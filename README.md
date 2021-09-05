@@ -1,2 +1,2 @@
-# xibam.net
+# haxibami.net
 haxibami's website.
