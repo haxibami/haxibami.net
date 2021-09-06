@@ -20,8 +20,9 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - name: Install dependencies
-      - run: npm ci
-      - run: npm run ts-check
+        run: npm ci
+      - name: Run tsc
+        run: npm run ts-check
       
   eslint:
     runs-on: ubuntu-latest
@@ -39,8 +40,9 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - name: Install dependencies
-      - run: npm ci
-      - run: npm run lint:eslint
+        run: npm ci
+      - name: Run eslint
+        run: npm run lint:eslint
 
   prettier:
     runs-on: ubuntu-latest
@@ -58,8 +60,9 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - name: Install dependencies
-      - run: npm ci
-      - run: npm run lint:prettier
+        run: npm ci
+      - name: Run prettier
+        run: npm run lint:prettier
 
   deploy:
     runs-on: ubuntu-latest
@@ -77,7 +80,7 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - name: Install dependencies
-      - run: npm ci
+        run: npm ci
       - uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
@@ -86,4 +89,3 @@ jobs:
           vercel-org-id: ${{ secrets.ORG_ID}}  #Required
           vercel-project-id: ${{ secrets.PROJECT_ID}} #Required 
           working-directory: ./sub-directory
-
