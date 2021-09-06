@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "ts-check": "tsc --noEmit",
+    "lint": "next lint",
+    "fmt:eslint": "npm lint:eslint --fix",
+    "fmt:prettier": "npm lint:prettier --write"
   },
   "dependencies": {
     "next": "11.1.2",
