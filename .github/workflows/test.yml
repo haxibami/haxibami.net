@@ -5,12 +5,16 @@ on:
       - dev
 jobs:
   ts-check:
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./haxibami.net
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: '16'
       - name: Cache Node.js modules
         uses: actions/cache@v2
         with:
@@ -25,12 +29,16 @@ jobs:
         run: npm run ts-check
       
   eslint:
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./haxibami.net
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: '16'
       - name: Cache Node.js modules
         uses: actions/cache@v2
         with:
@@ -46,11 +54,15 @@ jobs:
 
   prettier:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./haxibami.net
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: '16'
       - name: Cache Node.js modules
         uses: actions/cache@v2
         with:
@@ -66,11 +78,15 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./haxibami.net
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: '16'
       - name: Cache Node.js modules
         uses: actions/cache@v2
         with:
@@ -88,4 +104,4 @@ jobs:
           vercel-args: '--prod' #Optional
           vercel-org-id: ${{ secrets.ORG_ID}}  #Required
           vercel-project-id: ${{ secrets.PROJECT_ID}} #Required 
-          working-directory: ./sub-directory
+          working-directory: ./haxibami.net
