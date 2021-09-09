@@ -24,78 +24,77 @@ const Home: NextPage = () => {
               <Image className={styles.icon} src="/favicon.ico" alt="haxibami Logo" width={100} height={100} />
             </a></Link>
           </div>
-          <a href="https://twitter.com/haxibami">
-            <div className={styles.Twitter_box}>
+          <div className={styles.Twitter_box}>
+            <a href="https://twitter.com/haxibami">
               <div className={styles.Twitter_wrapper}>
                 <Twitter className={styles.Twitter} alt="twitter" layout="fill" />
               </div>
-            </div>
-          </a>
-          <a href="https://instagram.com/haxibami">
-            <div className={styles.Instagram_box}>
+            </a>
+          </div>
+          <div className={styles.Instagram_box}>
+            <a href="https://instagram.com/haxibami">
               <div className={styles.Instagram_wrapper}>
                 <Instagram className={styles.Instagram} alt="instagram" layout="fill" />
               </div>
-            </div>
-          </a>
-
-          <a href="https://github.com/haxibami">
-            <div className={styles.Github_box}>
+            </a>
+          </div>
+          <div className={styles.Github_box}>
+            <a href="https://github.com/haxibami">
               <div className={styles.Github_wrapper}>
                 <Github className={styles.Github} alt="github" layout="fill" />
               </div>
-            </div>
-          </a>
-          <a href="https://bookmeter.com/users/1025874">
-            <div className={styles.Bookmark_box}>
+            </a>
+          </div>
+          <div className={styles.Bookmark_box}>
+            <a href="https://bookmeter.com/users/1025874">
               <div className={styles.Bookmark_wrapper}>
                 <Bookmark className={styles.Bookmark} alt="bookmark" layout="fill" />
               </div>
-            </div>
-          </a>
-          <a href="https://haxibami.net/books">
-            <div className={styles.Book_box}>
+            </a>
+          </div>
+          <div className={styles.Book_box}>
+            <a href="https://haxibami.net/books">
               <div className={styles.Book_wrapper}>
                 <Book className={styles.Book} alt="book" layout="fill" />
               </div>
-            </div>
-          </a>
-          <a href="https://haxibami.hatenablog.jp">
-            <div className={styles.Blog1_box}>
+            </a>
+          </div>
+          <div className={styles.Blog1_box}>
+            <a href="https://haxibami.hatenablog.jp">
               <div className={styles.Blog1_wrapper}>
                 <Blog className={styles.Blog1} alt="blog" layout="fill" />
               </div>
-            </div>
-          </a>
-          <a href="https://wowo-fishlife.hatenablog.jp">
-            <div className={styles.Blog2_box}>
+            </a>
+          </div>
+          <div className={styles.Blog2_box}>
+            <a href="https://wowo-fishlife.hatenablog.jp">
               <div className={styles.Blog2_wrapper}>
                 <Blog className={styles.Blog2} alt="blog" layout="fill" />
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
 
-          <a href="https://kakuyomu.jp/users/haxibami">
-            <div className={styles.Write_box}>
+          <div className={styles.Write_box}>
+            <a href="https://kakuyomu.jp/users/haxibami">
               <div className={styles.Write_wrapper}>
                 <Write className={styles.Write} alt="kakuyomu" layout="fill" />
               </div>
-            </div>
-          </a>
-          <a href="https://utakatanka.jp/kajin/1102">
-            <div className={styles.Poem_box}>
+            </a>
+          </div>
+          <div className={styles.Poem_box}>
+            <a href="https://utakatanka.jp/kajin/1102">
               <div className={styles.Poem_wrapper}>
                 <Poem className={styles.Poem} alt="utakatanka" layout="fill" />
               </div>
-            </div>
-          </a>
-          <a href="https://open.spotify.com/user/a0ndq420ky5fxfey4rpqx952w">
-            <div className={styles.Spotify_box}>
+            </a>
+          </div>
+          <div className={styles.Spotify_box}>
+            <a href="https://open.spotify.com/user/a0ndq420ky5fxfey4rpqx952w">
               <div className={styles.Spotify_wrapper}>
                 <Spotify className={styles.Spotify} alt="spotify" layout="fill" />
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
           {/*
           <PlaceIcon></PlaceIcon>*/}
 

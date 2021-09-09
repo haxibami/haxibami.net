@@ -40,16 +40,18 @@ $brands: (
         }
       }
 
-      a {
-        @each $brandname, $values in $brands {
-          .#{$brandname}_box {
-            position: absolute;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transform: translateY(calc(-1 * #{nth($values, 5)} / 2));
-            left: calc(50vw - #{nth($values, 5)} / 2);
-            width: nth($values, 5); height: nth($values, 5);
+
+      @each $brandname, $values in $brands {
+        .#{$brandname}_box {
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transform: translateY(calc(-1 * #{nth($values, 5)} / 2));
+          left: calc(50vw - #{nth($values, 5)} / 2);
+          width: nth($values, 5); height: nth($values, 5);
+
+          a {
 
             .#{$brandname}_wrapper {
               position: absolute;
