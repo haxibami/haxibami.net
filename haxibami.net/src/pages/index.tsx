@@ -18,7 +18,7 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <div className={styles.tree}>
-          <Tree className={styles.canvas}></Tree>
+          <Tree></Tree>
           <div className={styles.icon_wrapper}>
             <Link href="/"><a>
               <Image className={styles.icon} src="/favicon.ico" alt="haxibami Logo" width={100} height={100} />

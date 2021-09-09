@@ -8,8 +8,7 @@
     "start": "next start",
     "ts-check": "tsc --noEmit",
     "lint": "next lint",
-    "fmt:eslint": "npm lint:eslint --fix",
-    "fmt:prettier": "npm lint:prettier --write"
+    "lint:prettier": "npx prettier --check '**/*.{ts, tsx, json}'"
   },
   "dependencies": {
     "next": "11.1.2",
