@@ -3,5 +3,8 @@
   "public": false,
   "github": {
     "enabled": false
-  }
+  },
+  "redirects": [
+    {"source": "/mail", "destination": "mailto:contact@haxibami.net"}
+  ]
 }

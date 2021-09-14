@@ -5,14 +5,22 @@ import Link from 'next/link'
 import styles from 'styles/Home.module.scss'
 //import  PlaceIcon from 'components/placeicon'
 import { Tree } from 'components/tree'
-import { Twitter, Instagram, Github, Bookmark, Book, Blog, Write, Poem, Spotify } from 'modules/svg'
+import { About, Twitter, Instagram, Mail, Github, Bookmark, Book, Blog, Write, Poem, Spotify } from 'modules/svg'
 
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
         <title>狂乱詞好: lyriqult</title>
-        <meta name="description" content="haxibami's phylogenetic tree..." />
+        <meta name="description" content="haxibami's phylogenetic tree" lang="ja" />
+        <meta name="twitter:site" content="@haxibami"></meta>
+        <meta name="twitter:creator" content="@haxibami"></meta>
+        <meta name="twitter:image" content="https://raw.githubusercontent.com/haxibami/haxibami.net/main/haxibami.net/public/favicon.ico"></meta>
+        <meta name="twitter:card" content="summary"></meta>
+        <meta property="og:url" content="https://www.haxibami.net" />
+        <meta property="og:title" content="haxibami.net" />
+        <meta property="og:description" content="haxibami's phylogenetic tree" />
+        <meta property="og:image" content="https://raw.githubusercontent.com/haxibami/haxibami.net/main/haxibami.net/public/favicon.ico" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -22,6 +30,15 @@ const Home: NextPage = () => {
           <div className={styles.icon_wrapper}>
             <Link href="/"><a>
               <Image className={styles.icon} src="/favicon.ico" alt="haxibami Logo" width={100} height={100} />
+              <div className={styles.icon_tip}>!</div>
+            </a></Link>
+          </div>
+
+          <div className={styles.About_box}>
+            <Link href="about"><a>
+              <div className={styles.About_wrapper}>
+                <About className={styles.About} alt="about" layout="fill" />
+              </div>
             </a></Link>
           </div>
           <div className={styles.Twitter_box}>
@@ -38,6 +55,13 @@ const Home: NextPage = () => {
               </div>
             </a>
           </div>
+          <div className={styles.Mail_box}>
+            <Link href="mail"><a>
+              <div className={styles.Mail_wrapper}>
+                <Mail className={styles.Mail} alt="mail" layout="fill" />
+              </div>
+            </a></Link>
+          </div>
           <div className={styles.Github_box}>
             <a href="https://github.com/haxibami">
               <div className={styles.Github_wrapper}>
@@ -53,11 +77,11 @@ const Home: NextPage = () => {
             </a>
           </div>
           <div className={styles.Book_box}>
-            <a href="https://haxibami.net/books">
+            <Link href="works"><a>
               <div className={styles.Book_wrapper}>
                 <Book className={styles.Book} alt="book" layout="fill" />
               </div>
-            </a>
+            </a></Link>
           </div>
           <div className={styles.Blog1_box}>
             <a href="https://haxibami.hatenablog.jp">

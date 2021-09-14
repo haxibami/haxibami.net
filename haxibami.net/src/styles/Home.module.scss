@@ -1,21 +1,8 @@
-$haxibami: haxibami, #bd93f9;
-
-
-$brands: (
-	Twitter: (#1da1f2, #f8f8f2, 200px, 130deg, 50px, 30px),
-  Instagram: (#f56040, #f8f8f2, 200px, 100deg, 50px, 30px),
-  Github: (#333, #f8f8f2, 150px, 230deg, 50px, 35px),
-  Bookmark: (#ffb86c, #f8f8f2, 150px, 150deg, 50px, 25px),
-  Book: (#ff79c6, #f8f8f2, 150px, -90deg, 50px, 25px),
-  Blog1: (#8be9fd, #f8f8f2, 200px, 65deg, 50px, 30px),
-  Blog2: (#bd93f9, #f8f8f2, 200px, 35deg, 50px, 30px),
-  Write: (#282a36, #f8f8f2, 200px, -25deg, 50px, 30px),
-  Poem: (#ff5555, #f8f8f2, 200px, -55deg, 50px, 30px),
-  Spotify: (#1db954, #f8f8f2, 150px, 190deg, 50px, 30px)
-);
+@import "variable.scss";
 
 .container {
   padding: 0px;
+  min-width: 800px;
 
   .main {
     padding: 0px;
@@ -26,20 +13,71 @@ $brands: (
       display: flex;
       justify-content: center;
       align-items: center;
-      min-width: 100vw;
 
       .icon_wrapper {
         position: absolute;
+        width: 100px;
+        height: 100px;
         z-index: 10;
         border-radius: 50%;
 
-        .icon {
-          position: relative;
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
           border-radius: 50%;
-          border: 5px solid #bd93f9 !important;
+          z-index: -1;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+
+          background-color: $shadow;
+          filter: blur(5px);
+          transform: translate(2px, 8px) scale(1.02);
+          mix-blend-mode: multiply;
+        }
+
+        a {
+          .icon_tip {
+            display: none;
+            position: absolute;
+            text-align: center;
+            font-size: 20px;
+            color: #f8f8f2;
+            border-radius: 50%;
+            background: #ff5555;
+            width: 30px;
+            height: 30px;
+            font-weight: bold;
+            box-shadow: 0 5px 8px 0 $shadow;
+
+            &:before {
+              content: "";
+              position: absolute;
+              top: 21px;
+              right: 67%;
+              border: 7px solid transparent;
+              border-top: 7px solid #ff5555;
+              margin-left: -15px;
+              transform: rotateZ(45deg);
+            }
+          }
+
+          &:hover > .icon_tip {
+            display: inline-block;
+            top: -23px;
+            left: 77px;
+          }
+
+
+          .icon {
+            position: relative;
+            border-radius: 50%;
+            border: 5px solid $haxibami_color !important;
+          }
         }
       }
-
 
       @each $brandname, $values in $brands {
         .#{$brandname}_box {
@@ -48,8 +86,10 @@ $brands: (
           justify-content: center;
           align-items: center;
           transform: translateY(calc(-1 * #{nth($values, 5)} / 2));
-          left: calc(50vw - #{nth($values, 5)} / 2);
+/*          transform: translateX(calc(-1 * #{nth($values, 5)} / 2));*/
+/*          left: calc(50vw - #{nth($values, 5)} / 2);*/
           width: nth($values, 5); height: nth($values, 5);
+          border-radius: 50%;
 
           a {
 
@@ -68,6 +108,25 @@ $brands: (
               border-radius: 50%;
               border: 3px solid nth($values, 1) !important;
 
+              &::after {
+                content: "";
+                position: absolute;
+                width: nth($values, 5); height: nth($values, 5);
+                transform: rotate(calc(-1 * #{nth($values, 4)}));
+                border-radius: 50%;
+                box-shadow: 1px 4px 8px 2px $shadow;
+
+              }
+
+              &:hover {
+                background-color: nth($values, 2);
+              }
+
+              &:hover > .#{$brandname} {
+                color: nth($values, 1);
+              }
+
+
               .#{$brandname} {
                 position: absolute;
                 width: nth($values, 6); height: nth($values, 6);
@@ -75,6 +134,7 @@ $brands: (
                 transform: rotate(calc(-1 * #{nth($values, 4)}));
                 color: nth($values, 2);
               }
+
             }
           }
         }

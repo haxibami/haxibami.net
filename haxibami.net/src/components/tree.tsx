@@ -6,9 +6,9 @@ export const Tree: React.FC = () => {
   const useWindowDimensions = () => {
     const isClient = typeof window === 'object';
     const getWindowDimensions = useCallback(() => {
-      if (isClient && window.innerWidth < 450)
+      if (isClient && window.innerWidth < 800)
         return {
-          prewidth: isClient ? window?.outerWidth : 0,
+          prewidth: isClient ? 800 : 0,
           preheight: isClient ? window?.outerHeight : 0
         }
         return {
@@ -82,6 +82,7 @@ export const Tree: React.FC = () => {
       const arcs: [number, number, number, number, number, string, number][] = [
         [0, 0, 100, -90, 115, 'black', 5],
           [0, 0, 150, 100, 130, 'black', 5],
+            [0, 0, 200, 120, 140, 'black', 5],
           [0, 0, 150, -55, -25, 'black', 5],
           [0, 0, 150, 35, 65, 'black', 5],
         [0, 0, 100, 150, 190, 'black', 5],
@@ -91,6 +92,7 @@ export const Tree: React.FC = () => {
         [50, 50, 15, 'black', 5],
           [100, 50, -90, 'black', 5],
           [100, 50, -40, 'black', 5],
+          [100, 50, 6, 'black', 5],
             [150, 50, -25, 'black', 5],
             [150, 50, -55, 'black', 5],
           [100, 50, 50, 'black', 5],
@@ -99,10 +101,12 @@ export const Tree: React.FC = () => {
           [100, 50, 115, 'black', 5],
             [150, 50, 100, 'black', 5],
             [150, 50, 130, 'black', 5],
+              [200, 50, 120, 'black', 5],
+              [200, 50, 140, 'black', 5],
         [50, 50, 170, 'black', 5],
           [100, 50, 150, 'black', 5],
           [100, 50, 190, 'black', 5],
-        [50, 100, 230, 'black', 5],
+        [50, 50, 230, '#bd93f9', 5],
       ];
 
       for (let i = 0; i < arcs.length; i++) {

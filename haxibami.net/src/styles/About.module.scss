@@ -7,7 +7,7 @@
   .main {
     padding: 0px;
     min-height: 100vh;
-    background-color: #f8f8f2;
+    background-color: $white;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -17,12 +17,12 @@
       margin: 15px;
       padding: 0px;
       background-color: #282a36;
-      opacity: 100;
-      color: #f8f8f2;
+      color: $white;
       border-radius: 5px;
       font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, Courier, monospace;
       max-width: 800px;
-      z-index: 1;
+      z-index: 10;
+/*      box-shadow: 0 10px 25px 0 $shadow;*/
 
       &::after {
         content: '';
@@ -33,6 +33,7 @@
         left: 0;
         width: 100%;
         height: 100%;
+
         background-color: $shadow;
         filter: blur(10px);
         transform: translate(5px, 5px) scale(1.02);
@@ -93,22 +94,22 @@
       }
 
       .yellow {
-        color: $yellow;
+        color: #f1fa8c;
       }
       .cyan {
-        color: $cyan;
+        color: #8be9fd;
       }
       .red {
-        color: $red;
+        color: #ff5555;
       }
       .magenta {
-        color: $magenta;
+        color: #ff79c6;
       }
       .green {
-        color: $green;
+        color: #50fa7b;
       }
       .purple {
-        color: $purple;
+        color: #bd93f9;
       }
       .icon_wrapper {
         margin: 10px 30px 10px 10px;
@@ -130,43 +131,6 @@
           }
         }
         @include animation(blink 1s steps(1) infinite);
-      }
-
-      .error {
-        display: inline-block;
-        @include appear(1.5s)
-      }
-
-      .notfound {
-        display: inline-block;
-        @include appear(2s)
-      }
-
-      .typing {
-        display: inline-block;
-        vertical-align: middle;
-        overflow: hidden;
-        white-space: nowrap;
-        border-right: 2px solid transparent;
-
-        @include keyframes(caret) {
-          50% {
-            border-right-color: currentColor;
-          }
-        }
-        @include keyframes(type) {
-          from {
-            width: 0px;
-          }
-          to {
-            width: 20ch;
-          }
-        }
-        animation: type 1s steps(20), caret 1s steps(1) 2;
-/*        @include animation(type 1s steps(20))*/
-      }
-      .newprompt {
-        @include appear(2.75s)
       }
     }
   }
