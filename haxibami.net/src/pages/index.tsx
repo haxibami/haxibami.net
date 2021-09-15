@@ -13,14 +13,16 @@ const Home: NextPage = () => {
       <Head>
         <title>狂乱詞好: lyriqult</title>
         <meta name="description" content="haxibami's phylogenetic tree" lang="ja" />
-        <meta name="twitter:site" content="@haxibami"></meta>
-        <meta name="twitter:creator" content="@haxibami"></meta>
-        <meta name="twitter:image" content="https://raw.githubusercontent.com/haxibami/haxibami.net/main/haxibami.net/public/favicon.ico"></meta>
-        <meta name="twitter:card" content="summary"></meta>
+        <meta name="twitter:site" content="@haxibami" />
+        <meta name="twitter:creator" content="@haxibami" />
+        <meta name="twitter:image" content="https://www.haxibami.net/ogpicon.webp" />
+        <meta name="twitter:card" content="summary" />
         <meta property="og:url" content="https://www.haxibami.net" />
+        <meta property="og:type" content="website" />
         <meta property="og:title" content="haxibami.net" />
         <meta property="og:description" content="haxibami's phylogenetic tree" />
-        <meta property="og:image" content="https://raw.githubusercontent.com/haxibami/haxibami.net/main/haxibami.net/public/favicon.ico" />
+        <meta property="og:site_name" content="haxibami.net" />
+        <meta property="og:image" content="https://www.haxibami.net/ogpicon.webp" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

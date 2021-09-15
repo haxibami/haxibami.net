@@ -12,16 +12,17 @@ $orange: #ffb86c;
 $shadow: #282a3688;
 
 $brands: (
-  About: ($haxibami_color, #f8f8f2, 100px, 230deg, 50px, 30px),
-	Twitter: (#1da1f2, #f8f8f2, 250px, 140deg, 50px, 30px),
-  Instagram: (#f56040, #f8f8f2, 250px, 120deg, 50px, 30px),
-  Mail: (#3c379e, #f8f8f2, 200px, 100deg, 50px, 30px),
-  Github: (#333, #f8f8f2, 150px, 5deg, 50px, 35px),
-  Bookmark: (#ffb86c, #f8f8f2, 150px, 150deg, 50px, 25px),
-  Book: (#ff79c6, #f8f8f2, 150px, -90deg, 50px, 25px),
-  Blog1: (#8be9fd, #f8f8f2, 200px, 65deg, 50px, 30px),
-  Blog2: (#50fa7b, #f8f8f2, 200px, 35deg, 50px, 30px),
-  Write: (#282a36, #f8f8f2, 200px, -25deg, 50px, 30px),
-  Poem: (#ff5555, #f8f8f2, 200px, -55deg, 50px, 30px),
-  Spotify: (#1db954, #f8f8f2, 150px, 190deg, 50px, 30px)
+/*Brandname:(top-left, bottom-right, darker, lighter, foreground, radius, rotate, outer, inner)*/
+  About:    ($haxibami_color, $haxibami_color, #8f48f5, #f6f1fe, #f8f8f2, 100px, 230deg, 50px, 30px),
+	Twitter:  (#1da1f2, #1da1f2, #0c84cd ,#c8defb, #f8f8f2, 250px, 140deg, 50px, 30px),
+  Instagram:(#ffdc80, #e1306c, #00000033, #ffffffbb, #f8f8f2, 250px, 120deg, 50px, 30px),
+  Mail:     (#1855f0, #11defe, #0d41c6 ,#aeefff, #f8f8f2, 200px, 100deg, 50px, 30px),
+  Github:   (#333333, #333333, #1d1d1d, #666666, #f8f8f2, 150px, 5deg, 50px, 35px),
+  Bookmark: (#ffb86c, #ffb86c, #ff9523, #ffe4c7, #f8f8f2, 150px, 150deg, 50px, 25px),
+  Book:     (#ff79c6, #ff79c6, #ff2ea6, #ffd7ee, #f8f8f2, 150px, -90deg, 50px, 25px),
+  Blog1:    (#8be9fd, #8be9fd, #6dcce0, #ebfbff, #f8f8f2, 200px, 65deg, 50px, 30px),
+  Blog2:    (#50fa7b, #50fa7b, #20dc60, #e8ffe9, #f8f8f2, 200px, 35deg, 50px, 30px),
+  Write:    (#282a36, #282a36, #000000, #5e627d, #f8f8f2, 200px, -25deg, 50px, 30px),
+  Poem:     (#ff5555, #ff5555, #ea0000, #ffe5e1, #f8f8f2, 200px, -55deg, 50px, 30px),
+  Spotify:  (#1db954, #1db954, #179443, #a1dea8, #f8f8f2, 150px, 190deg, 50px, 30px)
 );

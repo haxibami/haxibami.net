@@ -130,7 +130,7 @@ export const Tree: React.FC = () => {
 //        height={1000}
         style={{
 //          border: '2px solid #000'
-          background: '#f8f8f2',
+          background: 'lavender',
           border: 'none',
           margin: 0,
           position: "relative",
