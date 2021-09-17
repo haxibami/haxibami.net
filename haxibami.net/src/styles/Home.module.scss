@@ -20,9 +20,9 @@
         height: 100px;
         z-index: 10;
         border-radius: 50%;
-        box-shadow: -4px -4px 8px 0px white;
+/*        box-shadow: -4px -4px 8px 0px white;
 
-        &::after {
+          &::after {
           content: '';
           display: block;
           position: absolute;
@@ -36,7 +36,7 @@
           filter: blur(20px);
           transform: translate(6px, 6px) scale(1.0);
           mix-blend-mode: multiply;
-        }
+        }*/
 
         a {
           .icon_tip {
