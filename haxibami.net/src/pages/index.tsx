@@ -30,7 +30,7 @@ const Home: NextPage = () => {
         <div className={styles.tree}>
           <Tree></Tree>
           <div className={styles.icon_wrapper}>
-            <Link href="/"><a>
+            <Link href="/profile"><a>
               <Image className={styles.icon} src="/favicon.ico" alt="haxibami Logo" width={100} height={100} />
               <div className={styles.icon_tip}>!</div>
             </a></Link>

@@ -19,19 +19,19 @@ const NotFound: NextPage = () => {
           </div>
           <div className={styles.console_text}>
 
-            <br></br><p>
-            ┌── <span className={styles.path}>~/haxibami.net</span> on <span className={styles.cyan}> Internet-2.0</span>
-            <br></br>└─<span className={styles.magenta}>{'>>'}</span> <span className={styles.typing}><span className={styles.green}>haxibami</span> <span className={styles.yellow}>show</span> status</span>
-            </p><br></br>
+            <br /><p>
+            ┌── <span className={styles.path}><b>~/haxibami.net</b></span> on <span className={styles.cyan}><b>Internet-2.0</b></span>
+            <br />└─<span className={styles.magenta}>{'>>'}</span> <span className={styles.typing}><span className={styles.green}>haxibami</span> <span className={styles.yellow}>show</span> status</span>
+            </p><br />
             <p><span className={styles.red}><b><span className={styles.error}>[haxibami.net ERROR!]</span></b></span></p>
             <p><span className={styles.notfound}>404 not found. Go back to <Link href="/"><a>Home</a></Link></span></p>
 
-            <br></br><p className={styles.newprompt}>
-            ┌── <span className={styles.path}>~/haxibami.net</span> on <span className={styles.cyan}> Internet-2.0</span>
-            <br></br>└─<span className={styles.red}>{'>>'}</span> <span className={styles.blinking}></span>
+            <br /><p className={styles.newprompt}>
+            ┌── <span className={styles.path}><b>~/haxibami.net</b></span> on <span className={styles.cyan}><b>Internet-2.0</b></span>
+            <br />└─<span className={styles.red}>{'>>'}</span> <span className={styles.blinking}></span>
             </p>
 
-            <br></br>
+            <br />
           </div>
           
         </div>
