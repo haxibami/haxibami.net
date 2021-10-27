@@ -12,16 +12,22 @@
   },
   "dependencies": {
     "next": "11.1.2",
+    "raw-loader": "^4.0.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "sass": "^1.39.0"
+    "rehype-parse": "^8.0.3",
+    "rehype-react": "^7.0.3",
+    "remark": "^14.0.1",
+    "remark-html": "^15.0.0",
+    "sass": "^1.43.4",
+    "unified": "^10.1.0"
   },
   "devDependencies": {
     "@types/react": "17.0.20",
     "babel-plugin-inline-react-svg": "^2.0.1",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
-    "prettier": "2.3.2",
+    "prettier": "2.4.1",
     "typescript": "4.4.2"
   }
 }

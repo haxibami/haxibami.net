@@ -9,6 +9,7 @@ import Blog from "../../public/blog.svg";
 import Write from "../../public/write.svg";
 import Poem from "../../public/poem.svg";
 import Spotify from "../../public/spotify.svg";
+import Keybase from "../../public/keybase.svg";
 
 export {
   About,
@@ -22,4 +23,5 @@ export {
   Write,
   Poem,
   Spotify,
+  Keybase,
 };

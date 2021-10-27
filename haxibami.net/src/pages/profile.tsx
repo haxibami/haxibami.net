@@ -33,7 +33,7 @@ const Profile: NextPage = () => {
             <br />└─<span className={styles.magenta}>{'>>'}</span> <span className={styles.typing}><span className={styles.green}>haxfetch</span></span>
             </p><br />
             <p className={styles.info}>
-            <span className={styles.icon_wrapper}><Image className={styles.icon} src="/favicon.ico" alt="haxibami Logo" width={150} height={150} /></span>
+            <span className={styles.icon_wrapper}><Link href='/'><a><Image className={styles.icon} src="/favicon.ico" alt="haxibami Logo" width={150} height={150} /></a></Link></span>
             <span className={styles.infotext}>
               <p><span className={styles.cyan}>haxibami</span>@<span className={styles.cyan}>Internet-2.0</span></p>
               <p>---------------------</p>

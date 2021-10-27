@@ -1,0 +1,45 @@
+@import "animation.scss";
+@import "variable.scss";
+
+.container {
+  padding: 0px;
+  
+  .main {
+    padding: 0px;
+    min-height: 100vh;
+    min-width: 100vw;
+    background-color: lavender;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .reader {
+      writing-mode: vertical-rl;
+      width: 90vw;
+      height: 90vh;
+      font-family: serif;
+      font-size: 1.25rem;
+      line-height: 1.75;
+      overflow-x: scroll;
+      overflow-y: hidden;
+      
+      h1 {
+        margin: 5rem;
+        font-family: monospace;
+      }
+
+      h2 {
+        margin: 3rem;
+        font-family: monospace;
+      }
+
+      h3 {
+        margin: 3rem;
+        font-family: monospace;
+      }
+      p {
+        text-indent: 1em;
+      }
+    }
+  }
+}

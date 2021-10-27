@@ -5,7 +5,7 @@ import Link from 'next/link'
 import styles from 'styles/Home.module.scss'
 //import  PlaceIcon from 'components/placeicon'
 import { Tree } from 'components/tree'
-import { About, Twitter, Instagram, Mail, Github, Bookmark, Book, Blog, Write, Poem, Spotify } from 'modules/svg'
+import { About, Twitter, Instagram, Mail, Github, Bookmark, Book, Blog, Write, Poem, Spotify, Keybase } from 'modules/svg'
 
 const Home: NextPage = () => {
   return (
@@ -118,6 +118,13 @@ const Home: NextPage = () => {
             <a href="https://open.spotify.com/user/a0ndq420ky5fxfey4rpqx952w">
               <div className={styles.Spotify_wrapper}>
                 <Spotify className={styles.Spotify} alt="spotify" layout="fill" />
+              </div>
+            </a>
+          </div>
+          <div className={styles.Keybase_box}>
+            <a href="https://keybase.io/haxibami">
+              <div className={styles.Keybase_wrapper}>
+                <Keybase className={styles.Keybase} alt="keybase" layout="fill" />
               </div>
             </a>
           </div>

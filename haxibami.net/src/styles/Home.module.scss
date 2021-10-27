@@ -124,11 +124,11 @@
               }
 
               &:hover::after {
-                box-shadow: 
+                  box-shadow: 
                   4px 4px 8px 0px transparent, 
                   -3px -3px 8px 0px transparent, 
-                  3px 3px 9px 0px nth($values, 3) inset, 
-                  -3px -3px 9px 0px nth($values, 4) inset;
+                  3px 3px 9px 0px transparent inset, 
+                  -3px -3px 9px 0px transparent inset;
               }
 
               .#{$brandname} {
