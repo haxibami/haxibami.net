@@ -1,29 +1,31 @@
 $haxibami_color: #bd93f9;
-$white: #f8f8f2;
-$black: #282a36;
-$purple: #bd93f9;
-$magenta: #ff79c6;
-$cyan: #8be9fd;
-$green: #50fa7b;
-$yellow: #f1fa8c;
-$red: #ff5555;
-$orange: #ffb86c;
+$bg-dark: #211921;
+$bg-light: lavender;
+$fg: #d9ced9;
+$white: #d9ced9;
+$black: #332433;
+$blue: #b686bf;
+$magenta: #a6b4de;
+$cyan: #86bfb6;
+$green: #9abf86;
+$yellow: #d9c77e;
+$red: #d9989c;
 
-$shadow: #282a3688;
+$shadow: #21192166;
 
 $brands: (
 /*Brandname:(top-left, bottom-right, darker, lighter, foreground, radius, rotate, outer, inner)*/
-  About:    ($haxibami_color, $haxibami_color, #8f48f5, #f6f1fe, #f8f8f2, 100px, 230deg, 50px, 30px),
-	Twitter:  (#1da1f2, #1da1f2, #0c84cd ,#c8defb, #f8f8f2, 250px, 140deg, 50px, 30px),
-  Instagram:(#ffdc80, #e1306c, #00000033, #ffffffbb, #f8f8f2, 250px, 120deg, 50px, 30px),
-  Mail:     (#1855f0, #11defe, #0d41c6 ,#aeefff, #f8f8f2, 200px, 100deg, 50px, 30px),
-  Github:   (#333333, #333333, #1d1d1d, #666666, #f8f8f2, 200px, -10deg, 50px, 35px),
-  Keybase:  (#ff6f21, #ff6f21, #ff6f21, #ff6f21, #f8f8f2, 200px, 20deg, 50px, 35px),
-  Bookmark: (#ffb86c, #ffb86c, #ff9523, #ffe4c7, #f8f8f2, 150px, 150deg, 50px, 25px),
-  Book:     (#ff79c6, #ff79c6, #ff2ea6, #ffd7ee, #f8f8f2, 150px, -90deg, 50px, 25px),
-  Blog1:    (#8be9fd, #8be9fd, #6dcce0, #ebfbff, #f8f8f2, 200px, 75deg, 50px, 30px),
-  Blog2:    (#50fa7b, #50fa7b, #20dc60, #e8ffe9, #f8f8f2, 200px, 45deg, 50px, 30px),
-  Write:    (#282a36, #282a36, #000000, #5e627d, #f8f8f2, 200px, -35deg, 50px, 30px),
-  Poem:     (#ff5555, #ff5555, #ea0000, #ffe5e1, #f8f8f2, 200px, -65deg, 50px, 30px),
-  Spotify:  (#1db954, #1db954, #179443, #a1dea8, #f8f8f2, 150px, 190deg, 50px, 30px),
+  About:    ($blue, $blue, #8f48f5, #f6f1fe, #f2e6f2, 100px, 230deg, 50px, 30px, true),
+	Twitter:  (#1da1f2, #1da1f2, #0c84cd ,#c8defb, #f2e6f2, 250px, 140deg, 50px, 30px, true),
+  Instagram:(#ffdc80, #e1306c, #00000033, #ffffffbb, #f2e6f2, 250px, 120deg, 50px, 30px, true),
+  Mail:     (#1855f0, #11defe, #0d41c6 ,#aeefff, #f2e6f2, 200px, 100deg, 50px, 30px, true),
+  Github:   (#333333, #333333, #1d1d1d, #666666, #f2e6f2, 200px, -10deg, 50px, 35px, true),
+  Keybase:  (#ff6f21, #ff6f21, #ff6f21, #ff6f21, #f2e6f2, 200px, 20deg, 50px, 35px, true),
+  Bookmark: (#d9c77e, #d9c77e, #ff9523, #ffe4c7, #f2e6f2, 150px, 150deg, 50px, 25px, true),
+  Book:     (#a6b4de, #a6b4de, #ff2ea6, #ffd7ee, #f2e6f2, 150px, -90deg, 50px, 25px, true),
+  Blog1:    (#86bfb6, #86bfb6, #6dcce0, #ebfbff, #f2e6f2, 200px, 75deg, 50px, 30px, true),
+  Blog2:    (#9abf86, #9abf86, #20dc60, #e8ffe9, #f2e6f2, 200px, 45deg, 50px, 30px, true),
+  Write:    (#282a36, #282a36, #000000, #5e627d, #f2e6f2, 200px, -35deg, 50px, 30px, true),
+  Poem:     (#d9989c, #d9989c, #ea0000, #ffe5e1, #f2e6f2, 200px, -65deg, 50px, 30px, true),
+  Spotify:  (#1db954, #1db954, #179443, #a1dea8, #f2e6f2, 150px, 190deg, 50px, 30px, true),
 );

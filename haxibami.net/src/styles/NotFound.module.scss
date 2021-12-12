@@ -7,7 +7,7 @@
   .main {
     padding: 0px;
     min-height: 100vh;
-    background-color: lavender;
+    background-color: $bg-light;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,9 +16,9 @@
       position: relative;
       margin: 15px;
       padding: 0px;
-      background-color: #282a36;
+      background-color: $bg-dark;
       opacity: 100;
-      color: #f8f8f2;
+      color: $fg;
       border-radius: 5px;
       font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, Courier, monospace;
       max-width: 800px;
@@ -88,7 +88,7 @@
       }
 
       .path {
-        color: #f1fa8c;
+        color: $yellow;
         text-decoration: underline;
       }
 
@@ -107,8 +107,8 @@
       .green {
         color: $green;
       }
-      .purple {
-        color: $purple;
+      .blue {
+        color: $blue;
       }
       .icon_wrapper {
         margin: 10px 30px 10px 10px;

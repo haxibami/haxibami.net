@@ -6,13 +6,32 @@
 
   .main {
     padding: 0px;
-    background-color: #f8f8f2;
+    background-color: $white;
 
     .tree {
       position: relative;
       display: flex;
       justify-content: center;
       align-items: center;
+      
+      revue {
+        position: absolute;/*
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 80%;
+        height: 15%;
+        z-index: 10;
+        background-color: $black;
+        transform: translateY(-40vh);
+        p {
+          color: $fg;
+          font-family: serif;
+          font-size: 3rem;
+          font-style: italic;
+          font-weight: bold;
+        }*/
+      }
 
       .icon_wrapper {
         position: absolute;
@@ -20,7 +39,6 @@
         height: 100px;
         z-index: 10;
         border-radius: 50%;
-/*        box-shadow: -4px -4px 8px 0px white;
 
           &::after {
           content: '';
@@ -32,11 +50,17 @@
           left: 0;
           width: 100%;
           height: 100%;
-          background-color: $shadow;
-          filter: blur(20px);
-          transform: translate(6px, 6px) scale(1.0);
-          mix-blend-mode: multiply;
-        }*/
+          transition: box-shadow 0.5s;
+          box-shadow:
+            18px 8px 3px 0px #21192144,/*#21192144*/
+            -8px 16px 3px 0px #21192144,;/*#21192144*/
+          }
+            &:hover::after {
+              box-shadow: 
+                  4px 4px 8px 0px transparent, 
+                  -3px -3px 8px 0px transparent, 
+
+            }
 
         a {
           .icon_tip {
@@ -46,7 +70,7 @@
             font-size: 20px;
             color: #f8f8f2;
             border-radius: 50%;
-            background: #ff5555;
+            background: #d9989c;
             width: 30px;
             height: 30px;
             font-weight: bold;
@@ -60,7 +84,7 @@
               top: 21px;
               right: 67%;
               border: 7px solid transparent;
-              border-top: 7px solid #ff5555;
+              border-top: 7px solid #d9989c;
               margin-left: -15px;
               transform: rotateZ(45deg);
             }
@@ -75,7 +99,7 @@
           .icon {
             position: relative;
             border-radius: 50%;
-            border: 5px solid $haxibami_color !important;
+            border: 5px solid $blue !important;
           }
         }
       }
@@ -109,13 +133,23 @@
                 position: absolute;
                 width: 100%; height: 100%;
                 transform: rotate(calc(-1 * #{nth($values, 7)}));
-                background: linear-gradient(to bottom right, nth($values, 1), nth($values, 2));
                 border-radius: 50%;
+                background: linear-gradient(to bottom right, nth($values, 1), nth($values, 2));
+                @if nth($values, 10) {
                 box-shadow:
-                  4px 4px 8px 0px $shadow,
-                  -3px -3px 10px 0px white, 
+                  9px 4px 3px 0px transparent,/*#21192144*/
+                  -4px -4px 10px -2px transparent,
                   4px 4px 8px 0px transparent inset, 
-                  -4px -4px 8px 0px transparent inset;
+                  -4px -4px 8px 0px transparent inset,
+                  -4px 8px 3px 0px transparent,;/*#21192144*/
+                }
+                @else {
+                  box-shadow:
+                    -4px -4px 10px -2px transparent, /*white*/ 
+                    4px 4px 8px 0px transparent inset, 
+                    -4px -4px 8px 0px transparent inset,
+                    -4px 8px 3px 0px #21192144,;
+                }
                 transition: box-shadow 0.5s;
                 transition-property: box-shadow;
                 transition-duration: 0.5s;
