@@ -1,31 +1,42 @@
 $haxibami_color: #bd93f9;
-$bg-dark: #211921;
-$bg-light: lavender;
-$fg: #d9ced9;
-$white: #d9ced9;
-$black: #332433;
-$blue: #b686bf;
+$dark: #1c1921;
+$grad-0: #292433;
+$grad-1: #4e4266;
+$grad-2: #8a8299;
+$light: #d2ced9;
+$white: #edebef;
+$blue: #9986bf;
 $magenta: #a6b4de;
 $cyan: #86bfb6;
-$green: #9abf86;
+$green: #abbf86;
 $yellow: #d9c77e;
 $red: #d9989c;
 
-$shadow: #21192166;
+$shadow: #1c192166;
+$line: #8a829955;
+$tip_fg: $light;
+$tip_color: $dark;
 
 $brands: (
 /*Brandname:(top-left, bottom-right, darker, lighter, foreground, radius, rotate, outer, inner)*/
-  About:    ($blue, $blue, #8f48f5, #f6f1fe, #f2e6f2, 100px, 230deg, 50px, 30px, true),
-	Twitter:  (#1da1f2, #1da1f2, #0c84cd ,#c8defb, #f2e6f2, 250px, 140deg, 50px, 30px, true),
-  Instagram:(#ffdc80, #e1306c, #00000033, #ffffffbb, #f2e6f2, 250px, 120deg, 50px, 30px, true),
-  Mail:     (#1855f0, #11defe, #0d41c6 ,#aeefff, #f2e6f2, 200px, 100deg, 50px, 30px, true),
-  Github:   (#333333, #333333, #1d1d1d, #666666, #f2e6f2, 200px, -10deg, 50px, 35px, true),
-  Keybase:  (#ff6f21, #ff6f21, #ff6f21, #ff6f21, #f2e6f2, 200px, 20deg, 50px, 35px, true),
-  Bookmark: (#d9c77e, #d9c77e, #ff9523, #ffe4c7, #f2e6f2, 150px, 150deg, 50px, 25px, true),
-  Book:     (#a6b4de, #a6b4de, #ff2ea6, #ffd7ee, #f2e6f2, 150px, -90deg, 50px, 25px, true),
-  Blog1:    (#86bfb6, #86bfb6, #6dcce0, #ebfbff, #f2e6f2, 200px, 75deg, 50px, 30px, true),
-  Blog2:    (#9abf86, #9abf86, #20dc60, #e8ffe9, #f2e6f2, 200px, 45deg, 50px, 30px, true),
-  Write:    (#282a36, #282a36, #000000, #5e627d, #f2e6f2, 200px, -35deg, 50px, 30px, true),
-  Poem:     (#d9989c, #d9989c, #ea0000, #ffe5e1, #f2e6f2, 200px, -65deg, 50px, 30px, true),
-  Spotify:  (#1db954, #1db954, #179443, #a1dea8, #f2e6f2, 150px, 190deg, 50px, 30px, true),
+  About:    ($blue, $blue, #8f48f5, #f6f1fe, #edebef, 100px, 230deg, 50px, 30px, true),
+	Twitter:  (#1da1f2, #1da1f2, #0c84cd ,#c8defb, #edebef, 250px, 140deg, 50px, 30px, true),
+  Instagram:(#ffdc80, #e1306c, #00000033, #ffffffbb, #edebef, 250px, 120deg, 50px, 30px, true),
+  Mail:     (#1855f0, #11defe, #0d41c6 ,#aeefff, #edebef, 200px, 100deg, 50px, 30px, true),
+  Github:   (#333333, #333333, #1d1d1d, #666666, #edebef, 200px, -10deg, 50px, 35px, true),
+  Keybase:  (#ff6f21, #ff6f21, #ff6f21, #ff6f21, #edebef, 200px, 20deg, 50px, 35px, true),
+  Bookmark: (#d9c77e, #d9c77e, #ff9523, #ffe4c7, #edebef, 150px, 150deg, 50px, 25px, true),
+  Book:     (#a6b4de, #a6b4de, #ff2ea6, #ffd7ee, #edebef, 150px, -90deg, 50px, 25px, true),
+  Blog1:    ($green, $green, #6dcce0, #ebfbff, #edebef, 200px, 75deg, 50px, 30px, true),
+  Blog2:    ($magenta, $magenta, #20dc60, #e8ffe9, #edebef, 200px, 45deg, 50px, 30px, true),
+  Write:    (#282a36, #282a36, #000000, #5e627d, #edebef, 200px, -35deg, 50px, 30px, true),
+  Poem:     ($red, $red, #ea0000, #ffe5e1, #edebef, 200px, -65deg, 50px, 30px, true),
+  Spotify:  (#1db954, #1db954, #179443, #a1dea8, #edebef, 150px, 190deg, 50px, 30px, true),
 );
+
+$line_width: min(5vw, 5rem);
+$left_margin: 10vw;
+$main_width: calc(100vw - $line_width * 2 - $left_margin);
+$tip_width: 7rem;
+
+$media_border: 700px;

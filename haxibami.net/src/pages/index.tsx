@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { InferGetStaticPropsType, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,10 +19,29 @@ import {
   Spotify,
   Keybase,
 } from "modules/svg";
+import MyHead, { MetaProps } from "components/myhead";
 
-const Home: NextPage = () => {
+type Props = InferGetStaticPropsType<typeof getStaticProps>;
+
+export const getStaticProps = async () => {
+  const metaprops: MetaProps = {
+    title: "haxibami.net",
+    sitename: "haxibami.net",
+    description: "ポートフォリオ",
+    ogImageUrl: "/ogpicon.webp",
+    pageRelPath: "",
+    pagetype: "website",
+    twcardtype: "summary",
+  };
+  return {
+    props: { metaprops },
+  };
+};
+
+const Home: NextPage<Props> = ({ metaprops }) => {
   return (
     <div className={styles.container}>
+      <MyHead {...metaprops} />
       <Head>
         <title>狂乱詞好: lyriqult</title>
         <meta
@@ -148,11 +167,13 @@ const Home: NextPage = () => {
             </a>
           </div>
           <div className={styles.Blog2_box}>
-            <a href="https://wowo-fishlife.hatenablog.jp">
-              <div className={styles.Blog2_wrapper}>
-                <Blog className={styles.Blog2} alt="blog" layout="fill" />
-              </div>
-            </a>
+            <Link href={`/blog`}>
+              <a>
+                <div className={styles.Blog2_wrapper}>
+                  <Blog className={styles.Blog2} alt="blog" layout="fill" />
+                </div>
+              </a>
+            </Link>
           </div>
 
           <div className={styles.Write_box}>
@@ -195,19 +216,6 @@ const Home: NextPage = () => {
           <PlaceIcon></PlaceIcon>*/}
         </div>
       </main>
-      {/*
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/favicon.ico" alt="haxibami Logo" width={24} height={24} />
-          </span>
-        </a>
-      </footer>*/}
     </div>
   );
 };

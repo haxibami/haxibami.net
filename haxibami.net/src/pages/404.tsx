@@ -1,43 +1,94 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
-import styles from 'styles/NotFound.module.scss'
+import type { InferGetStaticPropsType, NextPage } from "next";
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
+import Styles from "styles/NotFound.module.scss";
+import MyHead, { MetaProps } from "components/myhead";
+import { ogpHost } from "lib/ogpprops";
 
-const NotFound: NextPage = () => {
+type Props = InferGetStaticPropsType<typeof getStaticProps>;
+
+export const getStaticProps = async () => {
+  const metaprops: MetaProps = {
+    title: "404 not found",
+    sitename: "haxibami.net",
+    description: "The URL you accessed does not exist",
+    ogImageUrl: encodeURI(`${ogpHost}/api/ogp?title=404 not found`),
+    pageRelPath: "404",
+    pagetype: "article",
+    twcardtype: "summary",
+  };
+
+  return {
+    props: { metaprops },
+  };
+};
+
+const NotFound: NextPage<Props> = ({ metaprops }) => {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>狂乱詞好: lyriqult</title>
-        <meta name="description" content="404 not found" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className={styles.main}>
-        <div className={styles.console}>
-          <div className={styles.titlebar}>
-            <span>404: hash</span> <div className={styles.windowbutton}></div>
+    <div className={Styles.container}>
+      <MyHead {...metaprops} />
+      <main className={Styles.main}>
+        <div className={Styles.console}>
+          <div className={Styles.titlebar}>
+            <span>404: hash</span> <div className={Styles.windowbutton}></div>
           </div>
-          <div className={styles.console_text}>
+          <div className={Styles.console_text}>
+            <br />
+            <p>
+              ┌──{" "}
+              <span className={Styles.path}>
+                <b>~/haxibami.net</b>
+              </span>{" "}
+              on{" "}
+              <span className={Styles.cyan}>
+                <b>Internet-2.0</b>
+              </span>
+              <br />
+              └─<span className={Styles.magenta}>{">>"}</span>{" "}
+              <span className={Styles.typing}>
+                <span className={Styles.green}>haxibami</span>{" "}
+                <span className={Styles.yellow}>show</span> status
+              </span>
+            </p>
+            <br />
+            <p>
+              <span className={Styles.red}>
+                <b>
+                  <span className={Styles.error}>[haxibami.net ERROR!]</span>
+                </b>
+              </span>
+            </p>
+            <p>
+              <span className={Styles.notfound}>
+                404 not found. Go back to{" "}
+                <Link href="/">
+                  <a>Home</a>
+                </Link>
+              </span>
+            </p>
 
-            <br /><p>
-            ┌── <span className={styles.path}><b>~/haxibami.net</b></span> on <span className={styles.cyan}><b>Internet-2.0</b></span>
-            <br />└─<span className={styles.magenta}>{'>>'}</span> <span className={styles.typing}><span className={styles.green}>haxibami</span> <span className={styles.yellow}>show</span> status</span>
-            </p><br />
-            <p><span className={styles.red}><b><span className={styles.error}>[haxibami.net ERROR!]</span></b></span></p>
-            <p><span className={styles.notfound}>404 not found. Go back to <Link href="/"><a>Home</a></Link></span></p>
-
-            <br /><p className={styles.newprompt}>
-            ┌── <span className={styles.path}><b>~/haxibami.net</b></span> on <span className={styles.cyan}><b>Internet-2.0</b></span>
-            <br />└─<span className={styles.red}>{'>>'}</span> <span className={styles.blinking}></span>
+            <br />
+            <p className={Styles.newprompt}>
+              ┌──{" "}
+              <span className={Styles.path}>
+                <b>~/haxibami.net</b>
+              </span>{" "}
+              on{" "}
+              <span className={Styles.cyan}>
+                <b>Internet-2.0</b>
+              </span>
+              <br />
+              └─<span className={Styles.red}>{">>"}</span>{" "}
+              <span className={Styles.blinking}></span>
             </p>
 
             <br />
           </div>
-          
         </div>
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default NotFound
+export default NotFound;

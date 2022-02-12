@@ -11,42 +11,42 @@ import Tiling from "components/tiling";
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 export const getStaticProps = async () => {
-  const allPostsPre = getAllPosts(
+  const allBlogsPre = getAllPosts(
     ["slug", "title", "date", "tags", "content"],
-    "grad_essay"
+    "blog"
   );
 
-  const taglists = getPostTags("grad_essay");
+  const taglists = getPostTags("blog");
 
-  const CreatePreview = async (post: BlogItem) => {
-    const result = await MdStrip(post.content);
-    post.content = result;
-    return post;
+  const CreatePreview = async (blog: BlogItem) => {
+    const result = await MdStrip(blog.content);
+    blog.content = result;
+    return blog;
   };
 
-  const allPosts = await Promise.all(
-    allPostsPre.map(async (item) => {
+  const allBlogs = await Promise.all(
+    allBlogsPre.map(async (item) => {
       const processed = await CreatePreview(item);
       return processed;
     })
   );
 
   const metaprops: MetaProps = {
-    title: "トップ",
-    sitename: "卒業文集",
-    description: "haxibamiの卒業文集",
-    ogImageUrl: encodeURI(`${ogpHost}/api/ogp?title=卒業文集`),
-    pageRelPath: "grad_essay",
+    title: "偽偽書",
+    sitename: "偽偽書",
+    description: "二重否定除去",
+    ogImageUrl: encodeURI(`${ogpHost}/api/ogp?title=偽偽書`),
+    pageRelPath: "blog",
     pagetype: "website",
     twcardtype: "summary",
   };
 
   return {
-    props: { allPosts, taglists, metaprops },
+    props: { allBlogs, taglists, metaprops },
   };
 };
 
-const GradEssayTop: NextPage<Props> = ({ allPosts, metaprops }) => {
+const BlogTop: NextPage<Props> = ({ allBlogs, metaprops }) => {
   return (
     <div>
       <div id={Styles.Wrapper}>
@@ -55,17 +55,17 @@ const GradEssayTop: NextPage<Props> = ({ allPosts, metaprops }) => {
         <main>
           <h2 className={Styles.BlogMenu}>
             <div className={Styles.CurrentFocus}>
-              <Link href={"/grad_essay"}>
+              <Link href={"/blog"}>
                 <a>Articles</a>
               </Link>
             </div>{" "}
             <div>
-              <Link href={"/grad_essay/tags"}>
+              <Link href={"/blog/tags"}>
                 <a>Tags</a>
               </Link>
             </div>
           </h2>
-          <Tiling allPosts={allPosts} relPath="grad_essay" />
+          <Tiling allPosts={allBlogs} relPath="blog" />
         </main>
         <footer></footer>
       </div>
@@ -73,4 +73,4 @@ const GradEssayTop: NextPage<Props> = ({ allPosts, metaprops }) => {
   );
 };
 
-export default GradEssayTop;
+export default BlogTop;

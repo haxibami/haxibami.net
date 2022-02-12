@@ -1,0 +1,164 @@
+@import "variable.scss";
+@import "init.scss";
+
+#Wrapper {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-end;
+  gap: 20px;
+  padding: 20px 0;
+  position: relative;
+  min-height: 100vh;
+  list-style-position: inside;
+
+  #SideBar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: $left_margin;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px;
+
+    .SideBarIcon {
+      list-style: none;
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+
+  @media (min-width:$media_border) {
+    font-size: 125%;
+  }
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: $left_margin;
+      height: calc(100%);
+      width: $line_width;
+      background-color: $dark;
+      color: $dark;
+      z-index: 5;
+    }
+
+
+  header {
+    display: flex;
+    flex-direction: column;
+    width: $main_width;
+    gap: 20px;
+
+    .Date {
+      margin-right: 1rem;
+      text-decoration: none;
+    }
+
+    span {
+      display: inline-block;
+      margin: 0 0.5rem;
+      list-style: none;
+      text-decoration: underline;
+    }
+
+    a {
+      text-decoration: underline;
+    }
+  }
+
+  #Main {
+    width: $main_width;
+
+    article {
+      width: 70vw;
+      margin-top: calc($line_width + 2.5rem);
+
+      p {
+        margin: 2.5rem 0;
+      }
+
+      a {
+        color: $red;
+      }
+
+      li {
+        margin: 1rem;
+      }
+      
+      img {
+        max-width: 70vw;
+        max-height: 70vw;
+      }
+
+      h1 {
+        margin: 2rem 0 1rem 0;
+        border-bottom: 1px solid $line;
+        color: $dark;
+        @media (max-width:500px) {
+          font-size: 3rem;
+        }
+      }
+
+      h2 {
+        margin: 2rem 0 1rem 0;
+        border-bottom: 1px solid $line;
+        color: $dark;
+        @media (max-width:500px) {
+          font-size: 2rem;
+        }
+      }
+      h3 {
+        margin: 1em 0 0.5em 0;
+        border-bottom: 1px solid $line;
+        font-size: 1.5rem;
+        color: $dark;
+      }
+      h4 {
+        margin: 1rem 0 0.5rem 0;
+        color: $dark;
+        @media (max-width:500px) {
+          font-size: 1.25rem;
+        }
+      }
+
+      pre {
+        display: flex;
+        code {
+          padding: 1rem;
+        }
+      }
+    }
+
+    #Title {
+      font-family: sans-serif;
+      color: $dark;
+      @media (max-width:500px) {
+        font-size: 2.5rem;
+      }
+      position: relative;
+      width: calc($main_width - $line_width);
+      margin-bottom: $line_width;
+
+      &::after {
+        content: "";
+        position: absolute;
+        display: block;
+        left: 0;
+        margin-top: 1rem;
+        height: $line_width;
+        width: $main_width;
+        background-color: $dark;
+        color: $dark;
+        z-index: 5;
+      }
+    }
+  }
+
+  footer {
+  }
+}

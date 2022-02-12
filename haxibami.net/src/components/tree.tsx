@@ -152,7 +152,7 @@ export const Tree: React.FC = () => {
         [50, 50, 170, "#706570", 5],
         [100, 50, 150, "#706570", 5],
         [100, 50, 190, "#706570", 5],
-        [50, 50, 230, "#b686bf", 5],
+        [50, 50, 230, "#9986bf", 5],
       ];
 
       const spots: [
@@ -175,7 +175,7 @@ export const Tree: React.FC = () => {
           (3 * height) / 4,
           -width / 2,
           (-3 * height) / 8,
-          "#d9ced9",
+          "#d2ced9",
         ],
         [
           width / 8,
@@ -186,13 +186,13 @@ export const Tree: React.FC = () => {
           height / 2,
           (-2 * width) / 8,
           height / 2,
-          "#d9ced9",
+          "#d2ced9",
         ],
       ];
 
-      for (let i = 0; i < spots.length; i++) {
-        Spot(...spots[i]);
-      }
+      //      for (let i = 0; i < spots.length; i++) {
+      //        Spot(...spots[i]);
+      //      }
 
       for (let i = 0; i < arcs.length; i++) {
         Arc(...arcs[i]);
@@ -216,7 +216,7 @@ export const Tree: React.FC = () => {
         //        height={1000}
         style={{
           //          border: '2px solid #000'
-          background: "#211921",
+          background: "#d2ced9",
           border: "none",
           margin: 0,
           position: "relative",

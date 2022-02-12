@@ -1,63 +1,62 @@
-import type { NextPage } from "next";
-import Head from "next/head";
+import type { InferGetStaticPropsType, NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import styles from "styles/Profile.module.scss";
+import Styles from "styles/Profile.module.scss";
+import MyHead, { MetaProps } from "components/myhead";
+import { ogpHost } from "lib/ogpprops";
 
-const Profile: NextPage = () => {
+type Props = InferGetStaticPropsType<typeof getStaticProps>;
+
+export const getStaticProps = async () => {
+  const metaprops: MetaProps = {
+    title: "私について",
+    sitename: "haxibami.net",
+    description: "自己紹介",
+    ogImageUrl: encodeURI(`${ogpHost}/api/ogp?title=私について`),
+    pageRelPath: "profile",
+    pagetype: "article",
+    twcardtype: "summary_large_image",
+  };
+
+  return {
+    props: { metaprops },
+  };
+};
+
+const Profile: NextPage<Props> = ({ metaprops }) => {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>狂乱詞好: lyriqult</title>
-        <meta name="description" content="haxibami profile" lang="ja" />
-        <meta name="twitter:site" content="@haxibami" />
-        <meta name="twitter:creator" content="@haxibami" />
-        <meta
-          name="twitter:image"
-          content="https://www.haxibami.net/ogpicon.webp"
-        />
-        <meta name="twitter:card" content="summary" />
-        <meta property="og:url" content="https://www.haxibami.net" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="haxibami.net" />
-        <meta property="og:description" content="haxibami profile" />
-        <meta property="og:site_name" content="haxibami.net" />
-        <meta
-          property="og:image"
-          content="https://www.haxibami.net/ogpicon.webp"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className={styles.main}>
-        <div className={styles.console}>
-          <div className={styles.titlebar}>
+    <div className={Styles.container}>
+      <MyHead {...metaprops} />
+      <main className={Styles.main}>
+        <div className={Styles.console}>
+          <div className={Styles.titlebar}>
             <span>About me: hash</span>{" "}
-            <div className={styles.windowbutton}></div>
+            <div className={Styles.windowbutton}></div>
           </div>
-          <div className={styles.console_text}>
+          <div className={Styles.console_text}>
             <br />
             <p>
               ┌──{" "}
-              <span className={styles.path}>
+              <span className={Styles.path}>
                 <b>~/haxibami</b>
               </span>{" "}
               on{" "}
-              <span className={styles.cyan}>
+              <span className={Styles.cyan}>
                 <b>Internet-2.0</b>
               </span>
               <br />
-              └─<span className={styles.magenta}>{">>"}</span>{" "}
-              <span className={styles.typing}>
-                <span className={styles.green}>haxfetch</span>
+              └─<span className={Styles.magenta}>{">>"}</span>{" "}
+              <span className={Styles.typing}>
+                <span className={Styles.green}>haxfetch</span>
               </span>
             </p>
             <br />
-            <p className={styles.info}>
-              <span className={styles.icon_wrapper}>
+            <p className={Styles.info}>
+              <span className={Styles.icon_wrapper}>
                 <Link href="/">
                   <a>
                     <Image
-                      className={styles.icon}
+                      className={Styles.icon}
                       src="/favicon.ico"
                       alt="haxibami Logo"
                       width={150}
@@ -66,37 +65,37 @@ const Profile: NextPage = () => {
                   </a>
                 </Link>
               </span>
-              <span className={styles.infotext}>
+              <span className={Styles.infotext}>
                 <p>
-                  <span className={styles.cyan}>haxibami</span>@
-                  <span className={styles.cyan}>Internet-2.0</span>
+                  <span className={Styles.cyan}>haxibami</span>@
+                  <span className={Styles.cyan}>Internet-2.0</span>
                 </p>
                 <p>---------------------</p>
                 <p>
-                  <span className={styles.blue}>Name</span>{" "}
-                  <span className={styles.magenta}>{">>"}</span> haxibami
+                  <span className={Styles.blue}>Name</span>{" "}
+                  <span className={Styles.magenta}>{">>"}</span> haxibami
                   (IPA:[haʃibamʲi], 漢字:端食)
                 </p>
                 <p>
-                  <span className={styles.blue}>Lang</span>{" "}
-                  <span className={styles.magenta}>{">>"}</span>{" "}
+                  <span className={Styles.blue}>Lang</span>{" "}
+                  <span className={Styles.magenta}>{">>"}</span>{" "}
                   {"Japanese (learning English & Russian)"}
                 </p>
                 <p>
-                  <span className={styles.blue}>Country</span>{" "}
-                  <span className={styles.magenta}>{">>"}</span> Japan
+                  <span className={Styles.blue}>Country</span>{" "}
+                  <span className={Styles.magenta}>{">>"}</span> Japan
                 </p>
                 <p>
-                  <span className={styles.blue}>Org</span>{" "}
-                  <span className={styles.magenta}>{">>"}</span>{" "}
+                  <span className={Styles.blue}>Org</span>{" "}
+                  <span className={Styles.magenta}>{">>"}</span>{" "}
                   {
                     "The Univ. of Tokyo Junior Division, Humanity and Social sciences I (B1)"
                   }
                 </p>
                 <p>
-                  <span className={styles.blue}>Recently</span>{" "}
-                  <span className={styles.magenta}>{">>"}</span> 🍅🗡👑✨{" "}
-                  <span className={styles.yellow}>
+                  <span className={Styles.blue}>Recently</span>{" "}
+                  <span className={Styles.magenta}>{">>"}</span> 🍅🗡👑✨{" "}
+                  <span className={Styles.yellow}>
                     <a href="https://cinema.revuestarlight.com">
                       starlightened!
                     </a>
@@ -108,17 +107,17 @@ const Profile: NextPage = () => {
             <br />
             <p>
               ┌──{" "}
-              <span className={styles.path}>
+              <span className={Styles.path}>
                 <b>~/haxibami</b>
               </span>{" "}
               on{" "}
-              <span className={styles.cyan}>
+              <span className={Styles.cyan}>
                 <b>Internet-2.0</b>
               </span>
               <br />
-              └─<span className={styles.magenta}>{">>"}</span>{" "}
-              <span className={styles.green}>list</span>{" "}
-              <span className={styles.magenta}>interests</span>
+              └─<span className={Styles.magenta}>{">>"}</span>{" "}
+              <span className={Styles.green}>list</span>{" "}
+              <span className={Styles.magenta}>interests</span>
             </p>
             <br />
             <p>
@@ -136,17 +135,17 @@ const Profile: NextPage = () => {
             <br />
             <p>
               ┌──{" "}
-              <span className={styles.path}>
+              <span className={Styles.path}>
                 <b>~/haxibami</b>
               </span>{" "}
               on{" "}
-              <span className={styles.cyan}>
+              <span className={Styles.cyan}>
                 <b>Internet-2.0</b>
               </span>
               <br />
-              └─<span className={styles.magenta}>{">>"}</span>{" "}
-              <span className={styles.green}>list</span>{" "}
-              <span className={styles.magenta}>awards</span>
+              └─<span className={Styles.magenta}>{">>"}</span>{" "}
+              <span className={Styles.green}>list</span>{" "}
+              <span className={Styles.magenta}>awards</span>
             </p>
             <br />
             <p>
@@ -158,16 +157,16 @@ const Profile: NextPage = () => {
             <br />
             <p>
               ┌──{" "}
-              <span className={styles.path}>
+              <span className={Styles.path}>
                 <b>~/haxibami</b>
               </span>{" "}
               on{" "}
-              <span className={styles.cyan}>
+              <span className={Styles.cyan}>
                 <b>Internet-2.0</b>
               </span>
               <br />
-              └─<span className={styles.magenta}>{">>"}</span>{" "}
-              <span className={styles.blinking}></span>
+              └─<span className={Styles.magenta}>{">>"}</span>{" "}
+              <span className={Styles.blinking}></span>
             </p>
 
             <br />

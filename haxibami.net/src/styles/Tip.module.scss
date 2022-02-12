@@ -1,0 +1,35 @@
+@import "variable.scss";
+@import "init.scss";
+
+  .Tip {
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    margin: 1rem;
+    position: fixed;
+    color: $tip_fg;
+
+    display: grid;
+    grid-template-columns: repeat(2, 40px);
+    grid-gap: 2rem;
+
+    &::after{
+      content: "";
+      position: fixed;
+      width: 0;
+      height: 0;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      border-top: $tip_width solid $tip_color;
+      border-bottom: $tip_width solid transparent;
+      border-left: $tip_width solid $tip_color;
+      border-right: $tip_width solid transparent;
+    }
+
+  svg {
+    width: 40px;
+    height: 40px;
+  }
+  }

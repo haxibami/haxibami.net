@@ -7,7 +7,7 @@
   .main {
     padding: 0px;
     min-height: 100vh;
-    background-color: $bg-light;
+    background-color: $light;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,7 +16,7 @@
       position: relative;
       margin: 15px;
       padding: 0px;
-      background-color: $bg-dark;
+      background-color: $dark;
       color: $white;
       border-radius: 5px;
       font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, Courier, monospace;

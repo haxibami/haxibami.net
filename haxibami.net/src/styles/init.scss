@@ -1,0 +1,55 @@
+@import "variable.scss";
+
+#Wrapper {
+  color: $grad-1;
+
+  table {
+  table-layout: fixed;
+  border-collapse: collapse;
+  text-align: center;
+  color: $dark;
+
+    th, td {
+    border: 1px solid $line;
+    padding: 0.25rem 0.5rem;
+    }
+
+    th {
+    background: $white;
+    }
+  }
+
+  p {
+    code {
+      background: $white;
+      padding: 0.2rem;
+      border-radius: 0.2rem;
+    }
+  }
+
+  pre {
+    width: 100%;
+    code {
+      width: 100%;
+      @media (max-width: 800px) {
+        font-size: 80%;
+      }
+    }
+  }
+
+  blockquote {
+    color: $grad-2;
+    padding: 0.5rem 1.5rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    &::before {
+      content: "";
+      position: absolute;
+      height: 80%;
+      width: 0.3rem;
+      left: 0;
+      background: $line;
+    }
+  }
+}

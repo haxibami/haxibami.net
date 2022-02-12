@@ -1,64 +1,63 @@
-import type { NextPage } from "next";
-import Head from "next/head";
+import type { InferGetStaticPropsType, NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import styles from "styles/About.module.scss";
+import Styles from "styles/About.module.scss";
+import MyHead, { MetaProps } from "components/myhead";
+import { ogpHost } from "lib/ogpprops";
 
-const About: NextPage = () => {
+type Props = InferGetStaticPropsType<typeof getStaticProps>;
+
+export const getStaticProps = async () => {
+  const metaprops: MetaProps = {
+    title: "haxibami.netについて",
+    sitename: "haxibami.net",
+    description: "このサイトの概略",
+    ogImageUrl: encodeURI(`${ogpHost}/api/ogp?title=このサイトについて`),
+    pageRelPath: "about",
+    pagetype: "article",
+    twcardtype: "summary_large_image",
+  };
+
+  return {
+    props: { metaprops },
+  };
+};
+
+const About: NextPage<Props> = ({ metaprops }) => {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>狂乱詞好: lyriqult</title>
-        <meta name="description" content="what is haxibami.net?" lang="ja" />
-        <meta name="twitter:site" content="@haxibami" />
-        <meta name="twitter:creator" content="@haxibami" />
-        <meta
-          name="twitter:image"
-          content="https://www.haxibami.net/ogpicon.webp"
-        />
-        <meta name="twitter:card" content="summary" />
-        <meta property="og:url" content="https://www.haxibami.net" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="haxibami.net" />
-        <meta property="og:description" content="what is haxibami.net?" />
-        <meta property="og:site_name" content="haxibami.net" />
-        <meta
-          property="og:image"
-          content="https://www.haxibami.net/ogpicon.webp"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className={styles.main}>
-        <div className={styles.console}>
-          <div className={styles.titlebar}>
+    <div className={Styles.container}>
+      <MyHead {...metaprops} />
+      <main className={Styles.main}>
+        <div className={Styles.console}>
+          <div className={Styles.titlebar}>
             <span>About this site: hash</span>{" "}
-            <div className={styles.windowbutton}></div>
+            <div className={Styles.windowbutton}></div>
           </div>
-          <div className={styles.console_text}>
+          <div className={Styles.console_text}>
             <br />
             <p>
               ┌──{" "}
-              <span className={styles.path}>
+              <span className={Styles.path}>
                 <b>~/haxibami.net</b>
               </span>{" "}
               on{" "}
-              <span className={styles.cyan}>
+              <span className={Styles.cyan}>
                 <b>Vercel</b>
               </span>
               <br />
-              └─<span className={styles.magenta}>{">>"}</span>{" "}
-              <span className={styles.typing}>
-                <span className={styles.green}>haxfetch</span>{" "}
-                <span className={styles.cyan}>--system</span>
+              └─<span className={Styles.magenta}>{">>"}</span>{" "}
+              <span className={Styles.typing}>
+                <span className={Styles.green}>haxfetch</span>{" "}
+                <span className={Styles.cyan}>--system</span>
               </span>
             </p>
             <br />
-            <p className={styles.info}>
-              <span className={styles.icon_wrapper}>
+            <p className={Styles.info}>
+              <span className={Styles.icon_wrapper}>
                 <Link href="/profile">
                   <a>
                     <Image
-                      className={styles.icon}
+                      className={Styles.icon}
                       src="/favicon_glasses.ico"
                       alt="haxibami Logo"
                       width={150}
@@ -67,41 +66,41 @@ const About: NextPage = () => {
                   </a>
                 </Link>{" "}
               </span>
-              <span className={styles.infotext}>
+              <span className={Styles.infotext}>
                 <p>
-                  <span className={styles.cyan}>haxibami.net</span>@
-                  <span className={styles.cyan}>Vercel</span>
+                  <span className={Styles.cyan}>haxibami.net</span>@
+                  <span className={Styles.cyan}>Vercel</span>
                 </p>
                 <p>---------------------</p>
                 <p>
-                  <span className={styles.blue}>Framework</span>{" "}
-                  <span className={styles.magenta}>{">>"}</span> Next.js, React
+                  <span className={Styles.blue}>Framework</span>{" "}
+                  <span className={Styles.magenta}>{">>"}</span> Next.js, React
                 </p>
                 <p>
-                  <span className={styles.blue}>Lang</span>{" "}
-                  <span className={styles.magenta}>{">>"}</span> TypeScript,
+                  <span className={Styles.blue}>Lang</span>{" "}
+                  <span className={Styles.magenta}>{">>"}</span> TypeScript,
                   scss
                 </p>
                 <p>
-                  <span className={styles.blue}>Host</span>{" "}
-                  <span className={styles.magenta}>{">>"}</span> Vercel
+                  <span className={Styles.blue}>Host</span>{" "}
+                  <span className={Styles.magenta}>{">>"}</span> Vercel
                 </p>
                 <p>
-                  <span className={styles.blue}>Domain</span>{" "}
-                  <span className={styles.magenta}>{">>"}</span> Google Domains
+                  <span className={Styles.blue}>Domain</span>{" "}
+                  <span className={Styles.magenta}>{">>"}</span> Google Domains
                 </p>
                 <p>
-                  <span className={styles.blue}>Repo</span>{" "}
-                  <span className={styles.magenta}>{">>"}</span> Github:{" "}
+                  <span className={Styles.blue}>Repo</span>{" "}
+                  <span className={Styles.magenta}>{">>"}</span> Github:{" "}
                   <a href="https://github.com/haxibami/haxibami.net">
                     haxibami/haxibami.net
                   </a>
                 </p>
                 <p>
-                  <span className={styles.blue}>Comment</span>{" "}
-                  <span className={styles.magenta}>{">>"}</span> To get info
+                  <span className={Styles.blue}>Comment</span>{" "}
+                  <span className={Styles.magenta}>{">>"}</span> To get info
                   about me, visit{" "}
-                  <span className={styles.green}>
+                  <span className={Styles.green}>
                     <Link href="/profile">
                       <a>PROFILE</a>
                     </Link>
@@ -114,17 +113,17 @@ const About: NextPage = () => {
             <br />
             <p>
               ┌──{" "}
-              <span className={styles.path}>
+              <span className={Styles.path}>
                 <b>~/haxibami.net</b>
               </span>{" "}
               on{" "}
-              <span className={styles.cyan}>
+              <span className={Styles.cyan}>
                 <b>Vercel</b>
               </span>
               <br />
-              └─<span className={styles.magenta}>{">>"}</span>{" "}
-              <span className={styles.green}>what</span> are these{" "}
-              <span className={styles.magenta}>brand-icons</span>?
+              └─<span className={Styles.magenta}>{">>"}</span>{" "}
+              <span className={Styles.green}>what</span> are these{" "}
+              <span className={Styles.magenta}>brand-icons</span>?
             </p>
             <br />
             <p>
@@ -141,18 +140,18 @@ const About: NextPage = () => {
             <br />
             <p>
               ┌──{" "}
-              <span className={styles.path}>
+              <span className={Styles.path}>
                 <b>~/haxibami.net</b>
               </span>{" "}
               on{" "}
-              <span className={styles.cyan}>
+              <span className={Styles.cyan}>
                 <b>Vercel</b>
               </span>
               <br />
-              └─<span className={styles.magenta}>{">>"}</span>{" "}
-              <span className={styles.green}>why</span>{" "}
-              <span className={styles.magenta}>window-buttons</span> on the{" "}
-              <span className={styles.yellow}>right</span>?
+              └─<span className={Styles.magenta}>{">>"}</span>{" "}
+              <span className={Styles.green}>why</span>{" "}
+              <span className={Styles.magenta}>window-buttons</span> on the{" "}
+              <span className={Styles.yellow}>right</span>?
             </p>
             <br />
             <p>
@@ -163,16 +162,16 @@ const About: NextPage = () => {
             <br />
             <p>
               ┌──{" "}
-              <span className={styles.path}>
+              <span className={Styles.path}>
                 <b>~/haxibami.net</b>
               </span>{" "}
               on{" "}
-              <span className={styles.cyan}>
+              <span className={Styles.cyan}>
                 <b>Vercel</b>
               </span>
               <br />
-              └─<span className={styles.magenta}>{">>"}</span>{" "}
-              <span className={styles.blinking}></span>
+              └─<span className={Styles.magenta}>{">>"}</span>{" "}
+              <span className={Styles.blinking}></span>
             </p>
 
             <br />
