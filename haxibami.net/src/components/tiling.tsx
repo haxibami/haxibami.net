@@ -4,13 +4,13 @@ import Styles from "styles/Tiling.module.scss";
 
 export default function Tiling(props: {
   allPosts: BlogItem[];
-  relPath: string;
+  contentTop: string;
 }) {
   return (
     <div>
       <ul className={Styles.ArticleList}>
         {props.allPosts?.map((post) => (
-          <Link href={`/${props.relPath}/${post.slug}`} key={post.slug}>
+          <Link href={`/${props.contentTop}/${post.slug}`} key={post.slug}>
             <a>
               <li className={Styles.ArticleTile} key={post.slug}>
                 {/*<Image

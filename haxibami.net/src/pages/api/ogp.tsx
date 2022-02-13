@@ -1,10 +1,7 @@
 import React from "react";
 import chromium from "chrome-aws-lambda";
 import type { NextApiRequest, NextApiResponse } from "next";
-import "styles/OgpContent.css";
 import ReactDomServer from "react-dom/server";
-import Head from "next/head";
-import Image from "next/image";
 
 type OgpInfo = {
   title: string | string[];

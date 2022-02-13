@@ -24,6 +24,7 @@
       background: $white;
       padding: 0.2rem;
       border-radius: 0.2rem;
+      font-family: Menlo, Monaco, "Andale Mono", "DejaVu Sans Mono", "Courier New", Courier, monospace;
     }
   }
 
@@ -34,22 +35,6 @@
       @media (max-width: 800px) {
         font-size: 80%;
       }
-    }
-  }
-
-  blockquote {
-    color: $grad-2;
-    padding: 0.5rem 1.5rem;
-    position: relative;
-    display: flex;
-    align-items: center;
-    &::before {
-      content: "";
-      position: absolute;
-      height: 80%;
-      width: 0.3rem;
-      left: 0;
-      background: $line;
     }
   }
 }

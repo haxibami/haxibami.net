@@ -83,7 +83,8 @@
       }
 
       a {
-        color: $red;
+        color: $blog_link;
+        text-decoration: underline;
       }
 
       li {
@@ -126,16 +127,44 @@
         }
       }
 
+      blockquote {
+        color: $grad-2;
+        padding: 0.5rem 1.5rem;
+        position: relative;
+        display: flex;
+        align-items: center;
+        &::before {
+          content: "";
+          position: absolute;
+          height: 100%;
+          width: 0.3rem;
+          left: 0;
+          background: $line;
+        }
+        p {
+          margin: 0;
+        }
+      }
+
       pre {
         display: flex;
+        margin: 1.5rem 0;
+        font-size: 1rem;
+
         code {
-          padding: 1rem;
+          @media (max-width: $media_border) {
+            font-size: 0.7rem;
+          }
+        padding: 1rem;
+          overflow: auto;
+          line-height: 2em;
+          font-family: Menlo, Monaco, "Andale Mono", "DejaVu Sans Mono", "Courier New", Courier, monospace;
+          margin: 0.25rem;
         }
       }
     }
 
     #Title {
-      font-family: sans-serif;
       color: $dark;
       @media (max-width:500px) {
         font-size: 2.5rem;

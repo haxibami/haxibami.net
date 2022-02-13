@@ -3,6 +3,14 @@ import { join } from "path";
 import matter from "gray-matter";
 import { MdStrip } from "modules/parser";
 
+export interface BlogItem {
+  slug: string;
+  title: string;
+  date: string;
+  tags: string[];
+  content: string;
+}
+
 const ArticleType = {
   Blog: "blog",
   Grad_Essay: "grad_essay",
@@ -11,7 +19,7 @@ const ArticleType = {
 export type ArticleType = typeof ArticleType[keyof typeof ArticleType];
 
 export const getArticlesDir = (articletype: ArticleType) => {
-  const ArticlesDir = join(process.cwd(), "src", "articles", articletype);
+  const ArticlesDir = join(process.cwd(), `src/articles/${articletype}`);
   return ArticlesDir;
 };
 
@@ -24,20 +32,12 @@ export const getPostSlugs = (articletype: ArticleType) => {
     .map(({ name }) => name.replace(/.md/g, ""));
 };
 
-export type BlogItem = {
-  slug: string;
-  title: string;
-  date: string;
-  tags: string[];
-  content: string;
-};
-
 export const getPostBySlug = (
   slug: string,
   fields: string[] = [],
   articletype: ArticleType
 ) => {
-  const fullPath = join(getArticlesDir(articletype), slug + ".md");
+  const fullPath = join(getArticlesDir(articletype), `${slug}.md`);
   const fileContent = fs.readFileSync(fullPath, "utf-8");
   const { data, content } = matter(fileContent);
 
@@ -97,9 +97,9 @@ export const getPostTags = (articletype: ArticleType) => {
 export const getPostsByTag = (tag: string, articletype: ArticleType) => {
   const stpair: BlogItem[] = getAllPosts(["slug", "tags", "date"], articletype);
   let taggedposts: string[] = [];
-  stpair.forEach((one: BlogItem) => {
-    if (one.tags.includes(tag)) {
-      taggedposts.push(one.slug);
+  stpair.forEach((item: BlogItem) => {
+    if (item.tags.includes(tag)) {
+      taggedposts.push(item.slug);
     }
   });
 
@@ -118,8 +118,7 @@ export const getPostsByDate = (date: string, articletype: ArticleType) => {
   return dayposts;
 };
 
-export const CreatePreview = async (post: BlogItem) => {
-  const result = await MdStrip(post.content);
-  post.content = result;
+export const replaceMdwithTxt = async (post: BlogItem) => {
+  post.content = await MdStrip(post.content);
   return post;
 };

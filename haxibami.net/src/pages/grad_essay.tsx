@@ -1,8 +1,7 @@
 import { NextPage, InferGetStaticPropsType } from "next";
-import { BlogItem, getAllPosts, getPostTags } from "lib/api";
+import { getAllPosts, getPostTags, replaceMdwithTxt } from "lib/api";
 import Styles from "styles/Blog.module.scss";
 import Link from "next/link";
-import { MdStrip } from "modules/parser";
 import BlogHeader from "components/blogheader";
 import MyHead, { MetaProps } from "components/myhead";
 import { ogpHost } from "lib/ogpprops";
@@ -18,15 +17,9 @@ export const getStaticProps = async () => {
 
   const taglists = getPostTags("grad_essay");
 
-  const CreatePreview = async (post: BlogItem) => {
-    const result = await MdStrip(post.content);
-    post.content = result;
-    return post;
-  };
-
   const allPosts = await Promise.all(
     allPostsPre.map(async (item) => {
-      const processed = await CreatePreview(item);
+      const processed = await replaceMdwithTxt(item);
       return processed;
     })
   );
@@ -58,14 +51,14 @@ const GradEssayTop: NextPage<Props> = ({ allPosts, metaprops }) => {
               <Link href={"/grad_essay"}>
                 <a>Articles</a>
               </Link>
-            </div>{" "}
+            </div>
             <div>
               <Link href={"/grad_essay/tags"}>
                 <a>Tags</a>
               </Link>
             </div>
           </h2>
-          <Tiling allPosts={allPosts} relPath="grad_essay" />
+          <Tiling allPosts={allPosts} contentTop="grad_essay" />
         </main>
         <footer></footer>
       </div>

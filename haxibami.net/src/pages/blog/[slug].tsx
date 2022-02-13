@@ -1,5 +1,10 @@
 import { NextPage, InferGetStaticPropsType } from "next";
-import { getAllPosts, getPostBySlug, CreatePreview, BlogItem } from "lib/api";
+import {
+  getAllPosts,
+  getPostBySlug,
+  replaceMdwithTxt,
+  BlogItem,
+} from "lib/api";
 import { MdStrip, MdToHtml } from "modules/parser";
 import Prism from "prismjs";
 import Styles from "styles/[slug].module.scss";
@@ -7,6 +12,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 import MyHead, { MetaProps } from "components/myhead";
 import { ogpHost } from "lib/ogpprops";
+import shiki, { IShikiTheme } from "shiki";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
@@ -34,7 +40,7 @@ export const getStaticProps = async ({ params }: any) => {
 
   const content: string = await MdToHtml(blog.content);
 
-  const description: string = (await CreatePreview(blog)).content;
+  const description: string = (await replaceMdwithTxt(blog)).content;
 
   const metaprops: MetaProps = {
     title: blog.title,
@@ -60,10 +66,6 @@ export const getStaticProps = async ({ params }: any) => {
 };
 
 const AllBlog: NextPage<Props> = ({ blog, metaprops }) => {
-  useEffect(() => {
-    Prism.manual = true;
-    Prism.highlightAll();
-  });
   return (
     <div id={Styles.Wrapper} key={blog.slug}>
       <MyHead {...metaprops} />

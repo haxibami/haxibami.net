@@ -8,37 +8,6 @@
       {
         "root": ["."]
       }
-    ],
-    [
-      "prismjs",
-      {
-        "languages": [
-          "javascript",
-          "bash",
-          "c",
-          "cpp",
-          "css",
-          "markup",
-          "bash",
-          "diff",
-          "docker",
-          "git",
-          "go",
-          "json",
-          "markdown",
-          "python",
-          "jsx",
-          "toml",
-          "tsx",
-          "regex",
-          "rust",
-          "typescript",
-          "vim",
-          "yaml"
-        ],
-        "plugins": ["line-numbers"],
-        "css": true
-      }
     ]
   ]
 }

@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-export type MetaProps = {
+export interface MetaProps {
   title: string;
   sitename: string;
   description: string;
@@ -8,8 +8,9 @@ export type MetaProps = {
   pageRelPath: string;
   pagetype: PageType;
   twcardtype: TwCardType;
-};
+}
 
+// page type in twitter card: article / website
 const PageType = {
   Article: "article",
   Website: "website",
@@ -17,6 +18,7 @@ const PageType = {
 
 type PageType = typeof PageType[keyof typeof PageType];
 
+// twitter card type: summary / summary_large_image
 const TwCardType = {
   Summary: "summary",
   Summary_Large_Image: "summary_large_image",
@@ -27,7 +29,9 @@ type TwCardType = typeof TwCardType[keyof typeof TwCardType];
 export default function MyHead(props: MetaProps) {
   return (
     <Head>
-      <title>{props.title} - 偽偽書</title>
+      <title>
+        {props.title} - {props.sitename}
+      </title>
       <meta name="description" content={props.description} lang="ja" />
       <meta name="twitter:site" content="@haxibami" />
       <meta name="twitter:creator" content="@haxibami" />

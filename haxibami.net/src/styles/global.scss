@@ -1,4 +1,3 @@
-@import "prism-urara.css";
 @import "variable.scss";
 
 html,
@@ -9,6 +8,7 @@ body {
     NotoColorEmoji, Noto Color Emoji, Segoe UI Symbol, Android Emoji,
     EmojiSymbols, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Helvetica Neue, Noto Sans, sans-serif;
+  font-display: swap;
 }
 
 a {
@@ -25,4 +25,8 @@ a {
 
 .footnotes ol {
   font-size: 80%;
+}
+
+.katex {
+  color: $dark;
 }

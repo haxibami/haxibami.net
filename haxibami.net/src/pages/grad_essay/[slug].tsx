@@ -1,5 +1,10 @@
 import { NextPage, InferGetStaticPropsType } from "next";
-import { getAllPosts, getPostBySlug, CreatePreview, BlogItem } from "lib/api";
+import {
+  getAllPosts,
+  getPostBySlug,
+  replaceMdwithTxt,
+  BlogItem,
+} from "lib/api";
 import { MdStrip, MdToHtml } from "modules/parser";
 import Prism from "prismjs";
 import Styles from "styles/[slug].module.scss";
@@ -34,7 +39,7 @@ export const getStaticProps = async ({ params }: any) => {
 
   const content: string = await MdToHtml(post.content);
 
-  const description: string = (await CreatePreview(post)).content;
+  const description: string = (await replaceMdwithTxt(post)).content;
 
   const metaprops: MetaProps = {
     title: post.title,
@@ -60,10 +65,6 @@ export const getStaticProps = async ({ params }: any) => {
 };
 
 const AllGradEssay: NextPage<Props> = ({ post, metaprops }) => {
-  useEffect(() => {
-    Prism.manual = true;
-    Prism.highlightAll();
-  });
   return (
     <div id={Styles.Wrapper}>
       <MyHead {...metaprops} />

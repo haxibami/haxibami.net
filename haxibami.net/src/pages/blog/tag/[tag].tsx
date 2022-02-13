@@ -1,12 +1,15 @@
 import { NextPage, InferGetStaticPropsType } from "next";
-import { BlogItem, getPostBySlug, getPostsByTag, getPostTags } from "lib/api";
+import {
+  getPostBySlug,
+  getPostsByTag,
+  getPostTags,
+  replaceMdwithTxt,
+} from "lib/api";
 import Styles from "styles/[tag].module.scss";
-import Link from "next/link";
-import Head from "next/head";
-import { MdStrip } from "modules/parser";
 import BlogHeader from "components/blogheader";
 import MyHead, { MetaProps } from "components/myhead";
 import { ogpHost } from "lib/ogpprops";
+import Tiling from "components/tiling";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
@@ -36,15 +39,9 @@ export const getStaticProps = async ({ params }: any) => {
     );
   });
 
-  const CreatePreview = async (blog: BlogItem) => {
-    const result = await MdStrip(blog.content);
-    blog.content = result;
-    return blog;
-  };
-
   const allBlogs = await Promise.all(
     allBlogsPre.map(async (item) => {
-      const processed = await CreatePreview(item);
+      const processed = await replaceMdwithTxt(item);
       return processed;
     })
   );
@@ -75,32 +72,7 @@ const TaggedBlogs: NextPage<Props> = ({ allBlogs, params, metaprops }) => {
         <h2 className={Styles.BlogMenu}>
           <div className={Styles.CurrentFocus}>#{params?.tag}</div>
         </h2>
-        <ul className={Styles.ArticleList}>
-          {allBlogs?.map((blog) => (
-            <Link href={`/blog/${blog.slug}`} key={blog.slug}>
-              <a>
-                <li className={Styles.ArticleTile}>
-                  {/*<Image
-                    className={Styles.ArticleTileIcon}
-                    src="/ogpicon.webp"
-                    alt="haxibami logo"
-                    width={80}
-                    height={80}
-                  />*/}
-                  <div className={Styles.TilePreview}>
-                    {blog.content.substring(0, 100)}
-                  </div>
-                  {/*<div className={Styles.TileDate}>
-                    <span>{blog.date}</span>
-                  </div>*/}
-                  <div className={Styles.TileTitle}>
-                    <h2>{blog.title}</h2>
-                  </div>
-                </li>
-              </a>
-            </Link>
-          ))}
-        </ul>
+        <Tiling allPosts={allBlogs} contentTop="blog" />
       </main>
       <footer></footer>
     </div>
