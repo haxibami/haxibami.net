@@ -1,8 +1,9 @@
-import Styles from "styles/BlogHeader.module.scss";
 import Link from "next/link";
-import Tip from "components/tip";
+import React from "react";
+import Tip from "components/Tip/Tip";
+import Styles from "./BlogHeader.module.scss";
 
-export default function BlogHeader() {
+const BlogHeader: React.VFC = () => {
   return (
     <div id={Styles.HeaderBox}>
       <header className={Styles.Desktop}>
@@ -42,4 +43,6 @@ export default function BlogHeader() {
       </header>
     </div>
   );
-}
+};
+
+export default BlogHeader;

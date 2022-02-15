@@ -2,11 +2,14 @@ import React from "react";
 import chromium from "chrome-aws-lambda";
 import type { NextApiRequest, NextApiResponse } from "next";
 import ReactDomServer from "react-dom/server";
+import path from "path";
 
 type OgpInfo = {
   title: string | string[];
   date: string | string[];
 };
+
+const AbsolutePath = path.resolve("./public");
 
 const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
@@ -60,7 +63,7 @@ function Content(ogpinfo: OgpInfo) {
             {/*<h2>{ogpinfo.date}</h2>*/}
             <span>
               <img
-                src="https://haxibami.net/favicon.ico"
+                src={`${AbsolutePath}/favicon.ico`}
                 alt="haxicon"
                 width={200}
                 height={200}

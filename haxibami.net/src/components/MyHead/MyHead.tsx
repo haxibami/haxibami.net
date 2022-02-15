@@ -1,4 +1,5 @@
 import Head from "next/head";
+import React from "react";
 
 export interface MetaProps {
   title: string;
@@ -26,7 +27,7 @@ const TwCardType = {
 
 type TwCardType = typeof TwCardType[keyof typeof TwCardType];
 
-export default function MyHead(props: MetaProps) {
+const MyHead: React.VFC<MetaProps> = (props: MetaProps) => {
   return (
     <Head>
       <title>
@@ -52,4 +53,6 @@ export default function MyHead(props: MetaProps) {
       <link rel="icon" href="/favicon.ico" />
     </Head>
   );
-}
+};
+
+export default MyHead;

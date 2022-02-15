@@ -1,11 +1,23 @@
 import { NextPage, InferGetStaticPropsType } from "next";
-import { getAllPosts, getPostTags, replaceMdwithTxt } from "lib/api";
-import Styles from "styles/Blog.module.scss";
 import Link from "next/link";
-import BlogHeader from "components/blogheader";
-import MyHead, { MetaProps } from "components/myhead";
+import { getAllPosts, getPostTags, replaceMdwithTxt } from "lib/api";
 import { ogpHost } from "lib/ogpprops";
-import Tiling from "components/tiling";
+import MyHead, { MetaProps } from "components/MyHead/MyHead";
+import BlogHeader from "components/BlogHeader/BlogHeader";
+import Tiling from "components/Tiling/Tiling";
+import ArticleMenu, { MenuTab } from "components/ArticleMenu/ArticleMenu";
+import Styles from "styles/grad_essay.module.scss";
+
+const tabs: MenuTab[] = [
+  {
+    name: "Articles",
+    link: "",
+  },
+  {
+    name: "Tags",
+    link: "tags",
+  },
+];
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
@@ -46,18 +58,7 @@ const GradEssayTop: NextPage<Props> = ({ allPosts, metaprops }) => {
         <MyHead {...metaprops} />
         <BlogHeader />
         <main>
-          <h2 className={Styles.BlogMenu}>
-            <div className={Styles.CurrentFocus}>
-              <Link href={"/grad_essay"}>
-                <a>Articles</a>
-              </Link>
-            </div>
-            <div>
-              <Link href={"/grad_essay/tags"}>
-                <a>Tags</a>
-              </Link>
-            </div>
-          </h2>
+          <ArticleMenu contentType={"grad_essay"} tabs={tabs} focus={0} />
           <Tiling allPosts={allPosts} contentTop="grad_essay" />
         </main>
         <footer></footer>

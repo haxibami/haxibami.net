@@ -1,11 +1,14 @@
 import Link from "next/link";
+import React from "react";
 import { BlogItem } from "lib/api";
-import Styles from "styles/Tiling.module.scss";
+import Styles from "./Tiling.module.scss";
 
-export default function Tiling(props: {
+interface TilingInfo {
   allPosts: BlogItem[];
   contentTop: string;
-}) {
+}
+
+const Tiling: React.VFC<TilingInfo> = (props) => {
   return (
     <div>
       <ul className={Styles.ArticleList}>
@@ -36,4 +39,6 @@ export default function Tiling(props: {
       </ul>
     </div>
   );
-}
+};
+
+export default Tiling;

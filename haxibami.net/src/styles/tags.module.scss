@@ -1,10 +1,12 @@
-@import "variable.scss";
-@import "init.scss";
+@use "variable" as var;
+@use "lib";
 
 #Wrapper {
   display: flex;
   flex-flow: column;
   gap: 1.5rem;
+  @include lib.tiling_outer;
+  @include lib.color;
 
   main {
     display: flex;
@@ -18,28 +20,28 @@
     .BlogMenu {
       display: flex;
       flex-flow: row;
-      color: $shadow;
-      border-bottom: 1px solid $line;
+      color: var.$shadow;
+      border-bottom: 1px solid var.$line;
       gap: 2rem;
       padding: 0 2rem;
 
       div {
         &.CurrentFocus {
-          border-bottom: 2.5px solid $dark;
+          border-bottom: 2.5px solid var.$dark;
           gap: 1rem;
-          color: $dark;
+          color: var.$dark;
         }
       }
     }
 
     .TagList {
-      color: $dark;
+      color: var.$dark;
       width: 100%;
 
       .TagTile {
         display: inline-block;
         list-style: none;
-        border: 1px solid $line;
+        border: 1px solid var.$line;
         border-radius: 0.25rem;
         margin: 0.5rem;
         padding: 0 0.25rem;
@@ -49,7 +51,7 @@
         transition-timing-function: cubic-bezier(.4,0,.2,1);
         &:hover{
           text-decoration: underline;
-          background: $white;
+          background: var.$white;
         }
       }
     }

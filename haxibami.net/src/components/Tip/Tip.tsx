@@ -1,13 +1,14 @@
-import Styles from "styles/Tip.module.scss";
 import Link from "next/link";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouseChimney,
   faBlog,
   faTags,
 } from "@fortawesome/free-solid-svg-icons";
+import Styles from "./Tip.module.scss";
 
-export default function Tip() {
+const Tip: React.VFC = () => {
   return (
     <div className={Styles.Tip}>
       <span>
@@ -33,4 +34,6 @@ export default function Tip() {
       </span>
     </div>
   );
-}
+};
+
+export default Tip;

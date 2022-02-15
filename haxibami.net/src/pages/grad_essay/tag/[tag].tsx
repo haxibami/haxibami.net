@@ -5,11 +5,12 @@ import {
   getPostTags,
   replaceMdwithTxt,
 } from "lib/api";
-import Styles from "styles/[tag].module.scss";
-import BlogHeader from "components/blogheader";
-import MyHead, { MetaProps } from "components/myhead";
 import { ogpHost } from "lib/ogpprops";
-import Tiling from "components/tiling";
+import MyHead, { MetaProps } from "components/MyHead/MyHead";
+import BlogHeader from "components/BlogHeader/BlogHeader";
+import Tiling from "components/Tiling/Tiling";
+import ArticleMenu from "components/ArticleMenu/ArticleMenu";
+import Styles from "styles/[tag].module.scss";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
@@ -69,9 +70,16 @@ const TaggedPosts: NextPage<Props> = ({ allPosts, params, metaprops }) => {
       <MyHead {...metaprops} />
       <BlogHeader />
       <main>
-        <h2 className={Styles.BlogMenu}>
-          <div className={Styles.CurrentFocus}>#{params.tag}</div>
-        </h2>
+        <ArticleMenu
+          contentType={"grad_essay"}
+          tabs={[
+            {
+              name: `#${params.tag}`,
+              link: `tag/${params.tag}`,
+            },
+          ]}
+          focus={0}
+        />
         <Tiling allPosts={allPosts} contentTop="grad_essay" />
       </main>
       <footer></footer>

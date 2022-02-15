@@ -1,9 +1,9 @@
 import type { InferGetStaticPropsType, NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import Styles from "styles/Profile.module.scss";
-import MyHead, { MetaProps } from "components/myhead";
 import { ogpHost } from "lib/ogpprops";
+import MyHead, { MetaProps } from "components/MyHead/MyHead";
+import Styles from "styles/profile.module.scss";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 

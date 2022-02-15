@@ -1,7 +1,7 @@
 import fs from "fs";
 import { join } from "path";
 import matter from "gray-matter";
-import { MdStrip } from "modules/parser";
+import { MdStrip } from "lib/parser";
 
 export interface BlogItem {
   slug: string;
@@ -11,7 +11,7 @@ export interface BlogItem {
   content: string;
 }
 
-const ArticleType = {
+export const ArticleType = {
   Blog: "blog",
   Grad_Essay: "grad_essay",
 } as const;

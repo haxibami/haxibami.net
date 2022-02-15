@@ -1,0 +1,163 @@
+@use "variable" as var;
+
+@mixin color {
+  color: var.$grad-1;
+}
+
+@mixin tiling_outer {
+  display: flex;
+  flex-flow: column;
+  gap: 1.5rem;
+
+  main {
+    display: flex;
+    flex-flow: column;
+    min-height: 100vh;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 3rem;
+  }
+}
+
+@mixin article_headlines {
+  h1 {
+    margin: 2rem 0 1rem 0;
+    border-bottom: 1px solid var.$line;
+    color: var.$dark;
+    @media (max-width: var.$media_border) {
+      font-size: 3rem;
+    }
+  }
+
+  h2 {
+    margin: 2rem 0 1rem 0;
+    font-size: 2rem;
+    color: var.$dark;
+    border-bottom: 1px solid var.$line;
+  }
+
+  h3 {
+    margin: 1rem 0 0.5rem 0;
+    font-size: 1.5rem;
+    color: var.$dark;
+    border-bottom: 1px solid var.$line;
+  }
+
+  h4 {
+    margin: 1rem 0 0.5rem 0;
+    font-size: 1.25rem;
+    color: var.$dark;
+  }
+}
+
+@mixin article_paragraph {
+  p {
+    margin: var.$paragraph_gap 0;
+
+  }
+}
+
+@mixin colored_link {
+  a {
+    color: var.$blog_link;
+    text-decoration: underline;
+  }
+}
+
+@mixin list {
+  li {
+    margin: 1rem;
+  }
+}
+
+@mixin table {
+  table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    text-align: center;
+    color: var.$dark;
+
+    th, td {
+      border: 1px solid var.$line;
+      padding: 0.25rem 0.5rem;
+    }
+
+    th {
+      background: var.$white;
+    }
+  }
+}
+
+@mixin imagelimit {
+  img {
+    max-width: var.$img_max;
+    max-height: var.$img_max;
+  }
+}
+
+@mixin code_inline {
+  p {
+    code {
+      background: var.$white;
+      padding: 0.2rem;
+      border-radius: 0.2rem;
+      font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+  }
+}
+
+@mixin code_block {
+  pre {
+    width: 100%;
+    font-size: 1rem;
+    display: flex;
+    margin: var.$paragraph_gap 0;
+    code {
+      width: 100%;
+      padding: 1rem;
+      overflow: auto;
+      margin: 0.25rem;
+      font-family: Menlo, Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", "Courier New", Courier, monospace;
+      @media (max-width: var.$media_border) {
+        font-size: 0.7rem;
+      }
+    }
+  }
+}
+
+@mixin quote {
+  blockquote {
+    color: var.$grad-2;
+    padding: 0 1.5rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 0.3rem;
+      left: 0;
+      background: var.$line;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+}
+
+@mixin katex {
+  .katex {
+    color: var.$dark;
+  }
+}
+
+@mixin footnotes {
+  section ol {
+    li {
+      font-size: 0.9rem;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 
-export const Tree: React.FC = () => {
+const Tree: React.VFC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   const useWindowDimensions = () => {
@@ -227,3 +227,5 @@ export const Tree: React.FC = () => {
     </div>
   );
 };
+
+export default Tree;

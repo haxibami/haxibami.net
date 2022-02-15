@@ -1,18 +1,10 @@
 import { NextPage, InferGetStaticPropsType } from "next";
-import {
-  getAllPosts,
-  getPostBySlug,
-  replaceMdwithTxt,
-  BlogItem,
-} from "lib/api";
-import { MdStrip, MdToHtml } from "modules/parser";
-import Prism from "prismjs";
-import Styles from "styles/[slug].module.scss";
 import Link from "next/link";
-import { useEffect } from "react";
-import MyHead, { MetaProps } from "components/myhead";
+import { getAllPosts, getPostBySlug, replaceMdwithTxt } from "lib/api";
+import { MdToHtml } from "lib/parser";
 import { ogpHost } from "lib/ogpprops";
-import shiki, { IShikiTheme } from "shiki";
+import MyHead, { MetaProps } from "components/MyHead/MyHead";
+import Styles from "styles/[slug].module.scss";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
@@ -90,7 +82,7 @@ const AllBlog: NextPage<Props> = ({ blog, metaprops }) => {
           ))}
         </ul>
       </header>
-      <main id={Styles.Main}>
+      <main>
         <h1 id={Styles.Title}>{blog.title}</h1>
         <article>
           <div dangerouslySetInnerHTML={{ __html: blog.content }} />

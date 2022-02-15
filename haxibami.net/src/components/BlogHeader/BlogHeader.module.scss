@@ -1,8 +1,8 @@
-@import "variable.scss";
-@import "init.scss";
+@use "styles/variable" as var;
+//@use "styles/init";
 
 header.Desktop {
-  @media (max-width: $media_border) {
+  @media (max-width: var.$media_border) {
     display: none;
   }
   display: flex;
@@ -12,17 +12,17 @@ header.Desktop {
   #Title {
     margin: 3rem;
     h1 {
-      color: $dark;
+      color: var.$dark;
     }
     p {
-      color: $grad-2;
+      color: var.$grad-2;
     }
   }
 
 }
 
 header.Mobile {
-  @media (min-width: $media_border) {
+  @media (min-width: var.$media_border) {
     display: none;
   }
   top: 0;
@@ -32,11 +32,11 @@ header.Mobile {
   flex-flow: row;
   justify-content: space-evenly;
   align-items: center;
-  background: $dark;
-  color: $white;
+  background: var.$dark;
+  color: var.$white;
 
   p {
-    color: $grad-2;
+    color: var.$grad-2;
   }
   li {
     list-style: none;

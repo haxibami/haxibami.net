@@ -1,4 +1,8 @@
+// Color definition
+
 $haxibami_color: #bd93f9;
+
+// urara colors
 $dark: #1c1921;
 $grad-0: #292433;
 $grad-1: #4e4266;
@@ -12,14 +16,9 @@ $green: #abbf86;
 $yellow: #d9c77e;
 $red: #d9989c;
 
-$shadow: #1c192166;
-$line: #8a829955;
-$blog_link: #7f60bf;
-$tip_fg: $light;
-$tip_color: $dark;
-
+// brand colors
 $brands: (
-/*Brandname:(top-left, bottom-right, darker, lighter, foreground, radius, rotate, outer, inner)*/
+//  Brandname:(top-left, bottom-right, darker, lighter, foreground, radius, rotate, outer, inner)
   About:    ($blue, $blue, #8f48f5, #f6f1fe, #edebef, 100px, 230deg, 50px, 30px, true),
 	Twitter:  (#1da1f2, #1da1f2, #0c84cd ,#c8defb, #edebef, 250px, 140deg, 50px, 30px, true),
   Instagram:(#ffdc80, #e1306c, #00000033, #ffffffbb, #edebef, 250px, 120deg, 50px, 30px, true),
@@ -35,9 +34,22 @@ $brands: (
   Spotify:  (#1db954, #1db954, #179443, #a1dea8, #edebef, 150px, 190deg, 50px, 30px, true),
 );
 
-$line_width: min(5vw, 5rem);
-$left_margin: 10vw;
-$main_width: calc(100vw - $line_width * 2 - $left_margin);
-$tip_width: 7rem;
+// element colors
+$shadow: #1c192166;
+$line: #8a829955;
+$blog_link: #7f60bf;
+$tip_fg: $light;
+$tip_color: $dark;
 
+// size definitions
+$line_width: min(5vw, 5rem);
+$line_left_margin: 10vw;
+$main_width: calc(100vw - $line_width * 2 - $line_left_margin);
+$tip_width: 7rem;
+$line_bottom_margin: 1.25rem;
+
+// responsive definitions
 $media_border: 700px;
+$img_max: min(70vw, 70vh);
+$element_gap: 1rem;
+$paragraph_gap: 2rem;

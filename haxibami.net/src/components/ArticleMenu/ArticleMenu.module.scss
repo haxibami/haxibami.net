@@ -1,0 +1,18 @@
+@use "styles/variable" as var;
+
+.ArticleMenu {
+  display: flex;
+  flex-direction: row;
+  color: var.$shadow;
+  border-bottom: 1px solid var.$line;
+  gap: 2rem;
+  padding: 0 2rem;
+
+  div {
+    &.Focus {
+      border-bottom: 2.5px solid var.$dark;
+      gap: 1rem;
+      color: var.$dark;
+    }
+  }
+}

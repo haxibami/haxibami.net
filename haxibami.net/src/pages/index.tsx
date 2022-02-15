@@ -2,24 +2,10 @@ import type { InferGetStaticPropsType, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import styles from "styles/Home.module.scss";
-//import  PlaceIcon from 'components/placeicon'
-import { Tree } from "components/tree";
-import {
-  About,
-  Twitter,
-  Instagram,
-  Mail,
-  Github,
-  Bookmark,
-  Book,
-  Blog,
-  Write,
-  Poem,
-  Spotify,
-  Keybase,
-} from "modules/svg";
-import MyHead, { MetaProps } from "components/myhead";
+import * as Svg from "lib/svg";
+import MyHead, { MetaProps } from "components/MyHead/MyHead";
+import Tree from "components/Tree/Tree";
+import styles from "styles/index.module.scss";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
@@ -27,7 +13,7 @@ export const getStaticProps = async () => {
   const metaprops: MetaProps = {
     title: "haxibami.net",
     sitename: "haxibami.net",
-    description: "ポートフォリオ",
+    description: "my phylogenetic tree",
     ogImageUrl: "/ogpicon.webp",
     pageRelPath: "",
     pagetype: "website",
@@ -96,7 +82,11 @@ const Home: NextPage<Props> = ({ metaprops }) => {
             <Link href="about">
               <a>
                 <div className={styles.About_wrapper}>
-                  <About className={styles.About} alt="about" layout="fill" />
+                  <Svg.About
+                    className={styles.About}
+                    alt="about"
+                    layout="fill"
+                  />
                 </div>
               </a>
             </Link>
@@ -104,7 +94,7 @@ const Home: NextPage<Props> = ({ metaprops }) => {
           <div className={styles.Twitter_box}>
             <a href="https://twitter.com/haxibami">
               <div className={styles.Twitter_wrapper}>
-                <Twitter
+                <Svg.Twitter
                   className={styles.Twitter}
                   alt="twitter"
                   layout="fill"
@@ -115,7 +105,7 @@ const Home: NextPage<Props> = ({ metaprops }) => {
           <div className={styles.Instagram_box}>
             <a href="https://instagram.com/haxibami">
               <div className={styles.Instagram_wrapper}>
-                <Instagram
+                <Svg.Instagram
                   className={styles.Instagram}
                   alt="instagram"
                   layout="fill"
@@ -127,7 +117,7 @@ const Home: NextPage<Props> = ({ metaprops }) => {
             <Link href="mail">
               <a>
                 <div className={styles.Mail_wrapper}>
-                  <Mail className={styles.Mail} alt="mail" layout="fill" />
+                  <Svg.Mail className={styles.Mail} alt="mail" layout="fill" />
                 </div>
               </a>
             </Link>
@@ -135,14 +125,18 @@ const Home: NextPage<Props> = ({ metaprops }) => {
           <div className={styles.Github_box}>
             <a href="https://github.com/haxibami">
               <div className={styles.Github_wrapper}>
-                <Github className={styles.Github} alt="github" layout="fill" />
+                <Svg.Github
+                  className={styles.Github}
+                  alt="github"
+                  layout="fill"
+                />
               </div>
             </a>
           </div>
           <div className={styles.Bookmark_box}>
             <a href="https://bookmeter.com/users/1025874">
               <div className={styles.Bookmark_wrapper}>
-                <Bookmark
+                <Svg.Bookmark
                   className={styles.Bookmark}
                   alt="bookmark"
                   layout="fill"
@@ -154,7 +148,7 @@ const Home: NextPage<Props> = ({ metaprops }) => {
             <Link href="works">
               <a>
                 <div className={styles.Book_wrapper}>
-                  <Book className={styles.Book} alt="book" layout="fill" />
+                  <Svg.Book className={styles.Book} alt="book" layout="fill" />
                 </div>
               </a>
             </Link>
@@ -162,7 +156,7 @@ const Home: NextPage<Props> = ({ metaprops }) => {
           <div className={styles.Blog1_box}>
             <a href="https://haxibami.hatenablog.jp">
               <div className={styles.Blog1_wrapper}>
-                <Blog className={styles.Blog1} alt="blog" layout="fill" />
+                <Svg.Blog className={styles.Blog1} alt="blog" layout="fill" />
               </div>
             </a>
           </div>
@@ -170,7 +164,7 @@ const Home: NextPage<Props> = ({ metaprops }) => {
             <Link href={`/blog`}>
               <a>
                 <div className={styles.Blog2_wrapper}>
-                  <Blog className={styles.Blog2} alt="blog" layout="fill" />
+                  <Svg.Blog className={styles.Blog2} alt="blog" layout="fill" />
                 </div>
               </a>
             </Link>
@@ -179,21 +173,29 @@ const Home: NextPage<Props> = ({ metaprops }) => {
           <div className={styles.Write_box}>
             <a href="https://kakuyomu.jp/users/haxibami">
               <div className={styles.Write_wrapper}>
-                <Write className={styles.Write} alt="kakuyomu" layout="fill" />
+                <Svg.Write
+                  className={styles.Write}
+                  alt="kakuyomu"
+                  layout="fill"
+                />
               </div>
             </a>
           </div>
           <div className={styles.Poem_box}>
             <a href="https://utakatanka.jp/kajin/1102">
               <div className={styles.Poem_wrapper}>
-                <Poem className={styles.Poem} alt="utakatanka" layout="fill" />
+                <Svg.Poem
+                  className={styles.Poem}
+                  alt="utakatanka"
+                  layout="fill"
+                />
               </div>
             </a>
           </div>
           <div className={styles.Spotify_box}>
             <a href="https://open.spotify.com/user/a0ndq420ky5fxfey4rpqx952w">
               <div className={styles.Spotify_wrapper}>
-                <Spotify
+                <Svg.Spotify
                   className={styles.Spotify}
                   alt="spotify"
                   layout="fill"
@@ -204,7 +206,7 @@ const Home: NextPage<Props> = ({ metaprops }) => {
           <div className={styles.Keybase_box}>
             <a href="https://keybase.io/haxibami">
               <div className={styles.Keybase_wrapper}>
-                <Keybase
+                <Svg.Keybase
                   className={styles.Keybase}
                   alt="keybase"
                   layout="fill"

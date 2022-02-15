@@ -1,5 +1,5 @@
-@import "animation.scss";
-@import "variable.scss";
+@use "cursor_animation" as cursor;
+@use "variable" as var;
 
 .container {
   padding: 0px;
@@ -7,7 +7,7 @@
   .main {
     padding: 0px;
     min-height: 100vh;
-    background-color: $light;
+    background-color: var.$light;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,9 +16,9 @@
       position: relative;
       margin: 15px;
       padding: 0px;
-      background-color: $dark;
+      background-color: var.$dark;
       opacity: 100;
-      color: $light;
+      color: var.$light;
       border-radius: 5px;
       font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, Courier, monospace;
       max-width: 800px;
@@ -33,7 +33,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: $shadow;
+        background-color: var.$shadow;
         filter: blur(10px);
         transform: translate(5px, 5px) scale(1.02);
         mix-blend-mode: unset;
@@ -88,27 +88,27 @@
       }
 
       .path {
-        color: $yellow;
+        color: var.$yellow;
         text-decoration: underline;
       }
 
       .yellow {
-        color: $yellow;
+        color: var.$yellow;
       }
       .cyan {
-        color: $cyan;
+        color: var.$cyan;
       }
       .red {
-        color: $red;
+        color: var.$red;
       }
       .magenta {
-        color: $magenta;
+        color: var.$magenta;
       }
       .green {
-        color: $green;
+        color: var.$green;
       }
       .blue {
-        color: $blue;
+        color: var.$blue;
       }
       .icon_wrapper {
         margin: 10px 30px 10px 10px;
@@ -124,22 +124,22 @@
       .blinking {
         margin: 1ch;
         border-left: 2px solid transparent;
-        @include keyframes(blink) {
+        @include cursor.keyframes(blink) {
           50% {
             border-left-color: currentColor;
           }
         }
-        @include animation(blink 1s steps(1) infinite);
+        @include cursor.animation(blink 1s steps(1) infinite);
       }
 
       .error {
         display: inline-block;
-        @include appear(2.5s)
+        @include cursor.appear(2.5s)
       }
 
       .notfound {
         display: inline-block;
-        @include appear(3s)
+        @include cursor.appear(3s)
       }
 
       .typing {
@@ -149,12 +149,12 @@
         white-space: nowrap;
         border-right: 2px solid transparent;
 
-        @include keyframes(caret) {
+        @include cursor.keyframes(caret) {
           50% {
             border-right-color: currentColor;
           }
         }
-        @include keyframes(type) {
+        @include cursor.keyframes(type) {
           from {
             width: 0px;
           }
@@ -163,10 +163,9 @@
           }
         }
         animation: type 1s steps(20), caret 1s steps(1) 3;
-/*        @include animation(type 1s steps(20))*/
       }
       .newprompt {
-        @include appear(3.75s)
+        @include cursor.appear(3.75s)
       }
     }
   }
