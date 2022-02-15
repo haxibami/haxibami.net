@@ -35,7 +35,7 @@
     "remark-rehype": "^10.1.0",
     "remark-stringify": "^10.0.2",
     "sass": "^1.49.7",
-    "shiki": "^0.10.0",
+    "shiki": "0.10.1",
     "strip-markdown": "^5.0.0",
     "unified": "^10.1.1"
   },
