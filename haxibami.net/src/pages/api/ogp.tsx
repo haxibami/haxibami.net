@@ -16,6 +16,7 @@ type OgpInfo = {
 
 const styles = `
 
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap");
 * {
   margin: 0;
@@ -26,7 +27,7 @@ html, body {
   width: 100%;
   height: 100%;
   background: #292433;
-  font-family: "Noto Sans CJK JP", sans-serif;
+  font-family: sans-serif, "Noto Sans JP";
   font-size: 125%;
 }
 
@@ -34,7 +35,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: repeating-linear-gradient(to left bottom, transparent, transparent 46px, #86bfb6cc 46px, #86bfb6cc 92px, transparent 92px, transparent 138px, #d9989ccc 138px, #d9989ccc 184px);
+  background-image: repeating-linear-gradient(to left bottom, transparent, transparent 46px, #d9989ccc 46px, #d9989ccc 92px, transparent 92px, transparent 138px, #a6b4decc 138px, #a6b4decc 184px);
 }
 
 #Wrapper {
@@ -44,11 +45,6 @@ body {
   display: flex;
   flex-direction: row;
   border-radius: 50px;
-  /*background-image: linear-gradient(135deg, 
-  transparent, transparent 125px,
-  var.$grad-1 125px, var.$grad-1 180px,
-  transparent 180px
-  );*/
   background: #f3f3f6;
   box-shadow: 30px 30px 60px #1c192166, -10px -10px 20px #1c192166;
 }
@@ -130,6 +126,7 @@ body {
   font-size: 150%;
 }
 
+/*# sourceMappingURL=ogp.css.map */
 `;
 
 function Content(ogpinfo: OgpInfo) {
@@ -186,10 +183,6 @@ const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
     title: req.query.title,
     date: req.query.date,
   };
-
-  await chromium.font(
-    "https://raw.githack.com/minoryorg/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Medium.woff2"
-  );
 
   const markup = ReactDomServer.renderToStaticMarkup(Content(ogpinfo));
   const html = `<!doctype html>${markup}`;

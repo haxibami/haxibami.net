@@ -1,5 +1,6 @@
 @use "variable" as var;
 @use 'sass:math';
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
 
 $card_margin: 50px;
@@ -19,11 +20,11 @@ html, body {
   width: 100%;
   height: 100%;
   background: $bg;
-  font-family: 'Noto Sans CJK JP', sans-serif;
+  font-family: sans-serif, 'Noto Sans JP';
   font-size: 125%;
 }
 
-$blue: #9986bfbb;
+$blue: #9986bfcc;
 $magenta: #a6b4decc;
 $cyan: #86bfb6cc;
 $green: #abbf86cc;
@@ -36,9 +37,9 @@ body {
   align-items: center;
   background-image: repeating-linear-gradient(to left bottom, 
     transparent, transparent $stripe, 
-    $cyan $stripe, $cyan calc($stripe * 2),
+    $red $stripe, $red calc($stripe * 2),
     transparent calc($stripe * 2), transparent calc($stripe * 3),
-    $red calc($stripe * 3), $red calc($stripe * 4),
+    $magenta calc($stripe * 3), $magenta calc($stripe * 4),
     /*transparent calc($stripe * 4), transparent calc($stripe * 5),
     $cyan calc($stripe * 5), $cyan calc($stripe * 6),
     transparent calc($stripe * 6), transparent calc($stripe * 7),
