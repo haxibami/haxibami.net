@@ -3,49 +3,133 @@ import chromium from "chrome-aws-lambda";
 import type { NextApiRequest, NextApiResponse } from "next";
 import ReactDomServer from "react-dom/server";
 import path from "path";
+import fs from "fs";
+
+const fullPath = path.resolve("./public");
+const faviconPath = path.join(fullPath, "favicon.ico");
+const favicon = fs.readFileSync(faviconPath).toString("base64");
 
 type OgpInfo = {
   title: string | string[];
   date: string | string[];
 };
 
-const AbsolutePath = path.resolve("./public");
-
 const styles = `
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
-  html, body, #Wrapper {
-    width: 100%;
-    height: 100%;
-    background: #1c1921;
-    color: #d2ced9;
-    font-family: 'Noto Sans JP', sans-serif;
-  }
 
-  #Wrapper {
-    font-size: 225%;
-    background: #1c1921;
-    color: #d2ced9;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-  }
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+}
 
-  #Title {
-    max-width: 90%;
-    overflow-wrap: anywhere;
-    overflow-y: hidden;
-  }
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #292433;
+  font-family: "Noto Sans CJK JP", sans-serif;
+  font-size: 125%;
+}
 
-  #Bottom {
-    width: 90%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 20px
-  }
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: repeating-linear-gradient(to left bottom, transparent, transparent 46px, #86bfb6cc 46px, #86bfb6cc 92px, transparent 92px, transparent 138px, #d9989ccc 138px, #d9989ccc 184px);
+}
+
+#Wrapper {
+  width: 1100px;
+  height: 530px;
+  background: white;
+  display: flex;
+  flex-direction: row;
+  border-radius: 50px;
+  /*background-image: linear-gradient(135deg, 
+  transparent, transparent 125px,
+  var.$grad-1 125px, var.$grad-1 180px,
+  transparent 180px
+  );*/
+  background: #f3f3f6;
+  box-shadow: 30px 30px 60px #1c192166, -10px -10px 20px #1c192166;
+}
+
+#Left {
+  display: flex;
+  flex-direction: column;
+  width: 225px;
+  height: 100%;
+}
+#Left::before {
+  position: relative;
+  top: 0;
+  left: 210px;
+  width: 30px;
+  height: 15px;
+  background: #292433;
+  border-radius: 0 0 15px 15px;
+  content: "";
+}
+#Left::after {
+  position: relative;
+  bottom: 0;
+  left: 210px;
+  width: 30px;
+  height: 15px;
+  background: #292433;
+  border-radius: 15px 15px 0 0;
+  content: "";
+}
+#Left img {
+  margin: auto;
+  margin-top: 25px;
+  border-radius: 50%;
+  border: 5px solid #8a8299;
+}
+#Left h3 {
+  font-size: 175%;
+  display: flex;
+  align-items: center;
+  width: 100px;
+  writing-mode: vertical-rl;
+  font-family: "Roboto mono", monospace;
+  margin: auto;
+}
+
+#Right {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  height: 100%;
+  width: 883px;
+  background-image: linear-gradient(to bottom, #1c192166, #1c192166 12px, transparent 12px, transparent 24px);
+  background-size: 4px 24px;
+  background-position: left top;
+  background-repeat: repeat-y;
+  gap: 20px;
+}
+#Right #Title {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 75px;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+#Right #Title p {
+  overflow: hidden;
+  max-height: 100%;
+}
+#Right #Host {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin: 75px;
+  margin-top: 0;
+  font-size: 150%;
+}
+
 `;
 
 function Content(ogpinfo: OgpInfo) {
@@ -56,25 +140,24 @@ function Content(ogpinfo: OgpInfo) {
       </head>
       <body>
         <div id="Wrapper">
-          <div id="Title">
-            <h1>{ogpinfo.title}</h1>
+          <div id="Left">
+            <img
+              src={`data:image/png;base64,${favicon}`}
+              alt="haxicon"
+              width={125}
+              height={125}
+            />
+            <h3>
+              <p>{ogpinfo.date}</p>
+            </h3>
           </div>
-          <div id="Bottom">
-            {/*<h2>{ogpinfo.date}</h2>*/}
-            <span>
-              <img
-                src={`${AbsolutePath}/favicon.ico`}
-                alt="haxicon"
-                width={200}
-                height={200}
-              />
-              {/*<Image
-                src="/favicon.ico"
-                alt="haxicon"
-                width={200}
-                height={200}
-              />*/}
-            </span>
+          <div id="Right">
+            <h1 id="Title">
+              <p>{ogpinfo.title}</p>
+            </h1>
+            <h2 id="Host">
+              <p>@haxibami.net</p>
+            </h2>
           </div>
         </div>
       </body>
@@ -103,6 +186,10 @@ const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
     title: req.query.title,
     date: req.query.date,
   };
+
+  await chromium.font(
+    "https://raw.githack.com/minoryorg/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Medium.woff2"
+  );
 
   const markup = ReactDomServer.renderToStaticMarkup(Content(ogpinfo));
   const html = `<!doctype html>${markup}`;
