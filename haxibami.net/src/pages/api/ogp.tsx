@@ -12,15 +12,6 @@ const publicFullPath = path.resolve("./public");
 const faviconPath = path.join(publicFullPath, "favicon.ico");
 const favicon = fs.readFileSync(faviconPath).toString("base64");
 
-// font paths
-const fontPath = path.join(publicFullPath, "font");
-const notocjk_reg = fs
-  .readFileSync(path.join(fontPath, "NotoSansCJKjp-Regular.woff2"))
-  .toString("base64");
-const notocjk_bol = fs
-  .readFileSync(path.join(fontPath, "NotoSansCJKjp-Bold.woff2"))
-  .toString("base64");
-
 type OgpInfo = {
   title: string;
   date: string;
@@ -34,13 +25,13 @@ const styles = `
   font-family: "Noto Sans CJK JP";
   font-style: normal;
   font-weight: normal;
-  src: url("data:font/woff2;charset=utf-8;base64,${notocjk_reg}") format("woff2");
+  src: url("https://raw.githack.com/minoryorg/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Regular.woff2") format("woff2");
 }
 @font-face {
   font-family: "Noto Sans CJK JP";
   font-style: normal;
   font-weight: bold;
-  src: url("data:font/woff2;charset=utf-8;base64,${notocjk_bol}") format("woff2");
+  src: url("https://raw.githack.com/minoryorg/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff2") format("woff2");
 }
 * {
   margin: 0;
