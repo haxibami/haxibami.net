@@ -20,7 +20,7 @@
 html, body {
   width: 100%;
   height: 100%;
-  background: #292433;
+  background: #e4e1e8;
   font-family: "Noto Sans CJK JP", "Noto Sans JP", sans-serif;
   font-size: 125%;
 }
@@ -29,18 +29,14 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: repeating-linear-gradient(to left bottom, transparent, transparent 46px, #9986bf 46px, #9986bf 92px, transparent 92px, transparent 138px, #a6b4de 138px, #a6b4de 184px);
 }
 
 #Wrapper {
   width: 1100px;
   height: 530px;
-  background: white;
   display: flex;
   flex-direction: row;
-  border-radius: 50px;
-  background: #f3f3f6;
-  box-shadow: 30px 30px 60px #1c192166, -10px -10px 20px #1c192166;
+  gap: 50px;
 }
 
 #Left {
@@ -48,26 +44,9 @@ body {
   flex-direction: column;
   width: 225px;
   height: 100%;
-}
-#Left::before {
-  position: relative;
-  top: 0;
-  left: 210px;
-  width: 30px;
-  height: 15px;
-  background: #292433;
-  border-radius: 0 0 15px 15px;
-  content: "";
-}
-#Left::after {
-  position: relative;
-  bottom: 0;
-  left: 210px;
-  width: 30px;
-  height: 15px;
-  background: #292433;
-  border-radius: 15px 15px 0 0;
-  content: "";
+  border-radius: 50px;
+  background: linear-gradient(to right bottom, #ffffff05, #00000005);
+  box-shadow: 10px 10px 20px #c2bfc5, -10px -10px 20px #ffffff;
 }
 #Left img {
   margin: auto;
@@ -91,12 +70,10 @@ body {
   flex-grow: 1;
   align-items: center;
   height: 100%;
-  width: 883px;
-  background-image: linear-gradient(to bottom, #1c1921, #1c1921 12px, transparent 12px, transparent 24px);
-  background-size: 4px 24px;
-  background-position: left top;
-  background-repeat: repeat-y;
   gap: 20px;
+  border-radius: 50px;
+  background: linear-gradient(to right bottom, #ffffff05, #00000005);
+  box-shadow: 10px 10px 20px #c2bfc5, -10px -10px 20px #ffffff;
 }
 #Right #Title {
   flex-grow: 1;
@@ -106,13 +83,10 @@ body {
   margin: 75px;
   margin-bottom: 0;
   overflow: hidden;
-  font-size: 225%;
 }
 #Right #Title p {
   overflow: hidden;
-  max-height: 6em;
-  max-width: 100%;
-  overflow-wrap: anywhere;
+  max-height: 100%;
 }
 #Right #Host {
   display: flex;
@@ -123,4 +97,4 @@ body {
   font-size: 150%;
 }
 
-/*# sourceMappingURL=ogp.css.map */
+/*# sourceMappingURL=ogp-material.css.map */

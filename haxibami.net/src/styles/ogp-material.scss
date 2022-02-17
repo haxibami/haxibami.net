@@ -6,7 +6,6 @@
   font-weight: normal;
   src: url("data:font/woff2;charset=utf-8;base64,${notocjk_reg}") format('woff2');
 }
-
 @font-face {
   font-family: "Noto Sans CJK JP";
   font-style:  normal;
@@ -21,9 +20,9 @@ $left_width: 225px;
 $round_size: 30px;
 $stripe: 46px;
 
-$bg: #292433;
-//$bg: #ffffff;
-$inner_bg: #f3f3f6;
+$bg: #e4e1e8;
+$inner_bg: #edebef;
+$tile_shadow: #c2bfc5;
 
 * {
   margin: 0;
@@ -42,23 +41,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: repeating-linear-gradient(to left bottom, 
-    transparent, transparent $stripe, 
-    var.$blue $stripe, var.$blue calc($stripe * 2),
-    transparent calc($stripe * 2), transparent calc($stripe * 3),
-    var.$magenta calc($stripe * 3), var.$magenta calc($stripe * 4),);
 }
 
 #Wrapper {
   width: calc(1200px - $card_margin * 2);
   height: calc(630px - $card_margin * 2);
-  background: white;
   display: flex;
   flex-direction: row;
-  border-radius: 50px;
-  background: $inner_bg;
-  box-shadow: 30px 30px 60px var.$shadow,
-  -10px -10px 20px var.$shadow;
+  gap: 50px;
+  //border-radius: 50px;
 }
 
 #Left {
@@ -66,28 +57,11 @@ body {
   flex-direction: column;
   width: $left_width;
   height: 100%;
+  border-radius: 50px;
+  background: linear-gradient(to right bottom, #ffffff05, #00000005);
+  box-shadow:  10px 10px 20px $tile_shadow,
+             -10px -10px 20px #ffffff;
 
-  &::before {
-    position: relative;
-    top: 0;
-    left: $left_width - math.div($round_size, 2);
-    width: $round_size;
-    height: math.div($round_size, 2);
-    background: $bg;
-    border-radius: 0 0 math.div($round_size, 2) math.div($round_size, 2);
-    content: "";
-  }
-
-  &::after {
-    position: relative;
-    bottom: 0;
-    left: $left_width - math.div($round_size, 2);
-    width: $round_size;
-    height: math.div($round_size, 2);
-    background: $bg;
-    border-radius: math.div($round_size, 2) math.div($round_size, 2) 0 0;
-    content: "";
-  }
 
   img {
     margin: auto;
@@ -112,12 +86,11 @@ body {
   flex-grow: 1;
   align-items: center;
   height: 100%;
-  width: 883px;
-  background-image : linear-gradient(to bottom, var.$dark, var.$dark 12px, transparent 12px, transparent 24px); 
-  background-size: 4px 24px;
-  background-position: left top;
-  background-repeat: repeat-y;
   gap: 20px;
+  border-radius: 50px;
+  background: linear-gradient(to right bottom, #ffffff05, #00000005);
+  box-shadow:  10px 10px 20px $tile_shadow,
+             -10px -10px 20px #ffffff;
 
   #Title {
     flex-grow: 1;
@@ -129,11 +102,8 @@ body {
     overflow: hidden;
     p {
       overflow: hidden;
-      max-height: 6em;
-      max-width: 100%;
-      overflow-wrap: anywhere;
+      max-height: 100%;
     }
-    font-size: 225%;
   }
   #Host {
     display: flex;

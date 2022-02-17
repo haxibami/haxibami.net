@@ -5,19 +5,43 @@ import ReactDomServer from "react-dom/server";
 import path from "path";
 import fs from "fs";
 
-const fullPath = path.resolve("./public");
-const faviconPath = path.join(fullPath, "favicon.ico");
+// full path resolve
+const publicFullPath = path.resolve("./public");
+
+// image paths
+const faviconPath = path.join(publicFullPath, "favicon.ico");
 const favicon = fs.readFileSync(faviconPath).toString("base64");
 
+// font paths
+const fontPath = path.join(publicFullPath, "font");
+const notocjk_reg = fs
+  .readFileSync(path.join(fontPath, "NotoSansCJKjp-Regular.woff2"))
+  .toString("base64");
+const notocjk_bol = fs
+  .readFileSync(path.join(fontPath, "NotoSansCJKjp-Bold.woff2"))
+  .toString("base64");
+
 type OgpInfo = {
-  title: string | string[];
-  date: string | string[];
+  title: string;
+  date: string;
 };
 
 const styles = `
 
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap");
+@font-face {
+  font-family: "Noto Sans CJK JP";
+  font-style: normal;
+  font-weight: normal;
+  src: url("data:font/woff2;charset=utf-8;base64,${notocjk_reg}") format("woff2");
+}
+@font-face {
+  font-family: "Noto Sans CJK JP";
+  font-style: normal;
+  font-weight: bold;
+  src: url("data:font/woff2;charset=utf-8;base64,${notocjk_bol}") format("woff2");
+}
 * {
   margin: 0;
   padding: 0;
@@ -27,7 +51,7 @@ html, body {
   width: 100%;
   height: 100%;
   background: #292433;
-  font-family: sans-serif, "Noto Sans JP";
+  font-family: "Noto Sans CJK JP", "Noto Sans JP", sans-serif;
   font-size: 125%;
 }
 
@@ -35,7 +59,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: repeating-linear-gradient(to left bottom, transparent, transparent 46px, #d9989ccc 46px, #d9989ccc 92px, transparent 92px, transparent 138px, #a6b4decc 138px, #a6b4decc 184px);
+  background-image: repeating-linear-gradient(to left bottom, transparent, transparent 46px, #9986bf 46px, #9986bf 92px, transparent 92px, transparent 138px, #a6b4de 138px, #a6b4de 184px);
 }
 
 #Wrapper {
@@ -98,7 +122,7 @@ body {
   align-items: center;
   height: 100%;
   width: 883px;
-  background-image: linear-gradient(to bottom, #1c192166, #1c192166 12px, transparent 12px, transparent 24px);
+  background-image: linear-gradient(to bottom, #1c1921, #1c1921 12px, transparent 12px, transparent 24px);
   background-size: 4px 24px;
   background-position: left top;
   background-repeat: repeat-y;
@@ -112,10 +136,13 @@ body {
   margin: 75px;
   margin-bottom: 0;
   overflow: hidden;
+  font-size: 225%;
 }
 #Right #Title p {
   overflow: hidden;
-  max-height: 100%;
+  max-height: 6em;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 #Right #Host {
   display: flex;
@@ -127,6 +154,7 @@ body {
 }
 
 /*# sourceMappingURL=ogp.css.map */
+
 `;
 
 function Content(ogpinfo: OgpInfo) {
@@ -179,9 +207,14 @@ const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
   });
   const page = await browser.newPage();
 
+  const longtitle = req.query.title.toString();
+
+  //const shorttitle = longtitle.length > 36 ? `${longtitle.substring(0, 35)}…` : longtitle;
+
   const ogpinfo: OgpInfo = {
-    title: req.query.title,
-    date: req.query.date,
+    title: longtitle,
+    date:
+      typeof req.query.date !== "undefined" ? req.query.date.toString() : "",
   };
 
   const markup = ReactDomServer.renderToStaticMarkup(Content(ogpinfo));
