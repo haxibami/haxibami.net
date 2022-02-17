@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "ts-check": "tsc --noEmit",
     "lint": "next lint",
@@ -44,6 +45,7 @@
     "@types/react-dom": "^17.0.11",
     "eslint": "8.9.0",
     "eslint-config-next": "^12.0.10",
+    "next-sitemap": "^2.4.2",
     "prettier": "2.5.1",
     "sass": "^1.49.7",
     "typescript": "4.5.5"
