@@ -25,13 +25,13 @@ const styles = `
   font-family: "Noto Sans CJK JP";
   font-style: normal;
   font-weight: normal;
-  src: url("https://raw.githack.com/minoryorg/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Regular.woff2") format("woff2");
+  src: url("https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Regular.woff2") format("woff2");
 }
 @font-face {
   font-family: "Noto Sans CJK JP";
   font-style: normal;
   font-weight: bold;
-  src: url("https://raw.githack.com/minoryorg/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff2") format("woff2");
+  src: url("https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff2") format("woff2");
 }
 * {
   margin: 0;
