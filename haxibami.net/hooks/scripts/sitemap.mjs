@@ -3,7 +3,6 @@ import prettier from "prettier";
 import { globby } from "globby";
 
 // variables
-
 const HOST = "https://www.haxibami.net";
 const XMLFILE = "sitemap.xml";
 

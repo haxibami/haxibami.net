@@ -1,65 +1,74 @@
 ---
 slug: "blog-renewal"
 title: "Next.jsでブログをつくった"
-date: "20220214"
+date: "20220220"
 tags: ["tech", "web", "nextjs"]
 ---
 
-無心で投稿できる空間がほしくて。
-
-## まえがき
-
-以前から haxibami.net 自体は公開していたが、謎のオブジェクトが生えているだけの自己紹介サイトでしかなかった。今回は`/blog`以下にブログ機能を付けたので、その話。
+以前から haxibami.net 自体は公開していたが、[謎の木](https://www.haxibami.net)が生えているだけの自己紹介サイトでしかなかった。今回は`/blog`以下にブログ機能を付けたので、その話。
 
 ## 基盤
 
 ### フレームワーク
 
-Next.js + TypeScript + Sass (SCSS, CSS modules)。いつもお世話になっている。
+Next.js + TypeScript + Sass (SCSS, CSS modules)。
 
-TypeScript は到底理解したとはいえないけれども、型チェックに何度も助けられた。嬉しいのは、Neovim で coc.nvim を使って書いていると、coc-tsserver のおかげで書いた瞬間からエラーに気づけることか。おかげでコンパイルエラーにかかることがほぼない。
-
-CSS modules と SCSS は出会ったときにいたく感動して以来ずっと使っている。ただ、追い風が吹いているという感じの技術ではないので、いずれ別の基盤に乗り換えるかもしれない。
+TypeScript はまったくもってよくわからないが、型チェックに何度も助けられた。嬉しいのは Neovim で coc.nvim を使って書いていると、coc-tsserver のおかげで書いた瞬間からエラーに気づけることか。CSS modules と SCSS は出会ったときにいたく感動して以来ずっと使っている。ただ追い風が吹いているという感じではないので、いずれ別の基盤に乗り換えるかもしれない。
 
 ### ホスティング・ビルド
 
-ホスティングは素直に Vercel に投げた。いかにも当世風の使い心地の良さで、思いっきり囲い込まれにいきたくもなる。ただし Vercel 側のビルド回数を消費したくないので、ビルドは GitHub Actions にしてある。
+ホスティングは素直に Vercel に投げた。またの名を囲い込まれともいう。ちなみに Vercel 側のビルド回数を消費したくないので、ビルドは GitHub Actions にしてある。ガンガン CI を回して Microsoft を破産させよう！
 
 ## 機能
 
 ### Markdown まわり
 
-われわれには先人の記憶というものがあり、すなわちこの手のサイトは記事管理が億劫になった瞬間に破滅を迎える。放置された過去の「〇〇の部屋」、消えて還らない借り物のドメイン、むなしく刻む入室カウンターたちを眺めるたびに、慣れたファイル形式で何もかも楽に扱いたい、サービスを変えても引き継ぎたい、と思うようになった。そういうわけで Markdown（内容管理） + tsx（テンプレートエンジン）という構成だ。Markdown ならそう簡単には廃れないだろうし、さまざまなサービスの間を渡り歩ける。いまはヘッドレス CMS とかいうのもあるらしい（全然知らない）が、個人レベルでは Git Repo ひとつでまるっと管理できたほうがやっぱり楽だ。
+われわれには先人の記憶というものがあり、すなわちこの手のサイトは記事管理が億劫になった時点でエタる。放置された「〇〇の部屋」、消えて還らない借りドメイン、むなしく刻む入室カウンターを眺めるたびに、せめて記事くらいは慣れたファイル形式で楽に引き継ぎたいと思うようになった。そういうわけで Markdown（内容管理） + tsx（テンプレートエンジン）。Markdown ならそう簡単には廃れないだろうし、最悪そのまま別サービスに投げ込める。いまはヘッドレス CMS とかいうのもあるらしい（全然知らない）が、個人レベルでは Git Repo ひとつで管理できたほうがやっぱり楽だ。
 
-Next.js から Markdown を扱う方法は[公式](https://nextjs.org/blog/markdown)でも取り上げられており、わりと簡単に実現できる。具体的には`remark`や`rehype`関連のパッケージを使うのだが、この remark と rehype がすごい。ともに unified という共通のインターフェースの傘下にあって、このもとで`mdast`（Markdown の構文木）や`hast`（HTML の構文木）を相互変換したり、特定の要素に対して望んだ処理を実行できる。おかげさまで関連プラグインも充実しており、やりたいことが既存のプロジェクトの組み合わせで実現できてしまったりする。今回もまさにそうで、以下に実現できた機能を書いておく。
+Next.js から Markdown を扱う方法は[公式](https://nextjs.org/blog/markdown)でも取り上げられている。具体的には`remark`や`rehype`関連のパッケージを使うのだが、この remark と rehype がすごい。ともに unified というインターフェースの傘下にあって、このもとで`mdast`（Markdown の構文木）や`hast`（HTML の構文木）を相互変換したり、特定の要素に対してカスタム処理を実行できる。関連プラグインも充実しており、やりたいことが既存のプロジェクトの組み合わせで実現できてしまう。以下、使用したツールと実現できた機能を書いておく。
+
+#### Frontmatter
+
+[grey-matter](https://github.com/jonschlinkert/gray-matter)で取り出した。remark 側で行うことも可能らしい。
+
+```md
+---
+slug: "blog-renewal"
+title: "Next.jsでブログをつくった"
+date: "20220214"
+tags: ["tech", "web", "nextjs"]
+---
+
+## hoge...
+```
 
 #### GitHub Flavored Markdown
 
 [`remark-gfm`](https://github.com/remarkjs/remark-gfm)で対応。
 
 ```md
-| 表を     | 作れる     |
+| 表を     | 作る       |
 | -------- | ---------- |
 | たとえば | このように |
 | 要素を   | 増やす     |
 
-https://haxibami.net みたいに生のリンクも置けるし
+https://www.haxibami.net みたいな生のリンクも置けるし
 
 - こうやって
-  - リストできる。さらに、[^1]
+  - リストが書ける。さらに、[^1]
 
 [^1]: 脚注も使える
 ```
 
-| 表を     | 作れる     |
+| 表を     | 作る       |
 | -------- | ---------- |
 | たとえば | このように |
 | 要素を   | 増やす     |
 
-https://haxibami.net みたいに生のリンクも置けるし
+https://www.haxibami.net みたいな生のリンクも置けるし
 
 - こうやって
-  - リストできる。さらに、[^1]
+  - リストが書ける。さらに、[^1]
 
 [^1]: 脚注も使える
 
@@ -68,10 +77,14 @@ https://haxibami.net みたいに生のリンクも置けるし
 [`remark-emoji`](https://github.com/rhysd/remark-emoji)で変換。
 
 ```md
-:v: が……
+:v:
 ```
 
-:v: に！
+が、
+
+:v:
+
+になる。あまり使わないが。
 
 #### 数式表示
 
@@ -87,11 +100,11 @@ $$
 ( \sum_{k=1}^{n} a_k b_k )^2 \leq ( \sum_{k=1}^{n} {a_k}^2 ) ( \sum_{k=1}^{n} {b_k}^2 )
 $$
 
-インライン数式もいける。 $e^{i\pi} + 1 = 0$ みたいに。
-
-手動でフォントを設置する必要はないようだが、KaTeX 用 CSS の挿入が必要。`pages/_document.tsx`あたりでやるとよさそう？
+$e^{i\pi} + 1 = 0$ のようなインライン数式もいける。手動でフォントを設置する必要はないが、KaTeX 用 CSS の挿入が必要。`pages/_document.tsx`で実行している。
 
 ```tsx
+// pages/_document.tsx
+
 import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
@@ -114,15 +127,17 @@ export default function Document() {
 
 #### 内容プレビュー
 
-大したことではないが、[トップ](https://haxibami.net/blog)の記事タイルには内容のプレビューを表示している。このために生の Markdown を流し込むのも気が引けたので、なんとかして plaintext 形式に変換できないかと考えていたら、[`strip-markdown`](https://github.com/remarkjs/strip-markdown)というのがあった。これで見出し・引用等を除いて抽出している。
+[トップ](https://haxibami.net/blog)の記事タイルには内容のプレビューを表示している。このために生の Markdown を流し込むのも気が引けたので、なんとかして plaintext 形式に変換できないかと考えていたら、[`strip-markdown`](https://github.com/remarkjs/strip-markdown)というのがあった。これで見出し・引用等を除いて抽出している。
 
 #### シンタックスハイライト
 
-最初は[prism.js](https://prismjs.com)を`babel-plugin-prismjs`から使っていた。問題なく動いてくれてはいたのだが、デフォルトで使えるカラースキームがあまりに少なかったため、[shiki](https://shiki.matsu.io)に変更した。こちらは公式サイトの例にある通り、なんと VSCode のカラースキームファイルが流用できる。そういうわけで自作の[urara-vscode](https://github.com/haxibami/urara-vscode)から設定を引っ張ってきた。
+最初は[prism.js](https://prismjs.com)を`babel-plugin-prismjs`から使っていた。特に問題はなかったが、デフォルトで使えるカラースキームがあまりに少ないのと、公式サイトが微妙に古臭かったため[shiki](https://shiki.matsu.io)に変更した。こちらは公式にある通り VSCode のカラースキームファイルが流用できる。スキームは自作の[urara-vscode](https://github.com/haxibami/urara-vscode)のものを使用した。
 
-以上を合わせたメソッドチェーンがこんな感じ。
+以上を合わせたメソッドチェーンが以下。
 
 ```ts
+// lib/parser.ts
+
 import { join } from "path";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
@@ -174,11 +189,11 @@ export const MdStrip = async (md: string) => {
 };
 ```
 
-変なファイル処理が入っているのは、shiki がテーマファイルを読み込むにあたって、**自分のインストールされた位置**（メインプロジェクトの`node_modules`以下）からの相対パスか、ファイルシステムの絶対パスかのいずれかしか受け付けないため。
+変なファイル処理が入っているのは、shiki がテーマファイルを読み込むにあたって**自分のインストールされた位置**（メインプロジェクトの`node_modules`以下）からの相対パスか、ファイルシステムの絶対パスかのいずれかしか受け付けないため。
 
 #### 引用
 
-デフォルトで`<blockquote>`タグに変換されるため、これは手動でスタイリングした。
+デフォルトで`<blockquote>`タグに変換されるため、手動でスタイリングした。
 
 ```md
 > 星屑落ちて 華は散っても  
@@ -198,97 +213,42 @@ export const MdStrip = async (md: string) => {
 
 [わかります](https://cinema.revuestarlight.com)。:giraffe_face:
 
-以上の処理で、はてブや Qiita、Zenn あたりと似た書き心地になった。次は SEO(?)だ。
+以上の処理で、はてブや Qiita、Zenn あたりと似た書き心地になった。
 
 ### 動的 OGP 画像の自動生成
 
-見たことはあると思う。ページをシェアしたときにただのベタ貼りリンクにならず、モコッとタイルが生えてくるあれだ。もちろん静的画像でも設定はできるが、記事ごとに違っているほうがかっこいい（主観）ので実装したいと思っていた。
+ページをシェアしたときにただのベタ貼りリンクにならず、モコッとタイルが生えてくるあれ。自分は Vercel のサーバレス関数機能を使って
 
-いろいろ方法はあるようだが、自分は Vercel のサーバレス関数機能を使って
+1. ヘッドレス Chromium を起動
+2. クエリパラメータ（記事タイトル・更新日）に応じた React コンポーネントを生成
+3. `renderToStaticMarkup`で静的 HTML に変換
+4. スクリーンショットを撮影
 
-1. ヘッドレス Chromium（puppeteer）を起動し
-2. クエリパラメータに応じた HTML を表示させて
-3. スクリーンショットを撮る
+する手順で実現した。
 
-手法で実現した。
-
-このやり方だと、流し込む HTML は自由なので自分でデザインを決められるという利点がある。問題点は無料プランゆえの実行時間制限（5 秒）と容量制限（50MB）だ。実行時間はともかく、向こうの環境（AWS Lambda）には日本語フォントが入っていないので、そのインストールも必要になる。そうなると容量がかなり厳しいところだが、今回は Web フォントでどうにかした。
+なお私の環境ではなぜか`playwright-aws-lambda`が動かなかったので、[`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda)と puppeteer を使った。`chrome-aws-lambda` 自体が内部で puppeteer をロードしているため、`puppeteer-core`をあえて依存関係に加える必要はない。
 
 ```tsx
+// pages/api/ogp.tsx
+
 import React from "react";
 import chromium from "chrome-aws-lambda";
 import type { NextApiRequest, NextApiResponse } from "next";
 import ReactDomServer from "react-dom/server";
+import path from "path";
+import fs from "fs";
+import OgpImage, { OgpInfo } from "components/OgpImage/OgpImage";
 
-type OgpInfo = {
-  title: string | string[];
-  date: string | string[];
-};
+// full path resolve
+const baseFullPath = path.resolve("./");
 
-const styles = `
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
-  html, body, #Wrapper {
-    width: 100%;
-    height: 100%;
-    background: #1c1921;
-    color: #d2ced9;
-    font-family: 'Noto Sans JP', sans-serif;
-  }
+// image paths
+const faviconPath = path.join(baseFullPath, "public/favicon.ico");
+const favicon: string = fs.readFileSync(faviconPath, "base64");
 
-  #Wrapper {
-    font-size: 225%;
-    background: #1c1921;
-    color: #d2ced9;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-  }
-
-  #Title {
-    max-width: 90%;
-    overflow-wrap: anywhere;
-    overflow-y: hidden;
-  }
-
-  #Bottom {
-    width: 90%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 20px
-  }
-`;
-
-function Content(ogpinfo: OgpInfo) {
-  return (
-    <html>
-      <head>
-        <style dangerouslySetInnerHTML={{ __html: styles }} />
-      </head>
-      <body>
-        <div id="Wrapper">
-          <div id="Title">
-            <h1>{ogpinfo.title}</h1>
-          </div>
-          <div id="Bottom">
-            {/*<h2>{ogpinfo.date}</h2>*/}
-            <span>
-              <img
-                src="https://haxibami.net/favicon.ico"
-                alt="haxicon"
-                width={200}
-                height={200}
-              />
-            </span>
-          </div>
-        </div>
-      </body>
-    </html>
-  );
-}
+// style paths
+const stylePath = path.join(baseFullPath, "src/styles/ogp.css");
+const style = fs.readFileSync(stylePath, "utf-8");
 
 const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
   const chromePath = {
@@ -307,12 +267,20 @@ const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
   });
   const page = await browser.newPage();
 
+  const longtitle =
+    typeof req.query.title !== "undefined" ? req.query.title.toString() : "";
+
+  const date =
+    typeof req.query.date !== "undefined" ? req.query.date.toString() : "";
+
   const ogpinfo: OgpInfo = {
-    title: req.query.title,
-    date: req.query.date,
+    title: longtitle,
+    date: date,
+    icon: favicon,
+    style: style,
   };
 
-  const markup = ReactDomServer.renderToStaticMarkup(Content(ogpinfo));
+  const markup = ReactDomServer.renderToStaticMarkup(<OgpImage {...ogpinfo} />);
   const html = `<!doctype html>${markup}`;
 
   await page.setContent(html, { waitUntil: "networkidle2" });
@@ -330,12 +298,266 @@ const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
 export default OgpGen;
 ```
 
-まあ見ての通りである。合ってんのかな :thinking_face::question:
+表示用のコンポーネントとスタイリングは別ファイルに分割した。自力で書いたぶんデザインの自由度は高い。
 
-Chromium については、AWS Lambda 向けに最適化された[`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda)というバイナリを見つけたので、ありがたく使わせてもらった。これ自体が内部で puppeteer をロードしているため、`puppeteer-core`はあえて依存関係に加えなくともよさそうだ。
+```tsx
+// components/OgpImage/OgpImage.tsx
 
-容量が足りてるのが奇跡としか思えないが、とにかくこれで実現できた:v:
+import React from "react";
+
+export interface OgpInfo {
+  title: string;
+  date: string;
+  icon: string;
+  style: string;
+}
+
+const OgpImage: React.VFC<OgpInfo> = (ogpinfo) => {
+  return (
+    <html>
+      <head>
+        <style dangerouslySetInnerHTML={{ __html: ogpinfo.style }} />
+      </head>
+      <body>
+        <div id="Wrapper">
+          <h1 id="Title">
+            <p>{ogpinfo.title}</p>
+          </h1>
+          <div id="Name">
+            <img
+              src={`data:image/png;base64,${ogpinfo.icon}`}
+              alt="haxicon"
+              width={100}
+              height={100}
+            />
+            <h2 id="Host">
+              <p>haxibami.net</p>
+            </h2>
+          </div>
+          <h2 id="Date">
+            <p>{ogpinfo.date}</p>
+          </h2>
+        </div>
+      </body>
+    </html>
+  );
+};
+
+export default OgpImage;
+```
+
+```css
+/* styles/ogp.css, compiled from styles/ogp.scss */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap");
+@font-face {
+  font-family: "Noto Sans CJK JP";
+  font-style: normal;
+  font-weight: bold;
+  src: url("https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff2")
+    format("woff2");
+}
+* {
+  margin: 0;
+  padding: 0;
+  font-display: swap;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background: #292433;
+  font-family: "Noto Sans CJK JP", "Noto Sans JP", sans-serif;
+  font-size: 125%;
+  color: #d2ced9;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right bottom, #d9989c, #a6b4de);
+}
+
+#Wrapper {
+  margin: 50px;
+  background: white;
+  grid-gap: 30px;
+  border-radius: 30px;
+  background: #1c1921;
+  box-shadow: 10px 10px 20px #1c192166, -10px -10px 20px #1c192166;
+  padding: 50px;
+  display: grid;
+  grid-template-rows: 280px 100px;
+  grid-template-columns: 700px 250px;
+  grid-template-areas: "Title Title" "Name Date";
+}
+#Wrapper #Title {
+  font-size: 60px;
+  grid-area: Title;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+#Wrapper #Title p {
+  max-height: 100%;
+  overflow-wrap: anywhere;
+}
+#Wrapper #Name {
+  grid-area: Name;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+#Wrapper #Name img {
+  border-radius: 50%;
+}
+#Wrapper #Date {
+  grid-area: Date;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-family: "Roboto Mono", monospace;
+}
+
+/*# sourceMappingURL=ogp.css.map */
+```
+
+問題は Vercel の実行時間制限（5 秒）と容量制限（50MB）だ。実行時間はともかく、向こうの環境（AWS Lambda 相当）には日本語フォントが入っていないので、そのインストールも必要になる。今回は Web フォントでどうにかした。
+
+![普通にオーバーしてるのに動いてる](/image/lambda-fn.png)
+
+Vercel のログによれば容量はややオーバーしているのになぜか動いている。優しいな〜
+
+### サイトマップ生成
+
+[next-sitemap](https://github.com/iamvishnusankar/next-sitemap)を使ったところ、`sitemap-0.xml`の`<lastmod>`がすべて最終ビルド時を示していて発狂しかかった。この挙動はある意味正しく、なぜかといえば自分が手を触れていないページでもビルドするたびに静的アセットの slug 名が変わってしまうためである。仕方がないので自分で書いた。[このへん](https://www.mk-engineer.com/posts/nextjs-before-build)を参考にしつつ、ビルド前に記事のインデックスを作成し、ビルド後にインデックスに基づいて`sitemap.xml`と`robots.txt`を生成するようにしてある。
+
+```js
+// hooks/scripts/sitemap.mjs
+
+import fs from "fs";
+import prettier from "prettier";
+import { globby } from "globby";
+
+// variables
+const HOST = "https://www.haxibami.net";
+const XMLFILE = "sitemap.xml";
+
+// Article index file
+const indexFile = fs.readFileSync("src/share/index.json", "utf-8");
+const index = JSON.parse(indexFile);
+
+// formatted xml
+const formatted = (sitemap) => prettier.format(sitemap, { parser: "html" });
+
+const sitemapGenerator = async () => {
+  const solidPaths = await globby(
+    ["src/pages/*.tsx", "src/pages/blog/*.tsx", "src/pages/grad_essay/*.tsx"],
+    { ignore: ["src/pages/_*.tsx", "src/pages/404.tsx"] }
+  );
+
+  const solidInfos = solidPaths.map((filePath) => {
+    const solidInfo = {
+      relpath: filePath
+        .replace("src/pages/", "")
+        .replace(".tsx", "")
+        .replace("index", ""),
+      lastmod: new Date().toISOString(),
+    };
+    return solidInfo;
+  });
+
+  const allBlogs = index.articles.blog;
+  const allGrads = index.articles.grad_essay;
+
+  const dateConverter = (date) => {
+    return date.slice(0, 4) + "-" + date.slice(4, 6) + "-" + date.slice(6);
+  };
+
+  const blogInfos = allBlogs.map((item) => {
+    const blogInfo = {
+      relpath: `blog/posts/${item.slug}`,
+      lastmod: dateConverter(item.date),
+    };
+    return blogInfo;
+  });
+
+  const gradInfos = allGrads.map((item) => {
+    const gradInfo = {
+      relpath: `grad_essay/posts/${item.slug}`,
+      lastmod: dateConverter(item.date),
+    };
+    return gradInfo;
+  });
+
+  const sitemapInfos = solidInfos.concat(blogInfos, gradInfos);
+
+  const pagesSitemap = `
+
+  ${sitemapInfos
+    .map((info) => {
+      return `
+        <url>
+          <loc>${HOST}/${info.relpath}</loc>
+          <lastmod>${info.lastmod}</lastmod>
+        </url>
+      `;
+    })
+    .join("")}
+  `;
+
+  const generatedSitemap = `
+    <?xml version="1.0" encoding="UTF-8"?>
+    <urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+    >
+      ${pagesSitemap}
+    </urlset>
+  `;
+
+  const robots = `
+      # *
+      User-agent: *
+      Allow: /
+
+      # Host
+      Host: https://www.haxibami.net
+
+      # Sitemaps
+      Sitemap: https://www.haxibami.net/sitemap.xml
+  `;
+
+  fs.writeFileSync(`public/${XMLFILE}`, formatted(generatedSitemap));
+  fs.writeFileSync("public/robots.txt", robots);
+};
+
+export default () => {
+  return new Promise(async (resolve) => {
+    sitemapGenerator();
+    resolve();
+  });
+};
+```
+
+```json
+// package.json
+
+{
+  "scripts": {
+    "prebuild": "node hooks/before-build.mjs",
+    "build": "next build",
+    "postbuild": "node hooks/after-build.mjs"
+  }
+}
+```
+
+本当は TypeScript で書きたかったが、ES Modules 対応は Version 4.6 以降に延期された[らしい](https://zenn.dev/aumy/scraps/06e8d775b047f2)。安定版に降りてきたら書き直すかもしれない。
 
 ## 感想
 
-こんなに簡単に動くとは思わなかった。要は Next.js と unified と諸々がすごいということなので、リファクタリングをしつつ、Developer のみなさんに五体投地しようと思う。
+けっこう簡単に動いた。Next.js と unified のデベロッパーに五体投地しつつ、リファクタリングをやっていく。

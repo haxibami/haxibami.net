@@ -78,7 +78,7 @@
 
     article {
       width: 70vw;
-      margin-top: calc(var.$line_width + 2.5rem);
+      margin-top: calc(var.$line_width + var.$line_bottom_margin * 2);
       @include lib.colored_link;
       @include lib.article_paragraph;
       @include lib.table;
