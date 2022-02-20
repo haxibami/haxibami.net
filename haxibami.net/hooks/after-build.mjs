@@ -2,8 +2,6 @@ import sitemap from "./scripts/sitemap.mjs";
 
 let promises = [sitemap()];
 
-(() => {
-  Promise.all(promises).then(() => {
-    process.exit();
-  });
+(async () => {
+  await Promise.all(promises);
 })();

@@ -35,7 +35,7 @@ const articleIndexer = () => {
 };
 
 export default () => {
-  return new Promise((resolve) => {
+  return new Promise(async (resolve) => {
     articleIndexer();
     resolve();
   });
