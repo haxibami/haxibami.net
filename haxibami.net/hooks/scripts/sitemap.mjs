@@ -81,12 +81,25 @@ const sitemapGenerator = async () => {
     </urlset>
   `;
 
+  const robots = `
+      # *
+      User-agent: *
+      Allow: /
+
+      # Host
+      Host: https://www.haxibami.net
+
+      # Sitemaps
+      Sitemap: https://www.haxibami.net/sitemap.xml
+  `;
+
   fs.writeFileSync(`public/${XMLFILE}`, formatted(generatedSitemap));
+  fs.writeFileSync("public/robots.txt", robots);
 };
 
 export default () => {
-  return new Promise(async (resolve) => {
-    await sitemapGenerator();
+  return new Promise((resolve) => {
+    sitemapGenerator();
     resolve();
   });
 };

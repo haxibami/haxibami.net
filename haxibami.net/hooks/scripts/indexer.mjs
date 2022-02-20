@@ -31,11 +31,11 @@ const articleIndexer = () => {
 
   const formatted = (json) => prettier.format(json, { parser: "json" });
 
-  fs.writeFileSync("public/index.json", formatted(JSON.stringify(index)));
+  fs.writeFileSync("src/share/index.json", formatted(JSON.stringify(index)));
 };
 
 export default () => {
-  return new Promise(async (resolve) => {
+  return new Promise((resolve) => {
     articleIndexer();
     resolve();
   });
