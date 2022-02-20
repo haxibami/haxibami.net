@@ -4,6 +4,8 @@ import {
   getPostsByTag,
   getPostTags,
   replaceMdwithTxt,
+  readYaml,
+  SiteInfo,
 } from "lib/api";
 import { ogpHost } from "lib/ogpprops";
 import MyHead, { MetaProps } from "components/MyHead/MyHead";
@@ -31,6 +33,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }: any) => {
   const taggedblogs: string[] = getPostsByTag(params.tag, "blog");
+  const sitename: SiteInfo = readYaml("meta.yaml");
 
   const allBlogsPre = taggedblogs.map((slug) => {
     return getPostBySlug(
@@ -49,7 +52,7 @@ export const getStaticProps = async ({ params }: any) => {
 
   const metaprops: MetaProps = {
     title: `タグ: #${params.tag}の記事`,
-    sitename: "偽偽書",
+    sitename: sitename.siteinfo.blog.title,
     description: encodeURI(`タグ: #${params.tag}を付与された記事の一覧`),
     ogImageUrl: encodeURI(
       `${ogpHost}/api/ogp?title=タグ: %23${params.tag}の記事`
@@ -60,15 +63,20 @@ export const getStaticProps = async ({ params }: any) => {
   };
 
   return {
-    props: { allBlogs, params, metaprops },
+    props: { allBlogs, params, metaprops, sitename },
   };
 };
 
-const TaggedBlogs: NextPage<Props> = ({ allBlogs, params, metaprops }) => {
+const TaggedBlogs: NextPage<Props> = ({
+  allBlogs,
+  params,
+  metaprops,
+  sitename,
+}) => {
   return (
     <div id={Styles.Wrapper}>
       <MyHead {...metaprops} />
-      <BlogHeader />
+      <BlogHeader {...sitename} />
       <main>
         <ArticleMenu
           contentType={"blog"}

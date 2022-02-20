@@ -7,14 +7,6 @@ tags: ["info", "meta"]
 
 ## 私について
 
-| 項目 | 値       |
-| ---- | -------- |
-| name | haxibami |
-| job  | student  |
-| org  | UTokyo   |
+haxibami といいます。（漢字: 端食、IPA: [haʃibamʲi]）。本名は非公開にも公開にもしていません。
 
-[プロフィール](https://haxibami.net/profile)を参照。
-
-## 内容
-
-インターネット。文章。技術関連。
+[プロフィール](https://haxibami.net/profile)も参照。

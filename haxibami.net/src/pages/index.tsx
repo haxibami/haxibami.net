@@ -29,12 +29,8 @@ const Home: NextPage<Props> = ({ metaprops }) => {
     <div className={styles.container}>
       <MyHead {...metaprops} />
       <Head>
-        <title>狂乱詞好: lyriqult</title>
-        <meta
-          name="description"
-          content="haxibami's phylogenetic tree"
-          lang="ja"
-        />
+        <title>haxibami</title>
+        <meta name="description" content="私の系統樹" lang="ja" />
         <meta name="twitter:site" content="@haxibami" />
         <meta name="twitter:creator" content="@haxibami" />
         <meta
@@ -45,10 +41,7 @@ const Home: NextPage<Props> = ({ metaprops }) => {
         <meta property="og:url" content="https://www.haxibami.net" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="haxibami.net" />
-        <meta
-          property="og:description"
-          content="haxibami's phylogenetic tree"
-        />
+        <meta property="og:description" content="私の系統樹" />
         <meta property="og:site_name" content="haxibami.net" />
         <meta
           property="og:image"
@@ -60,9 +53,6 @@ const Home: NextPage<Props> = ({ metaprops }) => {
       <main className={styles.main}>
         <div className={styles.tree}>
           <Tree></Tree>
-          <div className={styles.revue}>
-            <p></p>
-          </div>
           <div className={styles.icon_wrapper}>
             <Link href="/profile">
               <a>
@@ -214,8 +204,6 @@ const Home: NextPage<Props> = ({ metaprops }) => {
               </div>
             </a>
           </div>
-          {/*
-          <PlaceIcon></PlaceIcon>*/}
         </div>
       </main>
     </div>

@@ -1,20 +1,22 @@
+/*
+@font-face {
+  font-family: "Noto Sans CJK JP";
+  font-style:  normal;
+  font-weight: normal;
+  src: url("https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Regular.woff2") format("woff2");
+}*/
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap");
 @font-face {
   font-family: "Noto Sans CJK JP";
   font-style: normal;
-  font-weight: normal;
-  src: url("data:font/woff2;charset=utf-8;base64,${notocjk_reg}") format("woff2");
-}
-@font-face {
-  font-family: "Noto Sans CJK JP";
-  font-style: normal;
   font-weight: bold;
-  src: url("data:font/woff2;charset=utf-8;base64,${notocjk_bol}") format("woff2");
+  src: url("https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff2") format("woff2");
 }
 * {
   margin: 0;
   padding: 0;
+  font-display: swap;
 }
 
 html, body {
@@ -23,104 +25,57 @@ html, body {
   background: #292433;
   font-family: "Noto Sans CJK JP", "Noto Sans JP", sans-serif;
   font-size: 125%;
+  color: #d2ced9;
 }
 
 body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: repeating-linear-gradient(to left bottom, transparent, transparent 46px, #9986bf 46px, #9986bf 92px, transparent 92px, transparent 138px, #a6b4de 138px, #a6b4de 184px);
+  background: linear-gradient(to right bottom, #d9989c, #a6b4de);
 }
 
 #Wrapper {
-  width: 1100px;
-  height: 530px;
+  margin: 50px;
   background: white;
+  grid-gap: 30px;
+  border-radius: 30px;
+  background: #1c1921;
+  box-shadow: 10px 10px 20px #1c192166, -10px -10px 20px #1c192166;
+  padding: 50px;
+  display: grid;
+  grid-template-rows: 280px 100px;
+  grid-template-columns: 475px 475px;
+  grid-template-areas: "Title Title" "Name Date";
+}
+#Wrapper #Title {
+  font-size: 60px;
+  grid-area: Title;
   display: flex;
-  flex-direction: row;
-  border-radius: 50px;
-  background: #f3f3f6;
-  box-shadow: 30px 30px 60px #1c192166, -10px -10px 20px #1c192166;
-}
-
-#Left {
-  display: flex;
-  flex-direction: column;
-  width: 225px;
-  height: 100%;
-}
-#Left::before {
-  position: relative;
-  top: 0;
-  left: 210px;
-  width: 30px;
-  height: 15px;
-  background: #292433;
-  border-radius: 0 0 15px 15px;
-  content: "";
-}
-#Left::after {
-  position: relative;
-  bottom: 0;
-  left: 210px;
-  width: 30px;
-  height: 15px;
-  background: #292433;
-  border-radius: 15px 15px 0 0;
-  content: "";
-}
-#Left img {
-  margin: auto;
-  margin-top: 25px;
-  border-radius: 50%;
-  border: 5px solid #8a8299;
-}
-#Left h3 {
-  font-size: 175%;
-  display: flex;
-  align-items: center;
-  width: 100px;
-  writing-mode: vertical-rl;
-  font-family: "Roboto mono", monospace;
-  margin: auto;
-}
-
-#Right {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  align-items: center;
-  height: 100%;
-  width: 883px;
-  background-image: linear-gradient(to bottom, #1c1921, #1c1921 12px, transparent 12px, transparent 24px);
-  background-size: 4px 24px;
-  background-position: left top;
-  background-repeat: repeat-y;
-  gap: 20px;
-}
-#Right #Title {
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  margin: 75px;
-  margin-bottom: 0;
+  align-items: center;
   overflow: hidden;
-  font-size: 225%;
 }
-#Right #Title p {
-  overflow: hidden;
-  max-height: 6em;
-  max-width: 100%;
+#Wrapper #Title p {
+  max-height: 100%;
   overflow-wrap: anywhere;
 }
-#Right #Host {
+#Wrapper #Name {
+  grid-area: Name;
   display: flex;
-  text-align: center;
-  justify-content: center;
-  margin: 75px;
-  margin-top: 0;
-  font-size: 150%;
+  align-items: center;
+  gap: 20px;
+}
+#Wrapper #Name img {
+  border-radius: 50%;
+}
+#Wrapper #Date {
+  grid-area: Date;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  padding-right: 10px;
+  font-family: "Roboto Mono", monospace;
 }
 
 /*# sourceMappingURL=ogp.css.map */

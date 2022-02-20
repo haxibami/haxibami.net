@@ -2,9 +2,9 @@
 
 .ArticleList {
   display: grid;
-  grid-template-columns: repeat(2, minmax(25rem, 30rem));
-  @media (max-width: var.$media_border) {
-    grid-template-columns: repeat(1, minmax(15rem, 20rem));
+  grid-template-columns: repeat(2, minmax(25rem, 35rem));
+  @media (max-width: 52rem) {
+    grid-template-columns: repeat(1, minmax(15rem, 30rem));
   }
   grid-gap: 1.5rem;
   list-style: none;
@@ -12,7 +12,7 @@
   .ArticleTile {
     border: 1px solid var.$line;
     border-radius: 1rem;
-    height: 20rem;
+    height: 23rem;
     padding: 1.5rem;
     overflow: hidden;
     display: grid;

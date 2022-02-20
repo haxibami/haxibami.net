@@ -1,33 +1,34 @@
 @use "variable" as var;
 @use 'sass:math';
+/*
 @font-face {
   font-family: "Noto Sans CJK JP";
   font-style:  normal;
   font-weight: normal;
-  src: url("data:font/woff2;charset=utf-8;base64,${notocjk_reg}") format('woff2');
-}
+  src: url("https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Regular.woff2") format("woff2");
+}*/
 
 @font-face {
   font-family: "Noto Sans CJK JP";
   font-style:  normal;
   font-weight: bold;
-  src: url("data:font/woff2;charset=utf-8;base64,${notocjk_bol}") format('woff2');
+  src: url("https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff2") format("woff2");
 }
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
 
 $card_margin: 50px;
-$left_width: 225px;
-$round_size: 30px;
-$stripe: 46px;
+$item_gap: 30px;
 
 $bg: #292433;
 //$bg: #ffffff;
-$inner_bg: #f3f3f6;
+//$inner_bg: #f3f3f6;
+$inner_bg: var.$dark;
 
 * {
   margin: 0;
   padding: 0;
+  font-display: swap;
 }
 
 html, body {
@@ -36,111 +37,63 @@ html, body {
   background: $bg;
   font-family: "Noto Sans CJK JP", "Noto Sans JP", sans-serif;
   font-size: 125%;
+  color: var.$light;
 }
 
 body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: repeating-linear-gradient(to left bottom, 
-    transparent, transparent $stripe, 
-    var.$blue $stripe, var.$blue calc($stripe * 2),
-    transparent calc($stripe * 2), transparent calc($stripe * 3),
-    var.$magenta calc($stripe * 3), var.$magenta calc($stripe * 4),);
+  background: linear-gradient(to right bottom, var.$red, var.$magenta);
 }
 
 #Wrapper {
-  width: calc(1200px - $card_margin * 2);
-  height: calc(630px - $card_margin * 2);
+  margin: $card_margin;
   background: white;
-  display: flex;
-  flex-direction: row;
-  border-radius: 50px;
+  grid-gap: $item_gap;
+  border-radius: 30px;
   background: $inner_bg;
-  box-shadow: 30px 30px 60px var.$shadow,
-  -10px -10px 20px var.$shadow;
-}
-
-#Left {
-  display: flex;
-  flex-direction: column;
-  width: $left_width;
-  height: 100%;
-
-  &::before {
-    position: relative;
-    top: 0;
-    left: $left_width - math.div($round_size, 2);
-    width: $round_size;
-    height: math.div($round_size, 2);
-    background: $bg;
-    border-radius: 0 0 math.div($round_size, 2) math.div($round_size, 2);
-    content: "";
-  }
-
-  &::after {
-    position: relative;
-    bottom: 0;
-    left: $left_width - math.div($round_size, 2);
-    width: $round_size;
-    height: math.div($round_size, 2);
-    background: $bg;
-    border-radius: math.div($round_size, 2) math.div($round_size, 2) 0 0;
-    content: "";
-  }
-
-  img {
-    margin: auto;
-    margin-top: 25px;
-    border-radius: 50%;
-    border: 5px solid var.$grad-2;
-  }
-  h3 {
-    font-size: 175%;
-    display: flex;
-    align-items: center;
-    width: 100px;
-    writing-mode: vertical-rl;
-    font-family: "Roboto mono", monospace;
-    margin: auto;
-  }
-}
-
-#Right {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  align-items: center;
-  height: 100%;
-  width: 883px;
-  background-image : linear-gradient(to bottom, var.$dark, var.$dark 12px, transparent 12px, transparent 24px); 
-  background-size: 4px 24px;
-  background-position: left top;
-  background-repeat: repeat-y;
-  gap: 20px;
+  box-shadow:
+    10px 10px 20px var.$shadow,
+    -10px -10px 20px var.$shadow;
+  padding: $card_margin;
+  display: grid;
+  grid-template-rows: 280px 100px;
+  grid-template-columns: 475px 475px;
+  grid-template-areas:
+    "Title Title"
+    "Name Date";
 
   #Title {
-    flex-grow: 1;
+    font-size: 60px;
+    grid-area: Title;
     display: flex;
-    align-items: center;
     justify-content: center;
-    margin: 75px;
-    margin-bottom: 0;
+    align-items: center;
     overflow: hidden;
     p {
-      overflow: hidden;
-      max-height: 6em;
-      max-width: 100%;
+      max-height: 100%;
       overflow-wrap: anywhere;
     }
-    font-size: 225%;
   }
-  #Host {
+
+  #Name {
+    grid-area: Name;
     display: flex;
-    text-align: center;
-    justify-content: center;
-    margin: 75px;
-    margin-top: 0;
-    font-size: 150%;
+    align-items: center;
+    gap: 20px;
+
+    img {
+      border-radius: 50%;
+    }
+  }
+
+  #Date {
+    grid-area: Date;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    padding-right: 10px;
+    font-family: "Roboto Mono", monospace;
   }
 }

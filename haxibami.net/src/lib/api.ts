@@ -1,7 +1,8 @@
 import fs from "fs";
-import { join } from "path";
+import { join, dirname, sep, basename } from "path";
 import matter from "gray-matter";
 import { MdStrip } from "lib/parser";
+import * as yaml from "js-yaml";
 
 export interface BlogItem {
   slug: string;
@@ -122,3 +123,18 @@ export const replaceMdwithTxt = async (post: BlogItem) => {
   post.content = await MdStrip(post.content);
   return post;
 };
+
+export const getShareDir = () => {
+  const shareDir = join(process.cwd(), `src/share`);
+  return shareDir;
+};
+
+export const readYaml = (filename: string) => {
+  const fullPath = join(getShareDir(), filename);
+  const content = yaml.load(fs.readFileSync(fullPath, "utf8")) as SiteInfo;
+  return content;
+};
+
+export interface SiteInfo {
+  siteinfo: Record<string, Record<string, string>>;
+}

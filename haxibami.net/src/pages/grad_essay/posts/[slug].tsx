@@ -1,6 +1,12 @@
 import { NextPage, InferGetStaticPropsType } from "next";
 import Link from "next/link";
-import { getAllPosts, getPostBySlug, replaceMdwithTxt } from "lib/api";
+import {
+  getAllPosts,
+  getPostBySlug,
+  replaceMdwithTxt,
+  readYaml,
+  SiteInfo,
+} from "lib/api";
 import { MdToHtml } from "lib/parser";
 import { ogpHost } from "lib/ogpprops";
 import MyHead, { MetaProps } from "components/MyHead/MyHead";
@@ -9,13 +15,13 @@ import Styles from "styles/[slug].module.scss";
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 export const getStaticPaths = async () => {
-  const blogs = getAllPosts(["slug"], "blog");
+  const posts = getAllPosts(["slug"], "grad_essay");
 
   return {
-    paths: blogs.map((blog) => {
+    paths: posts.map((post) => {
       return {
         params: {
-          slug: blog.slug,
+          slug: post.slug,
         },
       };
     }),
@@ -24,24 +30,26 @@ export const getStaticPaths = async () => {
 };
 
 export const getStaticProps = async ({ params }: any) => {
-  const blog = getPostBySlug(
+  const post = getPostBySlug(
     params.slug,
     ["slug", "title", "date", "tags", "content"],
-    "blog"
+    "grad_essay"
   );
 
-  const content: string = await MdToHtml(blog.content);
+  const content: string = await MdToHtml(post.content);
 
-  const description: string = (await replaceMdwithTxt(blog)).content;
+  const description: string = (await replaceMdwithTxt(post)).content;
+
+  const sitename: SiteInfo = readYaml("meta.yaml");
 
   const metaprops: MetaProps = {
-    title: blog.title,
-    sitename: "偽偽書",
+    title: post.title,
+    sitename: sitename.siteinfo.grad_essay.title,
     description: description,
     ogImageUrl: encodeURI(
-      `${ogpHost}/api/ogp?title=${blog.title}&date=${blog.date}`
+      `${ogpHost}/api/ogp?title=${post.title}&date=${post.date}`
     ),
-    pageRelPath: `blog/${blog.slug}`,
+    pageRelPath: `grad_essay/posts/${post.slug}`,
     pagetype: "article",
     twcardtype: "summary_large_image",
   };
@@ -49,31 +57,31 @@ export const getStaticProps = async ({ params }: any) => {
   return {
     props: {
       metaprops,
-      blog: {
-        ...blog,
+      post: {
+        ...post,
         content,
       },
     },
   };
 };
 
-const AllBlog: NextPage<Props> = ({ blog, metaprops }) => {
+const AllGradEssay: NextPage<Props> = ({ post, metaprops }) => {
   return (
-    <div id={Styles.Wrapper} key={blog.slug}>
+    <div id={Styles.Wrapper}>
       <MyHead {...metaprops} />
       <header>
         <nav>
           <span>
-            <Link href={"/blog"}>
+            <Link href={"/grad_essay"}>
               <a>{"<< top"}</a>
             </Link>
           </span>
         </nav>
         <ul>
-          <span className={Styles.Date}>#{blog.date}</span>
-          {blog.tags.map((tag) => (
+          <span className={Styles.Date}>#{post.date}</span>
+          {post.tags?.map((tag) => (
             <span key={tag}>
-              <Link href={`/blog/tag/${tag}`}>
+              <Link href={`/grad_essay/tag/${tag}`}>
                 <a>
                   <li>#{tag}</li>
                 </a>
@@ -83,9 +91,9 @@ const AllBlog: NextPage<Props> = ({ blog, metaprops }) => {
         </ul>
       </header>
       <main>
-        <h1 id={Styles.Title}>{blog.title}</h1>
+        <h1 id={Styles.Title}>{post.title}</h1>
         <article>
-          <div dangerouslySetInnerHTML={{ __html: blog.content }} />
+          <div dangerouslySetInnerHTML={{ __html: post.content }} />
         </article>
       </main>
       <footer> </footer>
@@ -93,4 +101,4 @@ const AllBlog: NextPage<Props> = ({ blog, metaprops }) => {
   );
 };
 
-export default AllBlog;
+export default AllGradEssay;

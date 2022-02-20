@@ -1,6 +1,11 @@
 import { NextPage, InferGetStaticPropsType } from "next";
-import Link from "next/link";
-import { getAllPosts, getPostTags, replaceMdwithTxt } from "lib/api";
+import {
+  getAllPosts,
+  getPostTags,
+  replaceMdwithTxt,
+  readYaml,
+  SiteInfo,
+} from "lib/api";
 import { ogpHost } from "lib/ogpprops";
 import MyHead, { MetaProps } from "components/MyHead/MyHead";
 import BlogHeader from "components/BlogHeader/BlogHeader";
@@ -36,27 +41,31 @@ export const getStaticProps = async () => {
     })
   );
 
+  const meta: SiteInfo = readYaml("meta.yaml");
+
   const metaprops: MetaProps = {
     title: "トップ",
-    sitename: "卒業文集",
-    description: "haxibamiの卒業文集",
-    ogImageUrl: encodeURI(`${ogpHost}/api/ogp?title=卒業文集`),
+    sitename: meta.siteinfo.grad_essay.title,
+    description: meta.siteinfo.grad_essay.description,
+    ogImageUrl: encodeURI(
+      `${ogpHost}/api/ogp?title=${meta.siteinfo.grad_essay.title}`
+    ),
     pageRelPath: "grad_essay",
     pagetype: "website",
     twcardtype: "summary",
   };
 
   return {
-    props: { allPosts, taglists, metaprops },
+    props: { allPosts, taglists, metaprops, meta },
   };
 };
 
-const GradEssayTop: NextPage<Props> = ({ allPosts, metaprops }) => {
+const GradEssayTop: NextPage<Props> = ({ allPosts, metaprops, meta }) => {
   return (
     <div>
       <div id={Styles.Wrapper}>
         <MyHead {...metaprops} />
-        <BlogHeader />
+        <BlogHeader {...meta} />
         <main>
           <ArticleMenu contentType={"grad_essay"} tabs={tabs} focus={0} />
           <Tiling allPosts={allPosts} contentTop="grad_essay" />

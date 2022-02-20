@@ -13,7 +13,10 @@ const Tiling: React.VFC<TilingInfo> = (props) => {
     <div>
       <ul className={Styles.ArticleList}>
         {props.allPosts?.map((post) => (
-          <Link href={`/${props.contentTop}/${post.slug}`} key={post.slug}>
+          <Link
+            href={`/${props.contentTop}/posts/${post.slug}`}
+            key={post.slug}
+          >
             <a>
               <li className={Styles.ArticleTile} key={post.slug}>
                 {/*<Image

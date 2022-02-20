@@ -10,7 +10,11 @@ header.Desktop {
   align-items: center;
 
   #Title {
+    display: flex;
+    flex-direction: column;
     margin: 3rem;
+    align-items: center;
+    font-size: 125%;
     h1 {
       color: var.$dark;
     }
@@ -32,6 +36,8 @@ header.Mobile {
   flex-flow: row;
   justify-content: space-evenly;
   align-items: center;
+  gap: 10vw;
+  padding: 10vw;
   background: var.$dark;
   color: var.$white;
 

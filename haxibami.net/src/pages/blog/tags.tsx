@@ -1,6 +1,6 @@
 import { NextPage, InferGetStaticPropsType } from "next";
 import Link from "next/link";
-import { getPostTags } from "lib/api";
+import { getPostTags, readYaml, SiteInfo } from "lib/api";
 import { ogpHost } from "lib/ogpprops";
 import MyHead, { MetaProps } from "components/MyHead/MyHead";
 import BlogHeader from "components/BlogHeader/BlogHeader";
@@ -23,9 +23,11 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>;
 export const getStaticProps = async () => {
   const taglists = getPostTags("blog");
 
+  const meta: SiteInfo = readYaml("meta.yaml");
+
   const metaprops: MetaProps = {
     title: "タグ一覧",
-    sitename: "偽偽書",
+    sitename: meta.siteinfo.blog.title,
     description: "タグ別記事",
     ogImageUrl: encodeURI(`${ogpHost}/api/ogp?title=タグ一覧`),
     pageRelPath: "blog/tags",
@@ -34,16 +36,16 @@ export const getStaticProps = async () => {
   };
 
   return {
-    props: { taglists, metaprops },
+    props: { taglists, metaprops, meta },
   };
 };
 
-const Tags: NextPage<Props> = ({ taglists, metaprops }) => {
+const Tags: NextPage<Props> = ({ taglists, metaprops, meta }) => {
   return (
     <div>
       <div id={Styles.Wrapper}>
         <MyHead {...metaprops} />
-        <BlogHeader />
+        <BlogHeader {...meta} />
         <main>
           <ArticleMenu contentType={"blog"} tabs={tabs} focus={1} />
           <ul className={Styles.TagList}>

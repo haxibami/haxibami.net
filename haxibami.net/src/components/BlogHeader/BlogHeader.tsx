@@ -2,21 +2,22 @@ import Link from "next/link";
 import React from "react";
 import Tip from "components/Tip/Tip";
 import Styles from "./BlogHeader.module.scss";
+import { SiteInfo } from "lib/api";
 
-const BlogHeader: React.VFC = () => {
+const BlogHeader: React.VFC<SiteInfo> = ({ siteinfo }) => {
   return (
     <div id={Styles.HeaderBox}>
       <header className={Styles.Desktop}>
         <Tip />
         <div id={Styles.Title}>
-          <h1>偽偽書</h1>
-          <p>二重否定除去</p>
+          <h1>{siteinfo.blog.title}</h1>
+          <p>{siteinfo.blog.description}</p>
         </div>
       </header>
       <header className={Styles.Mobile}>
         <div>
-          <h1>偽偽書</h1>
-          <p>二重否定除去</p>
+          <h1>{siteinfo.blog.title}</h1>
+          <p>{siteinfo.blog.description}</p>
         </div>
         <ul>
           <li>
@@ -35,7 +36,7 @@ const BlogHeader: React.VFC = () => {
             </Link>
           </li>
           <li>
-            <Link href={"/blog/about"}>
+            <Link href={"/blog/posts/about"}>
               <a>About</a>
             </Link>
           </li>
