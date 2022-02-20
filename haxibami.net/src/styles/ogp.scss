@@ -1,12 +1,13 @@
 @use "variable" as var;
 @use 'sass:math';
 
+/*
 @font-face {
   font-family: "Noto Sans CJK JP";
   font-style:  normal;
   font-weight: normal;
   src: url("https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Regular.woff2") format("woff2");
-}
+}*/
 
 @font-face {
   font-family: "Noto Sans CJK JP";
@@ -35,7 +36,7 @@ html, body {
   width: 100%;
   height: 100%;
   background: $bg;
-  font-family: "Noto Sans CJK JP", "Noto Sans JP", sans-serif;
+  font-family:"Noto Sans JP", sans-serif;
   font-size: 125%;
   color: var.$light;
 }
@@ -59,7 +60,7 @@ body {
   padding: $card_margin;
   display: grid;
   grid-template-rows: 280px 100px;
-  grid-template-columns: 475px 475px;
+  grid-template-columns: 750px 200px;
   grid-template-areas:
     "Title Title"
     "Name Date";
@@ -92,8 +93,7 @@ body {
     grid-area: Date;
     display: flex;
     align-items: center;
-    justify-content: right;
-    padding-right: 10px;
+    justify-content: flex-end;
     font-family: "Roboto Mono", monospace;
   }
 }
