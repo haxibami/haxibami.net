@@ -31,7 +31,7 @@ const articleIndexer = () => {
 
   const formatted = (json) => prettier.format(json, { parser: "json" });
 
-  fs.writeFileSync("src/share/index.json", formatted(JSON.stringify(index)));
+  fs.writeFileSync("public/index.json", formatted(JSON.stringify(index)));
 };
 
 export default () => {

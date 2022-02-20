@@ -35,4 +35,4 @@ yarn-error.log*
 public/sitemap.xml
 public/sitemap-0.xml
 public/robots.txt
-src/share/index.json
+public/index.json
