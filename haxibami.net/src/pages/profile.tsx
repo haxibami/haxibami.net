@@ -74,7 +74,7 @@ const Profile: NextPage<Props> = ({ metaprops }) => {
                 <p>
                   <span className={Styles.blue}>Name</span>{" "}
                   <span className={Styles.magenta}>{">>"}</span> haxibami
-                  (IPA:[haʃibamʲi], 漢字:端食)
+                  (IPA:[haɕibamʲi], 漢字:端食)
                 </p>
                 <p>
                   <span className={Styles.blue}>Lang</span>{" "}
