@@ -75,8 +75,8 @@ export const getAllPosts = (
   const posts: BlogItem[] = slugs
     .map((slug) => getPostBySlug(slug, fields, articletype))
     .sort((a, b) => {
-      const dateA: number = Number(a.date);
-      const dateB: number = Number(b.date);
+      const dateA = Number(a.date);
+      const dateB = Number(b.date);
 
       return dateB - dateA;
     });
@@ -97,7 +97,7 @@ export const getPostTags = (articletype: ArticleType) => {
 
 export const getPostsByTag = (tag: string, articletype: ArticleType) => {
   const stpair: BlogItem[] = getAllPosts(["slug", "tags", "date"], articletype);
-  let taggedposts: string[] = [];
+  const taggedposts: string[] = [];
   stpair.forEach((item: BlogItem) => {
     if (item.tags.includes(tag)) {
       taggedposts.push(item.slug);
@@ -109,7 +109,7 @@ export const getPostsByTag = (tag: string, articletype: ArticleType) => {
 
 export const getPostsByDate = (date: string, articletype: ArticleType) => {
   const sdpair: BlogItem[] = getAllPosts(["slug", "date"], articletype);
-  let dayposts: string[] = [];
+  const dayposts: string[] = [];
   sdpair.forEach((one: BlogItem) => {
     if (one.date === date) {
       dayposts.push(one.slug);

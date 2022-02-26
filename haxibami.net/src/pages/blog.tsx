@@ -44,7 +44,7 @@ export const getStaticProps = async () => {
   const meta: SiteInfo = readYaml("meta.yaml");
 
   const metaprops: MetaProps = {
-    title: "トップ",
+    title: meta.siteinfo.blog.title,
     sitename: meta.siteinfo.blog.title,
     description: meta.siteinfo.blog.description,
     ogImageUrl: encodeURI(

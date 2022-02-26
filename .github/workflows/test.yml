@@ -1,105 +1,73 @@
 name: preview
+
 on:
   push:
     branches:
       - dev
-jobs:
-  ts-check:
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./haxibami.net
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '17'
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
-      - name: Install dependencies
-        run: npm ci
-      - name: Run tsc
-        run: npm run ts-check
-      
-  eslint:
-    defaults:
-      run:
-        shell: bash
-        working-directory: ./haxibami.net
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '17'
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
-      - name: Install dependencies
-        run: npm ci
-      - name: Run eslint
-        run: npm run lint
 
-  prettier:
+env:
+  node-version: 14
+  pnpm-version: latest
+  workdir: ./haxibami.net
+
+jobs:
+  check:
     runs-on: ubuntu-latest
     defaults:
       run:
-        shell: bash
-        working-directory: ./haxibami.net
+        working-directory: ${{ env.workdir }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '17'
-      - name: Cache Node.js modules
+          node-version: ${{ env.node-version }}
+      - name: Cache pnpm modules
         uses: actions/cache@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
-      - name: Install dependencies
-        run: npm ci
-      - name: Run prettier
-        run: npm run lint:prettier
+            ${{ runner.os }}-
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.1
+        with: 
+          version: ${{ env.pnpm-version }}
+          run_install: true
+      - name: TypeScript compiler check
+        run: pnpm run ts-check
+      - name: Next.js linter
+        run: pnpm run lint
+      - name: Code formatter
+        run: pnpm run format
 
   preview:
     runs-on: ubuntu-latest
     defaults:
       run:
-        shell: bash
-        working-directory: ./haxibami.net
+        working-directory: ${{ env.workdir }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '17'
-      - name: Cache Node.js modules
+          node-version: ${{ env.node-version }}
+      - name: Cache pnpm modules
         uses: actions/cache@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
-      - name: Install dependencies
-        run: npm ci
+            ${{ runner.os }}-
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.1
+        with: 
+          version: ${{ env.pnpm-version }}
+          run_install: true
+      - run: pnpm run build
       - uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
-          github-token: ${{ secrets.GITHUB_TOKEN }} #Optional 
-          vercel-org-id: ${{ secrets.ORG_ID}}  #Required
-          vercel-project-id: ${{ secrets.PROJECT_ID}} #Required 
+          github-token: ${{ secrets.GITHUB_TOKEN }} # Optional 
+          vercel-org-id: ${{ secrets.ORG_ID }}  # Required
+          vercel-project-id: ${{ secrets.PROJECT_ID }} # Required
+          alias-domains: | # Optional
+            staging.haxibami.net

@@ -30,9 +30,7 @@ type TwCardType = typeof TwCardType[keyof typeof TwCardType];
 const MyHead: React.VFC<MetaProps> = (props: MetaProps) => {
   return (
     <Head>
-      <title>
-        {props.title} - {props.sitename}
-      </title>
+      <title>{props.title}</title>
       <meta name="description" content={props.description} lang="ja" />
       <meta name="twitter:site" content="@haxibami" />
       <meta name="twitter:creator" content="@haxibami" />
@@ -43,10 +41,7 @@ const MyHead: React.VFC<MetaProps> = (props: MetaProps) => {
         content={`https://haxibami.net/${props.pageRelPath}`}
       />
       <meta property="og:type" content={props.pagetype} />
-      <meta
-        property="og:title"
-        content={`${props.title} - ${props.sitename}`}
-      />
+      <meta property="og:title" content={`${props.title}`} />
       <meta property="og:description" content={props.description} />
       <meta property="og:site_name" content={props.sitename} />
       <meta property="og:image" content={props.ogImageUrl} />

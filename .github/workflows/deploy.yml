@@ -3,32 +3,39 @@ on:
   push:
     branches:
       - main
+
+env:
+  node-version: 14
+  pnpm-version: latest
+  workdir: ./haxibami.net
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     defaults:
       run:
-        shell: bash
-        working-directory: ./haxibami.net
+        working-directory: ${{ env.workdir }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '16'
-      - name: Cache Node.js modules
+          node-version: ${{ env.node-version }}
+      - name: Cache pnpm modules
         uses: actions/cache@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.OS }}-node-
-            ${{ runner.OS }}-
-      - name: Install dependencies
-        run: npm ci
+            ${{ runner.os }}-
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.1
+        with: 
+          version: ${{ env.pnpm-version }}
+          run_install: true
       - uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
-          github-token: ${{ secrets.GITHUB_TOKEN }} #Optional 
+          github-token: ${{ secrets.GITHUB_TOKEN }} # Optional 
           vercel-args: '--prod' #Optional
-          vercel-org-id: ${{ secrets.ORG_ID}}  #Required
-          vercel-project-id: ${{ secrets.PROJECT_ID}} #Required 
+          vercel-org-id: ${{ secrets.ORG_ID }}  # Required
+          vercel-project-id: ${{ secrets.PROJECT_ID }} # Required

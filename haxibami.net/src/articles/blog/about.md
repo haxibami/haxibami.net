@@ -7,7 +7,7 @@ tags: ["info", "meta"]
 
 ## 私について
 
-haxibami と名乗っています。（漢字: 端食、IPA: [haʃibamʲi]）。[プロフィール](https://haxibami.net/profile)も参照。
+haxibami と名乗っています。（漢字: 端食、IPA: [haɕibamʲi]）。[プロフィール](https://haxibami.net/profile)も参照。
 
 ## 内容
 
