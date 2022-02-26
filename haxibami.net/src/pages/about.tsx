@@ -9,7 +9,7 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 export const getStaticProps = async () => {
   const metaprops: MetaProps = {
-    title: "haxibami.netについて",
+    title: "このサイトについて",
     sitename: "haxibami.net",
     description: "このサイトの概略",
     ogImageUrl: encodeURI(`${ogpHost}/api/ogp?title=このサイトについて`),

@@ -55,7 +55,7 @@ const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
   const image = await page.screenshot({ type: "png" });
   await browser.close();
 
-  res.setHeader("Cache-Control", "s-maxage=31536000, stale-while-revalidate");
+  res.setHeader("Cache-Control", "s-maxage=5256000, stale-while-revalidate");
 
   res.setHeader("Content-Type", "image/png");
 
