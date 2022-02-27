@@ -10,7 +10,7 @@
     "start": "next start",
     "ts-check": "tsc --noEmit",
     "lint": "next lint",
-    "format": "npx prettier --check '**/*.{ts, tsx, json}'"
+    "format": "prettier --check '**/*.{ts, tsx, json}'"
   },
   "dependencies": {
     "@babel/core": "^7.17.5",
@@ -49,14 +49,14 @@
     "@types/react": "17.0.39",
     "@types/react-dom": "^17.0.11",
     "@typescript-eslint/eslint-plugin": "^5.12.1",
-    "@typescript-eslint/parser": "^5.0.0",
+    "@typescript-eslint/parser": "^5.12.1",
     "eslint": "8.9.0",
     "eslint-config-next": "^12.1.0",
     "eslint-config-prettier": "^8.4.0",
     "globby": "^13.1.1",
     "js-yaml": "^4.1.0",
     "prettier": "2.5.1",
-    "sass": "^1.49.8",
+    "sass": "^1.49.9",
     "typescript": "4.5.5"
   }
 }
