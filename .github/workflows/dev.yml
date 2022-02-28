@@ -1,0 +1,75 @@
+name: preview deployment
+
+on:
+  push:
+    branches:
+      - dev
+
+env:
+  node-version: 14
+  pnpm-version: latest
+  workdir: ./haxibami.net
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.workdir }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.node-version }}
+      - name: Cache pnpm modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.1
+        with: 
+          version: ${{ env.pnpm-version }}
+          run_install: true
+      - name: TypeScript compiler check
+        run: pnpm run ts-check
+      - name: Next.js linter
+        run: pnpm run lint
+      - name: Code formatter
+        run: pnpm run format
+
+  preview:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.workdir }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.node-version }}
+      - name: Cache pnpm modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.1
+        with: 
+          version: ${{ env.pnpm-version }}
+          run_install: true
+      - name: Test build
+        run: pnpm run build
+      - name: Preview deployment
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
+          github-token: ${{ secrets.GITHUB_TOKEN }} # Optional 
+          vercel-org-id: ${{ secrets.ORG_ID }}  # Required
+          vercel-project-id: ${{ secrets.PROJECT_ID }} # Required
+          alias-domains: | # Optional
+            staging.haxibami.net

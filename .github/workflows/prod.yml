@@ -1,12 +1,10 @@
-name: deploy
+name: production deployment
 on:
   push:
     branches:
       - main
 
 env:
-  node-version: 14
-  pnpm-version: latest
   workdir: ./haxibami.net
 
 jobs:
@@ -17,21 +15,6 @@ jobs:
         working-directory: ${{ env.workdir }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.node-version }}
-      - name: Cache pnpm modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.1
-        with: 
-          version: ${{ env.pnpm-version }}
-          run_install: true
       - uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
