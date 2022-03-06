@@ -4,6 +4,7 @@ import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
 import emoji from "remark-emoji";
 import remarkMath from "remark-math";
+import remarkJaruby from "remark-jaruby";
 import rehypeKatex from "rehype-katex";
 import * as shiki from "shiki";
 import rehypeShiki from "@leafac/rehype-shiki";
@@ -24,6 +25,7 @@ export const MdToHtml = async (md: string) => {
     .use(remarkGfm)
     .use(emoji)
     .use(remarkMath)
+    .use(remarkJaruby)
     .use(remarkRehype)
     .use(rehypeKatex)
     .use(rehypeShiki, {

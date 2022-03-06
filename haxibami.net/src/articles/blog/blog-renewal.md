@@ -13,23 +13,23 @@ tags: ["tech", "web", "nextjs"]
 
 Next.js + TypeScript + Sass (SCSS, CSS modules)。
 
-TypeScript はまったくもってよくわからないが、型チェックに何度も助けられた。嬉しいのは Neovim で coc.nvim を使って書いていると、coc-tsserver のおかげで書いた瞬間からエラーに気づけることか。CSS modules と SCSS は出会ったときにいたく感動して以来ずっと使っている。ただ追い風が吹いているという感じではないので、いずれ別の基盤に乗り換えるかもしれない。
+TypeScript はまったくもってよくわからないが、型チェックに何度も助けられた。Neovim で coc.nvim を使って書いていると、coc-tsserver のおかげで書いた瞬間からエラーに気づけるのでかなり体験が良い。CSS modules と SCSS は出会ったときにいたく感動して以来ずっと使っているが、{追い風}^(Tailwind)が吹いている感じではないので、いずれ別のものに乗り換えるかもしれない。
 
 ### ホスティング・ビルド
 
-ホスティングは素直に Vercel に投げた。またの名を囲い込まれともいう。ちなみに Vercel 側のビルド回数を消費したくないので、ビルドは GitHub Actions にしてある。ガンガン CI を回して Microsoft を破産させよう！
+素直に Vercel に投げた。またの名を囲い込まれともいう。ただし Vercel 側のビルド回数を消費したくないので、ビルド前のテストは GitHub Actions にしてある。ガンガン CI を回して Microsoft を破産させよう！
 
 ## 機能
 
 ### Markdown まわり
 
-われわれには先人の記憶というものがあり、すなわちこの手のサイトは記事管理が億劫になった時点でエタる。放置された「〇〇の部屋」、消えて還らない借りドメイン、むなしく刻む入室カウンターを眺めるたびに、せめて記事くらいは慣れたファイル形式で楽に引き継ぎたいと思うようになった。そういうわけで Markdown（内容管理） + tsx（テンプレートエンジン）。Markdown ならそう簡単には廃れないだろうし、最悪そのまま別サービスに投げ込める。いまはヘッドレス CMS とかいうのもあるらしい（全然知らない）が、個人レベルでは Git Repo ひとつで管理できたほうがやっぱり楽だ。
+われわれには先人の記憶というものがあり、すなわちこの手のサイトは記事管理が億劫になった時点で**エタる**。放置された「なんたらの部屋」、消えて還らない借りドメイン、むなしく刻む入室カウンターを眺めるたびに、せめて記事くらいは慣れたファイル形式で楽に引き継ぎたいと思うようになった。そういうわけで Markdown（内容管理） + tsx（テンプレートエンジン）。Markdown ならそう簡単には廃れないだろうし、そのまま別サービスにも投げ込める。いまはヘッドレス CMS とかいうのもあるらしい（全然知らない）が、個人レベルでは Git Repo ひとつで管理できたほうがやっぱり楽だ。
 
 Next.js から Markdown を扱う方法は[公式](https://nextjs.org/blog/markdown)でも取り上げられている。具体的には`remark`や`rehype`関連のパッケージを使うのだが、この remark と rehype がすごい。ともに unified というインターフェースの傘下にあって、このもとで`mdast`（Markdown の構文木）や`hast`（HTML の構文木）を相互変換したり、特定の要素に対してカスタム処理を実行できる。関連プラグインも充実しており、やりたいことが既存のプロジェクトの組み合わせで実現できてしまう。以下、使用したツールと実現できた機能を書いておく。
 
 #### Frontmatter
 
-[grey-matter](https://github.com/jonschlinkert/gray-matter)で取り出した。remark 側で行うことも可能らしい。
+[grey-matter](https://github.com/jonschlinkert/gray-matter)で取り出した。これは unified の処理ではない。
 
 ```md
 ---
@@ -84,7 +84,7 @@ https://www.haxibami.net みたいな生のリンクも置けるし
 
 :v:
 
-になる。あまり使わないが。
+になる。
 
 #### 数式表示
 
@@ -100,7 +100,7 @@ $$
 ( \sum_{k=1}^{n} a_k b_k )^2 \leq ( \sum_{k=1}^{n} {a_k}^2 ) ( \sum_{k=1}^{n} {b_k}^2 )
 $$
 
-$e^{i\pi} + 1 = 0$ のようなインライン数式もいける。手動でフォントを設置する必要はないが、KaTeX 用 CSS の挿入が必要。`pages/_document.tsx`で実行している。
+$e^{i\pi} + 1 = 0$ のようなインライン数式もいける。手動でフォントを設置する必要はないが、KaTeX 用 CSS の挿入が必要。`pages/_document.tsx`で読み込んでいる。
 
 ```tsx
 // pages/_document.tsx
@@ -125,13 +125,27 @@ export default function Document() {
 }
 ```
 
+#### ルビ
+
+既に[remark-ruby](https://github.com/laysent/remark-ruby)というパッケージがルビを実装しているが、メンテナンスがされておらず依存関係と API が古くなっていた（主に`remark-parse`まわり）。そのため別パッケージ（[remark-jaruby](https://github.com/haxibami/remark-jaruby)）を実装した。
+
+元のパッケージ自体が`remark-parse`の中身である[micromark](https://github.com/micromark/micromark)に介入して処理を行っていたので、パーサ部分（[micromark-extension-jaruby](https://github.com/haxibami/micromark-extension-jaruby)）、構文木操作部分（[mdast-util-jaruby](https://github.com/haxibami/mdast-util-jaruby)）の拡張機能に分割し、これらを`remark-jaruby`から参照している。
+
+書式は元のパッケージのものを踏襲した。
+
+```md
+昨日午後、{†聖剣†}^(エクスカリバー)を振り回す{全裸中年男性}^(無敵の人)が出現し……
+```
+
+昨日午後、{†聖剣†}^(エクスカリバー)を振り回す{全裸中年男性}^(無敵の人)が出現し……
+
 #### 内容プレビュー
 
-[トップ](https://haxibami.net/blog)の記事タイルには内容のプレビューを表示している。このために生の Markdown を流し込むのも気が引けたので、なんとかして plaintext 形式に変換できないかと考えていたら、[`strip-markdown`](https://github.com/remarkjs/strip-markdown)というのがあった。これで見出し・引用等を除いて抽出している。
+お気づきかはわからないが、[トップ](https://haxibami.net/blog)の記事タイルには内容のプレビューを表示している。このために生の Markdown を流し込むのも気が引けたので、なんとかして plaintext 形式に変換できないかと考えていたら、[`strip-markdown`](https://github.com/remarkjs/strip-markdown)というのがあった。これで見出し・引用等を除いた冒頭 200 字を抽出している。
 
 #### シンタックスハイライト
 
-最初は[prism.js](https://prismjs.com)を`babel-plugin-prismjs`から使っていた。特に問題はなかったが、デフォルトで使えるカラースキームがあまりに少ないのと、公式サイトが微妙に古臭かったため[shiki](https://shiki.matsu.io)に変更した。こちらは公式にある通り VSCode のカラースキームファイルが流用できる。スキームは自作の[urara-vscode](https://github.com/haxibami/urara-vscode)のものを使用した。
+最初は[prism.js](https://prismjs.com)を`babel-plugin-prismjs`から使っていたが、使えるカラースキームがあまりに少なかったため[shiki](https://shiki.matsu.io)に変更した。公式サイトにある通りこちらは VSCode のカラースキームファイルが流用できる。せっかくなので自作の[urara-vscode](https://github.com/haxibami/urara-vscode)を使用してみた。
 
 以上を合わせたメソッドチェーンが以下。
 
@@ -144,6 +158,7 @@ import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
 import emoji from "remark-emoji";
 import remarkMath from "remark-math";
+import remarkJaruby from "remark-jaruby";
 import rehypeKatex from "rehype-katex";
 import * as shiki from "shiki";
 import rehypeShiki from "@leafac/rehype-shiki";
@@ -164,6 +179,7 @@ export const MdToHtml = async (md: string) => {
     .use(remarkGfm)
     .use(emoji)
     .use(remarkMath)
+    .use(remarkJaruby)
     .use(remarkRehype)
     .use(rehypeKatex)
     .use(rehypeShiki, {
@@ -226,7 +242,7 @@ export const MdStrip = async (md: string) => {
 
 する手順で実現した。
 
-なお私の環境ではなぜか`playwright-aws-lambda`が動かなかったので、[`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda)と puppeteer を使った。`chrome-aws-lambda` 自体が内部で puppeteer をロードしているため、`puppeteer-core`をあえて依存関係に加える必要はない。
+私の環境ではなぜか`playwright-aws-lambda`が動かなかったので、[`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda)と puppeteer を使った。
 
 ```tsx
 // pages/api/ogp.tsx
@@ -298,7 +314,7 @@ const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
 export default OgpGen;
 ```
 
-表示用のコンポーネントとスタイリングは別ファイルに分割した。自力で書いたぶんデザインの自由度は高い。
+表示用のコンポーネントとスタイリングは別ファイルに分割した。自力で書いたぶん、デザインの自由度は高い。
 
 ```tsx
 // components/OgpImage/OgpImage.tsx
@@ -433,7 +449,7 @@ Vercel のログによれば容量はややオーバーしているのになぜ�
 
 ### サイトマップ生成
 
-[next-sitemap](https://github.com/iamvishnusankar/next-sitemap)を使ったところ、`sitemap-0.xml`の`<lastmod>`がすべて最終ビルド時を示していて発狂しかかった。この挙動はある意味正しく、なぜかといえば自分が手を触れていないページでもビルドするたびに静的アセットの slug 名が変わってしまうためである。仕方がないので自分で書いた。[このへん](https://www.mk-engineer.com/posts/nextjs-before-build)を参考にしつつ、ビルド前に記事のインデックスを作成し、ビルド後にインデックスに基づいて`sitemap.xml`と`robots.txt`を生成するようにしてある。
+[next-sitemap](https://github.com/iamvishnusankar/next-sitemap)を使ったところ、`sitemap-0.xml`の`<lastmod>`がすべて最終ビルド時を示していて発狂しかかった。この挙動はある意味正しく、なぜかといえば自分が手を触れていないページでもビルドするたびに**静的アセットの slug 名が変わってしまう**ためである。仕方がないので[このへん](https://www.mk-engineer.com/posts/nextjs-before-build)を参考にしつつ自分で書いた。`package.json`の`prebuild`と`postbuild`を活用し、ビルド前に記事のインデックスを作成、ビルド後にインデックスに基づいて`sitemap.xml`と`robots.txt`を生成するようにしてある。
 
 ```js
 // hooks/scripts/sitemap.mjs
@@ -556,8 +572,14 @@ export default () => {
 }
 ```
 
-本当は TypeScript で書きたかったが、ES Modules 対応は Version 4.6 以降に延期された[らしい](https://zenn.dev/aumy/scraps/06e8d775b047f2)。安定版に降りてきたら書き直すかもしれない。
+本当は TypeScript で書きたかったが、ES Modules 対応は Version 4.6 以降に延期された[らしい](https://zenn.dev/aumy/scraps/06e8d775b047f2)。安定版に降りて広まってきたら書き直すかもしれない。
 
 ## 感想
 
-けっこう簡単に動いた。Next.js と unified のデベロッパーに五体投地しつつ、リファクタリングをやっていく。
+けっこう簡単に動いた。Next.js と unified のデベロッパーに五体投地しつつ、改修をやっていく。
+
+## TODO
+
+- [x] ルビの実装（2022/03/06）
+- [ ] 外部リンクのカード化
+- [ ] Mermaid のサポート
