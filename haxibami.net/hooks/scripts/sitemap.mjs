@@ -1,6 +1,7 @@
 import fs from "fs";
 import prettier from "prettier";
 import { globby } from "globby";
+import { dateConverter } from "./lib.mjs";
 
 // variables
 const HOST = "https://www.haxibami.net";
@@ -32,10 +33,6 @@ const sitemapGenerator = async () => {
 
   const allBlogs = index.articles.blog;
   const allGrads = index.articles.grad_essay;
-
-  const dateConverter = (date) => {
-    return date.slice(0, 4) + "-" + date.slice(4, 6) + "-" + date.slice(6);
-  };
 
   const blogInfos = allBlogs.map((item) => {
     const blogInfo = {

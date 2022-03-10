@@ -2,6 +2,16 @@ import fs from "fs";
 import { join, dirname, sep, basename } from "path";
 import matter from "gray-matter";
 import * as yaml from "js-yaml";
+import { unified } from "unified";
+import remarkParse from "remark-parse";
+import stripMarkdown from "strip-markdown";
+import remarkGfm from "remark-gfm";
+import emoji from "remark-emoji";
+import remarkMath from "remark-math";
+import remarkJaruby from "remark-jaruby";
+import remarkRehype from "remark-rehype";
+import rehypeKatex from "rehype-katex";
+import rehypeStringify from "rehype-stringify";
 
 export const getArticlesDir = (articletype) => {
   const ArticlesDir = join(process.cwd(), `src/articles/${articletype}`);
@@ -93,4 +103,37 @@ export const getPostsByTag = (tag, articletype) => {
   });
 
   return taggedposts;
+};
+
+export const getShareDir = () => {
+  const shareDir = join(process.cwd(), `src/share`);
+  return shareDir;
+};
+
+export const readYaml = (filename) => {
+  const fullPath = join(getShareDir(), filename);
+  const content = yaml.load(fs.readFileSync(fullPath, "utf8"));
+  return content;
+};
+
+export const MdToHtml = (md) => {
+  const result = unified()
+    .use(remarkParse)
+    .use(stripMarkdown, {
+      remove: ["list", "blockquote", "image", "code"],
+    })
+    .use(remarkGfm)
+    .use(emoji)
+    .use(remarkMath)
+    .use(remarkJaruby)
+    .use(remarkRehype)
+    .use(rehypeKatex)
+    .use(rehypeStringify)
+    .processSync(md);
+
+  return result.toString();
+};
+
+export const dateConverter = (date) => {
+  return date.slice(0, 4) + "-" + date.slice(4, 6) + "-" + date.slice(6);
 };

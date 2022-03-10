@@ -1,5 +1,5 @@
 export const ogpHost = {
-  production: "https://haxibami.net",
+  production: "https://www.haxibami.net",
   development: "http://localhost:3000",
-  test: "https://haxibami.net",
+  test: "https://www.haxibami.net",
 }[process.env.NODE_ENV];

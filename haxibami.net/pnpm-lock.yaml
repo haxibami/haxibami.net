@@ -20,6 +20,7 @@ specifiers:
   eslint: 8.10.0
   eslint-config-next: 12.1.0
   eslint-config-prettier: 8.5.0
+  feed: 4.2.2
   globby: 13.1.1
   gray-matter: 4.0.3
   js-yaml: 4.1.0
@@ -54,6 +55,7 @@ dependencies:
   babel-plugin-inline-react-svg: 2.0.1_@babel+core@7.17.5
   babel-plugin-module-resolver: 4.1.0
   chrome-aws-lambda: 10.1.0_puppeteer-core@10.1.0
+  feed: 4.2.2
   gray-matter: 4.0.3
   next: 12.1.0_b8b2418670651b634ff05a91b7cd94fe
   puppeteer-core: 10.1.0
@@ -1692,6 +1694,13 @@ packages:
     resolution: {integrity: sha1-JcfInLH5B3+IkbvmHY85Dq4lbx4=}
     dependencies:
       pend: 1.2.0
+    dev: false
+
+  /feed/4.2.2:
+    resolution: {integrity: sha512-u5/sxGfiMfZNtJ3OvQpXcvotFpYkL0n9u9mM2vkui2nGo8b4wvDkJ8gAkYqbA8QpGyFCv3RK0Z+Iv+9veCS9bQ==}
+    engines: {node: '>=0.4.0'}
+    dependencies:
+      xml-js: 1.6.11
     dev: false
 
   /file-entry-cache/6.0.1:
@@ -3423,6 +3432,10 @@ packages:
       source-map-js: 1.0.1
     dev: true
 
+  /sax/1.2.4:
+    resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
+    dev: false
+
   /scheduler/0.20.2:
     resolution: {integrity: sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==}
     dependencies:
@@ -3962,6 +3975,13 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
+    dev: false
+
+  /xml-js/1.6.11:
+    resolution: {integrity: sha512-7rVi2KMfwfWFl+GpPg6m80IVMWXLRjO+PxTq7V2CDhoGak0wzYzFgUY2m4XJ47OGdXd8eLE8EmwfAmdjw7lC1g==}
+    hasBin: true
+    dependencies:
+      sax: 1.2.4
     dev: false
 
   /yallist/4.0.0:

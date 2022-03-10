@@ -21,6 +21,7 @@
     "babel-plugin-inline-react-svg": "2.0.1",
     "babel-plugin-module-resolver": "4.1.0",
     "chrome-aws-lambda": "10.1.0",
+    "feed": "4.2.2",
     "gray-matter": "4.0.3",
     "next": "12.1.0",
     "puppeteer-core": "10.1.0",
