@@ -7,7 +7,7 @@ import {
   readYaml,
   SiteInfo,
 } from "lib/api";
-import { MdToHtml } from "lib/parser";
+import { MdToHtml, HtmlToReact } from "lib/parser";
 import { ogpHost } from "lib/ogpprops";
 import MyHead, { MetaProps } from "components/MyHead/MyHead";
 import Styles from "styles/[slug].module.scss";
@@ -57,15 +57,13 @@ export const getStaticProps = async ({ params }: any) => {
   return {
     props: {
       metaprops,
-      blog: {
-        ...blog,
-        content,
-      },
+      blog,
+      content,
     },
   };
 };
 
-const AllBlog: NextPage<Props> = ({ blog, metaprops }) => {
+const AllBlog: NextPage<Props> = ({ metaprops, blog, content }) => {
   return (
     <div id={Styles.Wrapper} key={blog.slug}>
       <MyHead {...metaprops} />
@@ -92,9 +90,7 @@ const AllBlog: NextPage<Props> = ({ blog, metaprops }) => {
       </header>
       <main>
         <h1 id={Styles.Title}>{blog.title}</h1>
-        <article>
-          <div dangerouslySetInnerHTML={{ __html: blog.content }} />
-        </article>
+        <article>{HtmlToReact(content)}</article>
       </main>
       <footer> </footer>
     </div>

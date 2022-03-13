@@ -7,7 +7,7 @@ import {
   readYaml,
   SiteInfo,
 } from "lib/api";
-import { MdToHtml } from "lib/parser";
+import { MdToHtml, HtmlToReact } from "lib/parser";
 import { ogpHost } from "lib/ogpprops";
 import MyHead, { MetaProps } from "components/MyHead/MyHead";
 import Styles from "styles/[slug].module.scss";
@@ -57,15 +57,13 @@ export const getStaticProps = async ({ params }: any) => {
   return {
     props: {
       metaprops,
-      post: {
-        ...post,
-        content,
-      },
+      post,
+      content,
     },
   };
 };
 
-const AllGradEssay: NextPage<Props> = ({ post, metaprops }) => {
+const AllGradEssay: NextPage<Props> = ({ metaprops, post, content }) => {
   return (
     <div id={Styles.Wrapper}>
       <MyHead {...metaprops} />
@@ -92,9 +90,7 @@ const AllGradEssay: NextPage<Props> = ({ post, metaprops }) => {
       </header>
       <main>
         <h1 id={Styles.Title}>{post.title}</h1>
-        <article>
-          <div dangerouslySetInnerHTML={{ __html: post.content }} />
-        </article>
+        <article>{HtmlToReact(content)}</article>
       </main>
       <footer> </footer>
     </div>

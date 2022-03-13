@@ -10,8 +10,13 @@ import * as shiki from "shiki";
 import rehypeShiki from "@leafac/rehype-shiki";
 import remarkRehype from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
+import rehypeReact from "rehype-react";
+import type { Options as RehypeReactOptions } from "rehype-react";
+import rehypeParse from "rehype-parse";
 import stripMarkdown from "strip-markdown";
 import remarkStringify from "remark-stringify";
+import React from "react";
+import MyLink from "components/MyLink";
 
 // Get shiki theme file (`src/styles/shiki/${themename}.json`) full path
 const getThemePath = (themename: string) =>
@@ -35,6 +40,22 @@ export const MdToHtml = async (md: string) => {
     .processSync(md);
 
   return result.toString();
+};
+
+// Convert HTML to React Component
+export const HtmlToReact = (html: string) => {
+  const result = unified()
+    .use(rehypeParse, {
+      fragment: true,
+    })
+    .use(rehypeReact, {
+      createElement: React.createElement,
+      components: {
+        a: MyLink,
+      },
+    } as RehypeReactOptions)
+    .processSync(html).result;
+  return result;
 };
 
 // Convert Markdown to plaintext
