@@ -44,7 +44,7 @@ specifiers:
   shiki: 0.10.1
   strip-markdown: 5.0.0
   typescript: 4.6.2
-  unified: 10.1.1
+  unified: 10.1.2
 
 dependencies:
   '@babel/core': 7.17.5
@@ -74,7 +74,7 @@ dependencies:
   remark-stringify: 10.0.2
   shiki: 0.10.1
   strip-markdown: 5.0.0
-  unified: 10.1.1
+  unified: 10.1.2
 
 devDependencies:
   '@types/js-yaml': 4.0.5
@@ -415,7 +415,7 @@ packages:
       hast-util-to-text: 3.1.1
       rehype-parse: 8.0.4
       shiki: 0.10.1
-      unified: 10.1.1
+      unified: 10.1.2
       unist-util-modify-children: 3.0.0
     dev: false
 
@@ -3265,7 +3265,7 @@ packages:
       hast-util-to-text: 3.1.1
       katex: 0.15.2
       rehype-parse: 8.0.4
-      unified: 10.1.1
+      unified: 10.1.2
       unist-util-remove-position: 4.0.1
       unist-util-visit: 4.1.0
     dev: false
@@ -3276,7 +3276,7 @@ packages:
       '@types/hast': 2.3.4
       hast-util-from-parse5: 7.1.0
       parse5: 6.0.1
-      unified: 10.1.1
+      unified: 10.1.2
     dev: false
 
   /rehype-react/7.0.4:
@@ -3287,7 +3287,7 @@ packages:
       '@types/react': 17.0.39
       hast-to-hyperscript: 10.0.1
       hast-util-whitespace: 2.0.0
-      unified: 10.1.1
+      unified: 10.1.2
     dev: false
 
   /rehype-stringify/9.0.3:
@@ -3295,7 +3295,7 @@ packages:
     dependencies:
       '@types/hast': 2.3.4
       hast-util-to-html: 8.0.2
-      unified: 10.1.1
+      unified: 10.1.2
     dev: false
 
   /remark-emoji/3.0.2:
@@ -3313,7 +3313,7 @@ packages:
       '@types/mdast': 3.0.10
       mdast-util-gfm: 2.0.0
       micromark-extension-gfm: 2.0.1
-      unified: 10.1.1
+      unified: 10.1.2
     dev: false
 
   /remark-jaruby/0.1.0:
@@ -3322,7 +3322,7 @@ packages:
       '@types/mdast': 3.0.10
       mdast-util-jaruby: 0.1.1
       micromark-extension-jaruby: 0.1.0
-      unified: 10.1.1
+      unified: 10.1.2
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -3333,7 +3333,7 @@ packages:
       '@types/mdast': 3.0.10
       mdast-util-math: 2.0.1
       micromark-extension-math: 2.0.2
-      unified: 10.1.1
+      unified: 10.1.2
     dev: false
 
   /remark-parse/10.0.1:
@@ -3341,7 +3341,7 @@ packages:
     dependencies:
       '@types/mdast': 3.0.10
       mdast-util-from-markdown: 1.0.4
-      unified: 10.1.1
+      unified: 10.1.2
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -3352,7 +3352,7 @@ packages:
       '@types/hast': 2.3.4
       '@types/mdast': 3.0.10
       mdast-util-to-hast: 12.1.1
-      unified: 10.1.1
+      unified: 10.1.2
     dev: false
 
   /remark-stringify/10.0.2:
@@ -3360,7 +3360,7 @@ packages:
     dependencies:
       '@types/mdast': 3.0.10
       mdast-util-to-markdown: 1.3.0
-      unified: 10.1.1
+      unified: 10.1.2
     dev: false
 
   /reselect/4.1.5:
@@ -3594,7 +3594,7 @@ packages:
     dependencies:
       '@types/mdast': 3.0.10
       '@types/unist': 2.0.6
-      unified: 10.1.1
+      unified: 10.1.2
     dev: false
 
   /style-to-object/0.3.0:
@@ -3754,8 +3754,8 @@ packages:
       through: 2.3.8
     dev: false
 
-  /unified/10.1.1:
-    resolution: {integrity: sha512-v4ky1+6BN9X3pQrOdkFIPWAaeDsHPE1svRDxq7YpTc2plkIqFMwukfqM+l0ewpP9EfwARlt9pPFAeWYhHm8X9w==}
+  /unified/10.1.2:
+    resolution: {integrity: sha512-pUSWAi/RAnVy1Pif2kAoeWNBa3JVrx0MId2LASj8G+7AiHWoKZNTomq6LG326T68U7/e263X6fTdcXIy7XnF7Q==}
     dependencies:
       '@types/unist': 2.0.6
       bail: 2.0.1
