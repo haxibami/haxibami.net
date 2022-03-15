@@ -1,14 +1,15 @@
 import type { InferGetStaticPropsType, NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ogpHost } from "lib/ogpprops";
-import MyHead, { MetaProps } from "components/MyHead/MyHead";
+import type { PageMetaProps } from "lib/interface";
+import { ogpHost } from "lib/constant";
+import MyHead from "components/MyHead";
 import Styles from "styles/about.module.scss";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 export const getStaticProps = async () => {
-  const metaprops: MetaProps = {
+  const metaprops: PageMetaProps = {
     title: "このサイトについて",
     sitename: "haxibami.net",
     description: "このサイトの概略",

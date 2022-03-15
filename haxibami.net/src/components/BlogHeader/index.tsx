@@ -1,8 +1,8 @@
 import Link from "next/link";
 import React from "react";
-import Tip from "components/Tip/Tip";
+import Tip from "components/Tip";
 import Styles from "./BlogHeader.module.scss";
-import { SiteInfo } from "lib/api";
+import { SiteInfo } from "lib/interface";
 
 const BlogHeader: React.VFC<SiteInfo> = ({ siteinfo }) => {
   return (

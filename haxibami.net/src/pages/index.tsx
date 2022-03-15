@@ -2,15 +2,16 @@ import type { InferGetStaticPropsType, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { PageMetaProps } from "lib/interface";
 import * as Svg from "lib/svg";
-import MyHead, { MetaProps } from "components/MyHead/MyHead";
-import Tree from "components/Tree/Tree";
+import MyHead from "components/MyHead";
+import Tree from "components/Tree";
 import styles from "styles/index.module.scss";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 export const getStaticProps = async () => {
-  const metaprops: MetaProps = {
+  const metaprops: PageMetaProps = {
     title: "haxibami.net",
     sitename: "haxibami.net",
     description: "my phylogenetic tree",

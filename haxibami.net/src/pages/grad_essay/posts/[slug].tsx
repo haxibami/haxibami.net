@@ -1,16 +1,23 @@
-import { NextPage, InferGetStaticPropsType } from "next";
+import type {
+  NextPage,
+  InferGetStaticPropsType,
+  GetStaticPropsContext,
+} from "next";
 import Link from "next/link";
+import Context from "lib/store";
 import {
   getAllPosts,
   getPostBySlug,
   replaceMdwithTxt,
   readYaml,
-  SiteInfo,
 } from "lib/api";
+import type { PageMetaProps, SiteInfo } from "lib/interface";
+import { ogpHost } from "lib/constant";
 import { MdToHtml, HtmlToReact } from "lib/parser";
-import { ogpHost } from "lib/ogpprops";
-import MyHead, { MetaProps } from "components/MyHead/MyHead";
+import MyHead from "components/MyHead";
 import Styles from "styles/[slug].module.scss";
+import { useContext } from "react";
+import linkStorer from "lib/link-widget-store";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
@@ -29,9 +36,13 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async ({ params }: any) => {
+export const getStaticProps = async (
+  context: GetStaticPropsContext<{ slug: string }>
+) => {
+  const { params } = context;
+  const slug = params?.slug ?? "";
   const post = getPostBySlug(
-    params.slug,
+    slug,
     ["slug", "title", "date", "tags", "content"],
     "grad_essay"
   );
@@ -42,7 +53,7 @@ export const getStaticProps = async ({ params }: any) => {
 
   const sitename: SiteInfo = readYaml("meta.yaml");
 
-  const metaprops: MetaProps = {
+  const metaprops: PageMetaProps = {
     title: post.title,
     sitename: sitename.siteinfo.grad_essay.title,
     description: description,
@@ -54,16 +65,29 @@ export const getStaticProps = async ({ params }: any) => {
     twcardtype: "summary_large_image",
   };
 
+  const cardDatas = await linkStorer(post.content);
+
   return {
     props: {
       metaprops,
       post,
       content,
+      cardDatas,
     },
   };
 };
 
-const AllGradEssay: NextPage<Props> = ({ metaprops, post, content }) => {
+const AllGradEssay: NextPage<Props> = ({
+  metaprops,
+  post,
+  content,
+  cardDatas,
+}) => {
+  const { state } = useContext(Context);
+
+  cardDatas.forEach((cardData) => {
+    state.metas.push(cardData);
+  });
   return (
     <div id={Styles.Wrapper}>
       <MyHead {...metaprops} />

@@ -1,16 +1,11 @@
-import { NextPage, InferGetStaticPropsType } from "next";
-import {
-  getAllPosts,
-  getPostTags,
-  replaceMdwithTxt,
-  SiteInfo,
-  readYaml,
-} from "lib/api";
-import { ogpHost } from "lib/ogpprops";
-import MyHead, { MetaProps } from "components/MyHead/MyHead";
-import BlogHeader from "components/BlogHeader/BlogHeader";
-import Tiling from "components/Tiling/Tiling";
-import ArticleMenu, { MenuTab } from "components/ArticleMenu/ArticleMenu";
+import type { NextPage, InferGetStaticPropsType } from "next";
+import { getAllPosts, getPostTags, replaceMdwithTxt, readYaml } from "lib/api";
+import type { PageMetaProps, MenuTab, SiteInfo } from "lib/interface";
+import { ogpHost } from "lib/constant";
+import MyHead from "components/MyHead";
+import BlogHeader from "components/BlogHeader";
+import Tiling from "components/Tiling";
+import ArticleMenu from "components/ArticleMenu";
 import Styles from "styles/blog.module.scss";
 
 const tabs: MenuTab[] = [
@@ -43,7 +38,7 @@ export const getStaticProps = async () => {
 
   const meta: SiteInfo = readYaml("meta.yaml");
 
-  const metaprops: MetaProps = {
+  const metaprops: PageMetaProps = {
     title: meta.siteinfo.blog.title,
     sitename: meta.siteinfo.blog.title,
     description: meta.siteinfo.blog.description,

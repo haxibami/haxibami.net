@@ -1,13 +1,14 @@
 import type { InferGetStaticPropsType, NextPage } from "next";
 import Link from "next/link";
-import { ogpHost } from "lib/ogpprops";
-import MyHead, { MetaProps } from "components/MyHead/MyHead";
+import type { PageMetaProps } from "lib/interface";
+import { ogpHost } from "lib/constant";
+import MyHead from "components/MyHead";
 import Styles from "styles/404.module.scss";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 export const getStaticProps = async () => {
-  const metaprops: MetaProps = {
+  const metaprops: PageMetaProps = {
     title: "404 not found",
     sitename: "haxibami.net",
     description: "The URL you accessed does not exist",

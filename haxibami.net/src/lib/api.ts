@@ -1,31 +1,17 @@
 import fs from "fs";
-import { join, dirname, sep, basename } from "path";
+import { join } from "path";
 import matter from "gray-matter";
+import { PostItem, PostType, SiteInfo } from "./interface";
 import { MdStrip } from "lib/parser";
 import * as yaml from "js-yaml";
 
-export interface BlogItem {
-  slug: string;
-  title: string;
-  date: string;
-  tags: string[];
-  content: string;
-}
-
-export const ArticleType = {
-  Blog: "blog",
-  Grad_Essay: "grad_essay",
-} as const;
-
-export type ArticleType = typeof ArticleType[keyof typeof ArticleType];
-
-export const getArticlesDir = (articletype: ArticleType) => {
-  const ArticlesDir = join(process.cwd(), `src/articles/${articletype}`);
+export const getArticlesDir = (posttype: PostType) => {
+  const ArticlesDir = join(process.cwd(), `src/articles/${posttype}`);
   return ArticlesDir;
 };
 
-export const getPostSlugs = (articletype: ArticleType) => {
-  const allobjects = fs.readdirSync(getArticlesDir(articletype), {
+export const getPostSlugs = (posttype: PostType) => {
+  const allobjects = fs.readdirSync(getArticlesDir(posttype), {
     withFileTypes: true,
   });
   return allobjects
@@ -36,13 +22,13 @@ export const getPostSlugs = (articletype: ArticleType) => {
 export const getPostBySlug = (
   slug: string,
   fields: string[] = [],
-  articletype: ArticleType
+  posttype: PostType
 ) => {
-  const fullPath = join(getArticlesDir(articletype), `${slug}.md`);
+  const fullPath = join(getArticlesDir(posttype), `${slug}.md`);
   const fileContent = fs.readFileSync(fullPath, "utf-8");
   const { data, content } = matter(fileContent);
 
-  const Post: BlogItem = {
+  const Post: PostItem = {
     slug: "",
     title: "",
     date: "",
@@ -67,13 +53,10 @@ export const getPostBySlug = (
   return Post;
 };
 
-export const getAllPosts = (
-  fields: string[] = [],
-  articletype: ArticleType
-) => {
-  const slugs: string[] = getPostSlugs(articletype);
-  const posts: BlogItem[] = slugs
-    .map((slug) => getPostBySlug(slug, fields, articletype))
+export const getAllPosts = (fields: string[] = [], posttype: PostType) => {
+  const slugs: string[] = getPostSlugs(posttype);
+  const posts: PostItem[] = slugs
+    .map((slug) => getPostBySlug(slug, fields, posttype))
     .sort((a, b) => {
       const dateA = Number(a.date);
       const dateB = Number(b.date);
@@ -84,21 +67,21 @@ export const getAllPosts = (
   return posts;
 };
 
-export const getPostTags = (articletype: ArticleType) => {
-  const alltags = getAllPosts(["tags"], articletype);
+export const getPostTags = (posttype: PostType) => {
+  const alltags = getAllPosts(["tags"], posttype);
   let taglist: string[] = [];
   alltags.forEach(
-    (tagset: BlogItem) => (taglist = taglist.concat(tagset.tags))
+    (tagset: PostItem) => (taglist = taglist.concat(tagset.tags))
   );
   const res: string[] = Array.from(new Set(taglist));
 
   return res;
 };
 
-export const getPostsByTag = (tag: string, articletype: ArticleType) => {
-  const stpair: BlogItem[] = getAllPosts(["slug", "tags", "date"], articletype);
+export const getPostsByTag = (tag: string, posttype: PostType) => {
+  const stpair: PostItem[] = getAllPosts(["slug", "tags", "date"], posttype);
   const taggedposts: string[] = [];
-  stpair.forEach((item: BlogItem) => {
+  stpair.forEach((item: PostItem) => {
     if (item.tags.includes(tag)) {
       taggedposts.push(item.slug);
     }
@@ -107,10 +90,10 @@ export const getPostsByTag = (tag: string, articletype: ArticleType) => {
   return taggedposts;
 };
 
-export const getPostsByDate = (date: string, articletype: ArticleType) => {
-  const sdpair: BlogItem[] = getAllPosts(["slug", "date"], articletype);
+export const getPostsByDate = (date: string, posttype: PostType) => {
+  const sdpair: PostItem[] = getAllPosts(["slug", "date"], posttype);
   const dayposts: string[] = [];
-  sdpair.forEach((one: BlogItem) => {
+  sdpair.forEach((one: PostItem) => {
     if (one.date === date) {
       dayposts.push(one.slug);
     }
@@ -119,7 +102,7 @@ export const getPostsByDate = (date: string, articletype: ArticleType) => {
   return dayposts;
 };
 
-export const replaceMdwithTxt = async (post: BlogItem) => {
+export const replaceMdwithTxt = async (post: PostItem) => {
   post.content = await MdStrip(post.content);
   return post;
 };
@@ -134,7 +117,3 @@ export const readYaml = (filename: string) => {
   const content = yaml.load(fs.readFileSync(fullPath, "utf8")) as SiteInfo;
   return content;
 };
-
-export interface SiteInfo {
-  siteinfo: Record<string, Record<string, string>>;
-}

@@ -1,10 +1,11 @@
-import { NextPage, InferGetStaticPropsType } from "next";
+import type { NextPage, InferGetStaticPropsType } from "next";
 import Link from "next/link";
-import { getPostTags, readYaml, SiteInfo } from "lib/api";
-import { ogpHost } from "lib/ogpprops";
-import MyHead, { MetaProps } from "components/MyHead/MyHead";
-import BlogHeader from "components/BlogHeader/BlogHeader";
-import ArticleMenu, { MenuTab } from "components/ArticleMenu/ArticleMenu";
+import { getPostTags, readYaml } from "lib/api";
+import type { PageMetaProps, MenuTab, SiteInfo } from "lib/interface";
+import { ogpHost } from "lib/constant";
+import MyHead from "components/MyHead";
+import BlogHeader from "components/BlogHeader";
+import ArticleMenu from "components/ArticleMenu";
 import Styles from "styles/tags.module.scss";
 
 const tabs: MenuTab[] = [
@@ -25,7 +26,7 @@ export const getStaticProps = async () => {
 
   const meta: SiteInfo = readYaml("meta.yaml");
 
-  const metaprops: MetaProps = {
+  const metaprops: PageMetaProps = {
     title: "タグ一覧",
     sitename: meta.siteinfo.blog.title,
     description: "タグ別記事",

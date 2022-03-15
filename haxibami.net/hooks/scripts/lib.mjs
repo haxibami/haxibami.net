@@ -6,7 +6,7 @@ import { unified } from "unified";
 import remarkParse from "remark-parse";
 import stripMarkdown from "strip-markdown";
 import remarkGfm from "remark-gfm";
-import emoji from "remark-emoji";
+import remarkGemoji from "remark-gemoji";
 import remarkMath from "remark-math";
 import remarkJaruby from "remark-jaruby";
 import remarkRehype from "remark-rehype";
@@ -123,7 +123,7 @@ export const MdToHtml = (md) => {
       remove: ["list", "blockquote", "image", "code"],
     })
     .use(remarkGfm)
-    .use(emoji)
+    .use(remarkGemoji)
     .use(remarkMath)
     .use(remarkJaruby)
     .use(remarkRehype)

@@ -58,9 +58,11 @@
 }
 
 @mixin colored_link {
-  a {
+  p {
+    a {
     color: var.$blog_link;
     text-decoration: underline;
+    }
   }
 }
 

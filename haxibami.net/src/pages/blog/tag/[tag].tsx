@@ -1,17 +1,21 @@
-import { NextPage, InferGetStaticPropsType } from "next";
+import type {
+  NextPage,
+  InferGetStaticPropsType,
+  GetStaticPropsContext,
+} from "next";
 import {
   getPostBySlug,
   getPostsByTag,
   getPostTags,
   replaceMdwithTxt,
   readYaml,
-  SiteInfo,
 } from "lib/api";
-import { ogpHost } from "lib/ogpprops";
-import MyHead, { MetaProps } from "components/MyHead/MyHead";
-import BlogHeader from "components/BlogHeader/BlogHeader";
-import Tiling from "components/Tiling/Tiling";
-import ArticleMenu from "components/ArticleMenu/ArticleMenu";
+import type { PageMetaProps, SiteInfo } from "lib/interface";
+import { ogpHost } from "lib/constant";
+import MyHead from "components/MyHead";
+import BlogHeader from "components/BlogHeader";
+import Tiling from "components/Tiling";
+import ArticleMenu from "components/ArticleMenu";
 import Styles from "styles/[tag].module.scss";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
@@ -31,8 +35,12 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async ({ params }: any) => {
-  const taggedblogs: string[] = getPostsByTag(params.tag, "blog");
+export const getStaticProps = async (
+  context: GetStaticPropsContext<{ tag: string }>
+) => {
+  const { params } = context;
+  const tag = params?.tag ?? "";
+  const taggedblogs: string[] = getPostsByTag(tag, "blog");
   const sitename: SiteInfo = readYaml("meta.yaml");
 
   const allBlogsPre = taggedblogs.map((slug) => {
@@ -50,14 +58,12 @@ export const getStaticProps = async ({ params }: any) => {
     })
   );
 
-  const metaprops: MetaProps = {
-    title: `タグ: #${params.tag}の記事`,
+  const metaprops: PageMetaProps = {
+    title: `タグ: #${tag}の記事`,
     sitename: sitename.siteinfo.blog.title,
-    description: encodeURI(`タグ: #${params.tag}を付与された記事の一覧`),
-    ogImageUrl: encodeURI(
-      `${ogpHost}/api/ogp?title=タグ: %23${params.tag}の記事`
-    ),
-    pageRelPath: `blog/tag/${params.tag}`,
+    description: encodeURI(`タグ: #${tag}を付与された記事の一覧`),
+    ogImageUrl: encodeURI(`${ogpHost}/api/ogp?title=タグ: %23${tag}の記事`),
+    pageRelPath: `blog/tag/${tag}`,
     pagetype: "article",
     twcardtype: "summary_large_image",
   };
@@ -82,8 +88,8 @@ const TaggedBlogs: NextPage<Props> = ({
           contentType={"blog"}
           tabs={[
             {
-              name: `#${params.tag}`,
-              link: `tag/${params.tag}`,
+              name: `#${params?.tag}`,
+              link: `tag/${params?.tag}`,
             },
           ]}
           focus={0}

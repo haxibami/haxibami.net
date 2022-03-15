@@ -1,15 +1,10 @@
-import { ArticleType } from "lib/api";
 import Link from "next/link";
 import React from "react";
 import Styles from "./ArticleMenu.module.scss";
-
-export interface MenuTab {
-  name: string;
-  link: string;
-}
+import { PostType, MenuTab } from "lib/interface";
 
 interface ArticleMenuProps {
-  contentType: ArticleType;
+  contentType: PostType;
   tabs: MenuTab[];
   focus: number;
 }

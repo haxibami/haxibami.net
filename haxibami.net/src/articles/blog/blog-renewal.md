@@ -5,7 +5,7 @@ date: "20220220"
 tags: ["tech", "web", "nextjs"]
 ---
 
-以前から haxibami.net 自体は公開していたが、[謎の木](https://www.haxibami.net)が生えているだけの自己紹介サイトでしかなかった。今回は`/blog`以下にブログ機能を付けたので、その話。
+以前から haxibami.net 自体は公開していたが、[謎の木](/)が生えているだけの自己紹介サイトでしかなかった。今回は`/blog`以下にブログ機能を付けたので、その話。
 
 ## 基盤
 
@@ -52,7 +52,9 @@ tags: ["tech", "web", "nextjs"]
 | たとえば | このように |
 | 要素を   | 増やす     |
 
-https://www.haxibami.net みたいな生のリンクも置けるし
+https://www.haxibami.net
+
+みたいな生のリンクも置けるし
 
 - こうやって
   - リストが書ける。さらに、[^1]
@@ -65,7 +67,9 @@ https://www.haxibami.net みたいな生のリンクも置けるし
 | たとえば | このように |
 | 要素を   | 増やす     |
 
-https://www.haxibami.net みたいな生のリンクも置けるし
+https://www.haxibami.net
+
+みたいな生のリンクも置けるし
 
 - こうやって
   - リストが書ける。さらに、[^1]

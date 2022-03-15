@@ -1,33 +1,8 @@
 import Head from "next/head";
 import React from "react";
+import { PageMetaProps } from "lib/interface";
 
-export interface MetaProps {
-  title: string;
-  sitename: string;
-  description: string;
-  ogImageUrl: string;
-  pageRelPath: string;
-  pagetype: PageType;
-  twcardtype: TwCardType;
-}
-
-// page type in twitter card: article / website
-const PageType = {
-  Article: "article",
-  Website: "website",
-} as const;
-
-type PageType = typeof PageType[keyof typeof PageType];
-
-// twitter card type: summary / summary_large_image
-const TwCardType = {
-  Summary: "summary",
-  Summary_Large_Image: "summary_large_image",
-} as const;
-
-type TwCardType = typeof TwCardType[keyof typeof TwCardType];
-
-const MyHead: React.VFC<MetaProps> = (props: MetaProps) => {
+const MyHead: React.VFC<PageMetaProps> = (props) => {
   return (
     <Head>
       <title>{props.title}</title>

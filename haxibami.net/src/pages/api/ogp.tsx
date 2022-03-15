@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import ReactDomServer from "react-dom/server";
 import path from "path";
 import fs from "fs";
-import OgpImage, { OgpInfo } from "components/OgpImage/OgpImage";
+import OgpImage, { OgpInfo } from "components/OgpImage";
 
 // full path resolve
 const baseFullPath = path.resolve("./");

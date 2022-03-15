@@ -1,10 +1,10 @@
 import Link from "next/link";
 import React from "react";
-import { BlogItem } from "lib/api";
+import type { PostItem } from "lib/interface";
 import Styles from "./Tiling.module.scss";
 
 interface TilingInfo {
-  allPosts: BlogItem[];
+  allPosts: PostItem[];
   contentTop: string;
 }
 
@@ -19,13 +19,6 @@ const Tiling: React.VFC<TilingInfo> = (props) => {
           >
             <a>
               <li className={Styles.ArticleTile} key={post.slug}>
-                {/*<Image
-                    className={Styles.ArticleTileIcon}
-                    src="/ogpicon.webp"
-                    alt="haxibami logo"
-                    width={100}
-                    height={100}
-                  />*/}
                 <div className={Styles.TileDate}>
                   <span>{post.date}</span>
                 </div>

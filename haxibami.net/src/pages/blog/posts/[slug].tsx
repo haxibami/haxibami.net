@@ -1,27 +1,34 @@
-import { NextPage, InferGetStaticPropsType } from "next";
+import type {
+  NextPage,
+  InferGetStaticPropsType,
+  GetStaticPropsContext,
+} from "next";
 import Link from "next/link";
+import Context from "lib/store";
 import {
   getAllPosts,
   getPostBySlug,
   replaceMdwithTxt,
   readYaml,
-  SiteInfo,
 } from "lib/api";
 import { MdToHtml, HtmlToReact } from "lib/parser";
-import { ogpHost } from "lib/ogpprops";
-import MyHead, { MetaProps } from "components/MyHead/MyHead";
+import type { PageMetaProps, SiteInfo } from "lib/interface";
+import linkStorer from "lib/link-widget-store";
+import { ogpHost } from "lib/constant";
+import MyHead from "components/MyHead";
 import Styles from "styles/[slug].module.scss";
+import { useContext } from "react";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 export const getStaticPaths = async () => {
-  const blogs = getAllPosts(["slug"], "blog");
+  const posts = getAllPosts(["slug"], "blog");
 
   return {
-    paths: blogs.map((blog) => {
+    paths: posts.map((post) => {
       return {
         params: {
-          slug: blog.slug,
+          slug: post.slug,
         },
       };
     }),
@@ -29,43 +36,56 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async ({ params }: any) => {
-  const blog = getPostBySlug(
-    params.slug,
+export const getStaticProps = async (
+  context: GetStaticPropsContext<{ slug: string }>
+) => {
+  const { params } = context;
+  const slug = params?.slug ?? "";
+  const post = getPostBySlug(
+    slug,
     ["slug", "title", "date", "tags", "content"],
     "blog"
   );
 
-  const content: string = await MdToHtml(blog.content);
+  const content: string = await MdToHtml(post.content);
 
-  const description: string = (await replaceMdwithTxt(blog)).content;
+  const description: string = (await replaceMdwithTxt(post)).content;
 
   const sitename: SiteInfo = readYaml("meta.yaml");
 
-  const metaprops: MetaProps = {
-    title: blog.title,
+  const metaprops: PageMetaProps = {
+    title: post.title,
     sitename: sitename.siteinfo.blog.title,
     description: description,
     ogImageUrl: encodeURI(
-      `${ogpHost}/api/ogp?title=${blog.title}&date=${blog.date}`
+      `${ogpHost}/api/ogp?title=${post.title}&date=${post.date}`
     ),
-    pageRelPath: `blog/posts/${blog.slug}`,
+    pageRelPath: `blog/posts/${post.slug}`,
     pagetype: "article",
     twcardtype: "summary_large_image",
   };
 
+  const cardDatas = await linkStorer(post.content);
+
   return {
     props: {
       metaprops,
-      blog,
+      post,
       content,
+      cardDatas,
     },
   };
 };
 
-const AllBlog: NextPage<Props> = ({ metaprops, blog, content }) => {
+const AllBlog: NextPage<Props> = ({ metaprops, post, content, cardDatas }) => {
+  const { state } = useContext(Context);
+
+  cardDatas.forEach((cardData) => {
+    state.metas.push(cardData);
+  });
+
   return (
-    <div id={Styles.Wrapper} key={blog.slug}>
+    <div id={Styles.Wrapper} key={post.slug}>
       <MyHead {...metaprops} />
       <header>
         <nav>
@@ -76,8 +96,8 @@ const AllBlog: NextPage<Props> = ({ metaprops, blog, content }) => {
           </span>
         </nav>
         <ul>
-          <span className={Styles.Date}>#{blog.date}</span>
-          {blog.tags.map((tag) => (
+          <span className={Styles.Date}>#{post.date}</span>
+          {post.tags.map((tag) => (
             <span key={tag}>
               <Link href={`/blog/tag/${tag}`}>
                 <a>
@@ -89,7 +109,7 @@ const AllBlog: NextPage<Props> = ({ metaprops, blog, content }) => {
         </ul>
       </header>
       <main>
-        <h1 id={Styles.Title}>{blog.title}</h1>
+        <h1 id={Styles.Title}>{post.title}</h1>
         <article>{HtmlToReact(content)}</article>
       </main>
       <footer> </footer>

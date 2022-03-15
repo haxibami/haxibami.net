@@ -2,13 +2,14 @@ import { join } from "path";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
-import emoji from "remark-emoji";
+import remarkGemoji from "remark-gemoji";
 import remarkMath from "remark-math";
 import remarkJaruby from "remark-jaruby";
 import rehypeKatex from "rehype-katex";
 import * as shiki from "shiki";
 import rehypeShiki from "@leafac/rehype-shiki";
 import remarkRehype from "remark-rehype";
+import type { Options as RemarkRehypeOptions } from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
 import rehypeReact from "rehype-react";
 import type { Options as RehypeReactOptions } from "rehype-react";
@@ -17,6 +18,9 @@ import stripMarkdown from "strip-markdown";
 import remarkStringify from "remark-stringify";
 import React from "react";
 import MyLink from "components/MyLink";
+import LinkWidget from "components/LinkWidget";
+import { remarkLinkWidget, extLinkHandler } from "./remark-link-widget";
+import type { LinkWidgetProps } from "components/LinkWidget";
 
 // Get shiki theme file (`src/styles/shiki/${themename}.json`) full path
 const getThemePath = (themename: string) =>
@@ -28,10 +32,15 @@ export const MdToHtml = async (md: string) => {
   const result = unified()
     .use(remarkParse)
     .use(remarkGfm)
-    .use(emoji)
+    .use(remarkGemoji)
     .use(remarkMath)
     .use(remarkJaruby)
-    .use(remarkRehype)
+    .use(remarkLinkWidget)
+    .use(remarkRehype, {
+      handlers: {
+        extlink: extLinkHandler,
+      },
+    } as RemarkRehypeOptions)
     .use(rehypeKatex)
     .use(rehypeShiki, {
       highlighter: await shiki.getHighlighter({ theme: myShikiTheme }),
@@ -51,7 +60,13 @@ export const HtmlToReact = (html: string) => {
     .use(rehypeReact, {
       createElement: React.createElement,
       components: {
-        a: MyLink,
+        a: ({ children, href }) => {
+          href ??= "/404";
+          return MyLink({ children, href });
+        },
+        extlink: ({ children }: LinkWidgetProps) => {
+          return LinkWidget({ children });
+        },
       },
     } as RehypeReactOptions)
     .processSync(html).result;

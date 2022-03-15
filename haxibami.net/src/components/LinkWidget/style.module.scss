@@ -1,0 +1,63 @@
+@use "styles/variable" as var;
+
+.Wrapper {
+  max-width: 500px;
+  height: 100px;
+  a {
+    text-decoration: none;
+  }
+  transition: background 0.2s;
+  transition-timing-function: cubic-bezier(.4,0,.2,1);
+  &:hover {
+    background: var.$white;
+  }
+}
+
+.Widget {
+  width: 100%;
+  height: 100%;
+  font-size: 1rem;
+  border: 1px solid var.$line;
+  border-radius: 5px;
+  display: flex;
+  overflow: hidden;
+  margin: 1em 0px;
+  .Image {
+    margin-left: auto;
+  }
+  img {
+    object-fit: cover;
+  }
+}
+
+.Main {
+  padding: 1rem;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.Title {
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
+
+.Description {
+  font-size: 80%;
+  color: var.$grad-2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.Host {
+  font-size: 80%;
+  color: var.$grad-1;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}

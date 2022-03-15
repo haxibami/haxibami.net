@@ -53,7 +53,7 @@ const Tree: React.VFC = () => {
       context.scale(scale, scale);
       context.translate(width / 2, height / 2);
 
-      let ArcArgs: {
+      /*  let ArcArgs: {
         x: number;
         y: number;
         radius: number;
@@ -61,7 +61,7 @@ const Tree: React.VFC = () => {
         end: number;
         color: string;
         width: number;
-      };
+      };*/
 
       const Arc = (
         x: number,
@@ -102,7 +102,7 @@ const Tree: React.VFC = () => {
         context.rotate((-Math.PI * deg) / 180);
       };
 
-      const Spot = (
+      /*const Spot = (
         startx: number,
         starty: number,
         secondx: number,
@@ -120,7 +120,7 @@ const Tree: React.VFC = () => {
         context.lineTo(lastx, lasty);
         context.fillStyle = color;
         context.fill();
-      };
+      };*/
 
       const arcs: [number, number, number, number, number, string, number][] = [
         [0, 0, 100, -90, 115, "#706570", 5],
@@ -155,7 +155,7 @@ const Tree: React.VFC = () => {
         [50, 50, 230, "#9986bf", 5],
       ];
 
-      const spots: [
+      /*const spots: [
         number,
         number,
         number,
@@ -188,7 +188,7 @@ const Tree: React.VFC = () => {
           height / 2,
           "#d2ced9",
         ],
-      ];
+      ];*/
 
       //      for (let i = 0; i < spots.length; i++) {
       //        Spot(...spots[i]);
@@ -212,10 +212,7 @@ const Tree: React.VFC = () => {
       <canvas
         id="canvas"
         ref={canvasRef}
-        //        width={1000}
-        //        height={1000}
         style={{
-          //          border: '2px solid #000'
           background: "#d2ced9",
           border: "none",
           margin: 0,

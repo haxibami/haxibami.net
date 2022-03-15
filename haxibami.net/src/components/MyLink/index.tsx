@@ -1,9 +1,12 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
-const MyLink: React.VFC<{
-  children: string;
+interface LinkProps {
+  children: ReactNode;
   href: string;
-}> = ({ children, href }: { children: string; href: string }) =>
+}
+
+const MyLink: React.VFC<LinkProps> = ({ children, href }) =>
   href.startsWith("/") || href === "" ? (
     <Link href={href}>
       <a>{children}</a>

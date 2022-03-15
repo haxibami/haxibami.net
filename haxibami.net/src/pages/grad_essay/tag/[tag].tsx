@@ -1,17 +1,21 @@
-import { NextPage, InferGetStaticPropsType } from "next";
+import type {
+  NextPage,
+  InferGetStaticPropsType,
+  GetStaticPropsContext,
+} from "next";
 import {
   getPostBySlug,
   getPostsByTag,
   getPostTags,
   replaceMdwithTxt,
   readYaml,
-  SiteInfo,
 } from "lib/api";
-import { ogpHost } from "lib/ogpprops";
-import MyHead, { MetaProps } from "components/MyHead/MyHead";
-import BlogHeader from "components/BlogHeader/BlogHeader";
-import Tiling from "components/Tiling/Tiling";
-import ArticleMenu from "components/ArticleMenu/ArticleMenu";
+import { PageMetaProps, SiteInfo } from "lib/interface";
+import { ogpHost } from "lib/constant";
+import MyHead from "components/MyHead";
+import BlogHeader from "components/BlogHeader";
+import Tiling from "components/Tiling";
+import ArticleMenu from "components/ArticleMenu";
 import Styles from "styles/[tag].module.scss";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
@@ -31,8 +35,12 @@ export const getStaticPaths = async () => {
   };
 };
 
-export const getStaticProps = async ({ params }: any) => {
-  const taggedposts: string[] = getPostsByTag(params.tag, "grad_essay");
+export const getStaticProps = async (
+  context: GetStaticPropsContext<{ tag: string }>
+) => {
+  const { params } = context;
+  const tag = params?.tag ?? "";
+  const taggedposts: string[] = getPostsByTag(tag, "grad_essay");
   const sitename: SiteInfo = readYaml("meta.yaml");
 
   const allPostsPre = taggedposts.map((slug) => {
@@ -50,14 +58,12 @@ export const getStaticProps = async ({ params }: any) => {
     })
   );
 
-  const metaprops: MetaProps = {
-    title: `タグ: #${params.tag}の卒業文集`,
+  const metaprops: PageMetaProps = {
+    title: `タグ: #${tag}の卒業文集`,
     sitename: sitename.siteinfo.grad_essay.title,
-    description: `タグ: #${params.tag}を付与されたセクションの一覧`,
-    ogImageUrl: encodeURI(
-      `${ogpHost}/api/ogp?title=タグ: %23${params.tag}の卒業文集`
-    ),
-    pageRelPath: `grad_essay/tag/${params.tag}`,
+    description: `タグ: #${tag}を付与されたセクションの一覧`,
+    ogImageUrl: encodeURI(`${ogpHost}/api/ogp?title=タグ: %23${tag}の卒業文集`),
+    pageRelPath: `grad_essay/tag/${tag}`,
     pagetype: "article",
     twcardtype: "summary_large_image",
   };
@@ -82,8 +88,8 @@ const TaggedPosts: NextPage<Props> = ({
           contentType={"grad_essay"}
           tabs={[
             {
-              name: `#${params.tag}`,
-              link: `tag/${params.tag}`,
+              name: `#${params?.tag}`,
+              link: `tag/${params?.tag}`,
             },
           ]}
           focus={0}
