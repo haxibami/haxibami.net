@@ -53,7 +53,16 @@ const linkStorer = async (content: string) => {
             const pro = links[i].getAttribute("rel");
             if (typeof pro == "string") {
               if (pro.match("icon")) {
-                metaData.icon = links[i].getAttribute("href") ?? metaData.image;
+                const tmp = links[i].getAttribute("href") ?? metaData.image;
+                if (tmp.indexOf("/") == 0) {
+                  const host =
+                    metaData.url.indexOf("/", 8) != -1
+                      ? metaData.url.slice(8, metaData.url.indexOf("/", 8))
+                      : metaData.url.slice(8);
+                  metaData.icon = "https://" + host + tmp;
+                } else {
+                  metaData.icon = tmp;
+                }
               }
             }
           }

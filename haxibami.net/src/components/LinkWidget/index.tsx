@@ -19,7 +19,9 @@ const LinkWidget: React.VFC<LinkWidgetProps> = ({ children }) => {
               <div className={Styles.Description}>{target.description}</div>
               <div className={Styles.Host}>
                 <img src={target.icon} height={15} width={15} />
-                {target.url.slice(8, target.url.indexOf("/", 8))}
+                {target.url.indexOf("/", 8) != -1
+                  ? target.url.slice(8, target.url.indexOf("/", 8))
+                  : target.url.slice(8)}
               </div>
             </div>
             <div className={Styles.Image}>

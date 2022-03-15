@@ -25,11 +25,24 @@ TypeScript はまったくもってよくわからないが、型チェックに
 
 われわれには先人の記憶というものがあり、すなわちこの手のサイトは記事管理が億劫になった時点で**エタる**。放置された「なんたらの部屋」、消えて還らない借りドメイン、むなしく刻む入室カウンターを眺めるたびに、せめて記事くらいは慣れたファイル形式で楽に引き継ぎたいと思うようになった。そういうわけで Markdown（内容管理） + tsx（テンプレートエンジン）。Markdown ならそう簡単には廃れないだろうし、そのまま別サービスにも投げ込める。いまはヘッドレス CMS とかいうのもあるらしい（全然知らない）が、個人レベルでは Git Repo ひとつで管理できたほうがやっぱり楽だ。
 
-Next.js から Markdown を扱う方法は[公式](https://nextjs.org/blog/markdown)でも取り上げられている。具体的には`remark`や`rehype`関連のパッケージを使うのだが、この remark と rehype がすごい。ともに unified というインターフェースの傘下にあって、このもとで`mdast`（Markdown の構文木）や`hast`（HTML の構文木）を相互変換したり、特定の要素に対してカスタム処理を実行できる。関連プラグインも充実しており、やりたいことが既存のプロジェクトの組み合わせで実現できてしまう。以下、使用したツールと実現できた機能を書いておく。
+Next.js から Markdown を扱う方法は[公式](https://nextjs.org/blog/markdown)でも取り上げられている。具体的には`remark`や`rehype`関連のパッケージを使うのだが、この remark と rehype がすごい。ともに unified というインターフェースの傘下にあって、このもとで`mdast`（Markdown の構文木）や`hast`（HTML の構文木）を相互変換したり、特定の要素に対してカスタム処理を実行できる。関連プラグインも充実しており、やりたいことが既存のプロジェクトの組み合わせで実現できてしまう。
+
+ただその豊かさゆえに（？）選択肢が多く、同じことを実装する方法が何通りもある。たとえば今回のように Markdown から Next.js ページを生成するなら、主に以下のような手法がある。
+
+- `unified`上で実行するもの
+  - `remark-parse` + `remark-rehype` + `rehype-stringify` (+ `dangerouslySetInnerHTML`)
+  - `remark-parse` + `remark-rehype` + `rehype-react`
+- そうでないもの（上の処理が複合されたプラグイン）
+  - `remark` + `remark-html`
+  - `react-remark`
+
+それぞれに利点があるようだが、自分は柔軟にプラグインを組み合わせたい、かつ React コンポーネントと融和させたいことを踏まえて上から二番目を採った。以下、使用したツールと実現できた機能を書いておく。
 
 #### Frontmatter
 
-[grey-matter](https://github.com/jonschlinkert/gray-matter)で取り出した。これは unified の処理ではない。
+`grey-matter`で取り出した。これは unified の処理ではない。
+
+https://github.com/jonschlinkert/gray-matter
 
 ```md
 ---
@@ -44,7 +57,9 @@ tags: ["tech", "web", "nextjs"]
 
 #### GitHub Flavored Markdown
 
-[`remark-gfm`](https://github.com/remarkjs/remark-gfm)で対応。
+`remark-gfm`で対応。
+
+https://github.com/remarkjs/remark-gfm
 
 ```md
 | 表を     | 作る       |
@@ -78,21 +93,19 @@ https://www.haxibami.net
 
 #### 絵文字表示
 
-[`remark-emoji`](https://github.com/rhysd/remark-emoji)で変換。
+`remark-gemoji`で変換。
 
-```md
-:v:
-```
+https://github.com/remarkjs/remark-gemoji
 
-が、
-
-:v:
-
-になる。
+`:v:`が :v: になる。
 
 #### 数式表示
 
-[`remark-math`](https://github.com/remarkjs/remark-math)と[`rehype-katex`](https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex)を噛ませる。
+`remark-math`と`rehype-katex`を噛ませる。
+
+https://github.com/remarkjs/remark-math
+
+https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex
 
 ```md
 $$
@@ -131,7 +144,9 @@ export default function Document() {
 
 #### ルビ
 
-既に[remark-ruby](https://github.com/laysent/remark-ruby)というパッケージがルビを実装しているが、メンテナンスがされておらず依存関係と API が古くなっていた（主に`remark-parse`まわり）。そのため別パッケージ（[remark-jaruby](https://github.com/haxibami/remark-jaruby)）を実装した。
+既に[remark-ruby](https://github.com/laysent/remark-ruby)というパッケージがルビを実装しているが、メンテナンスがされておらず依存関係と API が古くなっていた（主に`remark-parse`まわり）。そのため別パッケージ（`remark-jaruby`）を実装した。
+
+https://github.com/haxibami/remark-jaruby
 
 元のパッケージ自体が`remark-parse`の中身である[micromark](https://github.com/micromark/micromark)に介入して処理を行っていたので、パーサ部分（[micromark-extension-jaruby](https://github.com/haxibami/micromark-extension-jaruby)）、構文木操作部分（[mdast-util-jaruby](https://github.com/haxibami/mdast-util-jaruby)）の拡張機能に分割し、これらを`remark-jaruby`から参照している。
 
@@ -143,33 +158,62 @@ export default function Document() {
 
 昨日午後、{†聖剣†}^(エクスカリバー)を振り回す{全裸中年男性}^(無敵の人)が出現し……
 
+#### リンクカード
+
+外部サイトのリンクを貼ったときに、モコッとしたウィジェットが出るあれ。その表示**する**側。
+
+https://zenn.dev/tomi/articles/2021-03-22-blog-card
+
+実装は :point_up_2: を全面的に参考にしたが、細かい部分がちょっと違っている。
+
+##### remark-link-widget プラグイン
+
+まず、変換が行われる対象を限定した。元の記事では mdast 中の`link`ノードすべてに対し変換試行を行っていたが、こちらでは変換したい対象（空行に挟まれた裸のリンク）について、`extlink`という mdast ノード、及び同名の HTML タグを導入し、これに該当するものについて`rehype-react`の`components`オプションを用いて変換処理を行っている。
+
+ノードの操作のため、内部では unified の Transformer プラグインが動作している。これについては
+
+https://zenn.dev/januswel/articles/745787422d425b01e0c1
+
+を参考にした。
+
 #### 内容プレビュー
 
-お気づきかはわからないが、[トップ](https://haxibami.net/blog)の記事タイルには内容のプレビューを表示している。このために生の Markdown を流し込むのも気が引けたので、なんとかして plaintext 形式に変換できないかと考えていたら、[`strip-markdown`](https://github.com/remarkjs/strip-markdown)というのがあった。これで見出し・引用等を除いた冒頭 200 字を抽出している。
+お気づきかはわからないが、[トップ](https://haxibami.net/blog)の記事タイルには内容のプレビューを表示している。このために生の Markdown を流し込むのも気が引けたので、なんとかして plaintext 形式に変換できないかと考えていたら、`strip-markdown`というのがあった。これで見出し・引用等を除いた冒頭 200 字を抽出している。
+
+https://github.com/remarkjs/strip-markdown
 
 #### シンタックスハイライト
 
 最初は[prism.js](https://prismjs.com)を`babel-plugin-prismjs`から使っていたが、使えるカラースキームがあまりに少なかったため[shiki](https://shiki.matsu.io)に変更した。公式サイトにある通りこちらは VSCode のカラースキームファイルが流用できる。せっかくなので自作の[urara-vscode](https://github.com/haxibami/urara-vscode)を使用してみた。
 
+https://github.com/shikijs/shiki
+
 以上を合わせたメソッドチェーンが以下。
 
 ```ts
-// lib/parser.ts
-
 import { join } from "path";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
-import emoji from "remark-emoji";
+import remarkGemoji from "remark-gemoji";
 import remarkMath from "remark-math";
 import remarkJaruby from "remark-jaruby";
 import rehypeKatex from "rehype-katex";
 import * as shiki from "shiki";
 import rehypeShiki from "@leafac/rehype-shiki";
 import remarkRehype from "remark-rehype";
+import type { Options as RemarkRehypeOptions } from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
+import rehypeReact from "rehype-react";
+import type { Options as RehypeReactOptions } from "rehype-react";
+import rehypeParse from "rehype-parse";
 import stripMarkdown from "strip-markdown";
 import remarkStringify from "remark-stringify";
+import React from "react";
+import MyLink from "components/MyLink";
+import LinkWidget from "components/LinkWidget";
+import { remarkLinkWidget, extLinkHandler } from "./remark-link-widget";
+import type { LinkWidgetProps } from "components/LinkWidget";
 
 // Get shiki theme file (`src/styles/shiki/${themename}.json`) full path
 const getThemePath = (themename: string) =>
@@ -181,10 +225,15 @@ export const MdToHtml = async (md: string) => {
   const result = unified()
     .use(remarkParse)
     .use(remarkGfm)
-    .use(emoji)
+    .use(remarkGemoji)
     .use(remarkMath)
     .use(remarkJaruby)
-    .use(remarkRehype)
+    .use(remarkLinkWidget)
+    .use(remarkRehype, {
+      handlers: {
+        extlink: extLinkHandler,
+      },
+    } as RemarkRehypeOptions)
     .use(rehypeKatex)
     .use(rehypeShiki, {
       highlighter: await shiki.getHighlighter({ theme: myShikiTheme }),
@@ -193,6 +242,28 @@ export const MdToHtml = async (md: string) => {
     .processSync(md);
 
   return result.toString();
+};
+
+// Convert HTML to React Component
+export const HtmlToReact = (html: string) => {
+  const result = unified()
+    .use(rehypeParse, {
+      fragment: true,
+    })
+    .use(rehypeReact, {
+      createElement: React.createElement,
+      components: {
+        a: ({ children, href }) => {
+          href ??= "/404";
+          return MyLink({ children, href });
+        },
+        extlink: ({ children }: LinkWidgetProps) => {
+          return LinkWidget({ children });
+        },
+      },
+    } as RehypeReactOptions)
+    .processSync(html).result;
+  return result;
 };
 
 // Convert Markdown to plaintext
@@ -231,13 +302,15 @@ export const MdStrip = async (md: string) => {
 > 愛城華恋は 舞台に一人  
 > 愛城華恋は 次の舞台へ
 
-[わかります](https://cinema.revuestarlight.com)。:giraffe_face:
+[わかります](https://cinema.revuestarlight.com)。:giraffe:
+
+https://cinema.revuestarlight.com/
 
 以上の処理で、はてブや Qiita、Zenn あたりと似た書き心地になった。
 
 ### 動的 OGP 画像の自動生成
 
-ページをシェアしたときにただのベタ貼りリンクにならず、モコッとタイルが生えてくるあれ。自分は Vercel のサーバレス関数機能を使って
+外部サイトのリンクを貼ったときに、モコッとしたウィジェットが出るあれ。今度は表示**させる**側。自分は Vercel のサーバレス関数機能を使って
 
 1. ヘッドレス Chromium を起動
 2. クエリパラメータ（記事タイトル・更新日）に応じた React コンポーネントを生成
@@ -585,6 +658,7 @@ export default () => {
 ## TODO
 
 - [x] ルビの実装（2022/03/06）
-- [x] RSS, Atom 対応（2022/03/10）
-- [ ] 外部リンクのカード化
+- [x] フィード（RSS, Atom）対応（2022/03/10）
+- [x] 外部リンクのカード化（2022/03/15）
+- [ ] Twitter コンテンツの静的埋め込み
 - [ ] Mermaid のサポート

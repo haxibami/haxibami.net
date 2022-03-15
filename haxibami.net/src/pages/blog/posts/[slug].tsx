@@ -81,7 +81,9 @@ const AllBlog: NextPage<Props> = ({ metaprops, post, content, cardDatas }) => {
   const { state } = useContext(Context);
 
   cardDatas.forEach((cardData) => {
-    state.metas.push(cardData);
+    if (state.metas.indexOf(cardData) == -1) {
+      state.metas.push(cardData);
+    }
   });
 
   return (
