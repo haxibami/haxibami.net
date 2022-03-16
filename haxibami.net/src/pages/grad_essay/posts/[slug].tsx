@@ -4,7 +4,6 @@ import type {
   GetStaticPropsContext,
 } from "next";
 import Link from "next/link";
-import Context from "lib/store";
 import {
   getAllPosts,
   getPostBySlug,
@@ -13,11 +12,10 @@ import {
 } from "lib/api";
 import type { PageMetaProps, SiteInfo } from "lib/interface";
 import { ogpHost } from "lib/constant";
-import { MdToHtml, HtmlToReact } from "lib/parser";
+import { MdToHtml } from "lib/parser";
+import { HtmlToReact } from "lib/rehype-react";
 import MyHead from "components/MyHead";
 import Styles from "styles/[slug].module.scss";
-import { useContext } from "react";
-import linkStorer from "lib/link-widget-store";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
@@ -65,29 +63,16 @@ export const getStaticProps = async (
     twcardtype: "summary_large_image",
   };
 
-  const cardDatas = await linkStorer(post.content);
-
   return {
     props: {
       metaprops,
       post,
       content,
-      cardDatas,
     },
   };
 };
 
-const AllGradEssay: NextPage<Props> = ({
-  metaprops,
-  post,
-  content,
-  cardDatas,
-}) => {
-  const { state } = useContext(Context);
-
-  cardDatas.forEach((cardData) => {
-    state.metas.push(cardData);
-  });
+const AllGradEssay: NextPage<Props> = ({ metaprops, post, content }) => {
   return (
     <div id={Styles.Wrapper}>
       <MyHead {...metaprops} />

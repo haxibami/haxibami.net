@@ -4,20 +4,19 @@ import type {
   GetStaticPropsContext,
 } from "next";
 import Link from "next/link";
-import Context from "lib/store";
+//import Context from "lib/store";
 import {
   getAllPosts,
   getPostBySlug,
   replaceMdwithTxt,
   readYaml,
 } from "lib/api";
-import { MdToHtml, HtmlToReact } from "lib/parser";
+import { MdToHtml } from "lib/parser";
+import { HtmlToReact } from "lib/rehype-react";
 import type { PageMetaProps, SiteInfo } from "lib/interface";
-import linkStorer from "lib/link-widget-store";
 import { ogpHost } from "lib/constant";
 import MyHead from "components/MyHead";
 import Styles from "styles/[slug].module.scss";
-import { useContext } from "react";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
@@ -47,9 +46,9 @@ export const getStaticProps = async (
     "blog"
   );
 
-  const content: string = await MdToHtml(post.content);
+  const content = await MdToHtml(post.content);
 
-  const description: string = (await replaceMdwithTxt(post)).content;
+  const description = (await replaceMdwithTxt(post)).content;
 
   const sitename: SiteInfo = readYaml("meta.yaml");
 
@@ -65,27 +64,16 @@ export const getStaticProps = async (
     twcardtype: "summary_large_image",
   };
 
-  const cardDatas = await linkStorer(post.content);
-
   return {
     props: {
       metaprops,
       post,
       content,
-      cardDatas,
     },
   };
 };
 
-const AllBlog: NextPage<Props> = ({ metaprops, post, content, cardDatas }) => {
-  const { state } = useContext(Context);
-
-  cardDatas.forEach((cardData) => {
-    if (state.metas.indexOf(cardData) == -1) {
-      state.metas.push(cardData);
-    }
-  });
-
+const AllBlog: NextPage<Props> = ({ metaprops, post, content }) => {
   return (
     <div id={Styles.Wrapper} key={post.slug}>
       <MyHead {...metaprops} />

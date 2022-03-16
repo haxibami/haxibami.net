@@ -158,7 +158,7 @@ https://github.com/haxibami/remark-jaruby
 
 昨日午後、{†聖剣†}^(エクスカリバー)を振り回す{全裸中年男性}^(無敵の人)が出現し……
 
-#### リンクカード
+#### ウィジェット（リンクカード）
 
 外部サイトのリンクを貼ったときに、モコッとしたウィジェットが出るあれ。その表示**する**側。
 
@@ -166,15 +166,37 @@ https://zenn.dev/tomi/articles/2021-03-22-blog-card
 
 実装は :point_up_2: を全面的に参考にしたが、細かい部分がちょっと違っている。
 
-##### remark-link-widget プラグイン
+##### 変換試行対象の限定
 
-まず、変換が行われる対象を限定した。元の記事では mdast 中の`link`ノードすべてに対し変換試行を行っていたが、こちらでは変換したい対象（空行に挟まれた裸のリンク）について、`extlink`という mdast ノード、及び同名の HTML タグを導入し、これに該当するものについて`rehype-react`の`components`オプションを用いて変換処理を行っている。
+元の記事では mdast 中の`link`ノードすべてに対しウィジェットへの変換処理を試行していたが、こちらでは変換したい対象（空行に挟まれた裸のリンク）について、`extlink`という mdast ノード、及び同名の HTML タグを割り当てた。内部で unified の Transformer プラグインを動かし、
 
-ノードの操作のため、内部では unified の Transformer プラグインが動作している。これについては
+1. Paragraph かつ
+1. 子要素が一つかつ
+1. その子要素がリンクである
+
+ものを`extlink`ノードとしている。プラグインの書き方については
 
 https://zenn.dev/januswel/articles/745787422d425b01e0c1
 
 を参考にした。
+
+##### データフェッチの効率化
+
+元の記事ではリンク先の OGP 画像やタイトルを取得するため、ビルド時に記事内の全リンクを取得し、リンク先を `fetch` してメタ情報を抽出、グローバルステートに保存する方法を取っていたが、この部分を remark プラグイン側に移管した。
+
+[remark-link-card](https://github.com/gladevise/remark-link-card)などを参考に、メタ情報の取得には :point_down: を使用している。
+
+https://github.com/BetaHuhn/metadata-scraper#readme
+
+`fetch`している都合上、作成したプラグインは非同期プラグインとなることに留意。具体的には unified で`processSync`が使えなくなる。
+
+生成物は下のように独自のタグを作って出力している。この時点で普通の HTML 要素として出してしまい、後からスタイリングするのでもかまわない（というかそれが王道）のだが、できればリンクカードを React コンポーネントとして扱いたかったためやむを得ずこうした。なお、取得したメタ情報を渡す方法が他に思いつかず、強引に`JSON.stringify`したものを挟んでいるが、たぶん正しいやり方ではない。
+
+```html
+<extlink>{meta: {...}}</extlink>
+```
+
+あとは`rehype-react`の`components`オプションで`extlink`ノードをコンポーネントに変換すれば、お好きなリンクカードが出来上がる。
 
 #### 内容プレビュー
 
@@ -191,6 +213,9 @@ https://github.com/shikijs/shiki
 以上を合わせたメソッドチェーンが以下。
 
 ```ts
+// lib/parser.ts
+// Markdown parser on "Server" side. Never include Frontend code (including rehype-react).
+
 import { join } from "path";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
@@ -204,16 +229,9 @@ import rehypeShiki from "@leafac/rehype-shiki";
 import remarkRehype from "remark-rehype";
 import type { Options as RemarkRehypeOptions } from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
-import rehypeReact from "rehype-react";
-import type { Options as RehypeReactOptions } from "rehype-react";
-import rehypeParse from "rehype-parse";
 import stripMarkdown from "strip-markdown";
 import remarkStringify from "remark-stringify";
-import React from "react";
-import MyLink from "components/MyLink";
-import LinkWidget from "components/LinkWidget";
 import { remarkLinkWidget, extLinkHandler } from "./remark-link-widget";
-import type { LinkWidgetProps } from "components/LinkWidget";
 
 // Get shiki theme file (`src/styles/shiki/${themename}.json`) full path
 const getThemePath = (themename: string) =>
@@ -222,7 +240,7 @@ const getThemePath = (themename: string) =>
 // Convert Markdown to HTML
 export const MdToHtml = async (md: string) => {
   const myShikiTheme = await shiki.loadTheme(getThemePath("urara-color-theme"));
-  const result = unified()
+  const result = await unified()
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkGemoji)
@@ -239,10 +257,36 @@ export const MdToHtml = async (md: string) => {
       highlighter: await shiki.getHighlighter({ theme: myShikiTheme }),
     })
     .use(rehypeStringify)
+    .process(md);
+
+  return result.toString();
+};
+
+// Convert Markdown to plaintext
+export const MdStrip = async (md: string) => {
+  const result = unified()
+    .use(remarkParse)
+    .use(stripMarkdown, {
+      remove: ["heading", "list", "blockquote", "code", "image"],
+    })
+    .use(remarkStringify)
     .processSync(md);
 
   return result.toString();
 };
+```
+
+```ts
+// lib/rehype-react.ts
+
+import { unified } from "unified";
+import rehypeParse from "rehype-parse";
+import rehypeReact from "rehype-react";
+import type { Options as RehypeReactOptions } from "rehype-react";
+import React from "react";
+import MyLink from "components/MyLink";
+import LinkWidget from "components/LinkWidget";
+import type { LinkWidgetProps } from "components/LinkWidget";
 
 // Convert HTML to React Component
 export const HtmlToReact = (html: string) => {
@@ -262,25 +306,14 @@ export const HtmlToReact = (html: string) => {
         },
       },
     } as RehypeReactOptions)
-    .processSync(html).result;
-  return result;
-};
-
-// Convert Markdown to plaintext
-export const MdStrip = async (md: string) => {
-  const result = unified()
-    .use(remarkParse)
-    .use(stripMarkdown, {
-      remove: ["heading", "list", "blockquote", "code", "image"],
-    })
-    .use(remarkStringify)
-    .processSync(md);
-
-  return result.toString();
+    .processSync(html);
+  return result.result;
 };
 ```
 
 変なファイル処理が入っているのは、shiki がテーマファイルを読み込むにあたって**自分のインストールされた位置**（メインプロジェクトの`node_modules`以下）からの相対パスか、ファイルシステムの絶対パスかのいずれかしか受け付けないため。
+
+ファイルが分かれているのは、[getStaticProps をめぐる事情](https://zenn.dev/wattanx/scraps/da4690390d8e3d)のため。
 
 #### 引用
 
