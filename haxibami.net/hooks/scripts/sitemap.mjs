@@ -78,16 +78,16 @@ const sitemapGenerator = async () => {
   `;
 
   const robots = `
-      # *
-      User-agent: *
-      Allow: /
+# *
+User-agent: *
+Allow: /
 
-      # Host
-      Host: https://www.haxibami.net
+# Host
+Host: https://www.haxibami.net
 
-      # Sitemaps
-      Sitemap: https://www.haxibami.net/sitemap.xml
-  `;
+# Sitemaps
+Sitemap: https://www.haxibami.net/sitemap.xml
+`;
 
   fs.writeFileSync(`public/${XMLFILE}`, formatted(generatedSitemap));
   fs.writeFileSync("public/robots.txt", robots);
