@@ -1,0 +1,9 @@
+@use "styles/variable" as var;
+
+.ImgBox {
+  display: flex;
+  position: relative;
+  min-height: 20em;
+  width: calc(var.$main_width - var.$line_width * 2);
+  margin: 1em 0;
+}

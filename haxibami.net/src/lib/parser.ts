@@ -7,6 +7,7 @@ import remarkGfm from "remark-gfm";
 import remarkGemoji from "remark-gemoji";
 import remarkMath from "remark-math";
 import remarkJaruby from "remark-jaruby";
+import remarkUnwrapImages from "remark-unwrap-images";
 import rehypeKatex from "rehype-katex";
 import * as shiki from "shiki";
 import rehypeShiki from "@leafac/rehype-shiki";
@@ -31,6 +32,7 @@ export const MdToHtml = async (md: string) => {
     .use(remarkMath)
     .use(remarkJaruby)
     .use(remarkLinkWidget)
+    .use(remarkUnwrapImages)
     .use(remarkRehype, {
       handlers: {
         extlink: extLinkHandler,

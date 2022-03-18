@@ -2,6 +2,7 @@
 
 @mixin color {
   color: var(--foreground);
+  background: var(--background);
 }
 
 @mixin tiling_outer {

@@ -50,14 +50,16 @@ header.Mobile {
   flex-flow: row;
   justify-content: space-evenly;
   align-items: center;
-  gap: 10vw;
-  padding: 10vw;
-  background: var.$dark;
-  color: var.$white;
+  padding: 3rem 3rem 0 3rem;
+  background: var(--background);
+  color: var(--title);
 
   p {
-    color: var.$grad-2;
+    color: var(--subtitle);
+    display: flex;
+    gap: 20px;
   }
+
   li {
     list-style: none;
     font-size: 120%;

@@ -58,8 +58,11 @@ const BlogHeader: React.VFC<SiteInfo> = ({ siteinfo }) => {
       </header>
       <header className={Styles.Mobile}>
         <div>
-          <h1>{siteinfo.blog.title}</h1>
-          <p>{siteinfo.blog.description}</p>
+          <h1>
+            <div>なま</div>
+            <div>あたたかくて</div>
+            <div>おいしい</div>
+          </h1>
         </div>
         <ul>
           <li>
