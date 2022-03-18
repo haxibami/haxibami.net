@@ -16,6 +16,7 @@ import { MdToHtml } from "lib/parser";
 import { HtmlToReact } from "lib/rehype-react";
 import MyHead from "components/MyHead";
 import Styles from "styles/[slug].module.scss";
+import ThemeChanger from "components/ThemeChanger";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
@@ -78,11 +79,10 @@ const AllGradEssay: NextPage<Props> = ({ metaprops, post, content }) => {
       <MyHead {...metaprops} />
       <header>
         <nav>
-          <span>
-            <Link href={"/grad_essay"}>
-              <a>{"<< top"}</a>
-            </Link>
-          </span>
+          <Link href={"/grad_essay"}>
+            <a>{"<< top"}</a>
+          </Link>
+          <ThemeChanger />
         </nav>
         <ul>
           <span className={Styles.Date}>#{post.date}</span>

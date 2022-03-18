@@ -1,26 +1,40 @@
 @use "styles/variable" as var;
 //@use "styles/init";
 
+#HeaderBox {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 header.Desktop {
   @media (max-width: var.$media_border) {
     display: none;
   }
   display: flex;
-  flex-flow: column;
+  flex-flow: row;
   align-items: center;
+  justify-content: space-between;
+  max-width: var.$inner_width;
+  width: 100%;
+  margin: 3rem;
 
   #Title {
     display: flex;
     flex-direction: column;
-    margin: 3rem;
     align-items: center;
     font-size: 125%;
     h1 {
-      color: var.$dark;
+      color: var(--title);
     }
     p {
-      color: var.$grad-2;
+      color: var(--subtitle);
     }
+  }
+
+  #Icons {
+    display: flex;
+    gap: 20px;
   }
 
 }

@@ -3,16 +3,16 @@
 .ArticleMenu {
   display: flex;
   flex-direction: row;
-  color: var.$shadow;
+  color: var(--shadow);
   border-bottom: 1px solid var.$line;
   gap: 2rem;
   padding: 0 2rem;
 
   div {
     &.Focus {
-      border-bottom: 2.5px solid var.$dark;
+      border-bottom: 2.5px solid var(--title);
       gap: 1rem;
-      color: var.$dark;
+      color: var(--title);
     }
   }
 }

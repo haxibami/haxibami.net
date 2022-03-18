@@ -62,8 +62,10 @@ const GradEssayTop: NextPage<Props> = ({ allPosts, metaprops, meta }) => {
         <MyHead {...metaprops} />
         <BlogHeader {...meta} />
         <main>
-          <ArticleMenu contentType={"grad_essay"} tabs={tabs} focus={0} />
-          <Tiling allPosts={allPosts} contentTop="grad_essay" />
+          <div id={Styles.MainBox}>
+            <ArticleMenu contentType={"grad_essay"} tabs={tabs} focus={0} />
+            <Tiling allPosts={allPosts} contentTop="grad_essay" />
+          </div>
         </main>
         <footer></footer>
       </div>

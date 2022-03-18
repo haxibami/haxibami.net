@@ -19,14 +19,23 @@ const Tiling: React.VFC<TilingInfo> = (props) => {
           >
             <a>
               <li className={Styles.ArticleTile} key={post.slug}>
-                <div className={Styles.TileDate}>
-                  <span>{post.date}</span>
-                </div>
                 <div className={Styles.TileTitle}>
                   <h2>{post.title}</h2>
                 </div>
                 <div className={Styles.TilePreview}>
                   {post.content.substring(0, 200)}
+                </div>
+                <div className={Styles.TileDate}>
+                  <span className={Styles.Date}>{post.date}</span>
+                  <span className={Styles.TileTags}>
+                    {post.tags.map((tag) => (
+                      <span key={tag}>
+                        <Link href={`${props.contentTop}/tag/${tag}`}>
+                          <a>#{tag}</a>
+                        </Link>
+                      </span>
+                    ))}
+                  </span>
                 </div>
               </li>
             </a>

@@ -31,6 +31,7 @@
     "mdast-util-to-hast": "^12.1.1",
     "metadata-scraper": "^0.2.51",
     "next": "12.1.0",
+    "next-themes": "^0.1.1",
     "node-fetch": "^3.2.3",
     "puppeteer-core": "10.1.0",
     "react": "17.0.2",

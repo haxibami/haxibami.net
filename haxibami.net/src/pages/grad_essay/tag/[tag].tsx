@@ -84,17 +84,19 @@ const TaggedPosts: NextPage<Props> = ({
       <MyHead {...metaprops} />
       <BlogHeader {...sitename} />
       <main>
-        <ArticleMenu
-          contentType={"grad_essay"}
-          tabs={[
-            {
-              name: `#${params?.tag}`,
-              link: `tag/${params?.tag}`,
-            },
-          ]}
-          focus={0}
-        />
-        <Tiling allPosts={allPosts} contentTop="grad_essay" />
+        <div id={Styles.MainBox}>
+          <ArticleMenu
+            contentType={"grad_essay"}
+            tabs={[
+              {
+                name: `#${params?.tag}`,
+                link: `tag/${params?.tag}`,
+              },
+            ]}
+            focus={0}
+          />
+          <Tiling allPosts={allPosts} contentTop="grad_essay" />
+        </div>
       </main>
       <footer></footer>
     </div>

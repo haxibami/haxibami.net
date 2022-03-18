@@ -9,7 +9,7 @@
   transition: background 0.2s;
   transition-timing-function: cubic-bezier(.4,0,.2,1);
   &:hover {
-    background: var.$white;
+    background: var(--hover);
   }
 }
 

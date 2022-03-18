@@ -24,8 +24,8 @@
       left: var.$line_left_margin;
       height: 100%;
       width: var.$line_width;
-      background-color: var.$dark;
-      color: var.$dark;
+      background-color: var(--bar);
+      color: var(--bar);
     }
 
 
@@ -34,6 +34,12 @@
     flex-direction: column;
     width: var.$main_width;
     gap: 20px;
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      width: calc(var.$main_width - var.$line_width * 2);
+    }
 
     .Date {
       margin-right: 1rem;
@@ -56,7 +62,7 @@
     width: var.$main_width;
 
     #Title {
-      color: var.$dark;
+      color: var(--title);
       position: relative;
       width: calc(var.$main_width - var.$line_width * 2);
       margin-bottom: calc(var.$line_width + var.$line_bottom_margin * 2);
@@ -71,8 +77,8 @@
         margin-top: var.$line_bottom_margin;
         height: var.$line_width;
         width: var.$main_width;
-        background-color: var.$dark;
-        color: var.$dark;
+        background-color: var(--bar);
+        color: var(--bar);
       }
     }
 

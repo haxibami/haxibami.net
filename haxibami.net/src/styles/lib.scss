@@ -1,21 +1,29 @@
 @use "variable" as var;
 
 @mixin color {
-  color: var.$grad-1;
+  color: var(--foreground);
 }
 
 @mixin tiling_outer {
   display: flex;
   flex-flow: column;
-  gap: 1.5rem;
+  align-items: center;
 
   main {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  #MainBox {
     display: flex;
     flex-flow: column;
     min-height: 100vh;
     align-items: center;
     gap: 2rem;
-    padding: 0 3rem;
+    width: 100%;
+    max-width: var.$inner_width;
+    margin: 3rem;
   }
 }
 
@@ -23,7 +31,7 @@
   h1 {
     margin: 2rem 0 1rem 0;
     border-bottom: 1px solid var.$line;
-    color: var.$dark;
+    color: var(--title);
     @media (max-width: var.$media_border) {
       font-size: 3rem;
     }
@@ -32,21 +40,21 @@
   h2 {
     margin: 2rem 0 1rem 0;
     font-size: 2rem;
-    color: var.$dark;
+    color: var(--title);
     border-bottom: 1px solid var.$line;
   }
 
   h3 {
     margin: 1rem 0 0.5rem 0;
     font-size: 1.5rem;
-    color: var.$dark;
+    color: var(--title);
     border-bottom: 1px solid var.$line;
   }
 
   h4 {
     margin: 1rem 0 0.5rem 0;
     font-size: 1.25rem;
-    color: var.$dark;
+    color: var(--title);
   }
 }
 
@@ -77,7 +85,7 @@
     table-layout: fixed;
     border-collapse: collapse;
     text-align: center;
-    color: var.$dark;
+    color: var(--title);
 
     th, td {
       border: 1px solid var.$line;
@@ -85,7 +93,7 @@
     }
 
     th {
-      background: var.$white;
+      background: var(--hover);
     }
   }
 }
@@ -100,7 +108,7 @@
 @mixin code_inline {
   p {
     code {
-      background: var.$white;
+      background: var(--hover);
       padding: 0.2rem;
       border-radius: 0.2rem;
       font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -152,7 +160,7 @@
 
 @mixin katex {
   .katex {
-    color: var.$dark;
+    color: var(--title);
   }
 }
 

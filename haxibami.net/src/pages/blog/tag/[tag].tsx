@@ -84,17 +84,19 @@ const TaggedBlogs: NextPage<Props> = ({
       <MyHead {...metaprops} />
       <BlogHeader {...sitename} />
       <main>
-        <ArticleMenu
-          contentType={"blog"}
-          tabs={[
-            {
-              name: `#${params?.tag}`,
-              link: `tag/${params?.tag}`,
-            },
-          ]}
-          focus={0}
-        />
-        <Tiling allPosts={allBlogs} contentTop="blog" />
+        <div id={Styles.MainBox}>
+          <ArticleMenu
+            contentType={"blog"}
+            tabs={[
+              {
+                name: `#${params?.tag}`,
+                link: `tag/${params?.tag}`,
+              },
+            ]}
+            focus={0}
+          />
+          <Tiling allPosts={allBlogs} contentTop="blog" />
+        </div>
       </main>
       <footer></footer>
     </div>

@@ -4,7 +4,6 @@
 #Wrapper {
   display: flex;
   flex-flow: column;
-  gap: 1.5rem;
   @include lib.tiling_outer;
   @include lib.color;
 
@@ -17,22 +16,6 @@
     gap: 2rem;
     padding: 0 3rem;
 
-    .BlogMenu {
-      display: flex;
-      flex-flow: row;
-      color: var.$shadow;
-      border-bottom: 1px solid var.$line;
-      gap: 2rem;
-      padding: 0 2rem;
-
-      div {
-        &.CurrentFocus {
-          border-bottom: 2.5px solid var.$dark;
-          gap: 1rem;
-          color: var.$dark;
-        }
-      }
-    }
 
     .TagList {
       color: var.$dark;
@@ -41,7 +24,8 @@
       .TagTile {
         display: inline-block;
         list-style: none;
-        border: 1px solid var.$line;
+        color: var(--title);
+        border: 1px solid var(--line);
         border-radius: 0.25rem;
         margin: 0.5rem;
         padding: 0 0.25rem;
@@ -51,7 +35,7 @@
         transition-timing-function: cubic-bezier(.4,0,.2,1);
         &:hover{
           text-decoration: underline;
-          background: var.$white;
+          background: var(--hover);
         }
       }
     }

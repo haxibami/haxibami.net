@@ -4,7 +4,6 @@ import type {
   GetStaticPropsContext,
 } from "next";
 import Link from "next/link";
-//import Context from "lib/store";
 import {
   getAllPosts,
   getPostBySlug,
@@ -17,6 +16,7 @@ import type { PageMetaProps, SiteInfo } from "lib/interface";
 import { ogpHost } from "lib/constant";
 import MyHead from "components/MyHead";
 import Styles from "styles/[slug].module.scss";
+import ThemeChanger from "components/ThemeChanger";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
@@ -79,11 +79,10 @@ const AllBlog: NextPage<Props> = ({ metaprops, post, content }) => {
       <MyHead {...metaprops} />
       <header>
         <nav>
-          <span>
-            <Link href={"/blog"}>
-              <a>{"<< top"}</a>
-            </Link>
-          </span>
+          <Link href={"/blog"}>
+            <a>{"<< top"}</a>
+          </Link>
+          <ThemeChanger />
         </nav>
         <ul>
           <span className={Styles.Date}>#{post.date}</span>

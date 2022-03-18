@@ -17,6 +17,28 @@ body, html {
   font-size: 1rem;
 }
 
+:root {
+  --foreground: #4e4266;
+  --background: white;
+  --title: #1c1921;
+  --bar: #1c1921;
+  --subtitle: #8a8299;
+  --hover: #edebef;
+  --line: #8a829955;
+  --shadow: #1c192166;
+}
+
+[data-theme='dark'] {
+  --background: #1c1921;
+  --foreground: #d2ced9;
+  --title: #d2ced9;
+  --bar: #292433;
+  --subtitle: #8a8299;
+  --hover: #292433;
+  --line: #8a829955;
+  --shadow: #d2ced966;
+}
+
 a {
   color: inherit;
   text-decoration: none;

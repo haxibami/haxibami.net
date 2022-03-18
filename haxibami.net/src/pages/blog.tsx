@@ -62,8 +62,10 @@ const BlogTop: NextPage<Props> = ({ allBlogs, metaprops, meta }) => {
         <MyHead {...metaprops} />
         <BlogHeader {...meta} />
         <main>
-          <ArticleMenu contentType={"blog"} tabs={tabs} focus={0} />
-          <Tiling allPosts={allBlogs} contentTop="blog" />
+          <div id={Styles.MainBox}>
+            <ArticleMenu contentType={"blog"} tabs={tabs} focus={0} />
+            <Tiling allPosts={allBlogs} contentTop="blog" />
+          </div>
         </main>
         <footer></footer>
       </div>

@@ -47,16 +47,18 @@ const Tags: NextPage<Props> = ({ taglists, metaprops, meta }) => {
         <MyHead {...metaprops} />
         <BlogHeader {...meta} />
         <main>
-          <ArticleMenu contentType={"grad_essay"} tabs={tabs} focus={1} />
-          <ul className={Styles.TagList}>
-            {taglists?.map((tag) => (
-              <li className={Styles.TagTile} key={tag}>
-                <Link href={`/grad_essay/tag/${tag}`}>
-                  <a>#{tag}</a>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div id={Styles.MainBox}>
+            <ArticleMenu contentType={"grad_essay"} tabs={tabs} focus={1} />
+            <ul className={Styles.TagList}>
+              {taglists?.map((tag) => (
+                <li className={Styles.TagTile} key={tag}>
+                  <Link href={`/grad_essay/tag/${tag}`}>
+                    <a>#{tag}</a>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </main>
       </div>
     </div>

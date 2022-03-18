@@ -32,6 +32,7 @@ specifiers:
   mdast-util-to-hast: ^12.1.1
   metadata-scraper: ^0.2.51
   next: 12.1.0
+  next-themes: ^0.1.1
   node-fetch: ^3.2.3
   prettier: 2.5.1
   puppeteer-core: 10.1.0
@@ -75,6 +76,7 @@ dependencies:
   mdast-util-to-hast: 12.1.1
   metadata-scraper: 0.2.51
   next: 12.1.0_b8b2418670651b634ff05a91b7cd94fe
+  next-themes: 0.1.1_caa633a00319350dbda42996613fe26c
   node-fetch: 3.2.3
   puppeteer-core: 10.1.0
   react: 17.0.2
@@ -4143,6 +4145,18 @@ packages:
   /natural-compare/1.4.0:
     resolution: {integrity: sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=}
     dev: true
+
+  /next-themes/0.1.1_caa633a00319350dbda42996613fe26c:
+    resolution: {integrity: sha512-Iqxt6rhS/KfK/iHJ0tfFjTcdLEAI0AgwFuAFrMwLOPK5e+MI3I+fzyvBoS+VaOS+NldUiazurhgwYhrfV0VXsQ==}
+    peerDependencies:
+      next: '>=11.1.1'
+      react: '*'
+      react-dom: '*'
+    dependencies:
+      next: 12.1.0_b8b2418670651b634ff05a91b7cd94fe
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    dev: false
 
   /next/12.1.0_b8b2418670651b634ff05a91b7cd94fe:
     resolution: {integrity: sha512-s885kWvnIlxsUFHq9UGyIyLiuD0G3BUC/xrH0CEnH5lHEWkwQcHOORgbDF0hbrW9vr/7am4ETfX4A7M6DjrE7Q==}
