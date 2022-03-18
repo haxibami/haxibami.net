@@ -341,6 +341,42 @@ https://cinema.revuestarlight.com/
 
 以上の処理で、はてブや Qiita、Zenn あたりと似た書き心地になった。
 
+### ダークモード
+
+外部ライブラリを使用。
+
+https://github.com/pacocoursey/next-themes
+
+`globals.scss`でだいぶ原始的な変数指定をする羽目になっている。
+
+```css
+:root {
+  --foreground: #4e4266;
+  --background: white;
+  --title: #1c1921;
+  --bar: #1c1921;
+  --subtitle: #8a8299;
+  --hover: #edebef;
+  --line: #8a829955;
+  --shadow: #1c192166;
+  --link: #7f60bf;
+  --code: #edebef;
+}
+
+[data-theme="dark"] {
+  --background: #14111a;
+  --foreground: #d2ced9;
+  --title: #d2ced9;
+  --bar: #9986bf;
+  --subtitle: #8a8299;
+  --hover: #1c1921;
+  --line: #8a829955;
+  --shadow: #d2ced966;
+  --link: #86bfb6;
+  --code: #292433;
+}
+```
+
 ### 動的 OGP 画像の自動生成
 
 外部サイトのリンクを貼ったときに、モコッとしたウィジェットが出るあれ。今度は表示**させる**側。自分は Vercel のサーバレス関数機能を使って

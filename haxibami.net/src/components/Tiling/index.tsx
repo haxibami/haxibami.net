@@ -23,7 +23,7 @@ const Tiling: React.VFC<TilingInfo> = (props) => {
                   <h2>{post.title}</h2>
                 </div>
                 <div className={Styles.TilePreview}>
-                  {post.content.substring(0, 200)}
+                  {post.content.substring(0, 200)}...
                 </div>
                 <div className={Styles.TileDate}>
                   <span className={Styles.Date}>{post.date}</span>

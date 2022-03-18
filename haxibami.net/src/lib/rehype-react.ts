@@ -18,9 +18,9 @@ export const HtmlToReact = (html: string) => {
     .use(rehypeReact, {
       createElement: React.createElement,
       components: {
-        a: ({ children, href }) => {
-          href ??= "/404";
-          return MyLink({ children, href });
+        a: ({ children, href, id }) => {
+          href = href ?? "/404";
+          return MyLink({ children, href, id });
         },
         img: ({ src, alt }: NextImageProps) => {
           return NextImage({ src, alt });

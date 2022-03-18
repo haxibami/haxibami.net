@@ -26,17 +26,21 @@ body, html {
   --hover: #edebef;
   --line: #8a829955;
   --shadow: #1c192166;
+  --link: #7f60bf;
+  --code: #edebef;
 }
 
 [data-theme='dark'] {
-  --background: #1c1921;
+  --background: #14111a;
   --foreground: #d2ced9;
   --title: #d2ced9;
-  --bar: #8a8299;
+  --bar: #9986bf;
   --subtitle: #8a8299;
-  --hover: #292433;
+  --hover: #1c1921;
   --line: #8a829955;
   --shadow: #d2ced966;
+  --link: #86bfb6;
+  --code: #292433;
 }
 
 a {

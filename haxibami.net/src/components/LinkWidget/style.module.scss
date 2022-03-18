@@ -1,8 +1,8 @@
 @use "styles/variable" as var;
 
 .Wrapper {
-  max-width: 500px;
-  height: 100px;
+  max-width: 600px;
+  height: 105px;
   a {
     text-decoration: none;
   }
@@ -22,18 +22,20 @@
   display: flex;
   overflow: hidden;
   margin: 1em 0px;
+  .Main {
+    padding: 1rem;
+    flex: 4 1 180px;
+    overflow: hidden;
+  }
   .Image {
-    margin-left: auto;
+    max-width: 200px;
+    flex: 1 6 180px;
+    overflow: hidden;
+    display: flex;
   }
   img {
     object-fit: cover;
   }
-}
-
-.Main {
-  padding: 1rem;
-  flex-grow: 1;
-  overflow: hidden;
 }
 
 .Title {

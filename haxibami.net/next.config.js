@@ -8,6 +8,6 @@ module.exports = {
     includePaths: [path.join(__dirname, "styles")],
   },
   images: {
-    domains: ["asciinema.org"],
+    domains: ["asciinema.org", "raw.githubusercontent.com"],
   },
 };

@@ -69,7 +69,7 @@
 @mixin colored_link {
   p {
     a {
-    color: var.$blog_link;
+    color: var(--link);
     text-decoration: underline;
     }
   }
@@ -109,10 +109,11 @@
 @mixin code_inline {
   p {
     code {
-      background: var(--hover);
+      background: var(--code);
       padding: 0.2rem;
       border-radius: 0.2rem;
-      font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      /*font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;*/
+      font-family: Menlo, Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", "Courier New", Courier, monospace;
     }
   }
 }

@@ -22,7 +22,7 @@ const LinkWidget: React.VFC<LinkWidgetProps> = ({ children }) => {
             </div>
           </div>
           <div className={Styles.Image}>
-            <img src={meta.image} height={100} width={100} alt="image" />
+            <img src={meta.image} height={105} width={200} alt="image" />
           </div>
         </div>
       </a>

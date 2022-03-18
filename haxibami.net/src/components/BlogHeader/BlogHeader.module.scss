@@ -43,9 +43,7 @@ header.Mobile {
   @media (min-width: var.$media_border) {
     display: none;
   }
-  top: 0;
   width: 100vw;
-  height: 40vh;
   display: flex;
   flex-flow: row;
   justify-content: space-evenly;
