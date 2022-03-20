@@ -10,11 +10,13 @@ import {
   replaceMdwithTxt,
   readYaml,
 } from "lib/api";
+import { dateVisualizer } from "lib/front";
 import { MdToHtml } from "lib/parser";
 import { HtmlToReact } from "lib/rehype-react";
 import type { PageMetaProps, SiteInfo } from "lib/interface";
 import { ogpHost } from "lib/constant";
 import MyHead from "components/MyHead";
+import TagList from "components/TagList";
 import Styles from "styles/[slug].module.scss";
 import ThemeChanger from "components/ThemeChanger";
 
@@ -79,23 +81,21 @@ const AllBlog: NextPage<Props> = ({ metaprops, post, content }) => {
       <MyHead {...metaprops} />
       <header>
         <nav>
-          <Link href={"/blog"}>
-            <a>{"<< top"}</a>
-          </Link>
+          <span className={Styles.TopLink}>
+            <Link href={"/blog"}>
+              <a>
+                <h2>{"Raw, Warm, Tasty"}</h2>
+              </a>
+            </Link>
+          </span>
           <ThemeChanger />
         </nav>
-        <ul>
-          <span className={Styles.Date}>#{post.date}</span>
-          {post.tags.map((tag) => (
-            <span key={tag}>
-              <Link href={`/blog/tag/${tag}`}>
-                <a>
-                  <li>#{tag}</li>
-                </a>
-              </Link>
-            </span>
-          ))}
-        </ul>
+        <div>
+          <span className={Styles.Date}>{dateVisualizer(post.date)}</span>
+        </div>
+        <div>
+          <TagList tags={post.tags} postType={"blog"} />
+        </div>
       </header>
       <main>
         <h1 id={Styles.Title}>{post.title}</h1>

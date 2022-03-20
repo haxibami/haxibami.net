@@ -1,49 +1,45 @@
 import type { NextPage, InferGetStaticPropsType } from "next";
 import { getAllPosts, getPostTags, replaceMdwithTxt, readYaml } from "lib/api";
-import type { PageMetaProps, MenuTab, SiteInfo } from "lib/interface";
-import { ogpHost } from "lib/constant";
+import type { PageMetaProps, SiteInfo, PostType } from "lib/interface";
+import { COUNT_PER_PAGE, ogpHost, postMenuTabs } from "lib/constant";
 import MyHead from "components/MyHead";
-import BlogHeader from "components/BlogHeader";
-import Tiling from "components/Tiling";
-import ArticleMenu from "components/ArticleMenu";
-import Styles from "styles/blog.module.scss";
+import Header from "components/PostTopHeader";
+import PostTop from "components/PostTop";
+import Footer from "components/Footer";
+import Styles from "styles/posttop.module.scss";
 
-const tabs: MenuTab[] = [
-  {
-    name: "Articles",
-    link: "",
-  },
-  {
-    name: "Tags",
-    link: "tags",
-  },
-];
+const postType: PostType = "blog";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 export const getStaticProps = async () => {
-  const allBlogsPre = getAllPosts(
+  const id = 1;
+  const end = COUNT_PER_PAGE;
+  const start = 0;
+  const allPostsPre = getAllPosts(
     ["slug", "title", "date", "tags", "content"],
-    "blog"
+    postType
   );
+  const total = allPostsPre.length;
+  const postsAssign = allPostsPre.slice(start, end);
 
-  const taglists = getPostTags("blog");
+  const taglists = getPostTags(postType);
 
-  const allBlogs = await Promise.all(
-    allBlogsPre.map(async (item) => {
+  const posts = await Promise.all(
+    postsAssign.map(async (item) => {
       const processed = await replaceMdwithTxt(item);
       return processed;
     })
   );
 
-  const meta: SiteInfo = readYaml("meta.yaml");
+  const sitename: SiteInfo = readYaml("meta.yaml");
 
   const metaprops: PageMetaProps = {
-    title: meta.siteinfo.blog.title,
-    sitename: meta.siteinfo.blog.title,
-    description: meta.siteinfo.blog.description,
+    title: sitename.siteinfo.blog.title,
+    sitename: sitename.siteinfo.blog.title,
+    description: sitename.siteinfo.blog.description,
     ogImageUrl: encodeURI(
-      `${ogpHost}/api/ogp?title=${meta.siteinfo.blog.title}`
+      `${ogpHost}/api/ogp?title=${sitename.siteinfo.blog.title}`
     ),
     pageRelPath: "blog",
     pagetype: "website",
@@ -51,24 +47,35 @@ export const getStaticProps = async () => {
   };
 
   return {
-    props: { allBlogs, taglists, metaprops, meta },
+    props: {
+      posts,
+      taglists,
+      id,
+      total,
+      perPage: COUNT_PER_PAGE,
+      postType,
+      metaprops,
+      siteinfo: sitename,
+    },
   };
 };
 
-const BlogTop: NextPage<Props> = ({ allBlogs, metaprops, meta }) => {
+const BlogTop: NextPage<Props> = (props) => {
+  const { posts, id, total, perPage, postType, metaprops, siteinfo } = props;
   return (
-    <div>
-      <div id={Styles.Wrapper}>
-        <MyHead {...metaprops} />
-        <BlogHeader {...meta} />
-        <main>
-          <div id={Styles.MainBox}>
-            <ArticleMenu contentType={"blog"} tabs={tabs} focus={0} />
-            <Tiling allPosts={allBlogs} contentTop="blog" />
-          </div>
-        </main>
-        <footer></footer>
-      </div>
+    <div id={Styles.Wrapper}>
+      <MyHead {...metaprops} />
+      <Header {...siteinfo} />
+      <PostTop
+        top={`/${postType}`}
+        postMenuTabs={postMenuTabs}
+        posts={posts}
+        id={id}
+        total={total}
+        perPage={perPage}
+        postType={postType}
+      />
+      <Footer />
     </div>
   );
 };

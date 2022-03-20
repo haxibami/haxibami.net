@@ -1,0 +1,29 @@
+@use "styles/variable" as var;
+@use "styles/lib";
+
+#Footer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  color: var(--title);
+}
+
+#FooterBox {
+  width: 100%;
+  max-width: var.$inner_width;
+  padding: 0 1rem;
+}
+
+#Container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 3rem 0;
+  margin-top: 3rem;
+  border-top: 1px solid var(--subtitle);
+}
+
+#Icons {
+  display: flex;
+  gap: 2rem;
+}

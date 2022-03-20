@@ -2,42 +2,5 @@
 @use "lib";
 
 #Wrapper {
-  display: flex;
-  flex-flow: column;
-  @include lib.tiling_outer;
   @include lib.color;
-
-  main {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    min-height: 100vh;
-
-    gap: 2rem;
-    padding: 0 3rem;
-
-
-    .TagList {
-      color: var.$dark;
-      width: 100%;
-
-      .TagTile {
-        display: inline-block;
-        list-style: none;
-        color: var(--title);
-        border: 1px solid var(--line);
-        border-radius: 0.25rem;
-        margin: 0.5rem;
-        padding: 0 0.25rem;
-        font-size: 125%;
-        font-weight: bold;
-        transition: background 0.2s;
-        transition-timing-function: cubic-bezier(.4,0,.2,1);
-        &:hover{
-          text-decoration: underline;
-          background: var(--hover);
-        }
-      }
-    }
-  }
 }

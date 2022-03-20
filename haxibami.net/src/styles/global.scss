@@ -18,29 +18,33 @@ body, html {
 }
 
 :root {
-  --foreground: #4e4266;
-  --background: white;
-  --title: #1c1921;
-  --bar: #1c1921;
-  --subtitle: #8a8299;
-  --hover: #edebef;
-  --line: #8a829955;
-  --shadow: #1c192166;
-  --link: #7f60bf;
-  --code: #edebef;
+  --foreground: #{var.$fg};
+  --background: #{var.$bg};
+  --title: #{var.$title};
+  --bar: #{var.$bar};
+  --subtitle: #{var.$subtitle};
+  --hover: #{var.$hover};
+  --line: #{var.$line};
+  --shadow: #{var.$shadow};
+  --link: #{var.$blog_link};
+  --code: #{var.$code};
+  --nextbg: #{var.$nextbg};
+  --prevfg: #{var.$prevfg};
 }
 
 [data-theme='dark'] {
-  --background: #14111a;
-  --foreground: #d2ced9;
-  --title: #d2ced9;
-  --bar: #9986bf;
-  --subtitle: #8a8299;
-  --hover: #1c1921;
-  --line: #8a829955;
-  --shadow: #d2ced966;
-  --link: #86bfb6;
-  --code: #292433;
+  --foreground: #{var.$fg-night};
+  --background: #{var.$bg-night};
+  --title: #{var.$title-night};
+  --bar: #{var.$bar-night};
+  --subtitle: #{var.$subtitle-night};
+  --hover: #{var.$hover-night};
+  --line: #{var.$line-night};
+  --shadow: #{var.$shadow-night};
+  --link: #{var.$blog_link-night};
+  --code: #{var.$code-night};
+  --nextbg: #{var.$nextbg-night};
+  --prevfg: #{var.$prevfg-night};
 }
 
 a {

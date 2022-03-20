@@ -1,11 +1,12 @@
-import Styles from "./style.module.scss";
 import type { LinkWidgetMeta } from "lib/interface";
+import Styles from "./style.module.scss";
 
 export interface LinkWidgetProps {
   children: string;
 }
 
-const LinkWidget: React.VFC<LinkWidgetProps> = ({ children }) => {
+const LinkWidget: React.VFC<LinkWidgetProps> = (props) => {
+  const { children } = props;
   const meta: LinkWidgetMeta = JSON.parse(children);
   return (
     <div className={Styles.Wrapper}>

@@ -2,6 +2,5 @@
 @use "lib";
 
 #Wrapper {
-  @include lib.tiling_outer;
   @include lib.color;
 }

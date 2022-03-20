@@ -117,3 +117,8 @@ export const readYaml = (filename: string) => {
   const content = yaml.load(fs.readFileSync(fullPath, "utf8")) as SiteInfo;
   return content;
 };
+
+// if given n, returns array of 2...n
+export const pageIdGen = (stop: number) => {
+  return Array.from({ length: stop }, (_, i) => i + 1).slice(1);
+};

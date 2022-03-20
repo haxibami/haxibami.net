@@ -1,5 +1,5 @@
 @use "styles/variable" as var;
-//@use "styles/init";
+@use "styles/lib";
 
 #HeaderBox {
   display: flex;
@@ -7,7 +7,7 @@
   width: 100%;
 }
 
-header.Desktop {
+.Desktop {
   @media (max-width: var.$media_border) {
     display: none;
   }
@@ -35,11 +35,16 @@ header.Desktop {
   #Icons {
     display: flex;
     gap: 20px;
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 
 }
 
-header.Mobile {
+.Mobile {
   @media (min-width: var.$media_border) {
     display: none;
   }

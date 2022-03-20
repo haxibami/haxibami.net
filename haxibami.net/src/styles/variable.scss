@@ -16,6 +16,8 @@ $green: #abbf86;
 $yellow: #d9c77e;
 $red: #d9989c;
 
+$darker: #14111a;
+
 // brand colors
 $brands: (
 //  Brandname:(top-left, bottom-right, darker, lighter, foreground, radius, rotate, outer, inner)
@@ -25,21 +27,40 @@ $brands: (
   Mail:     (#1855f0, #11defe, #0d41c6 ,#aeefff, #edebef, 200px, 100deg, 50px, 30px, true),
   Github:   (#333333, #333333, #1d1d1d, #666666, #edebef, 200px, -10deg, 50px, 35px, true),
   Keybase:  (#ff6f21, #ff6f21, #ff6f21, #ff6f21, #edebef, 200px, 20deg, 50px, 35px, true),
-  Bookmark: (#d9c77e, #d9c77e, #ff9523, #ffe4c7, #edebef, 150px, 150deg, 50px, 25px, true),
+  Bookmark: (#64bc4b, #64bc4b, #ff9523, #ffe4c7, #edebef, 150px, 150deg, 50px, 25px, true),
   Book:     (#a6b4de, #a6b4de, #ff2ea6, #ffd7ee, #edebef, 150px, -90deg, 50px, 25px, true),
-  Blog1:    ($green, $green, #6dcce0, #ebfbff, #edebef, 200px, 75deg, 50px, 30px, true),
-  Blog2:    ($magenta, $magenta, #20dc60, #e8ffe9, #edebef, 200px, 45deg, 50px, 30px, true),
-  Write:    (#282a36, #282a36, #000000, #5e627d, #edebef, 200px, -35deg, 50px, 30px, true),
-  Poem:     ($red, $red, #ea0000, #ffe5e1, #edebef, 200px, -65deg, 50px, 30px, true),
+  Blog1:    (#2bb24c, #2bb24c, #6dcce0, #ebfbff, #edebef, 200px, 75deg, 50px, 30px, true),
+  Blog2:    ($dark, $dark, #20dc60, #e8ffe9, #edebef, 200px, 45deg, 50px, 30px, true),
+  Write:    (#2792ca, #2792ca, #000000, #5e627d, #edebef, 200px, -35deg, 50px, 30px, true),
+  Poem:     ($red, $red, #ea0000, #ffe5e1, #edebef, 200px, -65deg, 50px, 35px, true),
   Spotify:  (#1db954, #1db954, #179443, #a1dea8, #edebef, 150px, 190deg, 50px, 30px, true),
 );
 
 // element colors
-$shadow: #1c192166;
+$fg: $grad-1;
+$fg-night: $light;
+$bg: white;
+$bg-night: $darker;
+$title: $dark;
+$title-night: $light;
+$bar: $dark;
+$bar-night: $blue;
+$subtitle: $grad-2;
+$subtitle-night: $grad-2;
+$hover: $white;
+$hover-night: $dark;
 $line: #8a829955;
+$line-night: $line;
+$shadow: #1c192166;
+$shadow-night: #d2ced966;
 $blog_link: #7f60bf;
-$tip_fg: $light;
-$tip_color: $dark;
+$blog_link-night: $cyan;
+$code: $white;
+$code-night: $grad-0;
+$nextbg: $dark;
+$nextbg-night: #abbf86;
+$prevfg: $dark;
+$prevfg-night: #abbf86;
 
 // size definitions
 $line_width: min(5vw, 5rem);
@@ -47,11 +68,10 @@ $line_left_margin: 10vw;
 $main_width: calc(100vw - $line_width * 2 - $line_left_margin);
 $tip_width: 7rem;
 $line_bottom_margin: 2.5rem;
+$inner_width: 50rem;
 
 // responsive definitions
 $media_border: 700px;
 $img_max: min(70vw, 70vh);
 $element_gap: 1rem;
 $paragraph_gap: 2rem;
-
-$inner_width: 50rem;

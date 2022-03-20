@@ -2,14 +2,14 @@ import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
-import Styles from "./index.module.scss";
+import Styles from "./style.module.scss";
 
 const ThemeChanger = () => {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   useEffect(() => setMounted(true), []);
   return (
-    <div>
+    <div className={Styles.Container}>
       <button
         className={Styles.Button}
         aria-label="DarkModeToggle"

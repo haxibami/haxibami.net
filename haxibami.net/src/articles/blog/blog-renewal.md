@@ -1,46 +1,77 @@
 ---
 slug: "blog-renewal"
 title: "Next.jsでブログをつくった"
-date: "20220220"
+date: "20220320"
 tags: ["tech", "web", "nextjs"]
 ---
 
-以前から haxibami.net 自体は公開していたが、[謎の木](/)が生えているだけの自己紹介サイトでしかなかった。今回は`/blog`以下にブログ機能を付けたので、その話。
+[系統樹](/)が生えているだけだったポートフォリオサイトに、ブログを追加した。
+
+## 目次
 
 ## 基盤
+
+もう自由で個人的で良質なインターネットなどない、ということを認めなければならない。そんなものは幻影に過ぎなかったと言えば簡単だが、その幻影を見ることさえ年々困難になりつつある。
+
+いろいろなものを思い浮かべてみよう：
+
+- Twitter がサジェストするツイート
+- Yahoo!ニュースのコメント欄
+- いかがでしたか？　量産サイト
+- 大量の広告
+
+ここで私が攻撃しようとしているのは、質の低さ自体**ではない**。質の悪いインターネットコンテンツ自体ははるか前（それこそ私が生まれる以前！）から存在しているし、たいていはフィルタリングでどうにかなってきた。問題はむしろそれらが接続され、一体となり、フィルタ可能な密度を超えてやってくることだ。
+
+世界が真に遅延なく一体化する、これが私には恐ろしい。もっと分割された市場、もっと通約不能な体系の併存、それが私の望む世界像であって、一体になって襲いかかってくる凡庸さなど耐えられる気がしないのだ。私自身が凡庸であるにしても、それは個人的な凡庸さであってほしいし、どこかの片隅で毎月一通くらいの手紙で繋がるものであってほしい。
+
+だからハイパーリンク時代（これも古い用語かもしれないが）の接続は、何を繋ぐかではなく何を繋がないかだ。Google ではなく Brave へ。アップタイムではなくダウンタイムへ。外部サービスではなく個人ブログへ。現状、私がプラットフォームに求めるのは以下だ。
+
+1. 自由
+1. 管理しやすい
+1. 高速
+1. 見やすい
+1. カスタマイズ可能
+1. 広告が（鬱陶しく）ない
+
+書くということにあたっては、[この記事](https://sumirehibiya.com/notes/building-a-blog-with-nextjs)が指摘するようなサービスごとのコミュニティの存在というのも見逃せない。投稿ひとつに必要以上の団体性がまとわりつく、これが常に望ましいとは思われない。場合によって事実はもっと個人的であるべきなのだ。完全な孤独、というのではなく、むしろ{飽きるほどの接続}^(ハイパーリンク)を前提にしたうえで、あえて切断に至る方向を向くような分権性。有り体に言えば逆張りオタク。
+
+こうなってくると、自作した方が良い。
+
+以前、別のサイトを作っていたときは Gatsby.js を使っていた。高速ではあったが、すべてを自らのプラグインとして抱え込もうとするシステムに少しずつ違和感も募った。他方、同じ SSG でも Zola や Hugo はシンプルだが、柔軟性では JS/React 系に及ばない。けっきょく 2022 年現在、Next.js に落ち着く。
 
 ### フレームワーク
 
 Next.js + TypeScript + Sass (SCSS, CSS modules)。
 
-TypeScript はまったくもってよくわからないが、型チェックに何度も助けられた。Neovim で coc.nvim を使って書いていると、coc-tsserver のおかげで書いた瞬間からエラーに気づけるのでかなり体験が良い。CSS modules と SCSS は出会ったときにいたく感動して以来ずっと使っているが、{追い風}^(Tailwind)が吹いている感じではないので、いずれ別のものに乗り換えるかもしれない。
+TypeScript は未だによくわからないが、型チェックには何度も助けられた。Neovim で coc.nvim を使って書いていると、coc-tsserver のおかげで書いた瞬間からエラーに気づけるのでかなり良い。CSS modules と SCSS は出会ったときにいたく感動して以来ずっと使っているが、{追い風}^(Tailwind)が吹いている感じではなさそうだ。
 
 ### ホスティング・ビルド
 
-素直に Vercel に投げた。またの名を囲い込まれともいう。ただし Vercel 側のビルド回数を消費したくないので、ビルド前のテストは GitHub Actions にしてある。ガンガン CI を回して Microsoft を破産させよう！
+素直に Vercel に投げた。またの名を囲い込まれともいう。ただし Vercel 側のビルド回数を消費したくないので、ビルド前のテスト・デプロイは GitHub Actions にしてある（[vercel-action](github.com/amondnet/vercel-action/)）。ガンガン CI を回して Microsoft を破産させよう！
 
 ## 機能
 
 ### Markdown まわり
 
-われわれには先人の記憶というものがあり、すなわちこの手のサイトは記事管理が億劫になった時点で**エタる**。放置された「なんたらの部屋」、消えて還らない借りドメイン、むなしく刻む入室カウンターを眺めるたびに、せめて記事くらいは慣れたファイル形式で楽に引き継ぎたいと思うようになった。そういうわけで Markdown（内容管理） + tsx（テンプレートエンジン）。Markdown ならそう簡単には廃れないだろうし、そのまま別サービスにも投げ込める。いまはヘッドレス CMS とかいうのもあるらしい（全然知らない）が、個人レベルでは Git Repo ひとつで管理できたほうがやっぱり楽だ。
+われわれには先人の記憶というものがあり、すなわちこの手のサイトは記事管理が億劫になった時点で**エタる**。放置された「なんたらの部屋」、消えて還らない借りドメイン、むなしく刻む入室カウンターを眺めるたびに、せめて記事くらいは慣れたファイル形式で楽に引き継ぎたいと思うようになった。そういうわけで Markdown（内容管理） + tsx（テンプレートエンジン）。Markdown ならそう簡単には廃れないだろうし、いつか別サービスにも投げ込める。いまはヘッドレス CMS とかいうのもあるらしい（全然知らない）が、個人レベルでは Git Repo ひとつで管理できたほうがやっぱり楽だ。
 
 Next.js から Markdown を扱う方法は[公式](https://nextjs.org/blog/markdown)でも取り上げられている。具体的には`remark`や`rehype`関連のパッケージを使うのだが、この remark と rehype がすごい。ともに unified というインターフェースの傘下にあって、このもとで`mdast`（Markdown の構文木）や`hast`（HTML の構文木）を相互変換したり、特定の要素に対してカスタム処理を実行できる。関連プラグインも充実しており、やりたいことが既存のプロジェクトの組み合わせで実現できてしまう。
 
-ただその豊かさゆえに（？）選択肢が多く、同じことを実装する方法が何通りもある。たとえば今回のように Markdown から Next.js ページを生成するなら、主に以下のような手法がある。
+ただその豊かさゆえに選択肢が多く、同じことを実装する方法が何通りもある。たとえば今回のように Markdown から Next.js の ページを生成するだけでも、以下から選択することになる。
 
 - `unified`上で実行するもの
-  - `remark-parse` + `remark-rehype` + `rehype-stringify` (+ `dangerouslySetInnerHTML`)
+  - `remark-parse` + `remark-rehype` + `rehype-stringify`
   - `remark-parse` + `remark-rehype` + `rehype-react`
 - そうでないもの（上の処理が複合されたプラグイン）
   - `remark` + `remark-html`
   - `react-remark`
+  - `react-markdown`
 
-それぞれに利点があるようだが、自分は柔軟にプラグインを組み合わせたい、かつ React コンポーネントと融和させたいことを踏まえて上から二番目を採った。以下、使用したツールと実現できた機能を書いておく。
+自分は柔軟にプラグインを組み合わせ、React コンポーネントとも融和させたかったため、上から二番目を採った（後述するが、`rehype-react`がかなり魅力的だ）。
 
 #### Frontmatter
 
-`grey-matter`で取り出した。これは unified の処理ではない。
+Frontmatter に記事のメタデータを記載し、`grey-matter`で取り出した（これは unified の処理ではない）。
 
 https://github.com/jonschlinkert/gray-matter
 
@@ -48,7 +79,7 @@ https://github.com/jonschlinkert/gray-matter
 ---
 slug: "blog-renewal"
 title: "Next.jsでブログをつくった"
-date: "20220214"
+date: "20220320"
 tags: ["tech", "web", "nextjs"]
 ---
 
@@ -97,7 +128,7 @@ https://www.haxibami.net
 
 https://github.com/remarkjs/remark-gemoji
 
-`:v:`が :v: になる。
+`:v:`が :v: に。
 
 #### 数式表示
 
@@ -108,16 +139,16 @@ https://github.com/remarkjs/remark-math
 https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex
 
 ```md
-$$
-( \sum_{k=1}^{n} a_k b_k )^2 \leq ( \sum_{k=1}^{n} {a_k}^2 ) ( \sum_{k=1}^{n} {b_k}^2 )
-$$
+> $$
+> ( \sum_{k=1}^{n} a_k b_k )^2 \leq ( \sum_{k=1}^{n} {a_k}^2 ) ( \sum_{k=1}^{n} {b_k}^2 )
+> $$
 ```
 
-$$
-( \sum_{k=1}^{n} a_k b_k )^2 \leq ( \sum_{k=1}^{n} {a_k}^2 ) ( \sum_{k=1}^{n} {b_k}^2 )
-$$
+> $$
+> ( \sum_{k=1}^{n} a_k b_k )^2 \leq ( \sum_{k=1}^{n} {a_k}^2 ) ( \sum_{k=1}^{n} {b_k}^2 )
+> $$
 
-$e^{i\pi} + 1 = 0$ のようなインライン数式もいける。手動でフォントを設置する必要はないが、KaTeX 用 CSS の挿入が必要。`pages/_document.tsx`で読み込んでいる。
+$e^{i\pi} + 1 = 0$ のようなインライン数式もいける。フォントは置かずともよいが、CSS の挿入は必要。
 
 ```tsx
 // pages/_document.tsx
@@ -144,77 +175,166 @@ export default function Document() {
 
 #### ルビ
 
-既に[remark-ruby](https://github.com/laysent/remark-ruby)というパッケージがルビを実装しているが、メンテナンスがされておらず依存関係と API が古くなっていた（主に`remark-parse`まわり）。そのため別パッケージ（`remark-jaruby`）を実装した。
+既に[remark-ruby](https://github.com/laysent/remark-ruby)というパッケージがルビを実装しているが、メンテナンスがされておらず依存関係と API が古くなっていたため、別パッケージ（`remark-jaruby`）を実装した。
 
 https://github.com/haxibami/remark-jaruby
 
 元のパッケージ自体が`remark-parse`の中身である[micromark](https://github.com/micromark/micromark)に介入して処理を行っていたので、パーサ部分（[micromark-extension-jaruby](https://github.com/haxibami/micromark-extension-jaruby)）、構文木操作部分（[mdast-util-jaruby](https://github.com/haxibami/mdast-util-jaruby)）の拡張機能に分割し、これらを`remark-jaruby`から参照している。
 
-書式は元のパッケージのものを踏襲した。
+書式は元のものを踏襲した。
 
 ```md
-昨日午後、{†聖剣†}^(エクスカリバー)を振り回す{全裸中年男性}^(無敵の人)が出現し……
+> 昨日午後、{†聖剣†}^(エクスカリバー)を振り回す{全裸中年男性}^(無敵の人)が出現し……
 ```
 
-昨日午後、{†聖剣†}^(エクスカリバー)を振り回す{全裸中年男性}^(無敵の人)が出現し……
+> 昨日午後、{†聖剣†}^(エクスカリバー)を振り回す{全裸中年男性}^(無敵の人)が出現し……
 
 #### ウィジェット（リンクカード）
 
-外部サイトのリンクを貼ったときに、モコッとしたウィジェットが出るあれ。その表示**する**側。
+リンクを貼ったときに、モコッとしたウィジェットが出るあれ。その表示**する**側。
 
 https://zenn.dev/tomi/articles/2021-03-22-blog-card
 
-実装は :point_up_2: を全面的に参考にしたが、細かい部分がちょっと違っている。
+実装は :point_up_2: を全面的に参考にした。細かい部分は違っているが、Markdown 内のリンクからメタ情報を取得して、リンクを適当な React コンポーネントに置き換えている点は同じだ。
 
-##### 変換試行対象の限定
+##### 内部
 
-元の記事では mdast 中の`link`ノードすべてに対しウィジェットへの変換処理を試行していたが、こちらでは変換したい対象（空行に挟まれた裸のリンク）について、`extlink`という mdast ノード、及び同名の HTML タグを割り当てた。内部で unified の Transformer プラグインを動かし、
+汎用性・機能性を踏まえ、自分は unified のプラグインとして実装する手法を採った。まず、変換したい対象（空行に挟まれた裸のリンク）に対し`extlink`という mdast ノード、及び同名の HTML タグを割り当てた。具体的には、
 
 1. Paragraph かつ
 1. 子要素が一つかつ
-1. その子要素がリンクである
+1. 子要素がリンクである
 
-ものを`extlink`ノードとしている。プラグインの書き方については
+ものを`<extlink>`に置き換えている。
 
-https://zenn.dev/januswel/articles/745787422d425b01e0c1
-
-を参考にした。
-
-##### データフェッチの効率化
-
-元の記事ではリンク先の OGP 画像やタイトルを取得するため、ビルド時に記事内の全リンクを取得し、リンク先を `fetch` してメタ情報を抽出、グローバルステートに保存する方法を取っていたが、この部分を remark プラグイン側に移管した。
-
-[remark-link-card](https://github.com/gladevise/remark-link-card)などを参考に、メタ情報の取得には :point_down: を使用している。
+置き換えと同時に、プラグイン内でメタ情報の取得も行った。:point_down: を使用して`meta`タグに記載の title、description、OGP 画像・アイコンのリンクを`fetch`し、`<extlink>`の子要素として挟む。
 
 https://github.com/BetaHuhn/metadata-scraper#readme
-
-`fetch`している都合上、作成したプラグインは非同期プラグインとなることに留意。具体的には unified で`processSync`が使えなくなる。
-
-生成物は下のように独自のタグを作って出力している。この時点で普通の HTML 要素として出してしまい、後からスタイリングするのでもかまわない（というかそれが王道）のだが、できればリンクカードを React コンポーネントとして扱いたかったためやむを得ずこうした。なお、取得したメタ情報を渡す方法が他に思いつかず、強引に`JSON.stringify`したものを挟んでいるが、たぶん正しいやり方ではない。
 
 ```html
 <extlink>{meta: {...}}</extlink>
 ```
 
-あとは`rehype-react`の`components`オプションで`extlink`ノードをコンポーネントに変換すれば、お好きなリンクカードが出来上がる。
+（これ以外に方法が思いつかず、オブジェクトを強引に`JSON.stringify`したものを挟んでいるが、他に良いやり方があったら教えてほしい）
+
+最後に`rehype-react`。このプラグインの`components`オプションでは、入力された HTML の任意のタグを任意の React コンポーネントに変換できる。これで`extlink`タグの子要素（つまり取得したメタ情報）を`props`として自作のコンポーネントに渡してやればよい。[^2]
+
+[^2]: なお、`rehype-react`の処理と`remark-rehype`周辺の処理を同じファイルにまとめてはいけない。[getStaticProps をめぐる事情](https://zenn.dev/wattanx/scraps/da4690390d8e3d)でビルドがコケる。
+
+```ts
+// lib/rehype-react.ts
+// HTML parser on "Client" side. Never include backend code (including remark).
+
+import { unified } from "unified";
+import rehypeParse from "rehype-parse";
+import rehypeReact from "rehype-react";
+import type { Options as RehypeReactOptions } from "rehype-react";
+import React from "react";
+import MyLink from "components/MyLink";
+import type { MyLinkProps } from "components/MyLink";
+import LinkWidget from "components/LinkWidget";
+import type { LinkWidgetProps } from "components/LinkWidget";
+import NextImage from "components/NextImage";
+import type { NextImageProps } from "components/NextImage";
+
+// Convert HTML to React Component
+export const HtmlToReact = (html: string) => {
+  const result = unified()
+    .use(rehypeParse, {
+      fragment: true,
+    })
+    .use(rehypeReact, {
+      createElement: React.createElement,
+      components: {
+        a: (props: MyLinkProps) => {
+          return MyLink(props);
+        },
+        img: (props: NextImageProps) => {
+          return NextImage(props);
+        },
+        extlink: (props: LinkWidgetProps) => {
+          return LinkWidget(props);
+        },
+      },
+    } as RehypeReactOptions)
+    .processSync(html);
+  return result.result;
+};
+```
+
+```tsx
+// components/LinkWidget/index.tsx
+import type { LinkWidgetMeta } from "lib/interface";
+import Styles from "./style.module.scss";
+
+export interface LinkWidgetProps {
+  children: string;
+}
+
+const LinkWidget: React.VFC<LinkWidgetProps> = (props) => {
+  const { children } = props;
+  const meta: LinkWidgetMeta = JSON.parse(children);
+  return (
+    <div className={Styles.Wrapper}>
+      <a href={meta.url}>
+        <div className={Styles.Widget}>
+          <div className={Styles.Main}>
+            <div className={Styles.Title}>{meta.title}</div>
+            <div className={Styles.Description}>{meta.description}</div>
+            <div className={Styles.Host}>
+              <img src={meta.icon} height={15} width={15} alt="icon" />
+              {meta.url.indexOf("/", 8) != -1
+                ? meta.url.slice(8, meta.url.indexOf("/", 8))
+                : meta.url.slice(8)}
+            </div>
+          </div>
+          <div className={Styles.Image}>
+            <img src={meta.image} height={105} width={200} alt="image" />
+          </div>
+        </div>
+      </a>
+    </div>
+  );
+};
+
+export default LinkWidget;
+```
+
+unified プラグインの書き方は
+
+https://zenn.dev/januswel/articles/745787422d425b01e0c1
+
+を参考にした。なお、内部で`fetch`を行っている都合上、作成したプラグインは非同期プラグインとなることに留意。具体的には unified で`processSync`が[使えなくなる](https://github.com/unifiedjs/unified#processorprocesssyncfilevalue)。
+
+#### ページ内リンク・目次
+
+`rehype-slug`、`rehype-autolink-headings`、`remark-toc`で実現。
+
+https://github.com/rehypejs/rehype-slug
+
+https://github.com/rehypejs/rehype-autolink-headings
+
+https://github.com/remarkjs/remark-toc
 
 #### 内容プレビュー
 
-お気づきかはわからないが、[トップ](https://haxibami.net/blog)の記事タイルには内容のプレビューを表示している。このために生の Markdown を流し込むのも気が引けたので、なんとかして plaintext 形式に変換できないかと考えていたら、`strip-markdown`というのがあった。これで見出し・引用等を除いた冒頭 200 字を抽出している。
+[トップ](https://haxibami.net/blog)の記事タイルには内容のプレビューを表示している。このために生の Markdown を流し込むのも気が引けたので、なんとかして plaintext 形式に変換できないかと考えていたら、`strip-markdown`というのがあった。これで`<h1>`, `<blockquote>`等を除去し、冒頭 200 字を抽出している。
 
 https://github.com/remarkjs/strip-markdown
 
 #### シンタックスハイライト
 
-最初は[prism.js](https://prismjs.com)を`babel-plugin-prismjs`から使っていたが、使えるカラースキームがあまりに少なかったため[shiki](https://shiki.matsu.io)に変更した。公式サイトにある通りこちらは VSCode のカラースキームファイルが流用できる。せっかくなので自作の[urara-vscode](https://github.com/haxibami/urara-vscode)を使用してみた。
+最初は[prism.js](https://prismjs.com)を使っていたが、使えるカラースキームがあまりに少なかったため[shiki](https://shiki.matsu.io)に変更した。公式サイトにある通り、こちらは VSCode のカラースキームファイルが流用できる。せっかくなので自作の[urara-vscode](https://github.com/haxibami/urara-vscode)を使用してみた。
 
 https://github.com/shikijs/shiki
 
-以上を合わせたメソッドチェーンが以下。
+以上を合わせたメソッドチェーンが以下。[^3]
+
+[^3]: 変なファイル処理が入っているのは、shiki がテーマファイルを読み込むにあたって**自分のインストールされた位置**（メインプロジェクトの`node_modules`以下）からの相対パスか、ファイルシステムの絶対パスかのいずれかしか受け付けないため。
 
 ```ts
 // lib/parser.ts
-// Markdown parser on "Server" side. Never include Frontend code (including rehype-react).
+// Markdown parser on "Server" side. Never include frontend code (including rehype-react).
 
 import { join } from "path";
 import { unified } from "unified";
@@ -223,11 +343,15 @@ import remarkGfm from "remark-gfm";
 import remarkGemoji from "remark-gemoji";
 import remarkMath from "remark-math";
 import remarkJaruby from "remark-jaruby";
+import remarkUnwrapImages from "remark-unwrap-images";
+import remarkToc from "remark-toc";
+import remarkRehype from "remark-rehype";
+import type { Options as RemarkRehypeOptions } from "remark-rehype";
 import rehypeKatex from "rehype-katex";
 import * as shiki from "shiki";
 import rehypeShiki from "@leafac/rehype-shiki";
-import remarkRehype from "remark-rehype";
-import type { Options as RemarkRehypeOptions } from "remark-rehype";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeStringify from "rehype-stringify";
 import stripMarkdown from "strip-markdown";
 import remarkStringify from "remark-stringify";
@@ -247,6 +371,11 @@ export const MdToHtml = async (md: string) => {
     .use(remarkMath)
     .use(remarkJaruby)
     .use(remarkLinkWidget)
+    .use(remarkUnwrapImages)
+    .use(remarkToc, {
+      heading: "目次",
+      tight: true,
+    })
     .use(remarkRehype, {
       handlers: {
         extlink: extLinkHandler,
@@ -256,13 +385,17 @@ export const MdToHtml = async (md: string) => {
     .use(rehypeShiki, {
       highlighter: await shiki.getHighlighter({ theme: myShikiTheme }),
     })
+    .use(rehypeSlug)
+    .use(rehypeAutolinkHeadings, {
+      behavior: "wrap",
+    })
     .use(rehypeStringify)
     .process(md);
 
   return result.toString();
 };
 
-// Convert Markdown to plaintext
+// Convert Markdown to plaintext: for preview in top pages
 export const MdStrip = async (md: string) => {
   const result = unified()
     .use(remarkParse)
@@ -276,69 +409,6 @@ export const MdStrip = async (md: string) => {
 };
 ```
 
-```ts
-// lib/rehype-react.ts
-
-import { unified } from "unified";
-import rehypeParse from "rehype-parse";
-import rehypeReact from "rehype-react";
-import type { Options as RehypeReactOptions } from "rehype-react";
-import React from "react";
-import MyLink from "components/MyLink";
-import LinkWidget from "components/LinkWidget";
-import type { LinkWidgetProps } from "components/LinkWidget";
-
-// Convert HTML to React Component
-export const HtmlToReact = (html: string) => {
-  const result = unified()
-    .use(rehypeParse, {
-      fragment: true,
-    })
-    .use(rehypeReact, {
-      createElement: React.createElement,
-      components: {
-        a: ({ children, href }) => {
-          href ??= "/404";
-          return MyLink({ children, href });
-        },
-        extlink: ({ children }: LinkWidgetProps) => {
-          return LinkWidget({ children });
-        },
-      },
-    } as RehypeReactOptions)
-    .processSync(html);
-  return result.result;
-};
-```
-
-変なファイル処理が入っているのは、shiki がテーマファイルを読み込むにあたって**自分のインストールされた位置**（メインプロジェクトの`node_modules`以下）からの相対パスか、ファイルシステムの絶対パスかのいずれかしか受け付けないため。
-
-ファイルが分かれているのは、[getStaticProps をめぐる事情](https://zenn.dev/wattanx/scraps/da4690390d8e3d)のため。
-
-#### 引用
-
-デフォルトで`<blockquote>`タグに変換されるため、手動でスタイリングした。
-
-```md
-> 星屑落ちて 華は散っても  
-> キラめく舞台に 生まれて変わる  
-> 新たな私は 未知なる運命  
-> 新たな私は まだ見ぬ戯曲  
-> 愛城華恋は 舞台に一人  
-> 愛城華恋は 次の舞台へ
-```
-
-> 星屑落ちて 華は散っても  
-> キラめく舞台に 生まれて変わる  
-> 新たな私は 未知なる運命  
-> 新たな私は まだ見ぬ戯曲  
-> 愛城華恋は 舞台に一人  
-> 愛城華恋は 次の舞台へ
-
-[わかります](https://cinema.revuestarlight.com)。:giraffe:
-
-https://cinema.revuestarlight.com/
-
 以上の処理で、はてブや Qiita、Zenn あたりと似た書き心地になった。
 
 ### ダークモード
@@ -347,48 +417,18 @@ https://cinema.revuestarlight.com/
 
 https://github.com/pacocoursey/next-themes
 
-`globals.scss`でだいぶ原始的な変数指定をする羽目になっている。
-
-```css
-:root {
-  --foreground: #4e4266;
-  --background: white;
-  --title: #1c1921;
-  --bar: #1c1921;
-  --subtitle: #8a8299;
-  --hover: #edebef;
-  --line: #8a829955;
-  --shadow: #1c192166;
-  --link: #7f60bf;
-  --code: #edebef;
-}
-
-[data-theme="dark"] {
-  --background: #14111a;
-  --foreground: #d2ced9;
-  --title: #d2ced9;
-  --bar: #9986bf;
-  --subtitle: #8a8299;
-  --hover: #1c1921;
-  --line: #8a829955;
-  --shadow: #d2ced966;
-  --link: #86bfb6;
-  --code: #292433;
-}
-```
-
 ### 動的 OGP 画像の自動生成
 
-外部サイトのリンクを貼ったときに、モコッとしたウィジェットが出るあれ。今度は表示**させる**側。自分は Vercel のサーバレス関数機能を使って
+[先程](#ページ内リンク目次)に続き、今度は表示**される**側。Vercel のサーバレス関数機能を使って
 
 1. ヘッドレス Chromium を起動
-2. クエリパラメータ（記事タイトル・更新日）に応じた React コンポーネントを生成
-3. `renderToStaticMarkup`で静的 HTML に変換
-4. スクリーンショットを撮影
+2. クエリパラメータに応じた内容の React コンポーネントを生成
+3. `renderToStaticMarkup`で静的 HTML 化
+4. 表示してスクリーンショットを撮影
 
 する手順で実現した。
 
-私の環境ではなぜか`playwright-aws-lambda`が動かなかったので、[`chrome-aws-lambda`](https://github.com/alixaxel/chrome-aws-lambda)と puppeteer を使った。
+使うつもりだった`playwright-aws-lambda`がなぜか手元で動かなかったので、[chrome-aws-lambda](https://github.com/alixaxel/chrome-aws-lambda)と [puppeteer](https://github.com/puppeteer/puppeteer) を使った。
 
 ```tsx
 // pages/api/ogp.tsx
@@ -460,142 +500,22 @@ const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
 export default OgpGen;
 ```
 
-表示用のコンポーネントとスタイリングは別ファイルに分割した。自力で書いたぶん、デザインの自由度は高い。
+表示用のコンポーネント・スタイリングは手元で書けるぶん、デザインの自由度は高い。
 
-```tsx
-// components/OgpImage/OgpImage.tsx
-
-import React from "react";
-
-export interface OgpInfo {
-  title: string;
-  date: string;
-  icon: string;
-  style: string;
-}
-
-const OgpImage: React.VFC<OgpInfo> = (ogpinfo) => {
-  return (
-    <html>
-      <head>
-        <style dangerouslySetInnerHTML={{ __html: ogpinfo.style }} />
-      </head>
-      <body>
-        <div id="Wrapper">
-          <h1 id="Title">
-            <p>{ogpinfo.title}</p>
-          </h1>
-          <div id="Name">
-            <img
-              src={`data:image/png;base64,${ogpinfo.icon}`}
-              alt="haxicon"
-              width={100}
-              height={100}
-            />
-            <h2 id="Host">
-              <p>haxibami.net</p>
-            </h2>
-          </div>
-          <h2 id="Date">
-            <p>{ogpinfo.date}</p>
-          </h2>
-        </div>
-      </body>
-    </html>
-  );
-};
-
-export default OgpImage;
-```
-
-```css
-/* styles/ogp.css, compiled from styles/ogp.scss */
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap");
-@font-face {
-  font-family: "Noto Sans CJK JP";
-  font-style: normal;
-  font-weight: bold;
-  src: url("https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff2")
-    format("woff2");
-}
-* {
-  margin: 0;
-  padding: 0;
-  font-display: swap;
-}
-
-html,
-body {
-  width: 100%;
-  height: 100%;
-  background: #292433;
-  font-family: "Noto Sans CJK JP", "Noto Sans JP", sans-serif;
-  font-size: 125%;
-  color: #d2ced9;
-}
-
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(to right bottom, #d9989c, #a6b4de);
-}
-
-#Wrapper {
-  margin: 50px;
-  background: white;
-  grid-gap: 30px;
-  border-radius: 30px;
-  background: #1c1921;
-  box-shadow: 10px 10px 20px #1c192166, -10px -10px 20px #1c192166;
-  padding: 50px;
-  display: grid;
-  grid-template-rows: 280px 100px;
-  grid-template-columns: 700px 250px;
-  grid-template-areas: "Title Title" "Name Date";
-}
-#Wrapper #Title {
-  font-size: 60px;
-  grid-area: Title;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-#Wrapper #Title p {
-  max-height: 100%;
-  overflow-wrap: anywhere;
-}
-#Wrapper #Name {
-  grid-area: Name;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-#Wrapper #Name img {
-  border-radius: 50%;
-}
-#Wrapper #Date {
-  grid-area: Date;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  font-family: "Roboto Mono", monospace;
-}
-
-/*# sourceMappingURL=ogp.css.map */
-```
-
-問題は Vercel の実行時間制限（5 秒）と容量制限（50MB）だ。実行時間はともかく、向こうの環境（AWS Lambda 相当）には日本語フォントが入っていないので、そのインストールも必要になる。今回は Web フォントでどうにかした。
+問題は Vercel の容量制限（50MB）だ。`chrome-aws-lambda`のインストールだけでほぼ上限に達するうえ、向こうの環境（AWS Lambda 相当）には日本語フォントが入っていないので、その手配も必要になる。幸い今回は Web フォントでどうにかなった。
 
 ![普通にオーバーしてるのに動いてる](/image/lambda-fn.png)
 
-Vercel のログによれば容量はややオーバーしているのになぜか動いている。優しいな〜
+Vercel のログは容量オーバーを告げているが、なぜか動いている。優しいな〜
 
 ### サイトマップ生成
 
-[next-sitemap](https://github.com/iamvishnusankar/next-sitemap)を使ったところ、`sitemap-0.xml`の`<lastmod>`がすべて最終ビルド時を示していて発狂しかかった。この挙動はある意味正しく、なぜかといえば自分が手を触れていないページでもビルドするたびに**静的アセットの slug 名が変わってしまう**ためである。仕方がないので[このへん](https://www.mk-engineer.com/posts/nextjs-before-build)を参考にしつつ自分で書いた。`package.json`の`prebuild`と`postbuild`を活用し、ビルド前に記事のインデックスを作成、ビルド後にインデックスに基づいて`sitemap.xml`と`robots.txt`を生成するようにしてある。
+[next-sitemap](https://github.com/iamvishnusankar/next-sitemap)を使ったところ、`<lastmod>`がすべて最終ビルド時を示していて発狂しかけた。この挙動はある意味正しく、なぜなら自分が触れていないページでもビルドするたびに**静的アセットの slug 名が変わってしまう**ためである。仕方がないので[このへん](https://www.mk-engineer.com/posts/nextjs-before-build)を参考にしつつ自分で書いた。`package.json`の`prebuild`と`postbuild`を活用し、
+
+1. ビルド前に`share/index.json`に記事のインデックスを作成
+1. ビルド後にインデックスに基づいて`sitemap.xml`と`robots.txt`を生成
+
+するようにしてある。
 
 ```js
 // hooks/scripts/sitemap.mjs
@@ -682,17 +602,16 @@ const sitemapGenerator = async () => {
     </urlset>
   `;
 
-  const robots = `
-      # *
-      User-agent: *
-      Allow: /
+  const robots = `# *
+User-agent: *
+Allow: /
 
-      # Host
-      Host: https://www.haxibami.net
+# Host
+Host: https://www.haxibami.net
 
-      # Sitemaps
-      Sitemap: https://www.haxibami.net/sitemap.xml
-  `;
+# Sitemaps
+Sitemap: https://www.haxibami.net/sitemap.xml
+`;
 
   fs.writeFileSync(`public/${XMLFILE}`, formatted(generatedSitemap));
   fs.writeFileSync("public/robots.txt", robots);
@@ -720,14 +639,77 @@ export default () => {
 
 本当は TypeScript で書きたかったが、ES Modules 対応は Version 4.6 以降に延期された[らしい](https://zenn.dev/aumy/scraps/06e8d775b047f2)。安定版に降りて広まってきたら書き直すかもしれない。
 
+### フィード対応
+
+`Feed`というライブラリを使った。上と同じ要領で`/rss`以下に RSS、Atom、JSON Feed 用のファイル三種を吐かせる。
+
+```js
+// hooks/scripts/feed.mjs
+import fs from "fs";
+import { Feed } from "feed";
+import { readYaml, getAllPosts, MdToHtml, dateConverter } from "./lib.mjs";
+
+// variables
+const HOST = "https://www.haxibami.net";
+
+const meta = readYaml("meta.yaml");
+
+const genRssFeed = () => {
+  const author = {
+    name: "haxibami",
+    email: "contact@haxibami.net",
+    link: HOST,
+  };
+
+  const date = new Date();
+  const feed = new Feed({
+    title: meta.siteinfo.blog.title,
+    description: meta.siteinfo.blog.description,
+    id: HOST,
+    link: HOST,
+    language: "ja",
+    image: `${HOST}/favicon.png`,
+    copyright: `All rights reserved ${date.getFullYear()}, ${author.name}`,
+    updated: date,
+    feedLinks: {
+      rss2: `${HOST}/rss/feed.xml`,
+      json: `${HOST}/rss/feed.json`,
+      atom: `${HOST}/rss/atom.xml`,
+    },
+    author: author,
+  });
+
+  const allBlogs = getAllPosts(["slug", "title", "date", "content"], "blog");
+
+  allBlogs.forEach((post) => {
+    const url = `${HOST}/blog/posts/${post.slug}`;
+    feed.addItem({
+      title: post.title,
+      description: `<p>${MdToHtml(post.content).substring(0, 300)}</p>`,
+      id: url,
+      link: url,
+      date: new Date(dateConverter(post.date)),
+    });
+  });
+
+  fs.mkdirSync("public/rss", { recursive: true });
+  fs.writeFileSync("public/rss/feed.xml", feed.rss2());
+  fs.writeFileSync("public/rss/atom.xml", feed.atom1());
+  fs.writeFileSync("public/rss/feed.json", feed.json1());
+};
+
+export default genRssFeed;
+```
+
 ## 感想
 
-けっこう簡単に動いた。Next.js と unified のデベロッパーに五体投地しつつ、改修をやっていく。
+Next.js の抽象化と、unified はじめ充実した外部処理系のおかげでかなり簡単に動いた。デベロッパーに五体投地しつつ、改修をやっていく。
 
 ## TODO
 
 - [x] ルビの実装（2022/03/06）
 - [x] フィード（RSS, Atom）対応（2022/03/10）
 - [x] 外部リンクのカード化（2022/03/15）
-- [ ] Twitter コンテンツの静的埋め込み
+- [x] ダークモードのサポート（2022/03/22）
 - [ ] Mermaid のサポート
+- [ ] Twitter コンテンツの静的埋め込み

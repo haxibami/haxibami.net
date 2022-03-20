@@ -1,49 +1,46 @@
 import type { NextPage, InferGetStaticPropsType } from "next";
 import { getAllPosts, getPostTags, replaceMdwithTxt, readYaml } from "lib/api";
-import type { PageMetaProps, MenuTab, SiteInfo } from "lib/interface";
-import { ogpHost } from "lib/constant";
+import type { PageMetaProps, SiteInfo, PostType } from "lib/interface";
+import { COUNT_PER_PAGE, ogpHost, postMenuTabs } from "lib/constant";
 import MyHead from "components/MyHead";
-import BlogHeader from "components/BlogHeader";
-import Tiling from "components/Tiling";
-import ArticleMenu from "components/ArticleMenu";
-import Styles from "styles/grad_essay.module.scss";
+import Header from "components/PostTopHeader";
+import PostTop from "components/PostTop";
+import Footer from "components/Footer";
+import Styles from "styles/posttop.module.scss";
 
-const tabs: MenuTab[] = [
-  {
-    name: "Articles",
-    link: "",
-  },
-  {
-    name: "Tags",
-    link: "tags",
-  },
-];
+const postType: PostType = "grad_essay";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 export const getStaticProps = async () => {
+  const id = 1;
+  const end = COUNT_PER_PAGE;
+  const start = 0;
   const allPostsPre = getAllPosts(
     ["slug", "title", "date", "tags", "content"],
-    "grad_essay"
+    postType
   );
 
-  const taglists = getPostTags("grad_essay");
+  const total = allPostsPre.length;
+  const postAssign = allPostsPre.slice(start, end);
 
-  const allPosts = await Promise.all(
-    allPostsPre.map(async (item) => {
+  const taglists = getPostTags(postType);
+
+  const posts = await Promise.all(
+    postAssign.map(async (item) => {
       const processed = await replaceMdwithTxt(item);
       return processed;
     })
   );
 
-  const meta: SiteInfo = readYaml("meta.yaml");
+  const sitename: SiteInfo = readYaml("meta.yaml");
 
   const metaprops: PageMetaProps = {
     title: "トップ",
-    sitename: meta.siteinfo.grad_essay.title,
-    description: meta.siteinfo.grad_essay.description,
+    sitename: sitename.siteinfo.grad_essay.title,
+    description: sitename.siteinfo.grad_essay.description,
     ogImageUrl: encodeURI(
-      `${ogpHost}/api/ogp?title=${meta.siteinfo.grad_essay.title}`
+      `${ogpHost}/api/ogp?title=${sitename.siteinfo.grad_essay.title}`
     ),
     pageRelPath: "grad_essay",
     pagetype: "website",
@@ -51,23 +48,36 @@ export const getStaticProps = async () => {
   };
 
   return {
-    props: { allPosts, taglists, metaprops, meta },
+    props: {
+      posts,
+      taglists,
+      id,
+      total,
+      perPage: COUNT_PER_PAGE,
+      postType,
+      metaprops,
+      siteinfo: sitename,
+    },
   };
 };
 
-const GradEssayTop: NextPage<Props> = ({ allPosts, metaprops, meta }) => {
+const GradEssayTop: NextPage<Props> = (props) => {
+  const { posts, id, total, perPage, postType, metaprops, siteinfo } = props;
   return (
     <div>
       <div id={Styles.Wrapper}>
         <MyHead {...metaprops} />
-        <BlogHeader {...meta} />
-        <main>
-          <div id={Styles.MainBox}>
-            <ArticleMenu contentType={"grad_essay"} tabs={tabs} focus={0} />
-            <Tiling allPosts={allPosts} contentTop="grad_essay" />
-          </div>
-        </main>
-        <footer></footer>
+        <Header {...siteinfo} />
+        <PostTop
+          top={`/${postType}`}
+          postMenuTabs={postMenuTabs}
+          posts={posts}
+          id={id}
+          total={total}
+          perPage={perPage}
+          postType={postType}
+        />
+        <Footer />
       </div>
     </div>
   );

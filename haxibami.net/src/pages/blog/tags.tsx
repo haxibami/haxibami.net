@@ -1,66 +1,50 @@
 import type { NextPage, InferGetStaticPropsType } from "next";
-import Link from "next/link";
 import { getPostTags, readYaml } from "lib/api";
-import type { PageMetaProps, MenuTab, SiteInfo } from "lib/interface";
-import { ogpHost } from "lib/constant";
+import type { PageMetaProps, SiteInfo, PostType } from "lib/interface";
+import { ogpHost, tagsMenuTabs } from "lib/constant";
 import MyHead from "components/MyHead";
-import BlogHeader from "components/BlogHeader";
-import ArticleMenu from "components/ArticleMenu";
+import Header from "components/PostTopHeader";
+import TagsTop from "components/TagsTop";
+import Footer from "components/Footer";
 import Styles from "styles/tags.module.scss";
 
-const tabs: MenuTab[] = [
-  {
-    name: "Articles",
-    link: "",
-  },
-  {
-    name: "Tags",
-    link: "tags",
-  },
-];
+const postType: PostType = "blog";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 export const getStaticProps = async () => {
-  const taglists = getPostTags("blog");
+  const taglists = getPostTags(postType);
 
-  const meta: SiteInfo = readYaml("meta.yaml");
+  const sitename: SiteInfo = readYaml("meta.yaml");
 
   const metaprops: PageMetaProps = {
     title: "タグ一覧",
-    sitename: meta.siteinfo.blog.title,
+    sitename: sitename.siteinfo.blog.title,
     description: "タグ別記事",
     ogImageUrl: encodeURI(`${ogpHost}/api/ogp?title=タグ一覧`),
-    pageRelPath: "blog/tags",
+    pageRelPath: `${postType}/tags`,
     pagetype: "article",
     twcardtype: "summary",
   };
 
   return {
-    props: { taglists, metaprops, meta },
+    props: { taglists, metaprops, sitename },
   };
 };
 
-const Tags: NextPage<Props> = ({ taglists, metaprops, meta }) => {
+const Tags: NextPage<Props> = (props) => {
+  const { taglists, metaprops, sitename } = props;
   return (
     <div>
       <div id={Styles.Wrapper}>
         <MyHead {...metaprops} />
-        <BlogHeader {...meta} />
-        <main>
-          <div id={Styles.MainBox}>
-            <ArticleMenu contentType={"blog"} tabs={tabs} focus={1} />
-            <ul className={Styles.TagList}>
-              {taglists.map((tag) => (
-                <li className={Styles.TagTile} key={tag}>
-                  <Link href={`/blog/tag/${tag}`}>
-                    <a>#{tag}</a>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </main>
+        <Header {...sitename} />
+        <TagsTop
+          tagsMenuTabs={tagsMenuTabs}
+          taglists={taglists}
+          postType={postType}
+        />
+        <Footer />
       </div>
     </div>
   );

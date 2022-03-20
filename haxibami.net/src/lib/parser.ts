@@ -1,4 +1,4 @@
-// Markdown parser on "Server" side. Never include Frontend code (including rehype-react).
+// Markdown parser on "Server" side. Never include frontend code (including rehype-react).
 
 import { join } from "path";
 import { unified } from "unified";
@@ -8,11 +8,14 @@ import remarkGemoji from "remark-gemoji";
 import remarkMath from "remark-math";
 import remarkJaruby from "remark-jaruby";
 import remarkUnwrapImages from "remark-unwrap-images";
+import remarkToc from "remark-toc";
+import remarkRehype from "remark-rehype";
+import type { Options as RemarkRehypeOptions } from "remark-rehype";
 import rehypeKatex from "rehype-katex";
 import * as shiki from "shiki";
 import rehypeShiki from "@leafac/rehype-shiki";
-import remarkRehype from "remark-rehype";
-import type { Options as RemarkRehypeOptions } from "remark-rehype";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeStringify from "rehype-stringify";
 import stripMarkdown from "strip-markdown";
 import remarkStringify from "remark-stringify";
@@ -33,6 +36,10 @@ export const MdToHtml = async (md: string) => {
     .use(remarkJaruby)
     .use(remarkLinkWidget)
     .use(remarkUnwrapImages)
+    .use(remarkToc, {
+      heading: "目次",
+      tight: true,
+    })
     .use(remarkRehype, {
       handlers: {
         extlink: extLinkHandler,
@@ -41,6 +48,10 @@ export const MdToHtml = async (md: string) => {
     .use(rehypeKatex)
     .use(rehypeShiki, {
       highlighter: await shiki.getHighlighter({ theme: myShikiTheme }),
+    })
+    .use(rehypeSlug)
+    .use(rehypeAutolinkHeadings, {
+      behavior: "wrap",
     })
     .use(rehypeStringify)
     .process(md);

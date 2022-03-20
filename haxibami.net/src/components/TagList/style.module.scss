@@ -1,0 +1,18 @@
+@use "styles/variable" as var;
+@use "styles/lib";
+
+.TileTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  a:hover {
+    text-decoration: underline;
+  }
+  .TileTag {
+    padding: 0 0.5em;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    color: var(--title);
+    height: 1.75em;
+  }
+}

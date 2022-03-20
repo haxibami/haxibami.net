@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import Styles from "./BlogHeader.module.scss";
+import Styles from "./style.module.scss";
 import { SiteInfo } from "lib/interface";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,15 +10,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ThemeChanger from "components/ThemeChanger";
 
-const BlogHeader: React.VFC<SiteInfo> = ({ siteinfo }) => {
+const PostHeader: React.VFC<SiteInfo> = ({ siteinfo }) => {
   return (
-    <div id={Styles.HeaderBox}>
-      <header className={Styles.Desktop}>
-        <div id={Styles.Title}>
+    <header id={Styles.HeaderBox}>
+      <div className={Styles.Desktop}>
+        <span id={Styles.Title}>
           <h1>{siteinfo.blog.title}</h1>
           <p>{siteinfo.blog.description}</p>
-        </div>
-        <div id={Styles.Icons}>
+        </span>
+        <span id={Styles.Icons}>
           <Link href={"/"}>
             <a>
               <FontAwesomeIcon
@@ -54,9 +54,9 @@ const BlogHeader: React.VFC<SiteInfo> = ({ siteinfo }) => {
             </a>
           </Link>
           <ThemeChanger />
-        </div>
-      </header>
-      <header className={Styles.Mobile}>
+        </span>
+      </div>
+      <div className={Styles.Mobile}>
         <div>
           <h1>
             <div>なま</div>
@@ -109,9 +109,9 @@ const BlogHeader: React.VFC<SiteInfo> = ({ siteinfo }) => {
             <ThemeChanger />
           </li>
         </ul>
-      </header>
-    </div>
+      </div>
+    </header>
   );
 };
 
-export default BlogHeader;
+export default PostHeader;

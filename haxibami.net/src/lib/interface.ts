@@ -50,6 +50,7 @@ export interface PageMetaProps {
 export interface MenuTab {
   name: string;
   link: string;
+  focus: boolean;
 }
 
 // values passed to global state via /[slug].tsx

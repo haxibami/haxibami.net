@@ -77,8 +77,7 @@ const sitemapGenerator = async () => {
     </urlset>
   `;
 
-  const robots = `
-# *
+  const robots = `# *
 User-agent: *
 Allow: /
 

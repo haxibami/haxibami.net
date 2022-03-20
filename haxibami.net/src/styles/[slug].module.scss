@@ -41,20 +41,15 @@
       width: calc(var.$main_width - var.$line_width * 2);
     }
 
+    .TopLink {
+      display: flex;
+      align-items: center;
+      color: var(--title);
+    }
+
     .Date {
       margin-right: 1rem;
       text-decoration: none;
-    }
-
-    span {
-      display: inline-block;
-      margin: 0 0.5rem;
-      list-style: none;
-      text-decoration: underline;
-    }
-
-    a {
-      text-decoration: underline;
     }
   }
 

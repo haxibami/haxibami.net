@@ -7,20 +7,21 @@ export interface OgpInfo {
   style: string;
 }
 
-const OgpImage: React.VFC<OgpInfo> = (ogpinfo) => {
+const OgpImage: React.VFC<OgpInfo> = (props) => {
+  const { title, date, icon, style } = props;
   return (
     <html>
       <head>
-        <style dangerouslySetInnerHTML={{ __html: ogpinfo.style }} />
+        <style dangerouslySetInnerHTML={{ __html: style }} />
       </head>
       <body>
         <div id="Wrapper">
           <h1 id="Title">
-            <p>{ogpinfo.title}</p>
+            <p>{title}</p>
           </h1>
           <div id="Name">
             <img
-              src={`data:image/png;base64,${ogpinfo.icon}`}
+              src={`data:image/png;base64,${icon}`}
               alt="haxicon"
               width={100}
               height={100}
@@ -30,7 +31,7 @@ const OgpImage: React.VFC<OgpInfo> = (ogpinfo) => {
             </h2>
           </div>
           <h2 id="Date">
-            <p>{ogpinfo.date}</p>
+            <p>{date}</p>
           </h2>
         </div>
       </body>

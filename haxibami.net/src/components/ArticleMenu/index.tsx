@@ -1,24 +1,21 @@
 import Link from "next/link";
 import React from "react";
-import Styles from "./ArticleMenu.module.scss";
+import Styles from "./style.module.scss";
 import { PostType, MenuTab } from "lib/interface";
 
 interface ArticleMenuProps {
   contentType: PostType;
   tabs: MenuTab[];
-  focus: number;
 }
 
 const ArticleMenu: React.VFC<ArticleMenuProps> = (props) => {
+  const { contentType, tabs } = props;
   return (
     <h2 className={Styles.ArticleMenu}>
-      {props.tabs.map((tab, index) => {
+      {tabs.map((tab) => {
         return (
-          <div
-            className={index === props.focus ? Styles.Focus : ""}
-            key={tab.name}
-          >
-            <Link href={`/${props.contentType}/${tab.link}`}>
+          <div className={tab.focus ? Styles.Focus : ""} key={tab.name}>
+            <Link href={`/${contentType}/${tab.link}`} scroll={false}>
               <a>{tab.name}</a>
             </Link>
           </div>
