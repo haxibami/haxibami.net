@@ -6,19 +6,22 @@ import Styles from "./style.module.scss";
 
 const ThemeChanger = () => {
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { theme, resolvedTheme, setTheme } = useTheme();
   useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
+
   return (
     <div className={Styles.Container}>
       <button
         className={Styles.Button}
         aria-label="DarkModeToggle"
         type="button"
-        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
       >
         {mounted && (
           <>
-            {theme === "dark" ? (
+            {resolvedTheme === "dark" ? (
               <FontAwesomeIcon
                 icon={faMoon}
                 width={30}
@@ -30,7 +33,7 @@ const ThemeChanger = () => {
                 icon={faSun}
                 width={30}
                 height={30}
-                color={"orange"}
+                color={"darkorange"}
               />
             )}{" "}
           </>

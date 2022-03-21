@@ -13,7 +13,7 @@ const TagList: React.VFC<TagListProps> = (props) => {
     <span className={Styles.TileTags}>
       {tags.map((tag) => (
         <span className={Styles.TileTag} key={tag}>
-          <Link href={`${postType}/tag/${tag}`}>
+          <Link href={`/${postType}/tag/${tag}`}>
             <a>#{tag}</a>
           </Link>
         </span>

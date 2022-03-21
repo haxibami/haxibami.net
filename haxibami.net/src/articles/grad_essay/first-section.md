@@ -5,12 +5,15 @@ date: "20220213"
 tags: ["meta", "tech"]
 ---
 
-## このページについて
+## 予定地
 
 卒業文集のセクション 1 です。書きます。
 
 ### 現状報告
 
-(2022/02/13)
+- 概要
 
-ついに体裁が整った。詳細は[説明](https://haxibami.net/blog/blog-renewal)を参照。書くぞ！（素振り）
+  - :arrow_right: [この文書について](/grad_essay/about)
+
+- 技術的詳細
+  - :arrow_right: [説明](/blog/blog-renewal)を参照

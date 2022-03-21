@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import Styles from "./style.module.scss";
-import { SiteInfo } from "lib/interface";
+import { PostType, SiteInfo } from "lib/interface";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouseChimney,
@@ -10,13 +10,22 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import ThemeChanger from "components/ThemeChanger";
 
-const PostHeader: React.VFC<SiteInfo> = ({ siteinfo }) => {
+interface PostHeaderProps {
+  siteinfo: SiteInfo;
+  posttype: PostType;
+}
+
+const PostHeader: React.VFC<PostHeaderProps> = ({ siteinfo, posttype }) => {
   return (
     <header id={Styles.HeaderBox}>
       <div className={Styles.Desktop}>
         <span id={Styles.Title}>
-          <h1>{siteinfo.blog.title}</h1>
-          <p>{siteinfo.blog.description}</p>
+          <h1>
+            <Link href={`/${posttype}`}>
+              <a>{siteinfo.siteinfo[posttype].title}</a>
+            </Link>
+          </h1>
+          <p>{siteinfo.siteinfo[posttype].description}</p>
         </span>
         <span id={Styles.Icons}>
           <Link href={"/"}>
@@ -29,7 +38,7 @@ const PostHeader: React.VFC<SiteInfo> = ({ siteinfo }) => {
               />
             </a>
           </Link>
-          <Link href={"/blog/posts/about"}>
+          <Link href={`/${posttype}/posts/about`}>
             <a>
               <FontAwesomeIcon
                 icon={faQuestionCircle}
@@ -58,11 +67,25 @@ const PostHeader: React.VFC<SiteInfo> = ({ siteinfo }) => {
       </div>
       <div className={Styles.Mobile}>
         <div>
-          <h1>
-            <div>なま</div>
-            <div>あたたかくて</div>
-            <div>おいしい</div>
-          </h1>
+          {posttype === "blog" ? (
+            <h1>
+              <Link href={`/${posttype}`}>
+                <a>
+                  <div>なま</div>
+                  <div>あたたかくて</div>
+                  <div>おいしい</div>
+                </a>
+              </Link>
+            </h1>
+          ) : posttype === "grad_essay" ? (
+            <h1>
+              <Link href={`/${posttype}`}>
+                <a>{siteinfo.siteinfo[posttype].title}</a>
+              </Link>
+            </h1>
+          ) : (
+            <h1></h1>
+          )}
         </div>
         <ul>
           <li>
@@ -78,7 +101,7 @@ const PostHeader: React.VFC<SiteInfo> = ({ siteinfo }) => {
             </Link>
           </li>
           <li>
-            <Link href={"/blog/posts/about"}>
+            <Link href={`/${PostType}/posts/about`}>
               <a>
                 <FontAwesomeIcon
                   icon={faQuestionCircle}

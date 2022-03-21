@@ -30,7 +30,7 @@ $brands: (
   Bookmark: (#64bc4b, #64bc4b, #ff9523, #ffe4c7, #edebef, 150px, 150deg, 50px, 25px, true),
   Book:     (#a6b4de, #a6b4de, #ff2ea6, #ffd7ee, #edebef, 150px, -90deg, 50px, 25px, true),
   Blog1:    (#2bb24c, #2bb24c, #6dcce0, #ebfbff, #edebef, 200px, 75deg, 50px, 30px, true),
-  Blog2:    ($dark, $dark, #20dc60, #e8ffe9, #edebef, 200px, 45deg, 50px, 30px, true),
+  Blog2:    ($cyan, $cyan, #20dc60, #e8ffe9, #edebef, 200px, 45deg, 50px, 30px, true),
   Write:    (#2792ca, #2792ca, #000000, #5e627d, #edebef, 200px, -35deg, 50px, 30px, true),
   Poem:     ($red, $red, #ea0000, #ffe5e1, #edebef, 200px, -65deg, 50px, 35px, true),
   Spotify:  (#1db954, #1db954, #179443, #a1dea8, #edebef, 150px, 190deg, 50px, 30px, true),
@@ -61,6 +61,10 @@ $nextbg: $dark;
 $nextbg-night: #abbf86;
 $prevfg: $dark;
 $prevfg-night: #abbf86;
+$treefg: #706570;
+$treefg-night: $light;
+$treebg: $light;
+$treebg-night: $dark;
 
 // size definitions
 $line_width: min(5vw, 5rem);

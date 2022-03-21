@@ -29,7 +29,7 @@ const TaggedPostsGallery: NextPage<Props> = (props) => {
   return (
     <div id={Styles.Wrapper}>
       <MyHead {...metaprops} />
-      <Header {...siteinfo} />
+      <Header siteinfo={siteinfo} posttype={postType} />
       <PostTop
         top={`/${postType}/tag/${tag}`}
         postMenuTabs={[

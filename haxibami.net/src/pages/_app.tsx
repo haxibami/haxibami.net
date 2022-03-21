@@ -13,7 +13,7 @@ import "@fontsource/rubik/700.css";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     /*<ChakraProvider theme={theme}>*/
-    <ThemeProvider>
+    <ThemeProvider defaultTheme="system">
       <Component {...pageProps} />
     </ThemeProvider>
     /*</ChakraProvider>*/

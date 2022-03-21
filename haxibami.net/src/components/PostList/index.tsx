@@ -13,32 +13,30 @@ interface PostListProps {
 const PostList: React.VFC<PostListProps> = (props) => {
   const { posts, postType } = props;
   return (
-    <div>
-      <ul className={Styles.PostList}>
-        {posts.map((post) => (
-          <Link href={`/${postType}/posts/${post.slug}`} key={post.slug}>
-            <a>
-              <li className={Styles.PostTile} key={post.slug}>
-                <div className={Styles.TileTitle}>
-                  <h2>{post.title}</h2>
+    <ul className={Styles.PostList}>
+      {posts.map((post) => (
+        <Link href={`/${postType}/posts/${post.slug}`} key={post.slug}>
+          <a>
+            <li className={Styles.PostTile} key={post.slug}>
+              <div className={Styles.TileTitle}>
+                <h2>{post.title}</h2>
+              </div>
+              <div className={Styles.TileDate}>
+                <div>{dateVisualizer(post.date)}</div>
+              </div>
+              <div className={Styles.TilePreview}>
+                {post.content.substring(0, 200)}...
+              </div>
+              <div className={Styles.TileTags}>
+                <div>
+                  <TagList tags={post.tags} postType={postType} />
                 </div>
-                <div className={Styles.TileDate}>
-                  <div>{dateVisualizer(post.date)}</div>
-                </div>
-                <div className={Styles.TilePreview}>
-                  {post.content.substring(0, 200)}...
-                </div>
-                <div className={Styles.TileTags}>
-                  <div>
-                    <TagList tags={post.tags} postType={postType} />
-                  </div>
-                </div>
-              </li>
-            </a>
-          </Link>
-        ))}
-      </ul>
-    </div>
+              </div>
+            </li>
+          </a>
+        </Link>
+      ))}
+    </ul>
   );
 };
 

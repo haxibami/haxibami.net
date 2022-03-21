@@ -28,17 +28,17 @@ export const getStaticProps = async () => {
   };
 
   return {
-    props: { taglists, metaprops, sitename },
+    props: { taglists, metaprops, siteinfo: sitename },
   };
 };
 
 const Tags: NextPage<Props> = (props) => {
-  const { taglists, metaprops, sitename } = props;
+  const { taglists, metaprops, siteinfo } = props;
   return (
     <div>
       <div id={Styles.Wrapper}>
         <MyHead {...metaprops} />
-        <Header {...sitename} />
+        <Header siteinfo={siteinfo} posttype={postType} />
         <TagsTop
           tagsMenuTabs={tagsMenuTabs}
           taglists={taglists}

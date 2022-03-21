@@ -1,11 +1,11 @@
 import type { InferGetStaticPropsType, NextPage } from "next";
-import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { PageMetaProps } from "lib/interface";
 //import * as Svg from "lib/svg";
 import MyHead from "components/MyHead";
 import Tree from "components/Tree";
+import ThemeChanger from "components/ThemeChanger";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -16,7 +16,7 @@ import {
   faRssSquare,
   faPenToSquare,
   faQuoteLeft,
-  faChartBar,
+  faChartSimple,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faGithub,
@@ -25,15 +25,15 @@ import {
   faSpotify,
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
-import styles from "styles/index.module.scss";
+import Styles from "styles/index.module.scss";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 export const getStaticProps = async () => {
   const metaprops: PageMetaProps = {
-    title: "haxibami.net",
+    title: "haxibami",
     sitename: "haxibami.net",
-    description: "my phylogenetic tree",
+    description: "私の系統樹",
     ogImageUrl: "/ogpicon.webp",
     pageRelPath: "",
     pagetype: "website",
@@ -46,55 +46,36 @@ export const getStaticProps = async () => {
 
 const Home: NextPage<Props> = ({ metaprops }) => {
   return (
-    <div className={styles.container}>
+    <div className={Styles.container}>
       <MyHead {...metaprops} />
-      <Head>
-        <title>haxibami</title>
-        <meta name="description" content="私の系統樹" lang="ja" />
-        <meta name="twitter:site" content="@haxibami" />
-        <meta name="twitter:creator" content="@haxibami" />
-        <meta
-          name="twitter:image"
-          content="https://www.haxibami.net/ogpicon.webp"
-        />
-        <meta name="twitter:card" content="summary" />
-        <meta property="og:url" content="https://www.haxibami.net" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="haxibami.net" />
-        <meta property="og:description" content="私の系統樹" />
-        <meta property="og:site_name" content="haxibami.net" />
-        <meta
-          property="og:image"
-          content="https://www.haxibami.net/ogpicon.webp"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <div className={styles.tree}>
-          <Tree></Tree>
-          <div className={styles.icon_wrapper}>
+      <main id={Styles.Main}>
+        <div id={Styles.Tree}>
+          <Tree />
+          <div id={Styles.ThemeChanger}>
+            <ThemeChanger />
+          </div>
+          <div className={Styles.icon_wrapper}>
             <Link href="/profile">
               <a>
                 <Image
-                  className={styles.icon}
-                  src="/favicon.ico"
-                  alt="haxibami"
+                  className={Styles.icon}
+                  src="/ogpicon.webp"
+                  alt="icon"
                   width={100}
                   height={100}
                 />
-                <div className={styles.icon_tip}>!</div>
+                <div className={Styles.icon_tip}>!</div>
               </a>
             </Link>
           </div>
 
-          <div className={styles.About_box}>
+          <div className={Styles.About_box}>
             <Link href="about">
               <a>
-                <div className={styles.About_wrapper}>
-                  <FontAwesomeIcon icon={faQuestion} className={styles.About} />
+                <div className={Styles.About_wrapper}>
+                  <FontAwesomeIcon icon={faQuestion} className={Styles.About} />
                   {/*<Svg.About
-                    className={styles.About}
+                    className={Styles.About}
                     alt="about"
                     layout="fill"
                   />*/}
@@ -102,152 +83,150 @@ const Home: NextPage<Props> = ({ metaprops }) => {
               </a>
             </Link>
           </div>
-          <div className={styles.Twitter_box}>
+          <div className={Styles.Twitter_box}>
             <a
               href="https://twitter.com/haxibami"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <div className={styles.Twitter_wrapper}>
+              <div className={Styles.Twitter_wrapper}>
                 <FontAwesomeIcon
                   icon={faTwitter as IconProp}
-                  className={styles.Twitter}
+                  className={Styles.Twitter}
                 />
               </div>
             </a>
           </div>
-          <div className={styles.Instagram_box}>
+          <div className={Styles.Instagram_box}>
             <a
               href="https://instagram.com/haxibami"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <div className={styles.Instagram_wrapper}>
+              <div className={Styles.Instagram_wrapper}>
                 <FontAwesomeIcon
                   icon={faInstagram as IconProp}
-                  className={styles.Instagram}
+                  className={Styles.Instagram}
                 />
               </div>
             </a>
           </div>
-          <div className={styles.Mail_box}>
+          <div className={Styles.Mail_box}>
             <Link href="mail">
               <a>
-                <div className={styles.Mail_wrapper}>
-                  <FontAwesomeIcon icon={faEnvelope} className={styles.Mail} />
-                  {/*<Svg.Mail className={styles.Mail} alt="mail" layout="fill" />*/}
+                <div className={Styles.Mail_wrapper}>
+                  <FontAwesomeIcon icon={faEnvelope} className={Styles.Mail} />
                 </div>
               </a>
             </Link>
           </div>
-          <div className={styles.Github_box}>
+          <div className={Styles.Github_box}>
             <a
               href="https://github.com/haxibami"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <div className={styles.Github_wrapper}>
+              <div className={Styles.Github_wrapper}>
                 <FontAwesomeIcon
                   icon={faGithub as IconProp}
-                  className={styles.Github}
+                  className={Styles.Github}
                 />
               </div>
             </a>
           </div>
-          <div className={styles.Bookmark_box}>
+          <div className={Styles.Bookmark_box}>
             <a
               href="https://bookmeter.com/users/1025874"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <div className={styles.Bookmark_wrapper}>
+              <div className={Styles.Bookmark_wrapper}>
                 <FontAwesomeIcon
-                  icon={faChartBar}
-                  className={styles.Bookmark}
+                  icon={faChartSimple}
+                  className={Styles.Bookmark}
                 />
               </div>
             </a>
           </div>
-          <div className={styles.Book_box}>
+          <div className={Styles.Book_box}>
             <Link href="works">
               <a>
-                <div className={styles.Book_wrapper}>
-                  <FontAwesomeIcon icon={faBook} className={styles.Book} />
+                <div className={Styles.Book_wrapper}>
+                  <FontAwesomeIcon icon={faBook} className={Styles.Book} />
                 </div>
               </a>
             </Link>
           </div>
-          <div className={styles.Blog1_box}>
+          <div className={Styles.Blog1_box}>
             <a
               href="https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fwww.haxibami.net%2Frss%2Ffeed.xml"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <div className={styles.Blog1_wrapper}>
-                <FontAwesomeIcon icon={faRssSquare} className={styles.Blog1} />
+              <div className={Styles.Blog1_wrapper}>
+                <FontAwesomeIcon icon={faRssSquare} className={Styles.Blog1} />
               </div>
             </a>
           </div>
-          <div className={styles.Blog2_box}>
+          <div className={Styles.Blog2_box}>
             <Link href={`/blog`}>
               <a>
-                <div className={styles.Blog2_wrapper}>
-                  {/*<Svg.Blog className={styles.Blog2} alt="blog" layout="fill" />*/}
-                  <FontAwesomeIcon icon={faBlog} className={styles.Blog2} />
+                <div className={Styles.Blog2_wrapper}>
+                  <FontAwesomeIcon icon={faBlog} className={Styles.Blog2} />
                 </div>
               </a>
             </Link>
           </div>
 
-          <div className={styles.Write_box}>
+          <div className={Styles.Write_box}>
             <a
               href="https://kakuyomu.jp/users/haxibami"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <div className={styles.Write_wrapper}>
+              <div className={Styles.Write_wrapper}>
                 <FontAwesomeIcon
                   icon={faPenToSquare}
-                  className={styles.Write}
+                  className={Styles.Write}
                 />
               </div>
             </a>
           </div>
-          <div className={styles.Poem_box}>
+          <div className={Styles.Poem_box}>
             <a
               href="https://utakatanka.jp/kajin/1102"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <div className={styles.Poem_wrapper}>
-                <FontAwesomeIcon icon={faQuoteLeft} className={styles.Poem} />
+              <div className={Styles.Poem_wrapper}>
+                <FontAwesomeIcon icon={faQuoteLeft} className={Styles.Poem} />
               </div>
             </a>
           </div>
-          <div className={styles.Spotify_box}>
+          <div className={Styles.Spotify_box}>
             <a
               href="https://open.spotify.com/user/a0ndq420ky5fxfey4rpqx952w"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <div className={styles.Spotify_wrapper}>
+              <div className={Styles.Spotify_wrapper}>
                 <FontAwesomeIcon
                   icon={faSpotify as IconProp}
-                  className={styles.Spotify}
+                  className={Styles.Spotify}
                 />
               </div>
             </a>
           </div>
-          <div className={styles.Keybase_box}>
+          <div className={Styles.Keybase_box}>
             <a
               href="https://keybase.io/haxibami"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <div className={styles.Keybase_wrapper}>
+              <div className={Styles.Keybase_wrapper}>
                 <FontAwesomeIcon
                   icon={faKeybase as IconProp}
-                  className={styles.Keybase}
+                  className={Styles.Keybase}
                 />
               </div>
             </a>

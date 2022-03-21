@@ -77,7 +77,7 @@ export const getStaticProps = async (
 
 const AllBlog: NextPage<Props> = ({ metaprops, post, content }) => {
   return (
-    <div id={Styles.Wrapper} key={post.slug}>
+    <div id={Styles.Wrapper}>
       <MyHead {...metaprops} />
       <header>
         <nav>
