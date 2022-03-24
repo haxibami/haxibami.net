@@ -20,20 +20,20 @@ $darker: #14111a;
 
 // brand colors
 $brands: (
-//  Brandname:(top-left, bottom-right, darker, lighter, foreground, radius, rotate, outer, inner)
-  About:    ($blue, $blue, #8f48f5, #f6f1fe, #edebef, 100px, 230deg, 50px, 30px, true),
-	Twitter:  (#1da1f2, #1da1f2, #0c84cd ,#c8defb, #edebef, 250px, 140deg, 50px, 30px, true),
-  Instagram:(#ffdc80, #e1306c, #00000033, #ffffffbb, #edebef, 250px, 120deg, 50px, 30px, true),
-  Mail:     (#1855f0, #11defe, #0d41c6 ,#aeefff, #edebef, 200px, 100deg, 50px, 30px, true),
-  Github:   (#333333, #333333, #1d1d1d, #666666, #edebef, 200px, -10deg, 50px, 35px, true),
-  Keybase:  (#ff6f21, #ff6f21, #ff6f21, #ff6f21, #edebef, 200px, 20deg, 50px, 35px, true),
-  Bookmark: (#64bc4b, #64bc4b, #ff9523, #ffe4c7, #edebef, 150px, 150deg, 50px, 25px, true),
-  Book:     (#a6b4de, #a6b4de, #ff2ea6, #ffd7ee, #edebef, 150px, -90deg, 50px, 25px, true),
-  Blog1:    (#2bb24c, #2bb24c, #6dcce0, #ebfbff, #edebef, 200px, 75deg, 50px, 30px, true),
-  Blog2:    ($cyan, $cyan, #20dc60, #e8ffe9, #edebef, 200px, 45deg, 50px, 30px, true),
-  Write:    (#2792ca, #2792ca, #000000, #5e627d, #edebef, 200px, -35deg, 50px, 30px, true),
-  Poem:     ($red, $red, #ea0000, #ffe5e1, #edebef, 200px, -65deg, 50px, 35px, true),
-  Spotify:  (#1db954, #1db954, #179443, #a1dea8, #edebef, 150px, 190deg, 50px, 30px, true),
+// Brandname:(top-left, bottom-right, darker, lighter, foreground, radius, rotate, box-width)
+  About:    ($blue, $blue, #8f48f5, #f6f1fe, #edebef, 100px, 230deg, 50px),
+  Twitter:  (#1da1f2, #1da1f2, #0c84cd ,#c8defb, #edebef, 250px, 140deg, 50px),
+  Instagram:(#ffdc80, #e1306c, #00000033, #ffffffbb, #edebef, 250px, 120deg, 50px),
+  Mail:     (#1855f0, #11defe, #0d41c6 ,#aeefff, #edebef, 200px, 100deg, 50px),
+  Github:   (#333333, #333333, #1d1d1d, #666666, #edebef, 200px, -10deg, 50px),
+  Keybase:  (#ff6f21, #ff6f21, #ff6f21, #ff6f21, #edebef, 200px, 20deg, 50px),
+  Bookmark: (#64bc4b, #64bc4b, #ff9523, #ffe4c7, #edebef, 150px, 150deg, 50px),
+  Book:     (#a6b4de, #a6b4de, #ff2ea6, #ffd7ee, #edebef, 150px, -90deg, 50px),
+  Blog1:    (#2bb24c, #2bb24c, #6dcce0, #ebfbff, #edebef, 200px, 75deg, 50px),
+  Blog2:    ($cyan, $cyan, #20dc60, #e8ffe9, #edebef, 200px, 45deg, 50px),
+  Write:    (#2792ca, #2792ca, #000000, #5e627d, #edebef, 200px, -35deg, 50px),
+  Poem:     ($red, $red, #ea0000, #ffe5e1, #edebef, 200px, -65deg, 50px),
+  Spotify:  (#1db954, #1db954, #179443, #a1dea8, #edebef, 150px, 190deg, 50px),
 );
 
 // element colors
@@ -61,10 +61,8 @@ $nextbg: $dark;
 $nextbg-night: #abbf86;
 $prevfg: $dark;
 $prevfg-night: #abbf86;
-$treefg: #706570;
-$treefg-night: $light;
-$treebg: $light;
-$treebg-night: $dark;
+$docsbg: $white;
+$docsbg-night: $darker;
 
 // size definitions
 $line_width: min(5vw, 5rem);

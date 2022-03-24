@@ -10,7 +10,8 @@
     "start": "next start",
     "ts-check": "tsc --noEmit",
     "lint": "next lint",
-    "format": "prettier --check '**/*.{ts, tsx, json}'"
+    "format": "prettier --check '**/*.{ts, tsx, json}'",
+    "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
     "@babel/core": "7.17.8",
@@ -21,6 +22,7 @@
     "@fortawesome/free-solid-svg-icons": "6.1.0",
     "@fortawesome/react-fontawesome": "0.1.18",
     "@leafac/rehype-shiki": "2.1.2",
+    "@next/bundle-analyzer": "^12.1.0",
     "chrome-aws-lambda": "10.1.0",
     "feed": "4.2.2",
     "gray-matter": "4.0.3",

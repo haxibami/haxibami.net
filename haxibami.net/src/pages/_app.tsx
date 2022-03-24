@@ -4,6 +4,10 @@ import "../styles/global.scss";
 //import { ChakraProvider } from "@chakra-ui/react";
 //import theme from "lib/theme";
 import { ThemeProvider } from "next-themes";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+
+config.autoAddCss = false;
 
 import "@fontsource/rubik/400.css";
 import "@fontsource/rubik/500.css";

@@ -10,14 +10,12 @@ const Tree: React.VFC = () => {
       if (isClient && window.innerWidth < 600) {
         {
           return {
-            mobile: true,
             prewidth: isClient ? 500 : 0,
             preheight: isClient ? 900 : 0,
           };
         }
       }
       return {
-        mobile: false,
         prewidth: isClient ? window.innerWidth : 0,
         preheight: isClient ? window.innerHeight : 0,
       };

@@ -13,7 +13,7 @@ tags: ["meta", "tech"]
 
 - 概要
 
-  - :arrow_right: [この文書について](/grad_essay/about)
+  - :arrow_right: [この文書について](/grad_essay/posts/about)
 
 - 技術的詳細
-  - :arrow_right: [説明](/blog/blog-renewal)を参照
+  - :arrow_right: [説明](/blog/posts/blog-renewal)を参照

@@ -1,144 +1,93 @@
 @use "cursor_animation" as cursor;
 @use "variable" as var;
+@use "lib";
 
-.container {
-  padding: 0px;
-  
-  .main {
-    padding: 0px;
+#Wrapper {
+  @include lib.color;
+  background: var(--background);
+  color: var(--title);
+
+  header {
+    display: flex;
+    justify-content: center;
+  }
+
+  .Red {
+    color: var.$red;
+  }
+
+  .Yellow {
+    color: var.$yellow;
+  }
+
+  .Green {
+    color: var.$green;
+  }
+
+  .Cyan {
+    color: var.$cyan;
+  }
+
+  .Blue {
+    color: var.$blue;
+  }
+
+  .Magenta {
+    color: var.$magenta;
+  }
+
+  #HeaderBox {
+    max-width: 50rem;
+    width: 100%;
+    padding: 3rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  #Main {
+  padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
     min-height: 100vh;
-    background-color: var.$light;
+  }
+
+  #Card {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2em;
+  }
+
+  #IconImage {
+    object-fit: cover;
+    border-radius: 50%;
+    width: 175px;
+    height: 175px;
+  }
+
+  #Name {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: var(--title);
+    font-size: 150%;
+  }
 
-    .console {
-      position: relative;
-      margin: 15px;
-      padding: 0px;
-      background-color: var.$dark;
-      color: var.$white;
-      border-radius: 5px;
-      font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, Courier, monospace;
-      max-width: 800px;
-      z-index: 10;
-      line-height: 1.5;
-/*      box-shadow: 0 10px 25px 0 var.$shadow;*/
-
-      &::after {
-        content: '';
-        display: block;
-        position: absolute;
-        z-index: -1;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-
-        background-color: var.$shadow;
-        filter: blur(10px);
-        transform: translate(5px, 5px) scale(1.02);
-        mix-blend-mode: unset;
-      }
-
-      .titlebar {
-        position: relative;
-        background-color: silver;
-        border-radius: 5px 5px 0px 0px;
-        padding: 3px;
-        color: black;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        .windowbutton {
-          position: absolute;
-          right: 35px;
-          width: 15px;
-          height: 15px;
-          background-color: #ffcc00;
-          border-radius: 50%;
-          display: inline-block;
-          font-size: 12px;
-
-
-          &::after {
-            position: absolute;
-            right: -25px;
-            content: "";
-            width: 15px;
-            height: 15px;
-            background-color: #ff3b30;
-            border-radius: 50%;
-          }
-
-          &::before {
-            position: absolute;
-            left: -25px;
-            content: "";
-            width: 15px;
-            height: 15px;
-            background-color: #28cd41;
-            border-radius: 50%;
-          }
-        }
-      }
-
-      .console_text {
-        margin: 15px;
-        .info {
-          .infotext {
-            max-width: 70%;
-          }
-        }
-      }
-
-      .path {
-        color: var.$yellow;
-        text-decoration: underline;
-      }
-
-      .yellow {
-        color: var.$yellow;
-      }
-      .cyan {
-        color: var.$cyan;
-      }
-      .red {
-        color: var.$red;
-      }
-      .magenta {
-        color: var.$magenta;
-      }
-      .green {
-        color: var.$green;
-      }
-      .blue {
-        color: var.$blue;
-      }
-      .icon_wrapper {
-        margin: 10px 30px 10px 10px;
-      }
-      .info {
-        display: flex;
-      }
-
-      a {
-        text-decoration: underline;
-      }
-
-      .blinking {
-        margin: 1ch;
-        border-left: 2px solid transparent;
-        @include cursor.keyframes(blink) {
-          50% {
-            border-left-color: currentColor;
-          }
-        }
-        @include cursor.animation(blink 1s steps(1) infinite);
-      }
-    }
+  article {
+    max-width: 50rem;
+    width: 100%;
+    @include lib.colored_link;
+    @include lib.article_paragraph;
+    @include lib.table;
+    @include lib.code_inline;
+    @include lib.code_block;
+    @include lib.katex;
+    @include lib.quote;
+    @include lib.list;
+    @include lib.article_headlines;
+    @include lib.footnotes;
   }
 }

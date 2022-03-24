@@ -80,16 +80,16 @@ const AllBlog: NextPage<Props> = ({ metaprops, post, content }) => {
     <div id={Styles.Wrapper}>
       <MyHead {...metaprops} />
       <header>
-        <nav>
-          <span className={Styles.TopLink}>
+        <div className={Styles.Title}>
+          <div className={Styles.TopLink}>
             <Link href={"/blog"}>
               <a>
                 <h2>{"Raw, Warm, Tasty"}</h2>
               </a>
             </Link>
-          </span>
+          </div>
           <ThemeChanger />
-        </nav>
+        </div>
         <div>
           <span className={Styles.Date}>{dateVisualizer(post.date)}</span>
         </div>

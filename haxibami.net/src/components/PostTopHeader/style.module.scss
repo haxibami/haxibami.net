@@ -5,6 +5,7 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  font-size: 1rem;
 }
 
 .Desktop {
@@ -63,9 +64,17 @@
     gap: 20px;
   }
 
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+
   li {
     list-style: none;
     font-size: 120%;
-    margin: 1em 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

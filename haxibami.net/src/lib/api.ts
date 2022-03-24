@@ -1,7 +1,7 @@
 import fs from "fs";
 import { join } from "path";
 import matter from "gray-matter";
-import { PostItem, PostType, SiteInfo } from "./interface";
+import { PostItem, DocItem, PostType, SiteInfo } from "./interface";
 import { MdStrip } from "lib/parser";
 import * as yaml from "js-yaml";
 
@@ -9,6 +9,8 @@ export const getArticlesDir = (posttype: PostType) => {
   const ArticlesDir = join(process.cwd(), `src/articles/${posttype}`);
   return ArticlesDir;
 };
+
+export const getDocsDir = () => join(process.cwd(), `src/docs`);
 
 export const getPostSlugs = (posttype: PostType) => {
   const allobjects = fs.readdirSync(getArticlesDir(posttype), {
@@ -53,6 +55,34 @@ export const getPostBySlug = (
   return Post;
 };
 
+export const getDocBySlug = (slug: string, fields: string[] = []) => {
+  const fullPath = join(getDocsDir(), `${slug}.md`);
+  const fileContent = fs.readFileSync(fullPath, "utf-8");
+  const { data, content } = matter(fileContent);
+
+  const Post: DocItem = {
+    slug: "",
+    title: "",
+    content: "",
+  };
+
+  fields.forEach((field) => {
+    if (field === "slug") {
+      Post[field] = slug;
+    }
+
+    if (field === "title") {
+      Post[field] = data[field];
+    }
+
+    if (field === "content") {
+      Post[field] = content;
+    }
+  });
+
+  return Post;
+};
+
 export const getAllPosts = (fields: string[] = [], posttype: PostType) => {
   const slugs: string[] = getPostSlugs(posttype);
   const posts: PostItem[] = slugs
@@ -73,7 +103,7 @@ export const getPostTags = (posttype: PostType) => {
   alltags.forEach(
     (tagset: PostItem) => (taglist = taglist.concat(tagset.tags))
   );
-  const res: string[] = Array.from(new Set(taglist));
+  const res: string[] = Array.from(new Set(taglist)).sort();
 
   return res;
 };

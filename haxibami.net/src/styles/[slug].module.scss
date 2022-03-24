@@ -1,6 +1,8 @@
 @use "variable" as var;
 @use "lib";
 
+@import url("https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css");
+
 #Wrapper {
   display: flex;
   flex-flow: column;
@@ -35,7 +37,7 @@
     width: var.$main_width;
     gap: 20px;
 
-    nav {
+    .Title {
       display: flex;
       justify-content: space-between;
       width: calc(var.$main_width - var.$line_width * 2);

@@ -69,6 +69,10 @@ export const remarkLinkWidget: Plugin = function extLinkTrans(): Transformer {
         return;
       }
 
+      if (parent.type === "listItem") {
+        return;
+      }
+
       const child = node.children[0] as Link;
 
       promises.push(async () => {

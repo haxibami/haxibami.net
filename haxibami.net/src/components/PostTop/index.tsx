@@ -3,6 +3,7 @@ import { PostItem, MenuTab, PostType } from "lib/interface";
 import PostList from "components/PostList";
 import Pager from "components/Pager";
 import Styles from "./style.module.scss";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 
 interface PostTopProps {
   top: string;

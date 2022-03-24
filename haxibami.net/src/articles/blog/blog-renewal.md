@@ -47,7 +47,7 @@ TypeScript は未だによくわからないが、型チェックには何度も
 
 ### ホスティング・ビルド
 
-素直に Vercel に投げた。またの名を囲い込まれともいう。ただし Vercel 側のビルド回数を消費したくないので、ビルド前のテスト・デプロイは GitHub Actions にしてある（[vercel-action](github.com/amondnet/vercel-action/)）。ガンガン CI を回して Microsoft を破産させよう！
+素直に Vercel に投げた。またの名を囲い込まれともいう。ただし Vercel 側のビルド回数を消費したくないので、ビルド前のテスト・デプロイは GitHub Actions にしてある（[vercel-action](https://github.com/amondnet/vercel-action/)）。ガンガン CI を回して Microsoft を破産させよう！
 
 ## 機能
 

@@ -8,6 +8,7 @@ import {
   faRss,
   faQuestionCircle,
 } from "@fortawesome/free-solid-svg-icons";
+//import "@fortawesome/fontawesome-svg-core/styles.css";
 import ThemeChanger from "components/ThemeChanger";
 
 interface PostHeaderProps {
@@ -32,9 +33,8 @@ const PostHeader: React.VFC<PostHeaderProps> = ({ siteinfo, posttype }) => {
             <a>
               <FontAwesomeIcon
                 icon={faHouseChimney}
-                width={30}
-                height={30}
                 color={"#9986bf"}
+                size={"2x"}
               />
             </a>
           </Link>
@@ -42,9 +42,8 @@ const PostHeader: React.VFC<PostHeaderProps> = ({ siteinfo, posttype }) => {
             <a>
               <FontAwesomeIcon
                 icon={faQuestionCircle}
-                width={30}
-                height={30}
                 color={"#86bfb6"}
+                size={"2x"}
               />
             </a>
           </Link>
@@ -54,12 +53,7 @@ const PostHeader: React.VFC<PostHeaderProps> = ({ siteinfo, posttype }) => {
             }
           >
             <a>
-              <FontAwesomeIcon
-                icon={faRss}
-                width={30}
-                height={30}
-                color={"#abbf86"}
-              />
+              <FontAwesomeIcon icon={faRss} color={"#abbf86"} size={"2x"} />
             </a>
           </Link>
           <ThemeChanger />
@@ -69,7 +63,7 @@ const PostHeader: React.VFC<PostHeaderProps> = ({ siteinfo, posttype }) => {
         <div>
           {posttype === "blog" ? (
             <h1>
-              <Link href={`/${posttype}`}>
+              <Link href={`/${posttype.toString()}`}>
                 <a>
                   <div>なま</div>
                   <div>あたたかくて</div>
@@ -93,21 +87,19 @@ const PostHeader: React.VFC<PostHeaderProps> = ({ siteinfo, posttype }) => {
               <a>
                 <FontAwesomeIcon
                   icon={faHouseChimney}
-                  width={30}
-                  height={30}
                   color={"#9986bf"}
+                  size={"2x"}
                 />
               </a>
             </Link>
           </li>
           <li>
-            <Link href={`/${PostType}/posts/about`}>
+            <Link href={`/${posttype}/posts/about`}>
               <a>
                 <FontAwesomeIcon
                   icon={faQuestionCircle}
-                  width={30}
-                  height={30}
                   color={"#86bfb6"}
+                  size={"2x"}
                 />
               </a>
             </Link>
@@ -119,12 +111,7 @@ const PostHeader: React.VFC<PostHeaderProps> = ({ siteinfo, posttype }) => {
               }
             >
               <a>
-                <FontAwesomeIcon
-                  icon={faRss}
-                  width={30}
-                  height={30}
-                  color={"#abbf86"}
-                />
+                <FontAwesomeIcon icon={faRss} color={"#abbf86"} size={"2x"} />
               </a>
             </Link>
           </li>

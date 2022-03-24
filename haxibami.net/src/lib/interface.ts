@@ -7,6 +7,12 @@ export interface PostItem {
   content: string;
 }
 
+export interface DocItem {
+  slug: string;
+  title: string;
+  content: string;
+}
+
 // type of post
 export const PostType = {
   Blog: "blog",

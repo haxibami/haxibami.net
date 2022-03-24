@@ -7,7 +7,6 @@ import MyHead from "components/MyHead";
 import Tree from "components/Tree";
 import ThemeChanger from "components/ThemeChanger";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import {
   faQuestion,
   faBook,
@@ -46,191 +45,152 @@ export const getStaticProps = async () => {
 
 const Home: NextPage<Props> = ({ metaprops }) => {
   return (
-    <div className={Styles.container}>
+    <div id={Styles.Wrapper}>
       <MyHead {...metaprops} />
       <main id={Styles.Main}>
-        <div id={Styles.Tree}>
-          <Tree />
-          <div id={Styles.ThemeChanger}>
-            <ThemeChanger />
-          </div>
-          <div className={Styles.icon_wrapper}>
-            <Link href="/profile">
-              <a>
-                <Image
-                  className={Styles.icon}
-                  src="/ogpicon.webp"
-                  alt="icon"
-                  width={100}
-                  height={100}
-                />
-                <div className={Styles.icon_tip}>!</div>
-              </a>
-            </Link>
-          </div>
+        <Tree />
+        <div id={Styles.ThemeChanger}>
+          <ThemeChanger />
+        </div>
+        <div id={Styles.Icon_box}>
+          <Link href="/about">
+            <a>
+              <Image
+                id={Styles.Icon}
+                src="/ogpicon.webp"
+                alt="haxibami"
+                layout={"fill"}
+                objectFit={"cover"}
+              />
+            </a>
+          </Link>
+        </div>
 
-          <div className={Styles.About_box}>
-            <Link href="about">
-              <a>
-                <div className={Styles.About_wrapper}>
-                  <FontAwesomeIcon icon={faQuestion} className={Styles.About} />
-                  {/*<Svg.About
-                    className={Styles.About}
-                    alt="about"
-                    layout="fill"
-                  />*/}
-                </div>
-              </a>
-            </Link>
-          </div>
-          <div className={Styles.Twitter_box}>
-            <a
-              href="https://twitter.com/haxibami"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div className={Styles.Twitter_wrapper}>
-                <FontAwesomeIcon
-                  icon={faTwitter as IconProp}
-                  className={Styles.Twitter}
-                />
-              </div>
+        <div id={Styles.About_box}>
+          <Link href="about">
+            <a>
+              <FontAwesomeIcon
+                icon={faQuestion}
+                id={Styles.About}
+                size={"2x"}
+              />
             </a>
-          </div>
-          <div className={Styles.Instagram_box}>
-            <a
-              href="https://instagram.com/haxibami"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div className={Styles.Instagram_wrapper}>
-                <FontAwesomeIcon
-                  icon={faInstagram as IconProp}
-                  className={Styles.Instagram}
-                />
-              </div>
+          </Link>
+        </div>
+        <div id={Styles.Twitter_box}>
+          <a
+            href="https://twitter.com/haxibami"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faTwitter} id={Styles.Twitter} size={"2x"} />
+          </a>
+        </div>
+        <div id={Styles.Instagram_box}>
+          <a
+            href="https://instagram.com/haxibami"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon
+              icon={faInstagram}
+              id={Styles.Instagram}
+              size={"2x"}
+            />
+          </a>
+        </div>
+        <div id={Styles.Mail_box}>
+          <Link href="mail">
+            <a>
+              <FontAwesomeIcon icon={faEnvelope} id={Styles.Mail} size={"2x"} />
             </a>
-          </div>
-          <div className={Styles.Mail_box}>
-            <Link href="mail">
-              <a>
-                <div className={Styles.Mail_wrapper}>
-                  <FontAwesomeIcon icon={faEnvelope} className={Styles.Mail} />
-                </div>
-              </a>
-            </Link>
-          </div>
-          <div className={Styles.Github_box}>
-            <a
-              href="https://github.com/haxibami"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div className={Styles.Github_wrapper}>
-                <FontAwesomeIcon
-                  icon={faGithub as IconProp}
-                  className={Styles.Github}
-                />
-              </div>
+          </Link>
+        </div>
+        <div id={Styles.Github_box}>
+          <a
+            href="https://github.com/haxibami"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faGithub} id={Styles.Github} size={"2x"} />
+          </a>
+        </div>
+        <div id={Styles.Bookmark_box}>
+          <a
+            href="https://bookmeter.com/users/1025874"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon
+              icon={faChartSimple}
+              id={Styles.Bookmark}
+              size={"2x"}
+            />
+          </a>
+        </div>
+        <div id={Styles.Book_box}>
+          <Link href="works">
+            <a>
+              <FontAwesomeIcon icon={faBook} id={Styles.Book} size={"2x"} />
             </a>
-          </div>
-          <div className={Styles.Bookmark_box}>
-            <a
-              href="https://bookmeter.com/users/1025874"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div className={Styles.Bookmark_wrapper}>
-                <FontAwesomeIcon
-                  icon={faChartSimple}
-                  className={Styles.Bookmark}
-                />
-              </div>
+          </Link>
+        </div>
+        <div id={Styles.Blog1_box}>
+          <a
+            href="https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fwww.haxibami.net%2Frss%2Ffeed.xml"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faRssSquare} id={Styles.Blog1} size={"2x"} />
+          </a>
+        </div>
+        <div id={Styles.Blog2_box}>
+          <Link href={`/blog`}>
+            <a>
+              <FontAwesomeIcon icon={faBlog} id={Styles.Blog2} size={"2x"} />
             </a>
-          </div>
-          <div className={Styles.Book_box}>
-            <Link href="works">
-              <a>
-                <div className={Styles.Book_wrapper}>
-                  <FontAwesomeIcon icon={faBook} className={Styles.Book} />
-                </div>
-              </a>
-            </Link>
-          </div>
-          <div className={Styles.Blog1_box}>
-            <a
-              href="https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fwww.haxibami.net%2Frss%2Ffeed.xml"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div className={Styles.Blog1_wrapper}>
-                <FontAwesomeIcon icon={faRssSquare} className={Styles.Blog1} />
-              </div>
-            </a>
-          </div>
-          <div className={Styles.Blog2_box}>
-            <Link href={`/blog`}>
-              <a>
-                <div className={Styles.Blog2_wrapper}>
-                  <FontAwesomeIcon icon={faBlog} className={Styles.Blog2} />
-                </div>
-              </a>
-            </Link>
-          </div>
+          </Link>
+        </div>
 
-          <div className={Styles.Write_box}>
-            <a
-              href="https://kakuyomu.jp/users/haxibami"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div className={Styles.Write_wrapper}>
-                <FontAwesomeIcon
-                  icon={faPenToSquare}
-                  className={Styles.Write}
-                />
-              </div>
-            </a>
-          </div>
-          <div className={Styles.Poem_box}>
-            <a
-              href="https://utakatanka.jp/kajin/1102"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div className={Styles.Poem_wrapper}>
-                <FontAwesomeIcon icon={faQuoteLeft} className={Styles.Poem} />
-              </div>
-            </a>
-          </div>
-          <div className={Styles.Spotify_box}>
-            <a
-              href="https://open.spotify.com/user/a0ndq420ky5fxfey4rpqx952w"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div className={Styles.Spotify_wrapper}>
-                <FontAwesomeIcon
-                  icon={faSpotify as IconProp}
-                  className={Styles.Spotify}
-                />
-              </div>
-            </a>
-          </div>
-          <div className={Styles.Keybase_box}>
-            <a
-              href="https://keybase.io/haxibami"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div className={Styles.Keybase_wrapper}>
-                <FontAwesomeIcon
-                  icon={faKeybase as IconProp}
-                  className={Styles.Keybase}
-                />
-              </div>
-            </a>
-          </div>
+        <div id={Styles.Write_box}>
+          <a
+            href="https://kakuyomu.jp/users/haxibami"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon
+              icon={faPenToSquare}
+              id={Styles.Write}
+              size={"2x"}
+            />
+          </a>
+        </div>
+        <div id={Styles.Poem_box}>
+          <a
+            href="https://utakatanka.jp/kajin/1102"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faQuoteLeft} id={Styles.Poem} size={"2x"} />
+          </a>
+        </div>
+        <div id={Styles.Spotify_box}>
+          <a
+            href="https://open.spotify.com/user/a0ndq420ky5fxfey4rpqx952w"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faSpotify} id={Styles.Spotify} size={"2x"} />
+          </a>
+        </div>
+        <div id={Styles.Keybase_box}>
+          <a
+            href="https://keybase.io/haxibami"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon icon={faKeybase} id={Styles.Keybase} size={"2x"} />
+          </a>
         </div>
       </main>
     </div>

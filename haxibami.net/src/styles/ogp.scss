@@ -7,15 +7,14 @@
   font-weight: bold;
   src: url("https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff2") format("woff2");
 }
+
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
 
 $card_margin: 50px;
 $item_gap: 30px;
 
-$bg: #292433;
-//$bg: #ffffff;
-//$inner_bg: #f3f3f6;
+$bg:var.$grad-0;
 $inner_bg: var.$dark;
 
 * {

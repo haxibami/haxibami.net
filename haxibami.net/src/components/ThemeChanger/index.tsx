@@ -2,11 +2,12 @@ import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+//import "@fortawesome/fontawesome-svg-core/styles.css";
 import Styles from "./style.module.scss";
 
 const ThemeChanger = () => {
   const [mounted, setMounted] = useState(false);
-  const { theme, resolvedTheme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   useEffect(() => setMounted(true), []);
 
   if (!mounted) return null;
@@ -20,23 +21,13 @@ const ThemeChanger = () => {
         onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
       >
         {mounted && (
-          <>
+          <div>
             {resolvedTheme === "dark" ? (
-              <FontAwesomeIcon
-                icon={faMoon}
-                width={30}
-                height={30}
-                color={"#d9c77e"}
-              />
+              <FontAwesomeIcon icon={faMoon} size={"2x"} color={"#d9c77e"} />
             ) : (
-              <FontAwesomeIcon
-                icon={faSun}
-                width={30}
-                height={30}
-                color={"darkorange"}
-              />
-            )}{" "}
-          </>
+              <FontAwesomeIcon icon={faSun} size={"2x"} color={"#ff6f21"} />
+            )}
+          </div>
         )}
       </button>
     </div>

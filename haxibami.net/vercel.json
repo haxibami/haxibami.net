@@ -5,6 +5,7 @@
     "enabled": false
   },
   "redirects": [
-    {"source": "/mail", "destination": "mailto:contact@haxibami.net"}
+    { "source": "/mail", "destination": "mailto:contact@haxibami.net" },
+    { "source": "/profile", "destination": "/about" }
   ]
 }

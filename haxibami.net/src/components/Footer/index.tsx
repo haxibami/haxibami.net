@@ -1,8 +1,6 @@
 import Styles from "./style.module.scss";
-import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
-import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 const Footer: React.VFC = () => {
   const date = new Date();
@@ -12,16 +10,20 @@ const Footer: React.VFC = () => {
         <div id={Styles.Container}>
           <span>©{date.getFullYear()} haxibami</span>
           <span id={Styles.Icons}>
-            <Link href={"https://twitter.com/haxibami"}>
-              <a>
-                <FontAwesomeIcon icon={faTwitter as IconProp} width={30} />
-              </a>
-            </Link>
-            <Link href={"https://github.com/haxibami"}>
-              <a>
-                <FontAwesomeIcon icon={faGithub as IconProp} width={30} />
-              </a>
-            </Link>
+            <a
+              href={"https://twitter.com/haxibami"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faTwitter} size={"2x"} />
+            </a>
+            <a
+              href={"https://twitter.com/haxibami"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FontAwesomeIcon icon={faGithub} size={"2x"} />
+            </a>
           </span>
         </div>
       </div>

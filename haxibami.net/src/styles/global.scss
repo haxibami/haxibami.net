@@ -30,8 +30,7 @@ body, html {
   --code: #{var.$code};
   --nextbg: #{var.$nextbg};
   --prevfg: #{var.$prevfg};
-  --treefg: #{var.$treefg};
-  --treebg: #{var.$treebg};
+  --docsbg: #{var.$docsbg};
 }
 
 [data-theme='dark'] {
@@ -47,8 +46,7 @@ body, html {
   --code: #{var.$code-night};
   --nextbg: #{var.$nextbg-night};
   --prevfg: #{var.$prevfg-night};
-  --treefg: #{var.$treefg-night};
-  --treebg: #{var.$treebg-night};
+  --docsbg: #{var.$docsbg-night};
 }
 
 a {

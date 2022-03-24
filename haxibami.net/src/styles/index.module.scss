@@ -1,124 +1,61 @@
 @use "variable" as var;
 
-.container {
-  padding: 0px;
-  min-width: 500px;
-
+#Wrapper {
   #Main {
-    #Tree {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;    
-      
-      #ThemeChanger {
-        position: absolute;
-        right: 50px;
-        top: 50px;
-      }
+    min-width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
 
-      .icon_wrapper {
+    canvas {
+      z-index: -1;
+    }
+    
+    #ThemeChanger {
+      position: absolute;
+      right: 50px;
+      top: 50px;
+    }
+
+    #Icon_box {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 5px solid var.$blue;
+      overflow: hidden;
+    }
+
+    @each $brandname, $values in var.$brands {
+      ##{$brandname}_box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         position: absolute;
-        width: 100px;
-        height: 100px;
-        z-index: 10;
+        left: calc(50% - 0.5 * nth($values, 8) + nth($values, 6));
+        transform-origin: calc(0.5 * nth($values, 8) - nth($values, 6)) calc(0.5 * nth($values, 8));
+        transform: rotate(nth($values, 7));
+        width: nth($values, 8);
+        height: nth($values, 8);
         border-radius: 50%;
-
-          &::after {
-          content: '';
-          display: block;
-          position: absolute;
-          border-radius: 50%;
-          z-index: -1;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          }
+        background: linear-gradient(calc(135deg - nth($values, 7)), nth($values, 1), nth($values, 2));
 
         a {
-          .icon_tip {
-            display: none;
-            position: absolute;
-            text-align: center;
-            font-size: 20px;
-            color: #edebef;
-            border-radius: 50%;
-            background: var.$yellow;
-            width: 30px;
-            height: 30px;
-            font-weight: bold;
-
-            &:before {
-              content: "";
-              position: absolute;
-              top: 21px;
-              right: 67%;
-              border: 7px solid transparent;
-              border-top: 7px solid var.$yellow;
-              margin-left: -15px;
-              transform: rotateZ(45deg);
-            }
-          }
-
-          &:hover > .icon_tip {
-            display: inline-block;
-            top: -23px;
-            left: 77px;
-          }
-
-          .icon {
-            position: relative;
-            border-radius: 50%;
-            border: 5px solid var.$blue !important;
-          }
-        }
-      }
-
-      @each $brandname, $values in var.$brands {
-        .#{$brandname}_box {
-          position: absolute;
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
           display: flex;
           justify-content: center;
           align-items: center;
-          transform: translateY(calc(-1 * #{nth($values, 8)} / 2));
-          width: nth($values, 8); height: nth($values, 8);
-          border-radius: 50%;
+          transform: rotate(- nth($values, 7));
+        }
 
-          a {
-            .#{$brandname}_wrapper {
-              position: absolute;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              overflow: visible;
-              transform-origin: calc(50% - #{nth($values, 6)}) calc(50%);
-              transform: rotate(nth($values, 7));
-              left: #{nth($values, 6)};
-              width: nth($values, 8);
-              height: nth($values, 8);
-              z-index: 10;
-              border-radius: 50%;
-
-              &::after {
-                content: "";
-                position: absolute;
-                width: 100%; height: 100%;
-                transform: rotate(calc(-1 * #{nth($values, 7)}));
-                border-radius: 50%;
-                background: linear-gradient(to bottom right, nth($values, 1), nth($values, 2));
-              }
-
-              .#{$brandname} {
-                position: absolute;
-                width: nth($values, 9); height: nth($values, 9);
-                z-index: 10;
-                transform: rotate(calc(-1 * #{nth($values, 7)}));
-                color: nth($values, 5);
-              }
-
-            }
-          }
+        ##{$brandname} {
+          color: nth($values, 5);
         }
       }
     }
