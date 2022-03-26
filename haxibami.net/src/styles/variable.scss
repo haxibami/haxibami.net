@@ -66,14 +66,14 @@ $docsbg-night: $darker;
 
 // size definitions
 $line_width: min(5vw, 5rem);
-$line_left_margin: 10vw;
-$main_width: calc(100vw - $line_width * 2 - $line_left_margin);
-$tip_width: 7rem;
 $line_bottom_margin: 2.5rem;
-$inner_width: 50rem;
+$inner_width: 65rem;
+$container_max: calc(50vw + $inner_width * 0.5);
+$container_width: calc(100vw - $line_width * 3);
+$container: min($container_max, $container_width);
 
 // responsive definitions
 $media_border: 700px;
-$img_max: min(70vw, 70vh);
-$element_gap: 1rem;
+$image_max: min(70vw, 70vh);
+$graph_max: min(70vw, 70vh);
 $paragraph_gap: 2rem;

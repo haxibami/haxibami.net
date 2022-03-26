@@ -9,6 +9,7 @@ import remarkMath from "remark-math";
 import remarkJaruby from "remark-jaruby";
 import remarkUnwrapImages from "remark-unwrap-images";
 import remarkToc from "remark-toc";
+import remarkMermaid from "./remark-mermaid";
 import remarkRehype from "remark-rehype";
 import type { Options as RemarkRehypeOptions } from "remark-rehype";
 import rehypeKatex from "rehype-katex";
@@ -34,11 +35,18 @@ export const MdToHtml = async (md: string) => {
     .use(remarkGemoji)
     .use(remarkMath)
     .use(remarkJaruby)
-    .use(remarkLinkWidget)
+    //.use(remarkLinkWidget)
     .use(remarkUnwrapImages)
     .use(remarkToc, {
       heading: "目次",
       tight: true,
+    })
+    .use(remarkMermaid, {
+      launchOptions: {
+        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      },
+      wrap: true,
+      classname: ["mermaid"],
     })
     .use(remarkRehype, {
       handlers: {

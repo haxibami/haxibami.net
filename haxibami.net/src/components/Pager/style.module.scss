@@ -29,7 +29,8 @@
 
 #Prev {
   color: var(--prevfg);
-  transition: background 0.15s;
+  transition-property: background;
+  transition-duration: 0.15s;
   transition-timing-function: ease;
   &:hover {
     background: var(--hover)
@@ -39,7 +40,8 @@
 #Next {
   background: var(--nextbg);
   color: var(--background);
-  transition: all 0.15s;
+  transition-property: border, background, color;
+  transition-duration: 0.15s;
   transition-timing-function: ease;
   &:hover {
     border: 1px solid var(--nextbg);

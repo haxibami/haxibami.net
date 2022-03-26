@@ -3,6 +3,9 @@
 @mixin color {
   color: var(--foreground);
   background: var(--background);
+  transition-property: color, background;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
 }
 
 @mixin posttop {
@@ -102,21 +105,18 @@
 
 @mixin imagelimit {
   img {
-    max-width: var.$img_max;
-    max-height: var.$img_max;
+    //max-width: var.$image_max;
+    //max-height: var.$image_max;
   }
 }
 
 @mixin code_inline {
-  p {
     code {
       background: var(--code);
       padding: 0.2rem;
       border-radius: 0.2rem;
-      /*font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;*/
       font-family: Menlo, Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", "Courier New", Courier, monospace;
     }
-  }
 }
 
 @mixin code_block {
@@ -126,6 +126,7 @@
     display: flex;
     margin: var.$paragraph_gap 0;
     code {
+      background: transparent;
       width: 100%;
       padding: 1rem;
       overflow: auto;
@@ -171,6 +172,7 @@
   section ol {
     li {
       font-size: 0.9rem;
+      list-style-position: outside;
     }
   }
 }

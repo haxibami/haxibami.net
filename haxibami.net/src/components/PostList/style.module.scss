@@ -14,11 +14,6 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-    transition: background 0.15s;
-    transition-timing-function: ease;
-
-    &:hover {
-    }
 
     .TileTitle {
       color: var(--title);

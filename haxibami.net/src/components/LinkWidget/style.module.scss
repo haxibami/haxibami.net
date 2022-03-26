@@ -6,8 +6,9 @@
   a {
     text-decoration: none;
   }
-  transition: background 0.2s;
-  transition-timing-function: cubic-bezier(.4,0,.2,1);
+  transition-property: background;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
   &:hover {
     background: var(--hover);
   }

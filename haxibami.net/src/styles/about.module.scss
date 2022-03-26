@@ -37,7 +37,7 @@
   }
 
   #HeaderBox {
-    max-width: 50rem;
+    max-width: var.$inner_width;
     width: 100%;
     padding: 3rem 1rem;
     display: flex;
@@ -77,7 +77,7 @@
   }
 
   article {
-    max-width: 50rem;
+    max-width: var.$inner_width;
     width: 100%;
     @include lib.colored_link;
     @include lib.article_paragraph;

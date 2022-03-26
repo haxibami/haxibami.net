@@ -14,8 +14,9 @@
     margin: 0.5rem;
     padding: 0 0.5rem;
     font-size: 125%;
-    transition: background 0.1s;
-    transition-timing-function: cubic-bezier(.4,0,.2,1);
+    transition-property: text-decoration, background;
+    transition-duration: 0.1s;
+    transition-timing-function: ease;
     &:hover{
       text-decoration: underline;
       background: var(--hover);

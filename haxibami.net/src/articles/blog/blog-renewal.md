@@ -5,59 +5,32 @@ date: "20220320"
 tags: ["tech", "web", "nextjs"]
 ---
 
-[系統樹](/)が生えているだけだったポートフォリオサイトに、ブログを追加した。
-
 ## 目次
 
-## 基盤
+## 要点
 
-もう自由で個人的で良質なインターネットなどない、ということを認めなければならない。そんなものは幻影に過ぎなかったと言えば簡単だが、その幻影を見ることさえ年々困難になりつつある。
-
-いろいろなものを思い浮かべてみよう：
-
-- Twitter がサジェストするツイート
-- Yahoo!ニュースのコメント欄
-- いかがでしたか？　量産サイト
-- 大量の広告
-
-ここで私が攻撃しようとしているのは、質の低さ自体**ではない**。質の悪いインターネットコンテンツ自体ははるか前（それこそ私が生まれる以前！）から存在しているし、たいていはフィルタリングでどうにかなってきた。問題はむしろそれらが接続され、一体となり、フィルタ可能な密度を超えてやってくることだ。
-
-世界が真に遅延なく一体化する、これが私には恐ろしい。もっと分割された市場、もっと通約不能な体系の併存、それが私の望む世界像であって、一体になって襲いかかってくる凡庸さなど耐えられる気がしないのだ。私自身が凡庸であるにしても、それは個人的な凡庸さであってほしいし、どこかの片隅で毎月一通くらいの手紙で繋がるものであってほしい。
-
-だからハイパーリンク時代（これも古い用語かもしれないが）の接続は、何を繋ぐかではなく何を繋がないかだ。Google ではなく Brave へ。アップタイムではなくダウンタイムへ。外部サービスではなく個人ブログへ。現状、私がプラットフォームに求めるのは以下だ。
+ブログを自作した。欲しかったのは以下だ：
 
 1. 自由
-1. 管理しやすい
-1. 高速
-1. 見やすい
-1. カスタマイズ可能
-1. 広告が（鬱陶しく）ない
+1. 管理しやすさ
+1. 高速性・拡張性
+1. 無広告
 
-書くということにあたっては、[この記事](https://sumirehibiya.com/notes/building-a-blog-with-nextjs)が指摘するようなサービスごとのコミュニティの存在というのも見逃せない。投稿ひとつに必要以上の団体性がまとわりつく、これが常に望ましいとは思われない。場合によって事実はもっと個人的であるべきなのだ。完全な孤独、というのではなく、むしろ{飽きるほどの接続}^(ハイパーリンク)を前提にしたうえで、あえて切断に至る方向を向くような分権性。有り体に言えば逆張りオタク。
+### 自由
 
-こうなってくると、自作した方が良い。
+意味はさまざまだが、ここでは外部サービスを念頭に置いている。
 
-以前、別のサイトを作っていたときは Gatsby.js を使っていた。高速ではあったが、すべてを自らのプラグインとして抱え込もうとするシステムに少しずつ違和感も募った。他方、同じ SSG でも Zola や Hugo はシンプルだが、柔軟性では JS/React 系に及ばない。けっきょく 2022 年現在、Next.js に落ち着く。
+書くということにあたっては、[この記事](https://sumirehibiya.com/notes/building-a-blog-with-nextjs)が指摘するようなサービスごとのコミュニティの存在というのも見逃せない。はてな村のムラ社会は言うまでもないが、Note は水で薄めたようなエモが増えているように（勝手に）思うし、
 
-### フレームワーク
+多くが接続されすぎている。
 
-Next.js + TypeScript + Sass (SCSS, CSS modules)。
+### 管理しやすさ
 
-TypeScript は未だによくわからないが、型チェックには何度も助けられた。Neovim で coc.nvim を使って書いていると、coc-tsserver のおかげで書いた瞬間からエラーに気づけるのでかなり良い。CSS modules と SCSS は出会ったときにいたく感動して以来ずっと使っているが、{追い風}^(Tailwind)が吹いている感じではなさそうだ。
+#### 記事
 
-### ホスティング・ビルド
+われわれには先人の記憶というものがあり、すなわちこの手のサイトは記事管理が億劫になった時点で**エタる**。放置された「〇〇の部屋」、消えて還らない借りドメイン、むなしく刻む入室カウンターたちを眺めるたびに、せめて記事くらいは慣れたファイル形式で楽に扱いたいと思うようになった。そういうわけで Markdown（内容管理） + tsx（テンプレートエンジン）。Markdown ならそう簡単には廃れないだろうし、いつか別サービスにも投げ込める安心感がある。
 
-素直に Vercel に投げた。またの名を囲い込まれともいう。ただし Vercel 側のビルド回数を消費したくないので、ビルド前のテスト・デプロイは GitHub Actions にしてある（[vercel-action](https://github.com/amondnet/vercel-action/)）。ガンガン CI を回して Microsoft を破産させよう！
-
-## 機能
-
-### Markdown まわり
-
-われわれには先人の記憶というものがあり、すなわちこの手のサイトは記事管理が億劫になった時点で**エタる**。放置された「なんたらの部屋」、消えて還らない借りドメイン、むなしく刻む入室カウンターを眺めるたびに、せめて記事くらいは慣れたファイル形式で楽に引き継ぎたいと思うようになった。そういうわけで Markdown（内容管理） + tsx（テンプレートエンジン）。Markdown ならそう簡単には廃れないだろうし、いつか別サービスにも投げ込める。いまはヘッドレス CMS とかいうのもあるらしい（全然知らない）が、個人レベルでは Git Repo ひとつで管理できたほうがやっぱり楽だ。
-
-Next.js から Markdown を扱う方法は[公式](https://nextjs.org/blog/markdown)でも取り上げられている。具体的には`remark`や`rehype`関連のパッケージを使うのだが、この remark と rehype がすごい。ともに unified というインターフェースの傘下にあって、このもとで`mdast`（Markdown の構文木）や`hast`（HTML の構文木）を相互変換したり、特定の要素に対してカスタム処理を実行できる。関連プラグインも充実しており、やりたいことが既存のプロジェクトの組み合わせで実現できてしまう。
-
-ただその豊かさゆえに選択肢が多く、同じことを実装する方法が何通りもある。たとえば今回のように Markdown から Next.js の ページを生成するだけでも、以下から選択することになる。
+Markdown の処理系には remark / rehype を選択した。[unified](https://github.com/unifiedjs/unified)の API が使えて、後述の豊富なプラグイン群が揃っているのが理由だ。その反面、同じことを実装するのにも選択肢が複数ある。たとえば今回のように Markdown から Next.js の ページを生成するだけでも、以下の五種類（以上）から選ぶことになる。
 
 - `unified`上で実行するもの
   - `remark-parse` + `remark-rehype` + `rehype-stringify`
@@ -67,11 +40,27 @@ Next.js から Markdown を扱う方法は[公式](https://nextjs.org/blog/markd
   - `react-remark`
   - `react-markdown`
 
-自分は柔軟にプラグインを組み合わせ、React コンポーネントとも融和させたかったため、上から二番目を採った（後述するが、`rehype-react`がかなり魅力的だ）。
+自分は柔軟にプラグインを組み合わせ、React コンポーネントとも融和させたかったため、このうち上から二番目を採った（後述するが、`rehype-react`がかなり魅力的だ）。
 
-#### Frontmatter
+#### CI・ビルド・ホスティング
 
-Frontmatter に記事のメタデータを記載し、`grey-matter`で取り出した（これは unified の処理ではない）。
+テストとプレビューを GitHub Actions、ライブラリ更新を renovate で自動化している。これが全部無料で回るのだから、GitHub の懐の広さには本当に頭が上がらない。ホスティングは素直に Vercel に投げた。ほとんど囲い込まれたようなものだが、とくに拘りはないので Cloudflare Pages あたりに変えても良いかもしれない。ちなみに Vercel 側のビルド回数を抑えるため、デフォルトのレポジトリ連携は切り、CI で念入りにテストしてから Vercel CLI 経由でのデプロイを行うようにしてある（[vercel-action](https://github.com/amondnet/vercel-action/)）。せめてもの配慮（？）だ。
+
+### 高速性・拡張性
+
+パフォーマンスが良いらしいと聞いて Next.js の SSG を選択した。SSG とはいいながら、ページ遷移のたびに JS が走るので動きはなめらかだ（言い方を変えれば、ピュアではない）。画像最適化やルーティングの抽象化も向こうでやってくれる。Gatsby みたいにプラグインでガチガチに固める感じでもないので、引っ張ってきたライブラリや自作の処理も素直に持ち込めるのが良いと思った。
+
+### 無広告
+
+[この記事](/blog/posts/nextdns-install)からわかるように、広告の遍在に対して個人的な憎悪を燃やしているため、このサイトには一切置いていない。あるのは Vercel が（おそらく）行っているアナリティクスだけだ。
+
+## 機能
+
+以下では具体的に実装できた機能と、使ったライブラリを書く。
+
+### Frontmatter
+
+Markdown 冒頭に記事のメタデータを記載し、`grey-matter`で取り出している（これは unified の処理ではない）。
 
 https://github.com/jonschlinkert/gray-matter
 
@@ -79,14 +68,12 @@ https://github.com/jonschlinkert/gray-matter
 ---
 slug: "blog-renewal"
 title: "Next.jsでブログをつくった"
-date: "20220320"
+date: "20220326"
 tags: ["tech", "web", "nextjs"]
 ---
-
-## hoge...
 ```
 
-#### GitHub Flavored Markdown
+### GitHub Flavored Markdown
 
 `remark-gfm`で対応。
 
@@ -122,15 +109,15 @@ https://www.haxibami.net
 
 [^1]: 脚注も使える
 
-#### 絵文字表示
+### 絵文字
 
 `remark-gemoji`で変換。
 
 https://github.com/remarkjs/remark-gemoji
 
-`:v:`が :v: に。
+`:v:`が :v: になる。
 
-#### 数式表示
+### 数式
 
 `remark-math`と`rehype-katex`を噛ませる。
 
@@ -148,7 +135,7 @@ https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex
 > ( \sum_{k=1}^{n} a_k b_k )^2 \leq ( \sum_{k=1}^{n} {a_k}^2 ) ( \sum_{k=1}^{n} {b_k}^2 )
 > $$
 
-$e^{i\pi} + 1 = 0$ のようなインライン数式もいける。フォントは置かずともよいが、CSS の挿入は必要。
+$e^{i\pi} + 1 = 0$ のようなインライン数式もいける。フォントの設置は必要ないが、`pages/_document.tsx`で CSS の挿入が必要。
 
 ```tsx
 // pages/_document.tsx
@@ -173,15 +160,13 @@ export default function Document() {
 }
 ```
 
-#### ルビ
+### ルビ
 
-既に[remark-ruby](https://github.com/laysent/remark-ruby)というパッケージがルビを実装しているが、メンテナンスがされておらず依存関係と API が古くなっていたため、別パッケージ（`remark-jaruby`）を実装した。
+[remark-ruby](https://github.com/laysent/remark-ruby)というパッケージがルビを実装しているが、依存関係と API が古くなっていたため、ほぼフォークのような形で別パッケージ（`remark-jaruby`）を実装した。
 
 https://github.com/haxibami/remark-jaruby
 
-元のパッケージ自体が`remark-parse`の中身である[micromark](https://github.com/micromark/micromark)に介入して処理を行っていたので、パーサ部分（[micromark-extension-jaruby](https://github.com/haxibami/micromark-extension-jaruby)）、構文木操作部分（[mdast-util-jaruby](https://github.com/haxibami/mdast-util-jaruby)）の拡張機能に分割し、これらを`remark-jaruby`から参照している。
-
-書式は元のものを踏襲した。
+元のパッケージ自体が`remark-parse`のパーサである[micromark](https://github.com/micromark/micromark)に介入していたので、パーサ部分（[micromark-extension-jaruby](https://github.com/haxibami/micromark-extension-jaruby)）、構文木操作部分（[mdast-util-jaruby](https://github.com/haxibami/mdast-util-jaruby)）の拡張機能に分割し、これらを`remark-jaruby`から参照している。
 
 ```md
 > 昨日午後、{†聖剣†}^(エクスカリバー)を振り回す{全裸中年男性}^(無敵の人)が出現し……
@@ -189,37 +174,15 @@ https://github.com/haxibami/remark-jaruby
 
 > 昨日午後、{†聖剣†}^(エクスカリバー)を振り回す{全裸中年男性}^(無敵の人)が出現し……
 
-#### ウィジェット（リンクカード）
+### リンクカード
 
-リンクを貼ったときに、モコッとしたウィジェットが出るあれ。その表示**する**側。
+外部リンクをカードに変換するやつ。
 
 https://zenn.dev/tomi/articles/2021-03-22-blog-card
 
-実装は :point_up_2: を全面的に参考にした。細かい部分は違っているが、Markdown 内のリンクからメタ情報を取得して、リンクを適当な React コンポーネントに置き換えている点は同じだ。
+https://zenn.dev/januswel/articles/745787422d425b01e0c1
 
-##### 内部
-
-汎用性・機能性を踏まえ、自分は unified のプラグインとして実装する手法を採った。まず、変換したい対象（空行に挟まれた裸のリンク）に対し`extlink`という mdast ノード、及び同名の HTML タグを割り当てた。具体的には、
-
-1. Paragraph かつ
-1. 子要素が一つかつ
-1. 子要素がリンクである
-
-ものを`<extlink>`に置き換えている。
-
-置き換えと同時に、プラグイン内でメタ情報の取得も行った。:point_down: を使用して`meta`タグに記載の title、description、OGP 画像・アイコンのリンクを`fetch`し、`<extlink>`の子要素として挟む。
-
-https://github.com/BetaHuhn/metadata-scraper#readme
-
-```html
-<extlink>{meta: {...}}</extlink>
-```
-
-（これ以外に方法が思いつかず、オブジェクトを強引に`JSON.stringify`したものを挟んでいるが、他に良いやり方があったら教えてほしい）
-
-最後に`rehype-react`。このプラグインの`components`オプションでは、入力された HTML の任意のタグを任意の React コンポーネントに変換できる。これで`extlink`タグの子要素（つまり取得したメタ情報）を`props`として自作のコンポーネントに渡してやればよい。[^2]
-
-[^2]: なお、`rehype-react`の処理と`remark-rehype`周辺の処理を同じファイルにまとめてはいけない。[getStaticProps をめぐる事情](https://zenn.dev/wattanx/scraps/da4690390d8e3d)でビルドがコケる。
+:point_up_2: を参考にしつつ、unified の Transformer プラグインとして実装した。Markdown 内のリンクを取得して適当な HTML 要素（`<extlink>`）に置き換えたのち、リンク先にアクセスして得たメタ情報を挿入、`rehype-react`の`components`オプションを使ってカスタムコンポーネントに変換している。
 
 ```ts
 // lib/rehype-react.ts
@@ -262,53 +225,15 @@ export const HtmlToReact = (html: string) => {
 };
 ```
 
-```tsx
-// components/LinkWidget/index.tsx
-import type { LinkWidgetMeta } from "lib/interface";
-import Styles from "./style.module.scss";
+メタ情報の取得には、`metadata-scraper`という便利なライブラリを使った。
 
-export interface LinkWidgetProps {
-  children: string;
-}
+https://github.com/BetaHuhn/metadata-scraper#readme
 
-const LinkWidget: React.VFC<LinkWidgetProps> = (props) => {
-  const { children } = props;
-  const meta: LinkWidgetMeta = JSON.parse(children);
-  return (
-    <div className={Styles.Wrapper}>
-      <a href={meta.url}>
-        <div className={Styles.Widget}>
-          <div className={Styles.Main}>
-            <div className={Styles.Title}>{meta.title}</div>
-            <div className={Styles.Description}>{meta.description}</div>
-            <div className={Styles.Host}>
-              <img src={meta.icon} height={15} width={15} alt="icon" />
-              {meta.url.indexOf("/", 8) != -1
-                ? meta.url.slice(8, meta.url.indexOf("/", 8))
-                : meta.url.slice(8)}
-            </div>
-          </div>
-          <div className={Styles.Image}>
-            <img src={meta.image} height={105} width={200} alt="image" />
-          </div>
-        </div>
-      </a>
-    </div>
-  );
-};
+なお、内部で`fetch`を行っている都合上、作成したプラグインは非同期プラグインとなることに留意。具体的には unified で`processSync`が[使えなくなる](https://github.com/unifiedjs/unified#processorprocesssyncfilevalue)。
 
-export default LinkWidget;
-```
+### ページ内リンク・目次
 
-unified プラグインの書き方は
-
-https://zenn.dev/januswel/articles/745787422d425b01e0c1
-
-を参考にした。なお、内部で`fetch`を行っている都合上、作成したプラグインは非同期プラグインとなることに留意。具体的には unified で`processSync`が[使えなくなる](https://github.com/unifiedjs/unified#processorprocesssyncfilevalue)。
-
-#### ページ内リンク・目次
-
-`rehype-slug`、`rehype-autolink-headings`、`remark-toc`で実現。
+`rehype-slug`、`rehype-autolink-headings`、`remark-toc`で実現。heading に slug を振ってくれるそうな。
 
 https://github.com/rehypejs/rehype-slug
 
@@ -316,21 +241,65 @@ https://github.com/rehypejs/rehype-autolink-headings
 
 https://github.com/remarkjs/remark-toc
 
-#### 内容プレビュー
+### 内容プレビュー
 
 [トップ](https://haxibami.net/blog)の記事タイルには内容のプレビューを表示している。このために生の Markdown を流し込むのも気が引けたので、なんとかして plaintext 形式に変換できないかと考えていたら、`strip-markdown`というのがあった。これで`<h1>`, `<blockquote>`等を除去し、冒頭 200 字を抽出している。
 
 https://github.com/remarkjs/strip-markdown
 
-#### シンタックスハイライト
+### Mermaid のサポート
+
+[remark-mermaid](https://github.com/temando/remark-mermaid)は古く、[remark-mermaidjs](https://github.com/remcohaszing/remark-mermaidjs)は API が unified のものではなかったため、後者をベースにしつつ手元で実装した。裏でヘッドレス Chromium を立ち上げて SVG を生成しているが、想像以上に高速だ。
+
+````md
+```mermaid
+sequenceDiagram
+Alice->>John: Hello John, how are you?
+loop Healthcheck
+    John->>John: Fight against hypochondria
+end
+Note right of John: Rational thoughts!
+John-->>Alice: Great!
+John->>Bob: How about you?
+Bob-->>John: Jolly good!
+```
+
+```mermaid
+pie
+"Dogs" : 386
+"Cats" : 85
+"Rats" : 15
+```
+````
+
+```mermaid
+sequenceDiagram
+Alice->>John: Hello John, how are you?
+loop Healthcheck
+    John->>John: Fight against hypochondria
+end
+Note right of John: Rational thoughts!
+John-->>Alice: Great!
+John->>Bob: How about you?
+Bob-->>John: Jolly good!
+```
+
+```mermaid
+pie
+"Dogs" : 386
+"Cats" : 85
+"Rats" : 15
+```
+
+### シンタックスハイライト
 
 最初は[prism.js](https://prismjs.com)を使っていたが、使えるカラースキームがあまりに少なかったため[shiki](https://shiki.matsu.io)に変更した。公式サイトにある通り、こちらは VSCode のカラースキームファイルが流用できる。せっかくなので自作の[urara-vscode](https://github.com/haxibami/urara-vscode)を使用してみた。
 
 https://github.com/shikijs/shiki
 
-以上を合わせたメソッドチェーンが以下。[^3]
+以上を合わせたメソッドチェーンが以下。[^2]
 
-[^3]: 変なファイル処理が入っているのは、shiki がテーマファイルを読み込むにあたって**自分のインストールされた位置**（メインプロジェクトの`node_modules`以下）からの相対パスか、ファイルシステムの絶対パスかのいずれかしか受け付けないため。
+[^2]: 変なファイル処理が入っているのは、shiki がテーマファイルを読み込むにあたって**自分のインストールされた位置**（メインプロジェクトの`node_modules`以下）からの相対パスか、ファイルシステムの絶対パスかのいずれかしか受け付けないため。
 
 ```ts
 // lib/parser.ts
@@ -419,16 +388,16 @@ https://github.com/pacocoursey/next-themes
 
 ### 動的 OGP 画像の自動生成
 
-[先程](#ページ内リンク目次)に続き、今度は表示**される**側。Vercel のサーバレス関数機能を使って
+Vercel のサーバレス関数機能を使って
 
 1. ヘッドレス Chromium を起動
 2. クエリパラメータに応じた内容の React コンポーネントを生成
 3. `renderToStaticMarkup`で静的 HTML 化
 4. 表示してスクリーンショットを撮影
 
-する手順で実現した。
+する手順で実現した。この方法だと表示する内容を手元で書けるぶん、デザインの自由度が高い。
 
-使うつもりだった`playwright-aws-lambda`がなぜか手元で動かなかったので、[chrome-aws-lambda](https://github.com/alixaxel/chrome-aws-lambda)と [puppeteer](https://github.com/puppeteer/puppeteer) を使った。
+バイナリには[playwright-aws-lambda](https://github.com/JupiterOne/playwright-aws-lambda)を使った。
 
 ```tsx
 // pages/api/ogp.tsx
@@ -500,17 +469,15 @@ const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
 export default OgpGen;
 ```
 
-表示用のコンポーネント・スタイリングは手元で書けるぶん、デザインの自由度は高い。
+ちなみに向こうの環境（AWS Lambda 相当）には CJK 文字のフォントが入っていないため、既に chromium バイナリで容量ギリギリのところにフォントを足すことになり、普通にやると超過する。が、今回は Web フォントを当てることでどうにかした。
 
-問題は Vercel の容量制限（50MB）だ。`chrome-aws-lambda`のインストールだけでほぼ上限に達するうえ、向こうの環境（AWS Lambda 相当）には日本語フォントが入っていないので、その手配も必要になる。幸い今回は Web フォントでどうにかなった。
+![vercel_log_lambda_fn](/image/lambda-fn.png)
 
-![普通にオーバーしてるのに動いてる](/image/lambda-fn.png)
-
-Vercel のログは容量オーバーを告げているが、なぜか動いている。優しいな〜
+ログを見た感じこれでも微妙に容量オーバーしているが、普通に動いている。優しいな〜
 
 ### サイトマップ生成
 
-[next-sitemap](https://github.com/iamvishnusankar/next-sitemap)を使ったところ、`<lastmod>`がすべて最終ビルド時を示していて発狂しかけた。この挙動はある意味正しく、なぜなら自分が触れていないページでもビルドするたびに**静的アセットの slug 名が変わってしまう**ためである。仕方がないので[このへん](https://www.mk-engineer.com/posts/nextjs-before-build)を参考にしつつ自分で書いた。`package.json`の`prebuild`と`postbuild`を活用し、
+[next-sitemap](https://github.com/iamvishnusankar/next-sitemap)を使ったところ、`<lastmod>`がすべて最終ビルド時を示していて発狂しかけた。この挙動はある意味正しく、なぜなら自分が触れていないページでもビルドするたびに**静的アセットの slug 名が変わってしまう**ためである。仕方がないので[このへん](https://www.mk-engineer.com/posts/nextjs-before-build)を参考にしつつ書いた。npm scripts を活用し、
 
 1. ビルド前に`share/index.json`に記事のインデックスを作成
 1. ビルド後にインデックスに基づいて`sitemap.xml`と`robots.txt`を生成
@@ -637,11 +604,9 @@ export default () => {
 }
 ```
 
-本当は TypeScript で書きたかったが、ES Modules 対応は Version 4.6 以降に延期された[らしい](https://zenn.dev/aumy/scraps/06e8d775b047f2)。安定版に降りて広まってきたら書き直すかもしれない。
-
 ### フィード対応
 
-`Feed`というライブラリを使った。上と同じ要領で`/rss`以下に RSS、Atom、JSON Feed 用のファイル三種を吐かせる。
+`Feed`というライブラリを使った。上と同じ要領で、ビルド時に`/public/rss`以下に RSS、Atom、JSON Feed 用のファイル三種を吐かせている。
 
 ```js
 // hooks/scripts/feed.mjs
@@ -703,7 +668,7 @@ export default genRssFeed;
 
 ## 感想
 
-Next.js の抽象化と、unified はじめ充実した外部処理系のおかげでかなり簡単に動いた。デベロッパーに五体投地しつつ、改修をやっていく。
+Next.js の抽象化と、unified はじめ充実した外部処理系に助けられてかなり簡単に動いた。デベロッパーに五体投地しつつ、改修・保守をやっていく。
 
 ## TODO
 
@@ -711,5 +676,5 @@ Next.js の抽象化と、unified はじめ充実した外部処理系のおか�
 - [x] フィード（RSS, Atom）対応（2022/03/10）
 - [x] 外部リンクのカード化（2022/03/15）
 - [x] ダークモードのサポート（2022/03/22）
-- [ ] Mermaid のサポート
+- [x] Mermaid のサポート（2022/03/26）
 - [ ] Twitter コンテンツの静的埋め込み
