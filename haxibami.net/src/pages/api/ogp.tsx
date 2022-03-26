@@ -18,56 +18,60 @@ const stylePath = path.join(baseFullPath, "src/styles/ogp.css");
 const style = fs.readFileSync(stylePath, "utf-8");
 
 const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
-  const playwrightArgs = {
-    production: {},
-    development: {
-      executablePath: "/opt/google/chrome/google-chrome",
-      headless: true,
-      args: [],
-    },
-    test: {},
-  }[process.env.NODE_ENV];
+  try {
+    const playwrightArgs = {
+      production: {},
+      development: {
+        executablePath: "/opt/google/chrome/google-chrome",
+        headless: true,
+        args: [],
+      },
+      test: {},
+    }[process.env.NODE_ENV];
 
-  const viewport = { width: 1200, height: 630 };
+    const viewport = { width: 1200, height: 630 };
 
-  /*await playwright.loadFont(
-    "https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff2"
-  );
+    await playwright.loadFont(
+      "https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff2"
+    );
 
-  await playwright.loadFont(
-    "https://raw.githubusercontent.com/googlefonts/RobotoMono/main/fonts/ttf/RobotoMono-Medium.ttf"
-  );*/
+    await playwright.loadFont(
+      "https://raw.githubusercontent.com/googlefonts/RobotoMono/main/fonts/ttf/RobotoMono-Medium.ttf"
+    );
 
-  const browser = await playwright.launchChromium(playwrightArgs);
-  const page = await browser.newPage({ viewport: viewport });
+    const browser = await playwright.launchChromium(playwrightArgs);
+    const page = await browser.newPage({ viewport: viewport });
 
-  const longtitle =
-    typeof req.query.title !== "undefined" ? req.query.title.toString() : "";
+    const longtitle =
+      typeof req.query.title !== "undefined" ? req.query.title.toString() : "";
 
-  const date =
-    typeof req.query.date !== "undefined" ? req.query.date.toString() : "";
+    const date =
+      typeof req.query.date !== "undefined" ? req.query.date.toString() : "";
 
-  const ogpinfo: OgpInfo = {
-    title: longtitle,
-    date: date,
-    icon: favicon,
-    style: style,
-  };
+    const ogpinfo: OgpInfo = {
+      title: longtitle,
+      date: date,
+      icon: favicon,
+      style: style,
+    };
 
-  const markup = ReactDomServer.renderToStaticMarkup(<OgpImage {...ogpinfo} />);
-  const html = `<!doctype html>${markup}`;
+    const markup = ReactDomServer.renderToStaticMarkup(
+      <OgpImage {...ogpinfo} />
+    );
+    const html = `<!doctype html>${markup}`;
 
-  await page.setContent(html, { waitUntil: "networkidle" });
+    await page.setContent(html, { waitUntil: "networkidle" });
+    const image = await page.screenshot({ type: "png" });
+    await browser.close();
 
-  const image = await page.screenshot({ type: "png" });
+    res.setHeader("Cache-Control", "s-maxage=5256000, stale-while-revalidate");
+    res.setHeader("Content-Type", "image/png");
 
-  await browser.close();
-
-  res.setHeader("Cache-Control", "s-maxage=5256000, stale-while-revalidate");
-
-  res.setHeader("Content-Type", "image/png");
-
-  res.end(image);
+    res.end(image);
+  } catch (error) {
+    console.error("[Error]: ", error);
+    res.status(404).json({ message: "cannot render og-image" });
+  }
 };
 
 export default OgpGen;
