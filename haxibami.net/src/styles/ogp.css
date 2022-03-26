@@ -1,11 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap");
-@font-face {
+/*@font-face {
   font-family: "Noto Sans CJK JP";
-  font-style: normal;
+  font-style:  normal;
   font-weight: bold;
   src: url("https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff2") format("woff2");
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');*/
 * {
   margin: 0;
   padding: 0;

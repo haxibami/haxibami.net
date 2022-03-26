@@ -1,12 +1,10 @@
 import React from "react";
-//import chromium from "chrome-aws-lambda";
-import playwright from "playwright-aws-lambda";
+import * as playwright from "playwright-aws-lambda";
 import type { NextApiRequest, NextApiResponse } from "next";
 import ReactDomServer from "react-dom/server";
 import path from "path";
 import fs from "fs";
 import OgpImage, { OgpInfo } from "components/OgpImage";
-//import { chromium } from "playwright-core";
 
 // full path resolve
 const baseFullPath = path.resolve("./");
@@ -20,23 +18,28 @@ const stylePath = path.join(baseFullPath, "src/styles/ogp.css");
 const style = fs.readFileSync(stylePath, "utf-8");
 
 const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
-  /*const chromiumPath = {
-    production: chromium.executablePath(),
-    development: "/opt/google/chrome/google-chrome",
-    test: chromium.executablePath(),
-  }[process.env.NODE_ENV];*/
+  const playwrightArgs = {
+    production: {},
+    development: {
+      executablePath: "/opt/google/chrome/google-chrome",
+      headless: true,
+      args: playwright.getChromiumArgs(false),
+    },
+    test: {},
+  }[process.env.NODE_ENV];
 
-  //const viewport = { width: 1200, height: 630 };
+  const viewport = { width: 1200, height: 630 };
 
-  /*const browser = await chromium.puppeteer.launch({
-    args: chromium.args,
-    defaultViewport: viewport,
-    executablePath: chromePath,
-    headless: chromium.headless,
-  });*/
-  const browser = await playwright.launchChromium();
-  const context = await browser.newContext();
-  const page = await context.newPage();
+  await playwright.loadFont(
+    "https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff2"
+  );
+
+  await playwright.loadFont(
+    "https://raw.githubusercontent.com/googlefonts/RobotoMono/main/fonts/ttf/RobotoMono-Medium.ttf"
+  );
+
+  const browser = await playwright.launchChromium(playwrightArgs);
+  const page = await browser.newPage({ viewport: viewport });
 
   const longtitle =
     typeof req.query.title !== "undefined" ? req.query.title.toString() : "";
@@ -57,6 +60,7 @@ const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
   await page.setContent(html, { waitUntil: "networkidle" });
 
   const image = await page.screenshot({ type: "png" });
+
   await browser.close();
 
   res.setHeader("Cache-Control", "s-maxage=5256000, stale-while-revalidate");
