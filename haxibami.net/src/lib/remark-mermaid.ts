@@ -5,7 +5,7 @@ import { is } from "unist-util-is";
 import { Code, Paragraph } from "mdast";
 import type { Mermaid } from "mermaid";
 import { parseFragment } from "parse5";
-import puppeteer from "puppeteer";
+import * as playwright from "playwright";
 import { optimize, OptimizeOptions, OptimizedSvg } from "svgo";
 import { visit } from "unist-util-visit";
 import { VFileCompatible } from "vfile";
@@ -103,7 +103,7 @@ export interface RemarkMermaidOptions {
    *
    * @default {}
    */
-  launchOptions?: puppeteer.PuppeteerNodeLaunchOptions;
+  launchOptions?: playwright.LaunchOptions;
 
   /**
    * SVGO options used to minify the SVO output.
@@ -167,14 +167,15 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
 
   return async (node: Node, _file: VFileCompatible) => {
     const promises: any[] = [];
-    const browser = await puppeteer.launch(settings.launchOptions);
+    const browser = await playwright.chromium.launch(settings.launchOptions);
     const page = await browser.newPage();
     const html = `<!DOCTYPE html>`;
     await page.setContent(html);
     await page.addScriptTag({
       path: mermaidjs,
     });
-    await page.setViewport({ width: 1000, height: 3000 });
+    //await page.setViewport({width: 1000, height: 3000});
+    await page.setViewportSize({ width: 1000, height: 3000 });
     visit(node, isMermaid, visitor);
     await Promise.all(promises.map((t) => t()));
     await browser.close();
@@ -219,20 +220,19 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
 
 async function getSvg(
   node: Code,
-  page: puppeteer.Page,
+  page: playwright.Page,
   theme: UserTheme,
   svgo: OptimizeOptions
 ) {
   const graph = await page.evaluate(
-    (code: string, t: UserTheme) => {
+    ([code, t]) => {
       const id = "a";
       mermaid.initialize({ theme: t as Theme });
       const div = document.createElement("div");
       div.innerHTML = mermaid.render(id, code);
       return div.innerHTML;
     },
-    node.value,
-    theme
+    [node.value, theme]
   );
 
   let value = graph;

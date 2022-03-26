@@ -20,11 +20,13 @@ const style = fs.readFileSync(stylePath, "utf-8");
 const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const playwrightArgs = {
-      production: {},
+      production: {
+        args: playwright.getChromiumArgs(true),
+      },
       development: {
         executablePath: "/opt/google/chrome/google-chrome",
         headless: true,
-        args: [],
+        args: playwright.getChromiumArgs(false),
       },
       test: {},
     }[process.env.NODE_ENV];

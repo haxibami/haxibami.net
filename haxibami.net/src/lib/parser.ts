@@ -35,7 +35,7 @@ export const MdToHtml = async (md: string) => {
     .use(remarkGemoji)
     .use(remarkMath)
     .use(remarkJaruby)
-    //.use(remarkLinkWidget)
+    .use(remarkLinkWidget)
     .use(remarkUnwrapImages)
     .use(remarkToc, {
       heading: "目次",
