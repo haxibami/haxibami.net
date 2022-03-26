@@ -1,5 +1,5 @@
-import React from "react";
 import * as playwright from "playwright-aws-lambda";
+import React from "react";
 import type { NextApiRequest, NextApiResponse } from "next";
 import ReactDomServer from "react-dom/server";
 import path from "path";
@@ -23,20 +23,20 @@ const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
     development: {
       executablePath: "/opt/google/chrome/google-chrome",
       headless: true,
-      args: playwright.getChromiumArgs(false),
+      args: [],
     },
     test: {},
   }[process.env.NODE_ENV];
 
   const viewport = { width: 1200, height: 630 };
 
-  await playwright.loadFont(
+  /*await playwright.loadFont(
     "https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff2"
   );
 
   await playwright.loadFont(
     "https://raw.githubusercontent.com/googlefonts/RobotoMono/main/fonts/ttf/RobotoMono-Medium.ttf"
-  );
+  );*/
 
   const browser = await playwright.launchChromium(playwrightArgs);
   const page = await browser.newPage({ viewport: viewport });
