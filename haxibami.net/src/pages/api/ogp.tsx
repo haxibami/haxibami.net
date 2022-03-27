@@ -1,4 +1,5 @@
-import * as playwright from "playwright-aws-lambda";
+import * as chromium from "playwright-aws-lambda";
+//import playwright from "playwright-core";
 import React from "react";
 import type { NextApiRequest, NextApiResponse } from "next";
 import ReactDomServer from "react-dom/server";
@@ -21,27 +22,27 @@ const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const playwrightArgs = {
       production: {
-        args: playwright.getChromiumArgs(true),
+        args: chromium.getChromiumArgs(true),
       },
       development: {
         executablePath: "/opt/google/chrome/google-chrome",
         headless: true,
-        args: playwright.getChromiumArgs(false),
+        args: chromium.getChromiumArgs(false),
       },
       test: {},
     }[process.env.NODE_ENV];
 
     const viewport = { width: 1200, height: 630 };
 
-    await playwright.loadFont(
+    await chromium.loadFont(
       "https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff2"
     );
 
-    await playwright.loadFont(
+    await chromium.loadFont(
       "https://raw.githubusercontent.com/googlefonts/RobotoMono/main/fonts/ttf/RobotoMono-Medium.ttf"
     );
 
-    const browser = await playwright.launchChromium(playwrightArgs);
+    const browser = await chromium.launchChromium(playwrightArgs);
     const page = await browser.newPage({ viewport: viewport });
 
     const longtitle =
