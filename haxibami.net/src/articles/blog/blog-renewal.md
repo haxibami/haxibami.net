@@ -402,74 +402,176 @@ Vercel のサーバレス関数機能を使って
 ```tsx
 // pages/api/ogp.tsx
 
+import * as chromium from "playwright-aws-lambda";
 import React from "react";
-import chromium from "chrome-aws-lambda";
 import type { NextApiRequest, NextApiResponse } from "next";
 import ReactDomServer from "react-dom/server";
 import path from "path";
 import fs from "fs";
-import OgpImage, { OgpInfo } from "components/OgpImage/OgpImage";
+import OgpImage, { OgpInfo } from "components/OgpImage";
 
 // full path resolve
 const baseFullPath = path.resolve("./");
 
 // image paths
-const faviconPath = path.join(baseFullPath, "public/favicon.ico");
-const favicon: string = fs.readFileSync(faviconPath, "base64");
+const iconPath = path.join(baseFullPath, "public/icon_ange_glasses_192.webp");
+const icon: string = fs.readFileSync(iconPath, "base64");
 
-// style paths
-const stylePath = path.join(baseFullPath, "src/styles/ogp.css");
-const style = fs.readFileSync(stylePath, "utf-8");
+// font paths
+const monopath = path.join(
+  baseFullPath,
+  "public/fonts/RobotoMono-Medium.woff2"
+);
+const mono = fs.readFileSync(monopath).toString("base64");
+
+const notopath = path.join(
+  baseFullPath,
+  "public/fonts/NotoSansCJKjp-Bold.woff2"
+);
+const noto = fs.readFileSync(notopath).toString("base64");
+
+const style = `
+@font-face {
+  font-family: "Noto Sans CJK JP";
+  font-style: normal;
+  font-weight: bold;
+  src: url(data:font/woff2;charset=utf-8;base64,${noto}) format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: 500;
+  src: url(data:font/woff2;charset=utf-8;base64,${mono}) format("woff2");
+  font-display: swap;
+}
+
+/*@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');*/
+/*@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');*/
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #292433;
+  font-family: "Noto Sans CJK JP", "Noto Sans JP", sans-serif;
+  font-size: 125%;
+  color: #d2ced9;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right bottom, #d9989c, #a6b4de);
+}
+
+#Wrapper {
+  margin: 50px;
+  background: white;
+  grid-gap: 30px;
+  border-radius: 30px;
+  background: #1c1921;
+  box-shadow: 10px 10px 20px #1c192166, -10px -10px 20px #1c192166;
+  padding: 50px;
+  display: grid;
+  grid-template-rows: 280px 100px;
+  grid-template-columns: 700px 250px;
+  grid-template-areas: "Title Title" "Name Date";
+}
+#Wrapper #Title {
+  font-size: 60px;
+  grid-area: Title;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+#Wrapper #Title p {
+  max-height: 100%;
+  overflow-wrap: anywhere;
+}
+#Wrapper #Name {
+  grid-area: Name;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+#Wrapper #Name img {
+  border-radius: 50%;
+}
+#Wrapper #Date {
+  grid-area: Date;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-family: "Roboto Mono", monospace;
+}
+`;
 
 const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
-  const chromePath = {
-    production: await chromium.executablePath,
-    development: "/opt/google/chrome/google-chrome",
-    test: await chromium.executablePath,
-  }[process.env.NODE_ENV];
+  try {
+    const playwrightArgs = {
+      production: {
+        args: chromium.getChromiumArgs(true),
+      },
+      development: {
+        executablePath: "/opt/google/chrome/google-chrome",
+        headless: true,
+        args: chromium.getChromiumArgs(false),
+      },
+      test: {},
+    }[process.env.NODE_ENV];
 
-  const viewport = { width: 1200, height: 630 };
+    const viewport = { width: 1200, height: 630 };
 
-  const browser = await chromium.puppeteer.launch({
-    args: chromium.args,
-    defaultViewport: viewport,
-    executablePath: chromePath,
-    headless: chromium.headless,
-  });
-  const page = await browser.newPage();
+    const browser = await chromium.launchChromium(playwrightArgs);
+    const context = await browser.newContext({ viewport: viewport });
+    const page = await context.newPage();
+    await page.setExtraHTTPHeaders({
+      "Accept-Language": "ja-JP",
+    });
 
-  const longtitle =
-    typeof req.query.title !== "undefined" ? req.query.title.toString() : "";
+    const longtitle =
+      typeof req.query.title !== "undefined" ? req.query.title.toString() : "";
 
-  const date =
-    typeof req.query.date !== "undefined" ? req.query.date.toString() : "";
+    const date =
+      typeof req.query.date !== "undefined" ? req.query.date.toString() : "";
 
-  const ogpinfo: OgpInfo = {
-    title: longtitle,
-    date: date,
-    icon: favicon,
-    style: style,
-  };
+    const ogpinfo: OgpInfo = {
+      title: longtitle,
+      date: date,
+      icon: icon,
+      style: style,
+    };
 
-  const markup = ReactDomServer.renderToStaticMarkup(<OgpImage {...ogpinfo} />);
-  const html = `<!doctype html>${markup}`;
+    const markup = ReactDomServer.renderToStaticMarkup(
+      <OgpImage {...ogpinfo} />
+    );
+    const html = `<!doctype html>${markup}`;
 
-  await page.setContent(html, { waitUntil: "networkidle2" });
+    await page.setContent(html, { waitUntil: "networkidle" });
+    const image = await page.screenshot({ type: "png" });
+    await browser.close();
 
-  const image = await page.screenshot({ type: "png" });
-  await browser.close();
+    res.setHeader("Cache-Control", "s-maxage=5256000, stale-while-revalidate");
+    res.setHeader("Content-Type", "image/png");
 
-  res.setHeader("Cache-Control", "s-maxage=31536000, stale-while-revalidate");
-
-  res.setHeader("Content-Type", "image/png");
-
-  res.end(image);
+    res.end(image);
+  } catch (error) {
+    console.error("[Error]: ", error);
+    res.status(404).json({ message: "cannot render og-image" });
+  }
 };
 
 export default OgpGen;
 ```
 
-ちなみに向こうの環境（AWS Lambda 相当）には CJK 文字のフォントが入っていないため、既に chromium バイナリで容量ギリギリのところにフォントを足すことになり、普通にやると超過する。が、今回は Web フォントを当てることでどうにかした。
+ちなみに向こうの環境（AWS Lambda 相当）には CJK 文字のフォントが入っていないため、既に chromium バイナリで容量ギリギリのところにフォントを足すことになる。
 
 ![vercel_log_lambda_fn](/image/lambda-fn.png)
 

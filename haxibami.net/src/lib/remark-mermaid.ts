@@ -168,7 +168,10 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
   return async (node: Node, _file: VFileCompatible) => {
     const promises: any[] = [];
     const browser = await playwright.chromium.launch(settings.launchOptions);
-    const page = await browser.newPage();
+    const context = await browser.newContext({
+      viewport: { width: 1000, height: 3000 },
+    });
+    const page = await context.newPage();
     const html = `<!DOCTYPE html>`;
     await page.setContent(html);
     await page.addScriptTag({

@@ -59,7 +59,7 @@ const About: NextPage<Props> = ({ metaprops, doc, content }) => {
           <div id={Styles.Icon}>
             <Image
               id={Styles.IconImage}
-              src="/ogpicon.webp"
+              src="/icon_ange_glasses_512.webp"
               alt="icon"
               width={175}
               height={175}

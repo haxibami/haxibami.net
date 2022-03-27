@@ -10,7 +10,7 @@ export interface OgpInfo {
 const OgpImage: React.VFC<OgpInfo> = (props) => {
   const { title, date, icon, style } = props;
   return (
-    <html>
+    <html lang="ja">
       <head>
         <style dangerouslySetInnerHTML={{ __html: style }} />
       </head>

@@ -33,7 +33,7 @@ export const getStaticProps = async () => {
     title: "haxibami",
     sitename: "haxibami.net",
     description: "私の系統樹",
-    ogImageUrl: "/ogpicon.webp",
+    ogImageUrl: "https://www.haxibami.net/icon_ange_glasses_512.webp",
     pageRelPath: "",
     pagetype: "website",
     twcardtype: "summary",
@@ -57,7 +57,7 @@ const Home: NextPage<Props> = ({ metaprops }) => {
             <a>
               <Image
                 id={Styles.Icon}
-                src="/ogpicon.webp"
+                src="/icon_ange_glasses_192.webp"
                 alt="haxibami"
                 layout={"fill"}
                 objectFit={"cover"}

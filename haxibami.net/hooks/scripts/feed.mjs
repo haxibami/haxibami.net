@@ -21,7 +21,7 @@ const genRssFeed = () => {
     id: HOST,
     link: HOST,
     language: "ja",
-    image: `${HOST}/favicon.png`,
+    image: `${HOST}/icon_ange_glasses_192.png`,
     copyright: `All rights reserved ${date.getFullYear()}, ${author.name}`,
     updated: date,
     feedLinks: {

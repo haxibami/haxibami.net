@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { LinkWidgetMeta } from "lib/interface";
 import Styles from "./style.module.scss";
 
