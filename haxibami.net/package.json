@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node hooks/before-build.mjs && playwright install chromium",
-    "build": "next build",
+    "prebuild": "node hooks/before-build.mjs",
+    "build": "playwright install chromium && next build",
     "postbuild": "node hooks/after-build.mjs",
     "start": "next start",
     "ts-check": "tsc --noEmit",

@@ -27,6 +27,8 @@ jobs:
             ${{ runner.os }}-
       - name: Install pnpm
         uses: pnpm/action-setup@v2.2.1
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
         with: 
           version: ${{ env.pnpm-version }}
           run_install: true

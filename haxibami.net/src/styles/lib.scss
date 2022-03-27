@@ -67,14 +67,21 @@
 @mixin colored_link {
   p {
     a {
-    color: var(--link);
-    text-decoration: underline;
+      color: var(--link);
+      text-decoration: underline;
+      transition-property: color;
+      transition-duration: 0.2s;
+      transition-timing-function: ease;
     }
   }
+
   li {
     a {
       color: var(--link);
       text-decoration: underline;
+      transition-property: color;
+      transition-duration: 0.2s;
+      transition-timing-function: ease;
     }
   }
 }

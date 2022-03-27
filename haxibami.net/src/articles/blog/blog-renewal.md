@@ -1,7 +1,7 @@
 ---
 slug: "blog-renewal"
 title: "Next.jsでブログをつくった"
-date: "20220320"
+date: "20220326"
 tags: ["tech", "web", "nextjs"]
 ---
 
@@ -18,11 +18,11 @@ tags: ["tech", "web", "nextjs"]
 
 ### 自由
 
-意味はさまざまだが、ここでは外部サービスを念頭に置いている。
+外部サービスに書くということは自らを見世物にする覚悟を決めるということだ。どうせインターネットに上げれば同じ、というのは誤りで、Note やはてブに投稿したものはピックアップされ、サジェストされ、誰かの画面に躍り出る。これら閲覧を支援する機構（舞台装置だ！）が書き手を連れ出すのは舞台の上だ。書き手はスポットライトの存在を嫌でも意識させられ、噂を聞いて吸い寄せられた観客と向かい合う。閲覧数が伸びれば微弱な幸福感を覚え、時にはアンチともやり合うことになるだろう。やがて偶数個の瞳に銃口を幻視したのもつかの間、気づけば舞台の中心に立っていて、（小劇場かもしれないが）あたりの注目を一身に浴びている。おめでとう。あなたはちょっとした有名ブロガーだ。
 
-書くということにあたっては、[この記事](https://sumirehibiya.com/notes/building-a-blog-with-nextjs)が指摘するようなサービスごとのコミュニティの存在というのも見逃せない。はてな村のムラ社会は言うまでもないが、Note は水で薄めたようなエモが増えているように（勝手に）思うし、
+一方、個人ブログに辿り着くのはあえて勧められてもいないリンクを踏んだ人間だけだ。検索エンジンも閲覧を支援する装置ではあるが、幸いそこまで来れば偶然性の占める割合も大きい。クローラの巡回を拒否するほど徹底せずとも、外部サービスに書かれたものより明らかに到達コストは高くなる。重要なのはここだ。あえて到達コストのかかる場所で、演者としての露出を偶然性に委ねながら書かれたテクストにはそれ自体独特の意味がある。それは必ずしもあらゆる場面において望まれるものではない（私だって Note やはてブを使う）にしても、明確な書き手として場に固定された時点で消えてしまう種類のものだ。
 
-多くが接続されすぎている。
+ここで私は書き手が視線に晒されること自体を糾弾しているのではない。書き手と読み手という一方性が定式化されて提供され、{舞台装置}^(プラットフォーム)によって増幅されることで失われるものを考えている。書くことは広く伝えること、という刷り込みは極めて強力だが、必ずしも表現を拡張するものではない。読み手からしても、なげやりに打ち出された吐露、あるいは限られた対象にのみ向けられた事実をほとんど窃視のような形で目にするほうがより愉快であることも当然ある。そしてこういうものは、書き手が各人の自由な**シマ**を持っていなければ難しいことだ。
 
 ### 管理しやすさ
 
@@ -44,11 +44,11 @@ Markdown の処理系には remark / rehype を選択した。[unified](https://
 
 #### CI・ビルド・ホスティング
 
-テストとプレビューを GitHub Actions、ライブラリ更新を renovate で自動化している。これが全部無料で回るのだから、GitHub の懐の広さには本当に頭が上がらない。ホスティングは素直に Vercel に投げた。ほとんど囲い込まれたようなものだが、とくに拘りはないので Cloudflare Pages あたりに変えても良いかもしれない。ちなみに Vercel 側のビルド回数を抑えるため、デフォルトのレポジトリ連携は切り、CI で念入りにテストしてから Vercel CLI 経由でのデプロイを行うようにしてある（[vercel-action](https://github.com/amondnet/vercel-action/)）。せめてもの配慮（？）だ。
+テストとプレビューを GitHub Actions、ライブラリ更新を renovate で自動化している。これが全部無料で回るのだから本当に頭が上がらない。ホスティングは素直に Vercel に投げたが、とくに拘りはないので Cloudflare Pages あたりに変えても良いかもしれない。ちなみに Vercel 側のビルド回数を抑えるため、デフォルトのレポジトリ連携は切り、CI で念入りにテストしてから Vercel CLI 経由でのデプロイを行うようにしてある（[vercel-action](https://github.com/amondnet/vercel-action/)）。せめてもの配慮（？）だ。
 
 ### 高速性・拡張性
 
-パフォーマンスが良いらしいと聞いて Next.js の SSG を選択した。SSG とはいいながら、ページ遷移のたびに JS が走るので動きはなめらかだ（言い方を変えれば、ピュアではない）。画像最適化やルーティングの抽象化も向こうでやってくれる。Gatsby みたいにプラグインでガチガチに固める感じでもないので、引っ張ってきたライブラリや自作の処理も素直に持ち込めるのが良いと思った。
+パフォーマンスが良いらしいと聞いて Next.js の SSG を選択した。SSG とはいいながら、ページ遷移のたびに JS が走るので動きはなめらかだ（言い方を変えれば、ピュアではない）。画像最適化やルーティングの抽象化も向こうでやってくれる。かといって Gatsby みたいにプラグインでガチガチに固める感じでもないので、引っ張ってきたライブラリや自作の処理も素直に持ち込めるのが良いと思った。
 
 ### 無広告
 
@@ -166,7 +166,7 @@ export default function Document() {
 
 https://github.com/haxibami/remark-jaruby
 
-元のパッケージ自体が`remark-parse`のパーサである[micromark](https://github.com/micromark/micromark)に介入していたので、パーサ部分（[micromark-extension-jaruby](https://github.com/haxibami/micromark-extension-jaruby)）、構文木操作部分（[mdast-util-jaruby](https://github.com/haxibami/mdast-util-jaruby)）の拡張機能に分割し、これらを`remark-jaruby`から参照している。
+パーサ部分（[micromark-extension-jaruby](https://github.com/haxibami/micromark-extension-jaruby)）、構文木操作部分（[mdast-util-jaruby](https://github.com/haxibami/mdast-util-jaruby)）の拡張機能に分割し、これらを`remark-jaruby`から参照している。
 
 ```md
 > 昨日午後、{†聖剣†}^(エクスカリバー)を振り回す{全裸中年男性}^(無敵の人)が出現し……
@@ -182,7 +182,7 @@ https://zenn.dev/tomi/articles/2021-03-22-blog-card
 
 https://zenn.dev/januswel/articles/745787422d425b01e0c1
 
-:point_up_2: を参考にしつつ、unified の Transformer プラグインとして実装した。Markdown 内のリンクを取得して適当な HTML 要素（`<extlink>`）に置き換えたのち、リンク先にアクセスして得たメタ情報を挿入、`rehype-react`の`components`オプションを使ってカスタムコンポーネントに変換している。
+:point_up_2: を参考にしつつ、unified の Transformer プラグインとして実装した。Markdown 内のリンクを取得して適当な独自 HTML 要素（`<extlink>`）に置き換えたのち、リンク先にアクセスして得たメタ情報（title、description、OGP 画像 URL 等）を挿入、`rehype-react`の`components`オプションを使ってカスタムコンポーネントに変換している。
 
 ```ts
 // lib/rehype-react.ts
@@ -233,7 +233,7 @@ https://github.com/BetaHuhn/metadata-scraper#readme
 
 ### ページ内リンク・目次
 
-`rehype-slug`、`rehype-autolink-headings`、`remark-toc`で実現。heading に slug を振ってくれるそうな。
+`rehype-slug`、`rehype-autolink-headings`、`remark-toc`で実現。
 
 https://github.com/rehypejs/rehype-slug
 
@@ -241,15 +241,17 @@ https://github.com/rehypejs/rehype-autolink-headings
 
 https://github.com/remarkjs/remark-toc
 
+heading に slug を振ってくれるそうな。
+
 ### 内容プレビュー
 
-[トップ](https://haxibami.net/blog)の記事タイルには内容のプレビューを表示している。このために生の Markdown を流し込むのも気が引けたので、なんとかして plaintext 形式に変換できないかと考えていたら、`strip-markdown`というのがあった。これで`<h1>`, `<blockquote>`等を除去し、冒頭 200 字を抽出している。
+[トップ](https://haxibami.net/blog)の記事一覧には内容のプレビューを表示している。このために生の Markdown を流し込むのも気が引けたので、なんとかして plaintext 形式に変換できないかと考えていたら、`strip-markdown`というのがあった。これで`<h1>`, `<blockquote>`等を除去し、冒頭 200 字を抽出している。
 
 https://github.com/remarkjs/strip-markdown
 
 ### Mermaid のサポート
 
-[remark-mermaid](https://github.com/temando/remark-mermaid)は古く、[remark-mermaidjs](https://github.com/remcohaszing/remark-mermaidjs)は API が unified のものではなかったため、後者をベースにしつつ手元で実装した。裏でヘッドレス Chromium を立ち上げて SVG を生成しているが、想像以上に高速だ。
+[remark-mermaid](https://github.com/temando/remark-mermaid)は古く、[remark-mermaidjs](https://github.com/remcohaszing/remark-mermaidjs)は API が unified のものではなかったため、後者をベースにしつつ手元で実装した。裏でヘッドレス Chromium を立ち上げて SVG を生成しているとは思えないほど高速だ。
 
 ````md
 ```mermaid
@@ -390,14 +392,14 @@ https://github.com/pacocoursey/next-themes
 
 Vercel のサーバレス関数機能を使って
 
-1. ヘッドレス Chromium を起動
+1. ヘッドレス Chromium（playwright）を起動
 2. クエリパラメータに応じた内容の React コンポーネントを生成
 3. `renderToStaticMarkup`で静的 HTML 化
 4. 表示してスクリーンショットを撮影
 
-する手順で実現した。この方法だと表示する内容を手元で書けるぶん、デザインの自由度が高い。
+する手順で実現した。表示する内容を手元で書けるぶん、他の手法と比べてデザインの自由度が高い。
 
-バイナリには[playwright-aws-lambda](https://github.com/JupiterOne/playwright-aws-lambda)を使った。
+Chromium バイナリには[playwright-aws-lambda](https://github.com/JupiterOne/playwright-aws-lambda)を使った。[chrome-aws-lambda](https://github.com/alixaxel/chrome-aws-lambda)より容量が小さくバージョンも新しいため、こちらを使わない手はない。
 
 ```tsx
 // pages/api/ogp.tsx
@@ -571,18 +573,16 @@ const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
 export default OgpGen;
 ```
 
-ちなみに向こうの環境（AWS Lambda 相当）には CJK 文字のフォントが入っていないため、既に chromium バイナリで容量ギリギリのところにフォントを足すことになる。
-
 ![vercel_log_lambda_fn](/image/lambda-fn.png)
 
-ログを見た感じこれでも微妙に容量オーバーしているが、普通に動いている。優しいな〜
+ログを見た感じかなりギリギリだが、普通に動いている。なお、ローカル（`/public`以下）のフォントを読み込む際には base64 エンコードしたものを渡す必要があるため注意。Vercel 公式の[og-image](https://github.com/vercel/og-image/blob/0b76def1f56808f8f1aa2cd7ede8b8d9ef7ef7b7/api/_lib/template.ts)あたりの実装が参考になるだろう。
 
 ### サイトマップ生成
 
 [next-sitemap](https://github.com/iamvishnusankar/next-sitemap)を使ったところ、`<lastmod>`がすべて最終ビルド時を示していて発狂しかけた。この挙動はある意味正しく、なぜなら自分が触れていないページでもビルドするたびに**静的アセットの slug 名が変わってしまう**ためである。仕方がないので[このへん](https://www.mk-engineer.com/posts/nextjs-before-build)を参考にしつつ書いた。npm scripts を活用し、
 
 1. ビルド前に`share/index.json`に記事のインデックスを作成
-1. ビルド後にインデックスに基づいて`sitemap.xml`と`robots.txt`を生成
+1. ビルド後にインデックスに基づいて`public/sitemap.xml`と`public/robots.txt`を生成
 
 するようにしてある。
 
@@ -694,18 +694,6 @@ export default () => {
 };
 ```
 
-```json
-// package.json
-
-{
-  "scripts": {
-    "prebuild": "node hooks/before-build.mjs",
-    "build": "next build",
-    "postbuild": "node hooks/after-build.mjs"
-  }
-}
-```
-
 ### フィード対応
 
 `Feed`というライブラリを使った。上と同じ要領で、ビルド時に`/public/rss`以下に RSS、Atom、JSON Feed 用のファイル三種を吐かせている。
@@ -769,6 +757,8 @@ export default genRssFeed;
 ```
 
 ## 感想
+
+いい感じ〜
 
 Next.js の抽象化と、unified はじめ充実した外部処理系に助けられてかなり簡単に動いた。デベロッパーに五体投地しつつ、改修・保守をやっていく。
 

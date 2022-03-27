@@ -7,7 +7,9 @@ tags: ["tech", "vim"]
 
 ![Preview](https://raw.githubusercontent.com/haxibami/urara.vim/master/preview.png)
 
-Repo は[ここ](https://github.com/haxibami/urara.vim)。
+Repo はここ :point_down:
+
+https://github.com/haxibami/urara.vim
 
 ## きっかけ
 
