@@ -1,5 +1,4 @@
 import * as chromium from "playwright-aws-lambda";
-import playwright from "playwright-core";
 import React from "react";
 import type { NextApiRequest, NextApiResponse } from "next";
 import ReactDomServer from "react-dom/server";
@@ -20,7 +19,7 @@ const style = fs.readFileSync(stylePath, "utf-8");
 
 const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const playwrightArgs: playwright.LaunchOptions = {
+    const playwrightArgs = {
       production: {
         args: chromium.getChromiumArgs(true),
       },
@@ -42,7 +41,7 @@ const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
       "https://raw.githubusercontent.com/googlefonts/RobotoMono/main/fonts/ttf/RobotoMono-Medium.ttf"
     );
 
-    const browser = await playwright.chromium.launch(playwrightArgs);
+    const browser = await chromium.launchChromium(playwrightArgs);
     const page = await browser.newPage({ viewport: viewport });
 
     const longtitle =
