@@ -10,7 +10,7 @@ const LinkWidget: React.VFC<LinkWidgetProps> = (props) => {
   const meta: LinkWidgetMeta = JSON.parse(children);
   return (
     <div className={Styles.Wrapper}>
-      <a href={meta.url}>
+      <a href={meta.url} target="_blank" rel="noopener noreferrer">
         <div className={Styles.Widget}>
           <div className={Styles.Main}>
             <div className={Styles.Title}>{meta.title}</div>

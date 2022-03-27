@@ -7,7 +7,7 @@ tags: ["info", "meta"]
 
 ## 私について
 
-:arrow_right: [プロフィール](/profile)
+:arrow_right: [プロフィール](/about)
 
 ## 内容
 

@@ -3,6 +3,7 @@
 .ArticleMenu {
   display: flex;
   flex-direction: row;
+  justify-content: center;
   color: var(--shadow);
   border-bottom: 1px solid var.$line;
   gap: 2rem;

@@ -41,6 +41,10 @@ title: "About"
 - [少女歌劇レヴュースタァライト](https://revuestarlight.com)
 - [プリンセス・プリンシパル](https://pripri-anime.jp)
 
+https://revuestarlight.com
+
+https://pripri-anime.jp
+
 ### Software
 
 - [Arch Linux](https://archlinux.org)
@@ -69,10 +73,14 @@ https://github.com/haxibami/ruslovo-tufs
 
 - [六代目：生活の困難](https://umector.hatenablog.jp)
 
+https://umector.hatenablog.jp
+
 ## Link
 
 - [トップ](/)
 - [ブログ](/blog)
+
+https://www.haxibami.net/blog
 
 ### フォロワー・相互リンクのサイト
 

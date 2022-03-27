@@ -97,6 +97,8 @@
       @include lib.imagelimit;
       @include lib.article_headlines;
       @include lib.footnotes;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
     }
   }
 }
