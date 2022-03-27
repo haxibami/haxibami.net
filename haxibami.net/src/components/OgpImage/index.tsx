@@ -21,7 +21,7 @@ const OgpImage: React.VFC<OgpInfo> = (props) => {
           </h1>
           <div id="Name">
             <img
-              src={`data:image/png;base64,${icon}`}
+              src={`data:image/webp;base64,${icon}`}
               alt="haxicon"
               width={100}
               height={100}

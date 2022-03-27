@@ -94,10 +94,12 @@ body {
 #Wrapper #Name {
   grid-area: Name;
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 20px;
 }
 #Wrapper #Name img {
+  margin-right: 20px;
   border-radius: 50%;
 }
 #Wrapper #Date {
