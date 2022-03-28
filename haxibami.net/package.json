@@ -35,7 +35,7 @@
     "node-fetch": "3.2.3",
     "playwright": "1.20.1",
     "playwright-aws-lambda": "0.7.0",
-    "playwright-core": "1.20.1",
+    "playwright-core": "1.19.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "rehype-autolink-headings": "6.1.1",
