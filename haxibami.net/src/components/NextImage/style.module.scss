@@ -1,9 +1,19 @@
 @use "styles/variable" as var;
 
+.Figure {
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  figcaption {
+    text-align: center;
+    color: var.$subtitle;
+  }
+}
+
 .ImgBox {
   display: flex;
   position: relative;
   min-height: 20em;
   width: 100%;
-  margin: 1em 0;
 }

@@ -11,19 +11,22 @@ export type NextImageProps = {
 const NextImage: React.FC<NextImageProps> = (props) => {
   const { src, alt } = props;
   return alt !== "asciicast" ? (
-    <div className={Styles.ImgBox}>
-      <Link href={src} scroll={false}>
-        <a>
-          <Image
-            className={Styles.Img}
-            src={src}
-            alt={alt || src}
-            layout="fill"
-            objectFit="contain"
-          />
-        </a>
-      </Link>
-    </div>
+    <figure className={Styles.Figure}>
+      <div className={Styles.ImgBox}>
+        <Link href={src} scroll={false}>
+          <a>
+            <Image
+              className={Styles.Img}
+              src={src}
+              alt={alt || src}
+              layout="fill"
+              objectFit="contain"
+            />
+          </a>
+        </Link>
+      </div>
+      <figcaption>{alt}</figcaption>
+    </figure>
   ) : (
     <div className={Styles.ImgBox}>
       <Image

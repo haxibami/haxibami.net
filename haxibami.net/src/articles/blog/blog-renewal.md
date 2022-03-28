@@ -18,7 +18,7 @@ tags: ["tech", "web", "nextjs"]
 
 ### 自由
 
-外部サービスに書くということは自らを明示的に見世物にするということだ。どうせインターネットに上げれば同じ、というのは誤りで、Note やはてブの投稿はピックアップされ、サジェストされ、誰かの画面に躍り出る。これら閲覧を支援する機構（舞台装置だ！）は書き手を舞台の上に連れ出し、スポットライトの存在を嫌でも意識させる。そして本来なら触れるはずもなかった観客と向かい合わせる。
+外部サービスに書くということは自らを明示的に見世物にするということにほかならない。どうせインターネットに上げれば同じ、というのは誤りで、Note やはてブの投稿はピックアップされ、サジェストされ、誰かの画面に躍り出る。これら閲覧を支援する機構（舞台装置だ！）は書き手を舞台の上に連れ出し、スポットライトの存在を嫌でも意識させる。そして本来なら触れるはずもなかった観客と向かい合わせる。
 
 一方、個人ブログに辿り着くのはあえて勧められてもいないリンクを踏んだ人間だけだ。なんでこんなの読んでるんですか？　検索エンジンもサイトと読者を引き合わせる役割を持つが、そこには偶然性の占める割合が大きく、結果として外部サービスに書かれたものより明らかに到達コストは高くなる。
 
@@ -180,63 +180,6 @@ https://github.com/haxibami/remark-jaruby
 
 > 昨日午後、{†聖剣†}^(エクスカリバー)を振り回す{全裸中年男性}^(無敵の人)が出現し……
 
-### リンクカード
-
-外部リンクをカードに変換するやつ。
-
-https://zenn.dev/tomi/articles/2021-03-22-blog-card
-
-https://zenn.dev/januswel/articles/745787422d425b01e0c1
-
-:point_up_2: を参考にしつつ、unified の Transformer プラグインとして実装した。Markdown 内のリンクを取得して適当な独自 HTML 要素（`<extlink>`）に置き換えたのち、リンク先にアクセスして得たメタ情報（title、description、OGP 画像 URL 等）を挿入、`rehype-react`の`components`オプションを使ってカスタムコンポーネントに変換している。
-
-```ts
-// lib/rehype-react.ts
-// HTML parser on "Client" side. Never include backend code (including remark).
-
-import { unified } from "unified";
-import rehypeParse from "rehype-parse";
-import rehypeReact from "rehype-react";
-import type { Options as RehypeReactOptions } from "rehype-react";
-import React from "react";
-import MyLink from "components/MyLink";
-import type { MyLinkProps } from "components/MyLink";
-import LinkWidget from "components/LinkWidget";
-import type { LinkWidgetProps } from "components/LinkWidget";
-import NextImage from "components/NextImage";
-import type { NextImageProps } from "components/NextImage";
-
-// Convert HTML to React Component
-export const HtmlToReact = (html: string) => {
-  const result = unified()
-    .use(rehypeParse, {
-      fragment: true,
-    })
-    .use(rehypeReact, {
-      createElement: React.createElement,
-      components: {
-        a: (props: MyLinkProps) => {
-          return MyLink(props);
-        },
-        img: (props: NextImageProps) => {
-          return NextImage(props);
-        },
-        extlink: (props: LinkWidgetProps) => {
-          return LinkWidget(props);
-        },
-      },
-    } as RehypeReactOptions)
-    .processSync(html);
-  return result.result;
-};
-```
-
-メタ情報の取得には、`metadata-scraper`という便利なライブラリを使った。
-
-https://github.com/BetaHuhn/metadata-scraper#readme
-
-なお、内部で`fetch`を行っている都合上、作成したプラグインは非同期プラグインとなることに留意。具体的には unified で`processSync`が[使えなくなる](https://github.com/unifiedjs/unified#processorprocesssyncfilevalue)。
-
 ### ページ内リンク・目次
 
 `rehype-slug`、`rehype-autolink-headings`、`remark-toc`で実現。
@@ -305,7 +248,176 @@ pie
 
 https://github.com/shikijs/shiki
 
-以上を合わせたメソッドチェーンが以下。[^2]
+### リンクカード
+
+外部リンクをカードに変換するやつ。
+
+https://zenn.dev/tomi/articles/2021-03-22-blog-card
+
+https://zenn.dev/januswel/articles/745787422d425b01e0c1
+
+:point_up_2: を参考にしつつ、unified の Transformer プラグインとして実装した。文書中のリンク（`Paragraph`ノードかつ、子要素が単一の`Link`ノードであるもの）を取得し、適当な独自要素（`<extlink>`）に置き換えたのち、リンク先にアクセスして得たメタ情報（title、description、OGP 画像 URL 等）を挿入している。これを`rehype-react`の`components`オプションを使ってカスタムコンポーネントに変換することで、任意のスタイルでカードが表示できる。
+
+```ts
+// lib/remark-link-widget.ts
+
+import type { Plugin, Transformer } from "unified";
+import type { Node, Parent } from "unist";
+import type { VFileCompatible } from "vfile";
+import { visit } from "unist-util-visit";
+import type { Paragraph, Link, Literal } from "mdast";
+import { isParent, isLink, isParagraph } from "./mdast-util-node-is";
+import type { H } from "mdast-util-to-hast";
+import getMetadata from "metadata-scraper";
+
+interface ExtLink extends Literal {
+  type: "extlink";
+  url: string;
+  meta: LinkWidgetMeta;
+}
+
+interface LinkWidgetMeta {
+  url: string;
+  title: string;
+  description: string;
+  image: string;
+  icon: string;
+}
+
+function isExtLink(node: unknown): node is Paragraph {
+  if (!isParagraph(node)) {
+    return false;
+  }
+
+  const { children } = node;
+
+  if (children.length != 1) {
+    return false;
+  }
+
+  const singleChild = children[0];
+  if (!(isLink(singleChild) && singleChild.children[0].type == "text")) {
+    return false;
+  }
+
+  return true;
+}
+
+function fetchMeta(url: string) {
+  const metas = getMetadata(url).then((data) => {
+    const metaData: LinkWidgetMeta = {
+      url: url,
+      title: data.title ?? "",
+      description: data.description ?? "",
+      image: data.image ?? "",
+      icon: data.icon ?? "",
+    };
+    return metaData;
+  });
+  return metas;
+}
+
+export const remarkLinkWidget: Plugin = function extLinkTrans(): Transformer {
+  return async (tree: Node, _file: VFileCompatible) => {
+    const promises: any[] = [];
+    visit(tree, isExtLink, visitor);
+    await Promise.all(promises.map((t) => t()));
+
+    function visitor(
+      node: Paragraph,
+      index: number,
+      parent: Parent | undefined
+    ) {
+      if (!isParent(parent)) {
+        return;
+      }
+
+      if (parent.type === "listItem") {
+        return;
+      }
+
+      const child = node.children[0] as Link;
+
+      promises.push(async () => {
+        const data = await fetchMeta(child.url);
+        parent.children[index] = {
+          type: "extlink",
+          url: child.url,
+          meta: data,
+        } as ExtLink;
+      });
+    }
+  };
+};
+
+export function extLinkHandler(_h: H, node: ExtLink) {
+  return {
+    type: "element",
+    tagName: "extlink",
+    children: [{ type: "text", value: JSON.stringify(node.meta) }],
+  };
+}
+```
+
+メタ情報の取得には、`metadata-scraper`という便利なライブラリを使った。
+
+https://github.com/BetaHuhn/metadata-scraper#readme
+
+なお、内部で`fetch`を行っている都合上、作成したプラグインは非同期プラグインとなることに留意。具体的には unified で`processSync`が[使えなくなる](https://github.com/unifiedjs/unified#processorprocesssyncfilevalue)。
+
+### キャプション・画像・リンク処理
+
+Markdown で挿入した画像は通常の`<img>`タグに変換されるため、そのままでは Next.js の画像最適化の対象にはならない。が、これも`rehype-react`の`components`オプションで独自のコンポーネントに置換することで解決できる。たとえば以下のような関数コンポーネントを作れば、画像にリンクを付加し、`alt`テキストをキャプションとして追記できる。同様のことがリンク（`<a>`タグ →`<Link>`）についても可能。
+
+```tsx
+// components/NextImage.tsx
+
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import Styles from "./style.module.scss";
+
+export type NextImageProps = {
+  src: string;
+  alt?: string;
+};
+
+const NextImage: React.FC<NextImageProps> = (props) => {
+  const { src, alt } = props;
+  return alt !== "asciicast" ? (
+    <figure className={Styles.Figure}>
+      <div className={Styles.ImgBox}>
+        <Link href={src} scroll={false}>
+          <a>
+            <Image
+              className={Styles.Img}
+              src={src}
+              alt={alt || src}
+              layout="fill"
+              objectFit="contain"
+            />
+          </a>
+        </Link>
+      </div>
+      <figcaption>{alt}</figcaption>
+    </figure>
+  ) : (
+    <div className={Styles.ImgBox}>
+      <Image
+        className={Styles.Img}
+        src={src}
+        alt={alt}
+        layout="fill"
+        objectFit="contain"
+      />
+    </div>
+  );
+};
+
+export default NextImage;
+```
+
+以上を合わせた`remark-parse` / `remark-rehype`まわりのメソッドチェーンが下の通り。[^2]
 
 [^2]: 変なファイル処理が入っているのは、shiki がテーマファイルを読み込むにあたって**自分のインストールされた位置**（メインプロジェクトの`node_modules`以下）からの相対パスか、ファイルシステムの絶対パスかのいずれかしか受け付けないため。
 
@@ -322,6 +434,7 @@ import remarkMath from "remark-math";
 import remarkJaruby from "remark-jaruby";
 import remarkUnwrapImages from "remark-unwrap-images";
 import remarkToc from "remark-toc";
+import remarkMermaid from "./remark-mermaid";
 import remarkRehype from "remark-rehype";
 import type { Options as RemarkRehypeOptions } from "remark-rehype";
 import rehypeKatex from "rehype-katex";
@@ -352,6 +465,13 @@ export const MdToHtml = async (md: string) => {
     .use(remarkToc, {
       heading: "目次",
       tight: true,
+    })
+    .use(remarkMermaid, {
+      launchOptions: {
+        args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      },
+      wrap: true,
+      classname: ["mermaid"],
     })
     .use(remarkRehype, {
       handlers: {
@@ -386,7 +506,50 @@ export const MdStrip = async (md: string) => {
 };
 ```
 
-以上の処理で、はてブや Qiita、Zenn あたりと似た書き心地になった。
+また、`rehype-react`関連の処理は以下のようになる。
+
+```ts
+// lib/rehype-react.ts
+// HTML parser on "Client" side. Never include backend code (including remark).
+
+import { unified } from "unified";
+import rehypeParse from "rehype-parse";
+import rehypeReact from "rehype-react";
+import type { Options as RehypeReactOptions } from "rehype-react";
+import React from "react";
+import MyLink from "components/MyLink";
+import type { MyLinkProps } from "components/MyLink";
+import LinkWidget from "components/LinkWidget";
+import type { LinkWidgetProps } from "components/LinkWidget";
+import NextImage from "components/NextImage";
+import type { NextImageProps } from "components/NextImage";
+
+// Convert HTML to React Component
+export const HtmlToReact = (html: string) => {
+  const result = unified()
+    .use(rehypeParse, {
+      fragment: true,
+    })
+    .use(rehypeReact, {
+      createElement: React.createElement,
+      components: {
+        a: (props: MyLinkProps) => {
+          return MyLink(props);
+        },
+        img: (props: NextImageProps) => {
+          return NextImage(props);
+        },
+        extlink: (props: LinkWidgetProps) => {
+          return LinkWidget(props);
+        },
+      },
+    } as RehypeReactOptions)
+    .processSync(html);
+  return result.result;
+};
+```
+
+以上で、はてブや Qiita、Zenn あたりと似た書き心地になった。
 
 ### ダークモード
 
@@ -396,14 +559,14 @@ https://github.com/pacocoursey/next-themes
 
 ### 動的 OGP 画像の自動生成
 
-Vercel のサーバレス関数機能を使って
+Vercel のサーバレス関数機能を使い、
 
 1. ヘッドレス Chromium（playwright）を起動
 2. クエリパラメータに応じた内容の React コンポーネントを生成
 3. `renderToStaticMarkup`で静的 HTML 化
 4. 表示してスクリーンショットを撮影
 
-する手順で実現した。表示する内容を手元で書けるぶん、他の手法と比べてデザインの自由度が高い。
+する API を設置して実現した。表示する内容を手元で書けるぶん、他の手法と比べてデザインの自由度が高い。
 
 Chromium バイナリには[playwright-aws-lambda](https://github.com/JupiterOne/playwright-aws-lambda)を使った。[chrome-aws-lambda](https://github.com/alixaxel/chrome-aws-lambda)より容量が小さくバージョンも新しいため、こちらを使わない手はない。
 
@@ -579,9 +742,13 @@ const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
 export default OgpGen;
 ```
 
-![vercel_log_lambda_fn](/image/lambda-fn.png)
+![OGP画像](/image/ogp.png)
 
-ログを見た感じかなりギリギリだが、普通に動いている。なお、ローカル（`/public`以下）のフォントを読み込む際には base64 エンコードしたものを渡す必要があるため注意。Vercel 公式の[og-image](https://github.com/vercel/og-image/blob/0b76def1f56808f8f1aa2cd7ede8b8d9ef7ef7b7/api/_lib/template.ts)あたりの実装が参考になるだろう。
+以上でこんな :point_up_2: 感じのものがつくれる。
+
+![Lambda環境のログ](/image/lambda-fn.png)
+
+レスポンス改善を期待してフォントはローカル（`/public/fonts`以下）に設置した。ログを見た感じかなり容量がギリギリだが、普通に動いている。なお、ローカルフォントを読み込む際には base64 エンコードしたものを CSS に渡す必要があるため注意。Vercel 公式の[og-image](https://github.com/vercel/og-image/blob/0b76def1f56808f8f1aa2cd7ede8b8d9ef7ef7b7/api/_lib/template.ts)あたりの実装が参考になるだろう。
 
 ### サイトマップ生成
 
