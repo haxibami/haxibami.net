@@ -78,30 +78,32 @@ export const getStaticProps = async (
 const AllGradEssay: NextPage<Props> = ({ metaprops, post, content }) => {
   return (
     <div id={Styles.Wrapper}>
-      <MyHead {...metaprops} />
-      <header>
-        <nav>
-          <span className={Styles.TopLink}>
-            <Link href={"/grad_essay"}>
-              <a>
-                <h2>{"卒業文集"}</h2>
-              </a>
-            </Link>
-          </span>
-          <ThemeChanger />
-        </nav>
-        <div>
-          <span className={Styles.Date}>{dateVisualizer(post.date)}</span>
-        </div>
-        <div>
-          <TagList tags={post.tags} postType={"grad_essay"} />
-        </div>
-      </header>
-      <main>
-        <h1 id={Styles.Title}>{post.title}</h1>
-        <article>{HtmlToReact(content)}</article>
-      </main>
-      <footer> </footer>
+      <div id={Styles.Container}>
+        <MyHead {...metaprops} />
+        <header>
+          <div className={Styles.Title}>
+            <div className={Styles.TopLink}>
+              <Link href={"/grad_essay"}>
+                <a>
+                  <h2>{"卒業文集"}</h2>
+                </a>
+              </Link>
+            </div>
+            <ThemeChanger />
+          </div>
+          <div>
+            <span className={Styles.Date}>{dateVisualizer(post.date)}</span>
+          </div>
+          <div>
+            <TagList tags={post.tags} postType={"grad_essay"} />
+          </div>
+          <h1 id={Styles.Title}>{post.title}</h1>
+        </header>
+        <main>
+          <article>{HtmlToReact(content)}</article>
+        </main>
+        <footer></footer>
+      </div>
     </div>
   );
 };

@@ -102,7 +102,7 @@ const AllBlog: NextPage<Props> = ({ metaprops, post, content }) => {
         <main>
           <article>{HtmlToReact(content)}</article>
         </main>
-        <footer> </footer>
+        <footer></footer>
       </div>
     </div>
   );

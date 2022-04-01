@@ -161,8 +161,8 @@ const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.end(image);
   } catch (error) {
-    console.error("[Error]: ", error);
-    res.status(404).json({ message: "cannot render og-image" });
+    console.log("[Error]: ", error);
+    res.status(500).send("Internal Server Error");
   }
 };
 
