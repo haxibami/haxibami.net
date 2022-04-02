@@ -42,7 +42,6 @@
       align-items: center;
     }
   }
-
 }
 
 .Mobile {
@@ -55,8 +54,10 @@
   justify-content: space-evenly;
   align-items: center;
   padding: 3rem 3rem 0 3rem;
-  background: var(--background);
-  color: var(--title);
+
+  h1 {
+    color: var(--title);
+  }
 
   p {
     color: var(--subtitle);

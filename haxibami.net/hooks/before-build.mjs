@@ -1,7 +1,7 @@
 import articleIndexer from "./scripts/indexer.mjs";
-import genRssFeed from "./scripts/feed.mjs";
+import genFeed from "./scripts/feed.mjs";
 
-let promises = [articleIndexer(), genRssFeed()];
+let promises = [articleIndexer(), genFeed()];
 
 (async () => {
   await Promise.all(promises);

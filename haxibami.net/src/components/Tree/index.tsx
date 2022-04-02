@@ -1,5 +1,14 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, {
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+  useLayoutEffect,
+} from "react";
 import { useTheme } from "next-themes";
+
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 const Tree: React.VFC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -41,7 +50,7 @@ const Tree: React.VFC = () => {
   const [fg, bg] =
     resolvedTheme === "light" ? ["#706570", "#d2ced9"] : ["#8a8299", "#14111a"];
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const scale = window.devicePixelRatio;
 
     if (canvasRef.current) {

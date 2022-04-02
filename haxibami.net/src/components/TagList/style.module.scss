@@ -12,7 +12,7 @@
     padding: 0 0.5em;
     border: 1px solid var(--line);
     border-radius: 5px;
-    color: var(--title);
+    @include lib.title_color;
     height: 1.75em;
   }
 }

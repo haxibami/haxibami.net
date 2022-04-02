@@ -4,6 +4,7 @@ import type {
   GetStaticPropsContext,
 } from "next";
 import Link from "next/link";
+import Head from "next/head";
 import {
   getAllPosts,
   getPostBySlug,
@@ -80,6 +81,14 @@ const AllGradEssay: NextPage<Props> = ({ metaprops, post, content }) => {
     <div id={Styles.Wrapper}>
       <div id={Styles.Container}>
         <MyHead {...metaprops} />
+        <Head>
+          <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css"
+            integrity="sha384-KiWOvVjnN8qwAZbuQyWDIbfCLFhLXNETzBQjA/92pIowpC0d2O3nppDGQVgwd2nB"
+            crossOrigin="anonymous"
+          />
+        </Head>
         <header>
           <div className={Styles.Title}>
             <div className={Styles.TopLink}>

@@ -11,6 +11,7 @@ const OgpImage: React.VFC<OgpInfo> = (props) => {
   const { title, date, icon, style } = props;
   return (
     <html lang="ja">
+      {/* eslint-disable-next-line @next/next/no-head-element */}
       <head>
         <style dangerouslySetInnerHTML={{ __html: style }} />
       </head>
@@ -20,6 +21,7 @@ const OgpImage: React.VFC<OgpInfo> = (props) => {
             <p>{title}</p>
           </h1>
           <div id="Name">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={`data:image/webp;base64,${icon}`}
               alt="haxicon"

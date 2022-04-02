@@ -7,7 +7,8 @@ const HOST = "https://www.haxibami.net";
 
 const meta = readYaml("meta.yaml");
 
-const genRssFeed = () => {
+// generate feed
+const feedGenerator = () => {
   const author = {
     name: "haxibami",
     email: "contact@haxibami.net",
@@ -22,6 +23,7 @@ const genRssFeed = () => {
     link: HOST,
     language: "ja",
     image: `${HOST}/icon_ange_glasses_192.png`,
+    favicon: `${HOST}/favicon.ico`,
     copyright: `All rights reserved ${date.getFullYear()}, ${author.name}`,
     updated: date,
     feedLinks: {
@@ -51,4 +53,11 @@ const genRssFeed = () => {
   fs.writeFileSync("public/rss/feed.json", feed.json1());
 };
 
-export default genRssFeed;
+const GenFeed = () => {
+  return new Promise((resolve) => {
+    feedGenerator();
+    resolve();
+  });
+};
+
+export default GenFeed;

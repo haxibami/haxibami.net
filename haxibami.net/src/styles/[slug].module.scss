@@ -23,25 +23,26 @@
     gap: var.$line_bottom_margin;
   }
 
-    // vertical line
-    &::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: calc(var.$container + var.$line_width);
-      height: 100%;
-      width: var.$line_width;
-      background-color: var(--bar);
-      color: var(--bar);
-    }
-
+  // vertical line
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: calc(var.$container + var.$line_width);
+    height: 100%;
+    width: var.$line_width;
+    background: var(--bar);
+    transition-property: background;
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+  }
 
   header {
     display: flex;
     flex-direction: column;
-      max-width: var.$inner_width;
-      width: 100%;
+    max-width: var.$inner_width;
+    width: 100%;
     gap: 20px;
 
     .Title {
@@ -52,7 +53,7 @@
     .TopLink {
       display: flex;
       align-items: center;
-      color: var(--title);
+      @include lib.title_color;
     }
 
     .Date {
@@ -61,7 +62,7 @@
     }
 
     #Title {
-      color: var(--title);
+      @include lib.title_color;
       position: relative;
       margin-bottom: calc(var.$line_width + var.$line_bottom_margin);
       font-size: 2.5rem;
@@ -75,30 +76,32 @@
         margin-top: var.$line_bottom_margin;
         height: var.$line_width;
         width: var.$container;
-        background-color: var(--bar);
-        color: var(--bar);
+        background: var(--bar);
+        transition-property: background;
+        transition-duration: 0.2s;
+        transition-timing-function: ease;
       }
     }
   }
 
   main {
-
     article {
       max-width: var.$inner_width;
       width: 100%;
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+
       @include lib.colored_link;
       @include lib.article_paragraph;
       @include lib.table;
       @include lib.code_inline;
       @include lib.code_block;
       @include lib.katex;
+      @include lib.mermaid;
       @include lib.quote;
       @include lib.list;
-      @include lib.imagelimit;
       @include lib.article_headlines;
       @include lib.footnotes;
-      overflow-wrap: break-word;
-      word-wrap: break-word;
     }
   }
 }

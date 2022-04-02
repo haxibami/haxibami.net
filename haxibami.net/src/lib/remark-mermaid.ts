@@ -99,7 +99,7 @@ export const defaultSVGOOptions: OptimizeOptions = {
 
 export interface RemarkMermaidOptions {
   /**
-   * Launch options to pass to puppeteer.
+   * Launch options to pass to playwright.
    *
    * @default {}
    */
@@ -165,8 +165,9 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
 
   const settings = Object.assign({}, DEFAULT_SETTINGS, options);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return async (node: Node, _file: VFileCompatible) => {
-    const promises: any[] = [];
+    const promises: (() => Promise<void>)[] = [];
     const browser = await playwright.chromium.launch(settings.launchOptions);
     const context = await browser.newContext({
       viewport: { width: 1000, height: 3000 },
@@ -177,7 +178,6 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
     await page.addScriptTag({
       path: mermaidjs,
     });
-    //await page.setViewport({width: 1000, height: 3000});
     await page.setViewportSize({ width: 1000, height: 3000 });
     visit(node, isMermaid, visitor);
     await Promise.all(promises.map((t) => t()));

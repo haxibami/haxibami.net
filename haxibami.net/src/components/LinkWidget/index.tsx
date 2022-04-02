@@ -16,6 +16,7 @@ const LinkWidget: React.VFC<LinkWidgetProps> = (props) => {
             <div className={Styles.Title}>{meta.title}</div>
             <div className={Styles.Description}>{meta.description}</div>
             <div className={Styles.Host}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={meta.icon}
                 height={15}
@@ -29,6 +30,7 @@ const LinkWidget: React.VFC<LinkWidgetProps> = (props) => {
             </div>
           </div>
           <div className={Styles.Image}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={meta.image}
               height={105}

@@ -11,14 +11,18 @@ const XMLFILE = "sitemap.xml";
 const indexFile = fs.readFileSync("src/share/index.json", "utf-8");
 const index = JSON.parse(indexFile);
 
-// formatted xml
-const formatted = (sitemap) => prettier.format(sitemap, { parser: "html" });
+// format xml
+const formatXml = (sitemap) => prettier.format(sitemap, { parser: "html" });
 
+// generate sitemap & robots.txt
 const sitemapGenerator = async () => {
-  const solidPaths = await globby(
-    ["src/pages/*.tsx", "src/pages/blog/*.tsx", "src/pages/grad_essay/*.tsx"],
-    { ignore: ["src/pages/_*.tsx", "src/pages/404.tsx"] }
-  );
+  const solidPaths = await globby(["src/pages/*.tsx", "src/pages/blog/*.tsx"], {
+    ignore: [
+      "src/pages/_*.tsx",
+      "src/pages/404.tsx",
+      "src/pages/grad_essay.tsx",
+    ],
+  });
 
   const solidInfos = solidPaths.map((filePath) => {
     const solidInfo = {
@@ -32,7 +36,6 @@ const sitemapGenerator = async () => {
   });
 
   const allBlogs = index.articles.blog;
-  const allGrads = index.articles.grad_essay;
 
   const blogInfos = allBlogs.map((item) => {
     const blogInfo = {
@@ -42,15 +45,7 @@ const sitemapGenerator = async () => {
     return blogInfo;
   });
 
-  const gradInfos = allGrads.map((item) => {
-    const gradInfo = {
-      relpath: `grad_essay/posts/${item.slug}`,
-      lastmod: dateConverter(item.date),
-    };
-    return gradInfo;
-  });
-
-  const sitemapInfos = solidInfos.concat(blogInfos, gradInfos);
+  const sitemapInfos = solidInfos.concat(blogInfos);
 
   const pagesSitemap = `
 
@@ -88,13 +83,15 @@ Host: https://www.haxibami.net
 Sitemap: https://www.haxibami.net/sitemap.xml
 `;
 
-  fs.writeFileSync(`public/${XMLFILE}`, formatted(generatedSitemap));
+  fs.writeFileSync(`public/${XMLFILE}`, formatXml(generatedSitemap));
   fs.writeFileSync("public/robots.txt", robots);
 };
 
-export default () => {
-  return new Promise(async (resolve) => {
+const GenSitemap = () => {
+  return new Promise((resolve) => {
     sitemapGenerator();
     resolve();
   });
 };
+
+export default GenSitemap;

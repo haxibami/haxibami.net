@@ -43,18 +43,17 @@ const style = `
   font-display: swap;
 }
 
-/*@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');*/
-/*@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');*/
 * {
   margin: 0;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   background: #292433;
-  font-family: "Noto Sans CJK JP", "Noto Sans JP", sans-serif;
+  font-family: "Noto Sans CJK JP", sans-serif;
   font-size: 125%;
   color: #d2ced9;
 }
@@ -72,7 +71,8 @@ body {
   grid-gap: 30px;
   border-radius: 30px;
   background: #1c1921;
-  box-shadow: 10px 10px 20px #1c192166, -10px -10px 20px #1c192166;
+  box-shadow: 10px 10px 20px rgba(28, 25, 33, 0.4),
+    -10px -10px 20px rgba(28, 25, 33, 0.4);
   padding: 50px;
   display: grid;
   grid-template-rows: 280px 100px;
@@ -134,15 +134,13 @@ const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
       "Accept-Language": "ja-JP",
     });
 
-    const longtitle =
-      typeof req.query.title !== "undefined" ? req.query.title.toString() : "";
+    const title = req.query.title ?? "";
 
-    const date =
-      typeof req.query.date !== "undefined" ? req.query.date.toString() : "";
+    const date = req.query.date ?? "";
 
     const ogpinfo: OgpInfo = {
-      title: longtitle,
-      date: date,
+      title: title.toString(),
+      date: date.toString(),
       icon: icon,
       style: style,
     };
@@ -152,7 +150,7 @@ const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
     );
     const html = `<!doctype html>${markup}`;
 
-    await page.setContent(html, { waitUntil: "networkidle" });
+    await page.setContent(html);
     const image = await page.screenshot({ type: "png" });
     await browser.close();
 

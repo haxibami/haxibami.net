@@ -27,34 +27,56 @@
   }
 }
 
+@mixin title_color {
+  color: var(--title);
+  transition-property: color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
+@mixin link_color {
+  color: var(--link);
+  transition-property: color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease;
+}
+
 @mixin article_headlines {
   h1 {
     margin: 2rem 0 1rem 0;
     border-bottom: 1px solid var.$line;
-    color: var(--title);
     @media (max-width: var.$media_border) {
       font-size: 3rem;
     }
+    @include title_color();
   }
 
   h2 {
     margin: 2rem 0 1rem 0;
     font-size: 2rem;
-    color: var(--title);
     border-bottom: 1px solid var.$line;
+    @include title_color();
   }
 
   h3 {
     margin: 1rem 0 0.5rem 0;
     font-size: 1.5rem;
-    color: var(--title);
     border-bottom: 1px solid var.$line;
+    @include title_color();
   }
 
   h4 {
     margin: 2rem 0 0.5rem 0;
     font-size: 1.25rem;
-    color: var(--title);
+    @include title_color();
+  }
+
+  h5 {
+    @include title_color();
+  }
+
+  h6 {
+    @include title_color();
   }
 }
 
@@ -67,21 +89,15 @@
 @mixin colored_link {
   p {
     a {
-      color: var(--link);
+      @include link_color();
       text-decoration: underline;
-      transition-property: color;
-      transition-duration: 0.2s;
-      transition-timing-function: ease;
     }
   }
 
   li {
     a {
-      color: var(--link);
+      @include link_color();
       text-decoration: underline;
-      transition-property: color;
-      transition-duration: 0.2s;
-      transition-timing-function: ease;
     }
   }
 }
@@ -97,33 +113,37 @@
     table-layout: fixed;
     border-collapse: collapse;
     text-align: center;
-    color: var(--title);
+    @include title_color();
 
-    th, td {
+    th,
+    td {
       border: 1px solid var(--line);
+      transition-property: border;
+      transition-duration: 0.2s;
+      transition-timing-function: ease;
       padding: 0.25rem 0.5rem;
     }
 
     th {
       background: var(--hover);
+      transition-property: background;
+      transition-duration: 0.2s;
+      transition-timing-function: ease;
     }
-  }
-}
-
-@mixin imagelimit {
-  img {
-    //max-width: var.$image_max;
-    //max-height: var.$image_max;
   }
 }
 
 @mixin code_inline {
-    code {
-      background: var(--code);
-      padding: 0.2rem;
-      border-radius: 0.2rem;
-      font-family: Menlo, Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", "Courier New", Courier, monospace;
-    }
+  code {
+    background: var(--code);
+    transition-property: background;
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+    padding: 0.2rem;
+    border-radius: 0.2rem;
+    font-family: Menlo, Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono",
+      "Courier New", Courier, monospace;
+  }
 }
 
 @mixin code_block {
@@ -138,7 +158,8 @@
       padding: 1rem;
       overflow: auto;
       margin: 0.25rem;
-      font-family: Menlo, Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", "Courier New", Courier, monospace;
+      font-family: Menlo, Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono",
+        "Courier New", Courier, monospace;
       @media (max-width: var.$media_border) {
         font-size: 0.7rem;
       }
@@ -170,13 +191,26 @@
 }
 
 @mixin katex {
-  .katex {
-    color: var(--title);
+  [class="math-display"] {
+    @include title_color();
+  }
+}
+
+@mixin mermaid {
+  [class="mermaid"] {
+    svg {
+      background: white;
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 
 @mixin footnotes {
-  section ol {
+  [class="footnotes"] {
+    margin-top: 2em;
+    border-top: 1px var.$line solid;
     li {
       font-size: 0.9rem;
       list-style-position: outside;

@@ -55,8 +55,9 @@ function fetchMeta(url: string) {
 }
 
 export const remarkLinkWidget: Plugin = function extLinkTrans(): Transformer {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return async (tree: Node, _file: VFileCompatible) => {
-    const promises: any[] = [];
+    const promises: (() => Promise<void>)[] = [];
     visit(tree, isExtLink, visitor);
     await Promise.all(promises.map((t) => t()));
 

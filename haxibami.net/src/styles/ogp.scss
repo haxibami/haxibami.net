@@ -1,12 +1,17 @@
 @use "variable" as var;
-@use 'sass:math';
+@use "sass:math";
+
+$card_margin: 50px;
+$item_gap: 30px;
+
+$bg: var.$grad-0;
+$inner_bg: var.$dark;
 
 @font-face {
   font-family: "Noto Sans CJK JP";
-  font-style:  normal;
+  font-style: normal;
   font-weight: bold;
-  /*src: url("https://rawcdn.githack.com/haxibami/Noto-Sans-CJK-JP/7fbcb560ac433b37f7f0e65507e78924b717f7a7/fonts/NotoSansCJKjp-Bold.woff2") format("woff2");*/
-  src: url("/fonts/NotoSansCJKjp-Bold.woff2") format("woff2");
+  /*src: url(data:font/woff2;charset=utf-8;base64,${noto}) format("woff2");*/
   font-display: swap;
 }
 
@@ -14,30 +19,24 @@
   font-family: "Roboto Mono";
   font-style: normal;
   font-weight: 500;
-  src: url("/fonts/RobotoMono-Medium.woff2") format("woff2");
+  /*src: url(data:font/woff2;charset=utf-8;base64,${mono}) format("woff2");*/
   font-display: swap;
 }
 
-/*@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');*/
-/*@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');*/
-
-$card_margin: 50px;
-$item_gap: 30px;
-
-$bg:var.$grad-0;
-$inner_bg: var.$dark;
+// @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
 
 * {
   margin: 0;
   padding: 0;
-  //font-display: swap;
 }
 
-html, body {
+html,
+body {
   width: 100%;
   height: 100%;
   background: $bg;
-  font-family: "Hurricane","Noto Sans CJK JP", "Noto Sans JP", sans-serif;
+  font-family: "Noto Sans CJK JP", sans-serif;
   font-size: 125%;
   color: var.$light;
 }
@@ -55,9 +54,7 @@ body {
   grid-gap: $item_gap;
   border-radius: 30px;
   background: $inner_bg;
-  box-shadow:
-    10px 10px 20px var.$shadow,
-    -10px -10px 20px var.$shadow;
+  box-shadow: 10px 10px 20px var.$shadow, -10px -10px 20px var.$shadow;
   padding: $card_margin;
   display: grid;
   grid-template-rows: 280px 100px;
@@ -82,10 +79,12 @@ body {
   #Name {
     grid-area: Name;
     display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 20px;
 
     img {
+      margin-right: 20px;
       border-radius: 50%;
     }
   }
@@ -95,7 +94,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    //font-family: "Roboto Mono", monospace;
-    font-family: "Hurricane";
+    font-family: "Roboto Mono", monospace;
   }
 }
