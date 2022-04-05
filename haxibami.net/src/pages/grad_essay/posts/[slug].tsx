@@ -51,7 +51,10 @@ export const getStaticProps = async (
 
   const content: string = await MdToHtml(post.content);
 
-  const description: string = (await replaceMdwithTxt(post)).content;
+  const description: string = (await replaceMdwithTxt(post)).content.substring(
+    0,
+    300
+  );
 
   const sitename: SiteInfo = readYaml("meta.yaml");
 
