@@ -13,7 +13,7 @@ import {
 } from "lib/api";
 import { dateVisualizer } from "lib/front";
 import { MdToHtml } from "lib/parser";
-import { HtmlToReact } from "lib/rehype-react";
+import RehypeReact from "components/RehypeReact";
 import type { PageMetaProps, SiteInfo } from "lib/interface";
 import { ogpHost } from "lib/constant";
 import MyHead from "components/MyHead";
@@ -109,7 +109,9 @@ const AllBlog: NextPage<Props> = ({ metaprops, post, content }) => {
           <h1 id={Styles.Title}>{post.title}</h1>
         </header>
         <main>
-          <article>{HtmlToReact(content)}</article>
+          <article>
+            <RehypeReact {...content} />
+          </article>
         </main>
         <footer></footer>
       </div>

@@ -15,7 +15,7 @@ import { dateVisualizer } from "lib/front";
 import type { PageMetaProps, SiteInfo } from "lib/interface";
 import { ogpHost } from "lib/constant";
 import { MdToHtml } from "lib/parser";
-import { HtmlToReact } from "lib/rehype-react";
+import RehypeReact from "components/RehypeReact";
 import MyHead from "components/MyHead";
 import TagList from "components/TagList";
 import Styles from "styles/[slug].module.scss";
@@ -49,12 +49,9 @@ export const getStaticProps = async (
     "grad_essay"
   );
 
-  const content: string = await MdToHtml(post.content);
+  const content = await MdToHtml(post.content);
 
-  const description: string = (await replaceMdwithTxt(post)).content.substring(
-    0,
-    300
-  );
+  const description = (await replaceMdwithTxt(post)).content.substring(0, 300);
 
   const sitename: SiteInfo = readYaml("meta.yaml");
 
@@ -112,7 +109,9 @@ const AllGradEssay: NextPage<Props> = ({ metaprops, post, content }) => {
           <h1 id={Styles.Title}>{post.title}</h1>
         </header>
         <main>
-          <article>{HtmlToReact(content)}</article>
+          <article>
+            <RehypeReact {...content} />
+          </article>
         </main>
         <footer></footer>
       </div>

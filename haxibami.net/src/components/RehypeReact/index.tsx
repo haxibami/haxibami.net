@@ -13,7 +13,7 @@ import NextImage from "components/NextImage";
 import type { NextImageProps } from "components/NextImage";
 
 // Convert HTML to React Component
-export const HtmlToReact = (html: string) => {
+const RehypeReact: React.VFC<string> = (html: string) => {
   const result = unified()
     .use(rehypeParse, {
       fragment: true,
@@ -35,3 +35,5 @@ export const HtmlToReact = (html: string) => {
     .processSync(html);
   return result.result;
 };
+
+export default RehypeReact;
