@@ -8,7 +8,7 @@ env:
   workdir: ./haxibami.net
 
 jobs:
-  preview:
+  test-build:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -21,7 +21,9 @@ jobs:
       - name: Cache pnpm modules
         uses: actions/cache@v3
         with:
-          path: ~/.pnpm-store
+          path: |
+              ~/.pnpm-store
+              ~/.cache/ms-playwright
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-
