@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getDocBySlug } from "lib/api";
 import { MdToHtml } from "lib/parser";
-import RehypeReact from "components/RehypeReact";
+import RehypeReact from "lib/rehype-react";
 import type { PageMetaProps } from "lib/interface";
 import { ogpHost } from "lib/constant";
 import MyHead from "components/MyHead";
@@ -69,9 +69,7 @@ const About: NextPage<Props> = ({ metaprops, doc, content }) => {
             <h1>{doc.title}</h1>
           </span>
         </div>
-        <article>
-          <RehypeReact {...content} />
-        </article>
+        <article>{RehypeReact(content)}</article>
       </main>
       <Footer />
     </div>

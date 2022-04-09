@@ -4,7 +4,7 @@ import { unified } from "unified";
 import rehypeParse from "rehype-parse";
 import rehypeReact from "rehype-react";
 import type { Options as RehypeReactOptions } from "rehype-react";
-import React from "react";
+import React, { ReactNode } from "react";
 import MyLink from "components/MyLink";
 import type { MyLinkProps } from "components/MyLink";
 import LinkWidget from "components/LinkWidget";
@@ -13,7 +13,7 @@ import NextImage from "components/NextImage";
 import type { NextImageProps } from "components/NextImage";
 
 // Convert HTML to React Component
-const RehypeReact: React.VFC<string> = (html: string) => {
+const RehypeReact = (html: string) => {
   const result = unified()
     .use(rehypeParse, {
       fragment: true,
@@ -33,7 +33,7 @@ const RehypeReact: React.VFC<string> = (html: string) => {
       },
     } as RehypeReactOptions)
     .processSync(html);
-  return result.result;
+  return result.result as ReactNode;
 };
 
 export default RehypeReact;
