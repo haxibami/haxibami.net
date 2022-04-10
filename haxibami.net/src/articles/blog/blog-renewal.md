@@ -139,31 +139,25 @@ https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex
 
 $e^{i\pi} + 1 = 0$ のようなインライン数式もいける。
 
-スタイルシートを挿入するには`pages/_document.tsx`を使うしかないらしい。
+フォントの設置は必要なく、スタイルシートを読ませればよい。
 
 ```tsx
-// pages/_document.tsx
+// pages/blog/posts/[slug].tsx
 
-import { Html, Head, Main, NextScript } from "next/document";
-
-export default function Document() {
+const AllBlog: NextPage<Props> = ({ metaprops, post, content }) => {
   return (
-    <Html>
-      <Head>
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css"
-          integrity="sha384-KiWOvVjnN8qwAZbuQyWDIbfCLFhLXNETzBQjA/92pIowpC0d2O3nppDGQVgwd2nB"
-          crossOrigin="anonymous"
-        />
-      </Head>
-      <body>
-        <Main />
-        <NextScript />
-      </body>
-    </Html>
-  );
-}
+    <div id={Styles.Wrapper}>
+      <div id={Styles.Container}>
+        <MyHead {...metaprops} />
+        <Head>
+          <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css"
+            integrity="sha384-KiWOvVjnN8qwAZbuQyWDIbfCLFhLXNETzBQjA/92pIowpC0d2O3nppDGQVgwd2nB"
+            crossOrigin="anonymous"
+          />
+        </Head>
+// (略)
 ```
 
 ### ルビ
@@ -933,7 +927,7 @@ export default genRssFeed;
 
 ## 感想
 
-いい感じ〜
+いい感じ〜 :sunglasses:
 
 Next.js の抽象化と、unified はじめ充実した外部処理系に助けられてかなり簡単に動いた。デベロッパーに五体投地しつつ、改修・保守をやっていく。
 

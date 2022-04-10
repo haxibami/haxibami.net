@@ -141,8 +141,8 @@
     transition-timing-function: ease;
     padding: 0.2rem;
     border-radius: 0.2rem;
-    font-family: Menlo, Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono",
-      "Courier New", Courier, monospace;
+    font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas,
+      monospace;
   }
 }
 
@@ -158,8 +158,8 @@
       padding: 1rem;
       overflow: auto;
       margin: 0.25rem;
-      font-family: Menlo, Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono",
-        "Courier New", Courier, monospace;
+      font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco,
+        Consolas, monospace;
       @media (max-width: var.$media_border) {
         font-size: 0.7rem;
       }

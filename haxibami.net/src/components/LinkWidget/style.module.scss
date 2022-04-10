@@ -45,11 +45,11 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-
 }
 
 .Description {
   font-size: 80%;
+  min-height: 1em;
   color: var.$grad-2;
   white-space: nowrap;
   overflow: hidden;
