@@ -41,7 +41,7 @@ specifiers:
   rehype-autolink-headings: 6.1.1
   rehype-katex: 6.0.2
   rehype-parse: 8.0.4
-  rehype-react: 7.0.4
+  rehype-react: 7.1.0
   rehype-slug: 5.0.1
   rehype-stringify: 9.0.3
   remark-gemoji: 7.0.1
@@ -89,7 +89,7 @@ dependencies:
   rehype-autolink-headings: 6.1.1
   rehype-katex: 6.0.2
   rehype-parse: 8.0.4
-  rehype-react: 7.0.4
+  rehype-react: 7.1.0
   rehype-slug: 5.0.1
   rehype-stringify: 9.0.3
   remark-gemoji: 7.0.1
@@ -533,21 +533,12 @@ packages:
       '@types/react': 18.0.1
     dev: true
 
-  /@types/react/17.0.44:
-    resolution: {integrity: sha512-Ye0nlw09GeMp2Suh8qoOv0odfgCoowfM/9MG6WeRD60Gq9wS90bdkdRtYbRkNhXOpG4H+YXGvj4wOWhAC0LJ1g==}
-    dependencies:
-      '@types/prop-types': 15.7.5
-      '@types/scheduler': 0.16.2
-      csstype: 3.0.11
-    dev: false
-
   /@types/react/18.0.1:
     resolution: {integrity: sha512-VnWlrVgG0dYt+NqlfMI0yUYb8Rdl4XUROyH+c6gq/iFCiZ805Vi//26UW38DHnxQkbDhnrIWTBiy6oKZqL11cw==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
       csstype: 3.0.11
-    dev: true
 
   /@types/responselike/1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
@@ -4110,12 +4101,12 @@ packages:
       unified: 10.1.2
     dev: false
 
-  /rehype-react/7.0.4:
-    resolution: {integrity: sha512-mC3gT/EVmxB8mgwz6XkupjF/UAhA2NOai/bYvTQYC+AW0jvomXB+LGpC4UcX3vsY327nM29BttEDG4lLrtqu/g==}
+  /rehype-react/7.1.0:
+    resolution: {integrity: sha512-XRo00BqFzpcAhb5r4M3ClbvLWBGf/aZNwK1g9XUHmnXAAElqZ4YGUafqH2TJhRsyyQ4PdZXAQqsqe/n7EwsVQg==}
     dependencies:
       '@mapbox/hast-util-table-cell-style': 0.2.0
       '@types/hast': 2.3.4
-      '@types/react': 17.0.44
+      '@types/react': 18.0.1
       hast-to-hyperscript: 10.0.1
       hast-util-whitespace: 2.0.0
       unified: 10.1.2
