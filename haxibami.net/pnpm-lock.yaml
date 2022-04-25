@@ -28,20 +28,20 @@ specifiers:
   hast-util-from-parse5: 7.1.0
   js-yaml: 4.1.0
   mdast-util-to-hast: 12.1.1
-  mermaid: 9.0.0
+  mermaid: 9.0.1
   metadata-scraper: 0.2.53
   next: 12.1.5
   next-themes: 0.1.1
-  playwright: 1.21.0
+  playwright: 1.21.1
   playwright-aws-lambda: 0.7.0
-  playwright-core: 1.21.0
+  playwright-core: 1.21.1
   prettier: 2.6.2
   react: 18.0.0
   react-dom: 18.0.0
   rehype-autolink-headings: 6.1.1
   rehype-katex: 6.0.2
   rehype-parse: 8.0.4
-  rehype-react: 7.1.0
+  rehype-react: 7.1.1
   rehype-slug: 5.0.1
   rehype-stringify: 9.0.3
   remark-gemoji: 7.0.1
@@ -77,19 +77,19 @@ dependencies:
   gray-matter: 4.0.3
   hast-util-from-parse5: 7.1.0
   mdast-util-to-hast: 12.1.1
-  mermaid: 9.0.0
+  mermaid: 9.0.1
   metadata-scraper: 0.2.53
   next: 12.1.5_20f5adf4273c744e534d6f852e08cd1e
   next-themes: 0.1.1_1cf2cc49e2c27648b440cc4e09213966
-  playwright: 1.21.0
-  playwright-aws-lambda: 0.7.0_playwright-core@1.21.0
-  playwright-core: 1.21.0
+  playwright: 1.21.1
+  playwright-aws-lambda: 0.7.0_playwright-core@1.21.1
+  playwright-core: 1.21.1
   react: 18.0.0
   react-dom: 18.0.0_react@18.0.0
   rehype-autolink-headings: 6.1.1
   rehype-katex: 6.0.2
   rehype-parse: 8.0.4
-  rehype-react: 7.1.0
+  rehype-react: 7.1.1_@types+react@18.0.5
   rehype-slug: 5.0.1
   rehype-stringify: 9.0.3
   remark-gemoji: 7.0.1
@@ -526,6 +526,7 @@ packages:
 
   /@types/prop-types/15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
+    dev: true
 
   /@types/react-dom/18.0.1:
     resolution: {integrity: sha512-jCwTXvHtRLiyVvKm9aEdHXs8rflVOGd5Sl913JZrPshfXjn8NYsTNZOz70bCsA31IR0TOqwi3ad+X4tSCBoMTw==}
@@ -539,6 +540,7 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
       csstype: 3.0.11
+    dev: true
 
   /@types/responselike/1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
@@ -548,6 +550,7 @@ packages:
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
+    dev: true
 
   /@types/svgo/2.6.3:
     resolution: {integrity: sha512-5sP0Xgo0dXppY0tbYF6TevB/1+tzFLuu71XXxC/zGvQAn9PW7y+DwtDO81g0ZUPye00K6tPwtsLDOpARa0mFcA==}
@@ -1175,6 +1178,7 @@ packages:
 
   /csstype/3.0.11:
     resolution: {integrity: sha512-sa6P2wJ+CAbgyy4KFssIb/JNMLxFvKF1pCYCSXS8ZMuqZnMsrxqI2E5sPyoTpxoPU/gVZMzr2zjOfg8GIZOMsw==}
+    dev: true
 
   /cypress-image-snapshot/4.0.1:
     resolution: {integrity: sha512-PBpnhX/XItlx3/DAk5ozsXQHUi72exybBNH5Mpqj1DVmjq+S5Jd9WE5CRa4q5q0zuMZb2V2VpXHth6MjFpgj9Q==}
@@ -3194,8 +3198,8 @@ packages:
     engines: {node: '>= 8'}
     dev: true
 
-  /mermaid/9.0.0:
-    resolution: {integrity: sha512-HN0gHZ1+2RnyCR/7pS3ceRMGlt/2PpWAM5dUAzTEQ4nmMOM2Ix7XodcPkQbA7BradLQ5LwFhlH5jcMu1LARl1Q==}
+  /mermaid/9.0.1:
+    resolution: {integrity: sha512-TXXffALLhCACez+MUky4cOOcGXEXiJhHwN8eRV7bBqD8F6KdcjssyPZClVgzrC2KQzSGLqQkj7ce8ea7MhWz+Q==}
     dependencies:
       '@braintree/sanitize-url': 6.0.0
       cypress-image-snapshot: 4.0.1
@@ -3865,18 +3869,18 @@ packages:
       find-up: 3.0.0
     dev: false
 
-  /playwright-aws-lambda/0.7.0_playwright-core@1.21.0:
+  /playwright-aws-lambda/0.7.0_playwright-core@1.21.1:
     resolution: {integrity: sha512-vmcXA98LioRhcQg9v+xSLk/HHpkfuOyPQTFGx02rtUa00AEYuMQlNIEMSFn50Sm7R8cwQehyzI3FdKcWhYSAdA==}
     engines: {node: '>= 8.0.0'}
     peerDependencies:
       playwright-core: ^1
     dependencies:
       lambdafs: 1.3.0
-      playwright-core: 1.21.0
+      playwright-core: 1.21.1
     dev: false
 
-  /playwright-core/1.21.0:
-    resolution: {integrity: sha512-yDGVs9qaaW6WiefgR7wH1CGt9D6D/X4U3jNpIzH0FjjrrWLCOYQo78Tu3SkW8X+/kWlBpj49iWf3QNSxhYc12Q==}
+  /playwright-core/1.21.1:
+    resolution: {integrity: sha512-SbK5dEsai9ZUKlxcinqegorBq4GnftXd4/GfW+pLsdQIQWrLCM/JNh6YQ2Rf2enVykXCejtoXW8L5vJXBBVSJQ==}
     engines: {node: '>=12'}
     hasBin: true
     dependencies:
@@ -3904,13 +3908,13 @@ packages:
       - utf-8-validate
     dev: false
 
-  /playwright/1.21.0:
-    resolution: {integrity: sha512-OH5ZFoiS0HkBZzhb7HPVeE8lEx3PO/AaKgoQfgs1NbmwFPqHgPzfKFa3fO+VM27WqTLjtYOL6hM03sWnJhT3ig==}
+  /playwright/1.21.1:
+    resolution: {integrity: sha512-Of0h1XAvsqK1XfHVZ8sL2PjJVoQUu9gTmmMTtLS7MEyWMRD0kn8myeI90xj1ncJhUysQxGboH64S5v+lL2USrg==}
     engines: {node: '>=12'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      playwright-core: 1.21.0
+      playwright-core: 1.21.1
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -4096,8 +4100,10 @@ packages:
       unified: 10.1.2
     dev: false
 
-  /rehype-react/7.1.0:
-    resolution: {integrity: sha512-XRo00BqFzpcAhb5r4M3ClbvLWBGf/aZNwK1g9XUHmnXAAElqZ4YGUafqH2TJhRsyyQ4PdZXAQqsqe/n7EwsVQg==}
+  /rehype-react/7.1.1_@types+react@18.0.5:
+    resolution: {integrity: sha512-6yaitxM95JFsuTA74OH54OyvTAeRqR4/A6f45S2sEk2FEG04iGgsObcmEIFQRsjK9pfAhc74lR4iGf/W2G/sBw==}
+    peerDependencies:
+      '@types/react': '>=17'
     dependencies:
       '@mapbox/hast-util-table-cell-style': 0.2.0
       '@types/hast': 2.3.4
