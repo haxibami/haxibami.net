@@ -1,10 +1,10 @@
+import { unified } from "unified";
 import type { Plugin, Transformer } from "unified";
-import { fromParse5 } from "hast-util-from-parse5";
 import type { Node, Parent } from "unist";
 import { is } from "unist-util-is";
 import { Code, Paragraph } from "mdast";
 import type { Mermaid } from "mermaid";
-import { parseFragment } from "parse5";
+import rehypeParse from "rehype-parse";
 import * as playwright from "playwright";
 import { optimize, OptimizeOptions, OptimizedSvg } from "svgo";
 import { visit } from "unist-util-visit";
@@ -135,6 +135,12 @@ export interface RemarkMermaidOptions {
   classname?: string[];
 }
 
+function svgParse(svg: string): Node {
+  const processor = unified().use(rehypeParse);
+  const ast = processor.parse(svg);
+  return ast;
+}
+
 function isMermaid(node: unknown): node is Code {
   if (!is(node, { type: "code", lang: "mermaid" })) {
     return false;
@@ -197,7 +203,7 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
               hChildren: [
                 {
                   type: "element",
-                  children: [fromParse5(parseFragment(svg))],
+                  children: [svgParse(svg)],
                   tagName: "div",
                   properties: {
                     className: settings.classname,
@@ -211,7 +217,7 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
             type: "paragraph",
             children: [],
             data: {
-              hChildren: [fromParse5(parseFragment(svg))],
+              hChildren: [svgParse(svg)],
             },
           } as Paragraph;
         }

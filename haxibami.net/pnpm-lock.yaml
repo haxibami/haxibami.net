@@ -13,7 +13,6 @@ specifiers:
   '@types/mdast': ^3.0.10
   '@types/mermaid': 8.2.9
   '@types/node': 17.0.21
-  '@types/parse5': ^6.0.3
   '@types/prettier': 2.6.0
   '@types/prismjs': 1.26.0
   '@types/react': 18.0.6
@@ -28,14 +27,12 @@ specifiers:
   feed: 4.2.2
   globby: 13.1.1
   gray-matter: 4.0.3
-  hast-util-from-parse5: 7.1.0
   js-yaml: 4.1.0
   mdast-util-to-hast: 12.1.1
   mermaid: 9.0.1
   metadata-scraper: 0.2.53
   next: 12.1.5
   next-themes: 0.1.1
-  parse5: ^7.0.0
   playwright: 1.21.1
   playwright-aws-lambda: 0.7.0
   playwright-core: 1.21.1
@@ -79,13 +76,11 @@ dependencies:
   '@next/bundle-analyzer': 12.1.5
   feed: 4.2.2
   gray-matter: 4.0.3
-  hast-util-from-parse5: 7.1.0
   mdast-util-to-hast: 12.1.1
   mermaid: 9.0.1
   metadata-scraper: 0.2.53
   next: 12.1.5_27jh6o6ilowmz64rgkxyifcere
   next-themes: 0.1.1_dtzmyspcyj3erncazrhasijzmy
-  parse5: 7.0.0
   playwright: 1.21.1
   playwright-aws-lambda: 0.7.0_playwright-core@1.21.1
   playwright-core: 1.21.1
@@ -120,7 +115,6 @@ devDependencies:
   '@types/mdast': 3.0.10
   '@types/mermaid': 8.2.9
   '@types/node': 17.0.21
-  '@types/parse5': 6.0.3
   '@types/prettier': 2.6.0
   '@types/prismjs': 1.26.0
   '@types/react': 18.0.6
@@ -521,6 +515,7 @@ packages:
 
   /@types/parse5/6.0.3:
     resolution: {integrity: sha512-SuT16Q1K51EAVPz1K29DJ/sXjhSQ0zjvsypYJ6tlwVsRV9jwW5Adq2ch8Dq8kDBCkYnELS7N7VNCSB5nC56t/g==}
+    dev: false
 
   /@types/prettier/2.6.0:
     resolution: {integrity: sha512-G/AdOadiZhnJp0jXCaBQU449W2h716OW/EoXeYkCytxKL06X1WCXB4DZpp8TpZ8eyIJVS1cw4lrlkkSYU21cDw==}
@@ -1826,11 +1821,6 @@ packages:
 
   /entities/2.2.0:
     resolution: {integrity: sha512-p92if5Nz619I0w+akJrLZH0MX0Pb5DX39XOwQTtXSdQQOaYH03S1uIQp4mhOZtAXrxq4ViO67YTiLBo2638o9A==}
-    dev: false
-
-  /entities/4.3.0:
-    resolution: {integrity: sha512-/iP1rZrSEJ0DTlPiX+jbzlA3eVkY/e8L8SozroF395fIqE3TYF/Nz7YOMAawta+vLmyJ/hkGNNPcSbMADCCXbg==}
-    engines: {node: '>=0.12'}
     dev: false
 
   /es-abstract/1.19.1:
@@ -3816,12 +3806,6 @@ packages:
 
   /parse5/6.0.1:
     resolution: {integrity: sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==}
-    dev: false
-
-  /parse5/7.0.0:
-    resolution: {integrity: sha512-y/t8IXSPWTuRZqXc0ajH/UwDj4mnqLEbSttNbThcFhGrZuOyoyvNBO85PBp2jQa55wY9d07PBNjsK8ZP3K5U6g==}
-    dependencies:
-      entities: 4.3.0
     dev: false
 
   /path-exists/3.0.0:
