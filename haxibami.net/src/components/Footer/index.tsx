@@ -18,7 +18,7 @@ const Footer: React.VFC = () => {
               <FontAwesomeIcon icon={faTwitter} size={"2x"} />
             </a>
             <a
-              href={"https://twitter.com/haxibami"}
+              href={"https://github.com/haxibami"}
               target="_blank"
               rel="noopener noreferrer"
             >

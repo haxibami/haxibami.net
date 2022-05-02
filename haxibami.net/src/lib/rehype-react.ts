@@ -4,7 +4,7 @@ import { unified } from "unified";
 import rehypeParse from "rehype-parse";
 import rehypeReact from "rehype-react";
 import type { Options as RehypeReactOptions } from "rehype-react";
-import React, { ReactNode } from "react";
+import React from "react";
 import MyLink from "components/MyLink";
 import type { MyLinkProps } from "components/MyLink";
 import LinkWidget from "components/LinkWidget";
@@ -33,7 +33,7 @@ const RehypeReact = (html: string) => {
       },
     } as RehypeReactOptions)
     .processSync(html);
-  return result.result as ReactNode;
+  return result.result;
 };
 
 export default RehypeReact;
