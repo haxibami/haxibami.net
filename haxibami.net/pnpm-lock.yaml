@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@fontsource/rubik': 4.5.6
+  '@fontsource/rubik': 4.5.9
   '@fortawesome/fontawesome-svg-core': 6.1.1
   '@fortawesome/free-brands-svg-icons': 6.1.1
   '@fortawesome/free-regular-svg-icons': 6.1.1
@@ -30,15 +30,15 @@ specifiers:
   js-yaml: 4.1.0
   mdast-util-to-hast: 12.1.1
   mermaid: 9.0.1
-  metadata-scraper: 0.2.53
+  metadata-scraper: 0.2.54
   next: 12.1.5
   next-themes: 0.1.1
   playwright: 1.21.1
   playwright-aws-lambda: 0.7.0
   playwright-core: 1.21.1
   prettier: 2.6.2
-  react: 18.0.0
-  react-dom: 18.0.0
+  react: 18.1.0
+  react-dom: 18.1.0
   rehype-autolink-headings: 6.1.1
   rehype-katex: 6.0.2
   rehype-parse: 8.0.4
@@ -66,26 +66,26 @@ specifiers:
   vfile: 5.3.2
 
 dependencies:
-  '@fontsource/rubik': 4.5.6
+  '@fontsource/rubik': 4.5.9
   '@fortawesome/fontawesome-svg-core': 6.1.1
   '@fortawesome/free-brands-svg-icons': 6.1.1
   '@fortawesome/free-regular-svg-icons': 6.1.1
   '@fortawesome/free-solid-svg-icons': 6.1.1
-  '@fortawesome/react-fontawesome': 0.1.18_ale3w4t32h5v6dbzn5wc64akdu
+  '@fortawesome/react-fontawesome': 0.1.18_hjfkmtq3pe7bdfmd7inrupgslm
   '@leafac/rehype-shiki': 2.1.2_shiki@0.10.1
   '@next/bundle-analyzer': 12.1.5
   feed: 4.2.2
   gray-matter: 4.0.3
   mdast-util-to-hast: 12.1.1
   mermaid: 9.0.1
-  metadata-scraper: 0.2.53
-  next: 12.1.5_fpdaum3iwfasizdhihgy7u2hmi
-  next-themes: 0.1.1_dtzmyspcyj3erncazrhasijzmy
+  metadata-scraper: 0.2.54
+  next: 12.1.5_achxnsjje7b5gy3iikucscdeta
+  next-themes: 0.1.1_iw2ijl5yq2m4rs4sgxacncq4yu
   playwright: 1.21.1
   playwright-aws-lambda: 0.7.0_playwright-core@1.21.1
   playwright-core: 1.21.1
-  react: 18.0.0
-  react-dom: 18.0.0_react@18.0.0
+  react: 18.1.0
+  react-dom: 18.1.0_react@18.1.0
   rehype-autolink-headings: 6.1.1
   rehype-katex: 6.0.2
   rehype-parse: 8.0.4
@@ -170,8 +170,8 @@ packages:
       - supports-color
     dev: true
 
-  /@fontsource/rubik/4.5.6:
-    resolution: {integrity: sha512-DhXog9xyXyG2gPrF2XedcKZDFYYFXPLjoiT0y6rKosKV2i5Y+eLVjWFsUF7cD2CPYpHKEThOIR5PVssl6BJMtQ==}
+  /@fontsource/rubik/4.5.9:
+    resolution: {integrity: sha512-atF0Mvh6woVFPX2p2MdVO0JIqw6DSjrb82EQJ9UaHnJeJ79SfaTUFxRoQMF3yF6ehaY5el3SgynSX5w02O3lqQ==}
     dev: false
 
   /@fortawesome/fontawesome-common-types/6.1.1:
@@ -212,7 +212,7 @@ packages:
       '@fortawesome/fontawesome-common-types': 6.1.1
     dev: false
 
-  /@fortawesome/react-fontawesome/0.1.18_ale3w4t32h5v6dbzn5wc64akdu:
+  /@fortawesome/react-fontawesome/0.1.18_hjfkmtq3pe7bdfmd7inrupgslm:
     resolution: {integrity: sha512-RwLIB4TZw0M9gvy5u+TusAA0afbwM4JQIimNH/j3ygd6aIvYPQLqXMhC9ErY26J23rDPyDZldIfPq/HpTTJ/tQ==}
     peerDependencies:
       '@fortawesome/fontawesome-svg-core': ~1 || ~6
@@ -220,7 +220,7 @@ packages:
     dependencies:
       '@fortawesome/fontawesome-svg-core': 6.1.1
       prop-types: 15.8.1
-      react: 18.0.0
+      react: 18.1.0
     dev: false
 
   /@humanwhocodes/config-array/0.9.2:
@@ -1898,7 +1898,7 @@ packages:
       eslint-plugin-jsx-a11y: 6.5.1_eslint@8.14.0
       eslint-plugin-react: 7.29.1_eslint@8.14.0
       eslint-plugin-react-hooks: 4.3.0_eslint@8.14.0
-      next: 12.1.5_fpdaum3iwfasizdhihgy7u2hmi
+      next: 12.1.5_achxnsjje7b5gy3iikucscdeta
       typescript: 4.6.4
     transitivePeerDependencies:
       - supports-color
@@ -3216,8 +3216,8 @@ packages:
       - jest
     dev: false
 
-  /metadata-scraper/0.2.53:
-    resolution: {integrity: sha512-U2m8L/rQu/2YPSdQGplPpK/WctuZ42a8i7IxzdcuhC9K9jbAApLmQqXzdGAAIwfDWreOMt1WVBMNBEPn0cv99w==}
+  /metadata-scraper/0.2.54:
+    resolution: {integrity: sha512-vYaGlsIJ0HWASwfM+mcwSGK4L0U6cxkTX4fK/S9mno4l+s+LfrnpJVneZHZeDHAvB5wQAsPWcDHJ6gY2HSiJgw==}
     dependencies:
       domino: 2.1.6
       got: 11.8.3
@@ -3577,19 +3577,19 @@ packages:
     resolution: {integrity: sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=}
     dev: true
 
-  /next-themes/0.1.1_dtzmyspcyj3erncazrhasijzmy:
+  /next-themes/0.1.1_iw2ijl5yq2m4rs4sgxacncq4yu:
     resolution: {integrity: sha512-Iqxt6rhS/KfK/iHJ0tfFjTcdLEAI0AgwFuAFrMwLOPK5e+MI3I+fzyvBoS+VaOS+NldUiazurhgwYhrfV0VXsQ==}
     peerDependencies:
       next: '>=11.1.1'
       react: '*'
       react-dom: '*'
     dependencies:
-      next: 12.1.5_fpdaum3iwfasizdhihgy7u2hmi
-      react: 18.0.0
-      react-dom: 18.0.0_react@18.0.0
+      next: 12.1.5_achxnsjje7b5gy3iikucscdeta
+      react: 18.1.0
+      react-dom: 18.1.0_react@18.1.0
     dev: false
 
-  /next/12.1.5_fpdaum3iwfasizdhihgy7u2hmi:
+  /next/12.1.5_achxnsjje7b5gy3iikucscdeta:
     resolution: {integrity: sha512-YGHDpyfgCfnT5GZObsKepmRnne7Kzp7nGrac07dikhutWQug7hHg85/+sPJ4ZW5Q2pDkb+n0FnmLkmd44htIJQ==}
     engines: {node: '>=12.22.0'}
     hasBin: true
@@ -3610,10 +3610,10 @@ packages:
       '@next/env': 12.1.5
       caniuse-lite: 1.0.30001312
       postcss: 8.4.5
-      react: 18.0.0
-      react-dom: 18.0.0_react@18.0.0
+      react: 18.1.0
+      react-dom: 18.1.0_react@18.1.0
       sass: 1.51.0
-      styled-jsx: 5.0.1_react@18.0.0
+      styled-jsx: 5.0.1_react@18.1.0
     optionalDependencies:
       '@next/swc-android-arm-eabi': 12.1.5
       '@next/swc-android-arm64': 12.1.5
@@ -4013,21 +4013,21 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /react-dom/18.0.0_react@18.0.0:
-    resolution: {integrity: sha512-XqX7uzmFo0pUceWFCt7Gff6IyIMzFUn7QMZrbrQfGxtaxXZIcGQzoNpRLE3fQLnS4XzLLPMZX2T9TRcSrasicw==}
+  /react-dom/18.1.0_react@18.1.0:
+    resolution: {integrity: sha512-fU1Txz7Budmvamp7bshe4Zi32d0ll7ect+ccxNu9FlObT605GOEB8BfO4tmRJ39R5Zj831VCpvQ05QPBW5yb+w==}
     peerDependencies:
-      react: ^18.0.0
+      react: ^18.1.0
     dependencies:
       loose-envify: 1.4.0
-      react: 18.0.0
-      scheduler: 0.21.0
+      react: 18.1.0
+      scheduler: 0.22.0
     dev: false
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
-  /react/18.0.0:
-    resolution: {integrity: sha512-x+VL6wbT4JRVPm7EGxXhZ8w8LTROaxPXOqhlGyVSrv0sB1jkyFGgXxJ8LVoPRLvPR6/CIZGFmfzqUa2NYeMr2A==}
+  /react/18.1.0:
+    resolution: {integrity: sha512-4oL8ivCz5ZEPyclFQXaNksK3adutVS8l2xzZU0cqEFrE9Sb7fC0EFK5uEk74wIreL1DERyjvsU915j1pcT2uEQ==}
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
@@ -4326,8 +4326,8 @@ packages:
     resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
     dev: false
 
-  /scheduler/0.21.0:
-    resolution: {integrity: sha512-1r87x5fz9MXqswA2ERLo0EbOAU74DpIUO090gIasYTqlVoJeMcl+Z1Rg7WHz+qtPujhS/hGIt9kxZOYBV3faRQ==}
+  /scheduler/0.22.0:
+    resolution: {integrity: sha512-6QAm1BgQI88NPYymgGQLCZgvep4FyePDWFpXVK+zNSUgHwlqpJy8VEh8Et0KxTACS4VWwMousBElAZOH9nkkoQ==}
     dependencies:
       loose-envify: 1.4.0
     dev: false
@@ -4565,7 +4565,7 @@ packages:
       inline-style-parser: 0.1.1
     dev: false
 
-  /styled-jsx/5.0.1_react@18.0.0:
+  /styled-jsx/5.0.1_react@18.1.0:
     resolution: {integrity: sha512-+PIZ/6Uk40mphiQJJI1202b+/dYeTVd9ZnMPR80pgiWbjIwvN2zIp4r9et0BgqBuShh48I0gttPlAXA7WVvBxw==}
     engines: {node: '>= 12.0.0'}
     peerDependencies:
@@ -4578,7 +4578,7 @@ packages:
       babel-plugin-macros:
         optional: true
     dependencies:
-      react: 18.0.0
+      react: 18.1.0
     dev: false
 
   /stylis/4.0.13:
