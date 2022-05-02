@@ -37,7 +37,8 @@ jobs:
         with: 
           version: ${{ env.pnpm-version }}
           run_install: |
-            - args: [--strict-peer-dependencies=false]
+            - recursive: true
+              args: [--strict-peer-dependencies=false]
       - name: TypeScript compiler check
         run: pnpm run ts-check
       - name: Next.js linter
@@ -68,7 +69,9 @@ jobs:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
         with: 
           version: ${{ env.pnpm-version }}
-          run_install: true
+          run_install: |
+            - recursive: true
+              args: [--strict-peer-dependencies=false]
       - name: Test build
         run: pnpm run build
       - name: Preview deployment
