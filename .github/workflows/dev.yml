@@ -38,7 +38,6 @@ jobs:
           version: ${{ env.pnpm-version }}
           run_install: |
             - recursive: true
-              args: [--strict-peer-dependencies=false]
       - name: TypeScript compiler check
         run: pnpm run ts-check
       - name: Next.js linter

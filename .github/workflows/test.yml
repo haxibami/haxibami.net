@@ -35,6 +35,5 @@ jobs:
           version: ${{ env.pnpm-version }}
           run_install: |
             - recursive: true
-              args: [--strict-peer-dependencies=false]
       - name: Test build
         run: pnpm run build
