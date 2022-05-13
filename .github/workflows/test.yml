@@ -23,6 +23,7 @@ jobs:
         with:
           path: |
               ~/.pnpm-store
+              ${{ github.workspace }}/.next/cache
               ~/.cache/ms-playwright
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
