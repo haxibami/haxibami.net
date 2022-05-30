@@ -30,7 +30,7 @@ specifiers:
   js-yaml: 4.1.0
   mdast-util-to-hast: 12.1.1
   mermaid: 9.1.1
-  metadata-scraper: 0.2.54
+  metadata-scraper: 0.2.55
   next: 12.1.6
   next-themes: 0.2.0
   playwright: 1.22.2
@@ -78,7 +78,7 @@ dependencies:
   gray-matter: 4.0.3
   mdast-util-to-hast: 12.1.1
   mermaid: 9.1.1
-  metadata-scraper: 0.2.54
+  metadata-scraper: 0.2.55
   next: 12.1.6_r4x3shsibbhjfvhxzsevzwdixm
   next-themes: 0.2.0_2mgcgz5qhsdxw4fgpqzqeafmkq
   playwright: 1.22.2
@@ -913,7 +913,7 @@ packages:
     dev: false
 
   /clone-response/1.0.2:
-    resolution: {integrity: sha1-0dyXOSAxTfZ/vrlCI7TuNQI56Ws=}
+    resolution: {integrity: sha512-yjLXh88P599UOyPTFX0POsd7WxnbsVsGohcwzHOLspIhhpalPw1BcqED8NblyZLKcGrL8dTgMlcaZxV2jAD41Q==}
     dependencies:
       mimic-response: 1.0.1
     dev: false
@@ -2904,8 +2904,8 @@ packages:
       stylis: 4.0.13
     dev: false
 
-  /metadata-scraper/0.2.54:
-    resolution: {integrity: sha512-vYaGlsIJ0HWASwfM+mcwSGK4L0U6cxkTX4fK/S9mno4l+s+LfrnpJVneZHZeDHAvB5wQAsPWcDHJ6gY2HSiJgw==}
+  /metadata-scraper/0.2.55:
+    resolution: {integrity: sha512-YZjFvUVUSWJawZTi9c90uRFzTSNc7g5khSxxp3FgXlTkkM6a+D1KtO3gnpQxfUpep91PuqbIuRTCW2NK7RttwQ==}
     dependencies:
       domino: 2.1.6
       got: 11.8.3
