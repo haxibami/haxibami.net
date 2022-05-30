@@ -32,7 +32,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
       - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.1
+        uses: pnpm/action-setup@v2.2.2
         env: 
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
         with: 
@@ -67,7 +67,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
       - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.1
+        uses: pnpm/action-setup@v2.2.2
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
         with: 
