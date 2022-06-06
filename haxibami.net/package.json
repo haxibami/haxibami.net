@@ -15,7 +15,7 @@
     "blog": "./article.sh"
   },
   "dependencies": {
-    "@fontsource/rubik": "4.5.9",
+    "@fontsource/rubik": "4.5.10",
     "@fortawesome/fontawesome-svg-core": "6.1.1",
     "@fortawesome/free-brands-svg-icons": "6.1.1",
     "@fortawesome/free-regular-svg-icons": "6.1.1",
@@ -31,7 +31,7 @@
     "next": "12.1.6",
     "next-themes": "0.2.0",
     "playwright": "1.22.2",
-    "playwright-aws-lambda": "0.7.0",
+    "playwright-aws-lambda": "0.8.0",
     "playwright-core": "1.22.2",
     "react": "18.1.0",
     "react-dom": "18.1.0",
