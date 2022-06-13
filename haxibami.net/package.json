@@ -27,7 +27,7 @@
     "gray-matter": "4.0.3",
     "mdast-util-to-hast": "12.1.1",
     "mermaid": "9.1.1",
-    "metadata-scraper": "0.2.55",
+    "metadata-scraper": "0.2.56",
     "next": "12.1.6",
     "next-themes": "0.2.0",
     "playwright": "1.22.2",
@@ -57,7 +57,7 @@
     "unified": "10.1.2",
     "unist-util-is": "5.1.1",
     "unist-util-visit": "4.1.0",
-    "vfile": "5.3.2"
+    "vfile": "5.3.3"
   },
   "devDependencies": {
     "@types/js-yaml": "4.0.5",
