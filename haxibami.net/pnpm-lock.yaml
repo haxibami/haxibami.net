@@ -30,7 +30,7 @@ specifiers:
   js-yaml: 4.1.0
   mdast-util-to-hast: 12.1.1
   mermaid: 9.1.1
-  metadata-scraper: 0.2.55
+  metadata-scraper: 0.2.56
   next: 12.1.6
   next-themes: 0.2.0
   playwright: 1.22.2
@@ -63,7 +63,7 @@ specifiers:
   unified: 10.1.2
   unist-util-is: 5.1.1
   unist-util-visit: 4.1.0
-  vfile: 5.3.2
+  vfile: 5.3.3
 
 dependencies:
   '@fontsource/rubik': 4.5.10
@@ -78,7 +78,7 @@ dependencies:
   gray-matter: 4.0.3
   mdast-util-to-hast: 12.1.1
   mermaid: 9.1.1
-  metadata-scraper: 0.2.55
+  metadata-scraper: 0.2.56
   next: 12.1.6_xab2ksyqfwgnu3ykyybaqku6vm
   next-themes: 0.2.0_2mgcgz5qhsdxw4fgpqzqeafmkq
   playwright: 1.22.2
@@ -108,7 +108,7 @@ dependencies:
   unified: 10.1.2
   unist-util-is: 5.1.1
   unist-util-visit: 4.1.0
-  vfile: 5.3.2
+  vfile: 5.3.3
 
 devDependencies:
   '@types/js-yaml': 4.0.5
@@ -2266,7 +2266,7 @@ packages:
       '@types/unist': 2.0.6
       hastscript: 7.0.2
       property-information: 6.0.1
-      vfile: 5.3.2
+      vfile: 5.3.3
       vfile-location: 4.0.1
       web-namespaces: 2.0.0
     dev: false
@@ -2904,8 +2904,8 @@ packages:
       stylis: 4.0.13
     dev: false
 
-  /metadata-scraper/0.2.55:
-    resolution: {integrity: sha512-YZjFvUVUSWJawZTi9c90uRFzTSNc7g5khSxxp3FgXlTkkM6a+D1KtO3gnpQxfUpep91PuqbIuRTCW2NK7RttwQ==}
+  /metadata-scraper/0.2.56:
+    resolution: {integrity: sha512-BwHJ70Jao6lmWz1/DGgqn9Cy8UINd0zekYMsqHgfvQOfi2XvFZgfAxie5PNDF7kj3G5YNmi8kr/8FOmipoWV4w==}
     dependencies:
       domino: 2.1.6
       got: 11.8.3
@@ -4178,7 +4178,7 @@ packages:
       is-buffer: 2.0.5
       is-plain-obj: 4.0.0
       trough: 2.0.2
-      vfile: 5.3.2
+      vfile: 5.3.3
     dev: false
 
   /unist-builder/3.0.0:
@@ -4313,7 +4313,7 @@ packages:
     resolution: {integrity: sha512-JDxPlTbZrZCQXogGheBHjbRWjESSPEak770XwWPfw5mTc1v1nWGLB/apzZxsx8a0SJVfF8HK8ql8RD308vXRUw==}
     dependencies:
       '@types/unist': 2.0.6
-      vfile: 5.3.2
+      vfile: 5.3.3
     dev: false
 
   /vfile-message/3.0.2:
@@ -4323,8 +4323,8 @@ packages:
       unist-util-stringify-position: 3.0.0
     dev: false
 
-  /vfile/5.3.2:
-    resolution: {integrity: sha512-w0PLIugRY3Crkgw89TeMvHCzqCs/zpreR31hl4D92y6SOE07+bfJe+dK5Q2akwS+i/c801kzjoOr9gMcTe6IAA==}
+  /vfile/5.3.3:
+    resolution: {integrity: sha512-xwALvwUKmXzHOri5dGXqXNN8JDEvxPhf8avC+E+pJEl32e4/grLdRdsgx23HpK7QI0cwgR4+QfaM8D5KUnki3g==}
     dependencies:
       '@types/unist': 2.0.6
       is-buffer: 2.0.5
