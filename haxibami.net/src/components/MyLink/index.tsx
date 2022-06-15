@@ -7,7 +7,7 @@ export interface MyLinkProps {
   id?: string;
 }
 
-const MyLink: React.VFC<MyLinkProps> = (props) => {
+const MyLink: React.FC<MyLinkProps> = (props) => {
   const { children, href, id } = props;
   if (href === undefined) {
     return <a>{children}</a>;

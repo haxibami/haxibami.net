@@ -2,7 +2,7 @@ import Head from "next/head";
 import React from "react";
 import { PageMetaProps } from "lib/interface";
 
-const MyHead: React.VFC<PageMetaProps> = (props) => {
+const MyHead: React.FC<PageMetaProps> = (props) => {
   return (
     <Head>
       <title>{props.title}</title>

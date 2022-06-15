@@ -2,7 +2,7 @@ import Styles from "./style.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
-const Footer: React.VFC = () => {
+const Footer: React.FC = () => {
   const date = new Date();
   return (
     <footer id={Styles.Footer}>

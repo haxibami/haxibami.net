@@ -8,7 +8,7 @@ interface ArticleMenuProps {
   tabs: MenuTab[];
 }
 
-const ArticleMenu: React.VFC<ArticleMenuProps> = (props) => {
+const ArticleMenu: React.FC<ArticleMenuProps> = (props) => {
   const { contentType, tabs } = props;
   return (
     <h2 className={Styles.ArticleMenu}>

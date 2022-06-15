@@ -7,7 +7,7 @@ export interface OgpInfo {
   style: string;
 }
 
-const OgpImage: React.VFC<OgpInfo> = (props) => {
+const OgpImage: React.FC<OgpInfo> = (props) => {
   const { title, date, icon, style } = props;
   return (
     <html lang="ja">

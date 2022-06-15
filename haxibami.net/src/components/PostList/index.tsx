@@ -10,7 +10,7 @@ interface PostListProps {
   postType: PostType; // post type
 }
 
-const PostList: React.VFC<PostListProps> = (props) => {
+const PostList: React.FC<PostListProps> = (props) => {
   const { posts, postType } = props;
   return (
     <ul className={Styles.PostList}>

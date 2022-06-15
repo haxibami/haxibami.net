@@ -15,7 +15,7 @@ interface PostTopProps {
   postType: PostType;
 }
 
-const PostTop: React.VFC<PostTopProps> = (props) => {
+const PostTop: React.FC<PostTopProps> = (props) => {
   const { top, postMenuTabs, posts, id, total, perPage, postType } = props;
   return (
     <main id={Styles.Main}>

@@ -16,7 +16,7 @@ interface PostHeaderProps {
   posttype: PostType;
 }
 
-const PostHeader: React.VFC<PostHeaderProps> = ({ siteinfo, posttype }) => {
+const PostHeader: React.FC<PostHeaderProps> = ({ siteinfo, posttype }) => {
   return (
     <header id={Styles.HeaderBox}>
       <div className={Styles.Desktop}>

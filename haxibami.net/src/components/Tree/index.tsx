@@ -10,7 +10,7 @@ import { useTheme } from "next-themes";
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
-const Tree: React.VFC = () => {
+const Tree: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
   const useWindowDimensions = () => {

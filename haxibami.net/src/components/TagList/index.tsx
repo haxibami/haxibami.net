@@ -7,7 +7,7 @@ interface TagListProps {
   postType: PostType;
 }
 
-const TagList: React.VFC<TagListProps> = (props) => {
+const TagList: React.FC<TagListProps> = (props) => {
   const { tags, postType } = props;
   return (
     <span className={Styles.TileTags}>

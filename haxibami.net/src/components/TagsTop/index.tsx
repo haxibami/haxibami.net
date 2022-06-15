@@ -9,7 +9,7 @@ interface TagsTopProps {
   postType: PostType;
 }
 
-const TagsTop: React.VFC<TagsTopProps> = (props) => {
+const TagsTop: React.FC<TagsTopProps> = (props) => {
   const { tagsMenuTabs, taglists, postType } = props;
   return (
     <main id={Styles.Main}>

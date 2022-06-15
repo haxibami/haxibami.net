@@ -14,7 +14,7 @@ interface PagerProps {
   postType: string;
 }
 
-const Pager: React.VFC<PagerProps> = (props) => {
+const Pager: React.FC<PagerProps> = (props) => {
   const { top, total, page, perPage } = props;
 
   const prevPage = page > 1 ? page - 1 : null;
