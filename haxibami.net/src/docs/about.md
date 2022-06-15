@@ -5,14 +5,20 @@ title: "About"
 
 ## :sunglasses: Meta
 
-| key   | val         |
-| ----- | ----------- |
-| Latin | haxibami    |
-| IPA   | [haɕibamʲi] |
+| key      | val         |
+| -------- | ----------- |
+| Latin    | haxibami    |
+| Cyrillic | хашибами    |
+| 漢字     | 端食        |
+| IPA      | [haɕibamʲi] |
 
-- The Univ. of Tokyo Junior Div., Humanity and Social sciences I
-  - B2
-  - :ru:
+### Education
+
+- Humanity & Social sciences I, College of Arts & Sciences Junior Div., the Univ. of Tokyo
+  - 2 年
+
+### Contact
+
 - [contact@haxibami.net](mailto:contact@haxibami.net)
 
 ## :sparkles: Favorites
@@ -28,7 +34,7 @@ title: "About"
 - 社会機構と権威
   - 法哲学、政治学
 - 情報処理と自由
-  - 情報科学、OSS ソフトウェア
+  - 情報科学、OSS プロジェクト
 
 ### Book
 
@@ -42,13 +48,9 @@ title: "About"
 
 ### Music
 
-> 判断基準：気持ち良いか否か
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1rrcstuv7f3SoULWaWq8Rx?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
-- 相対性理論
-- the cabs
-- Homecomings
-- ROSSO
-- Nyarons
+その時点での好み。移り変わるものであるからして。
 
 ### Anime
 
@@ -93,13 +95,15 @@ https://umector.hatenablog.jp
 
 ## Link
 
-- [トップ](/)
-- [ブログ](/blog)
+- [Top](/)
+- [Blog](/blog)
 
 https://www.haxibami.net/blog
 
 ### フォロワー・相互リンクのサイト
 
-- [人造日本人](https://mikanixonable.github.io)
-- [sno2wman.net](https://sno2wman.net)
-- [みそは入ってませんけど](https://not-miso-inside.netlify.app)
+敬称略。
+
+- [人造日本人](https://mikanixonable.github.io) - みかぶる
+- [sno2wman.net](https://sno2wman.net) - sno2wman
+- [みそは入ってませんけど](https://not-miso-inside.netlify.app) - 一階堂洋

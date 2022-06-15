@@ -5,7 +5,7 @@ export interface LinkWidgetProps {
   children: string;
 }
 
-const LinkWidget: React.VFC<LinkWidgetProps> = (props) => {
+const LinkWidget: React.FC<LinkWidgetProps> = (props) => {
   const { children } = props;
   const meta: LinkWidgetMeta = JSON.parse(children);
   return (
@@ -21,7 +21,7 @@ const LinkWidget: React.VFC<LinkWidgetProps> = (props) => {
                 src={meta.icon}
                 height={15}
                 width={15}
-                alt="icon"
+                alt=""
                 loading="lazy"
               />
               {meta.url.indexOf("/", 8) != -1

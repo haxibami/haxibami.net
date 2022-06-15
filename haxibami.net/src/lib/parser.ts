@@ -49,6 +49,7 @@ export const MdToHtml = async (md: string) => {
       classname: ["mermaid"],
     })
     .use(remarkRehype, {
+      allowDangerousHtml: true,
       handlers: {
         extlink: extLinkHandler,
       },
@@ -61,7 +62,9 @@ export const MdToHtml = async (md: string) => {
     .use(rehypeAutolinkHeadings, {
       behavior: "wrap",
     })
-    .use(rehypeStringify)
+    .use(rehypeStringify, {
+      allowDangerousHtml: true,
+    })
     .process(md);
 
   return result.toString();

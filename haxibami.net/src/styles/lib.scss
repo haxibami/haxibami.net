@@ -27,6 +27,28 @@
   }
 }
 
+@mixin article {
+  article {
+    max-width: var.$inner_width;
+    width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    @include colored_link;
+    @include article_paragraph;
+    @include table;
+    @include code_inline;
+    @include code_block;
+    @include katex;
+    @include mermaid;
+    @include quote;
+    @include list;
+    @include article_headlines;
+    @include footnotes;
+    @include iframe;
+  }
+}
+
 @mixin title_color {
   color: var(--title);
   transition-property: color;
@@ -215,5 +237,11 @@
       font-size: 0.9rem;
       list-style-position: outside;
     }
+  }
+}
+
+@mixin iframe {
+  iframe {
+    margin: 0.5rem 0;
   }
 }

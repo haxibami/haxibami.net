@@ -1,4 +1,3 @@
-@use "cursor_animation" as cursor;
 @use "variable" as var;
 @use "lib";
 
@@ -76,22 +75,5 @@
     font-size: 150%;
   }
 
-  article {
-    max-width: var.$inner_width;
-    width: 100%;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-
-    @include lib.colored_link;
-    @include lib.article_paragraph;
-    @include lib.table;
-    @include lib.code_inline;
-    @include lib.code_block;
-    @include lib.katex;
-    @include lib.mermaid;
-    @include lib.quote;
-    @include lib.list;
-    @include lib.article_headlines;
-    @include lib.footnotes;
-  }
+  @include lib.article;
 }
