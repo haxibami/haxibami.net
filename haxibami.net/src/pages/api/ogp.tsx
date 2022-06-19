@@ -1,10 +1,16 @@
-import * as chromium from "playwright-aws-lambda";
-import React from "react";
-import type { NextApiRequest, NextApiResponse } from "next";
-import ReactDomServer from "react-dom/server";
-import path from "path";
 import fs from "fs";
-import OgpImage, { OgpInfo } from "components/OgpImage";
+import path from "path";
+
+import React from "react";
+import ReactDomServer from "react-dom/server";
+
+import type { NextApiRequest, NextApiResponse } from "next";
+
+import * as chromium from "playwright-aws-lambda";
+
+import OgpImage from "components/OgpImage";
+
+import type { OgpInfo } from "components/OgpImage";
 
 // full path resolve
 const baseFullPath = path.resolve("./");

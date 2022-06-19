@@ -1,7 +1,12 @@
-import Link from "next/link";
 import React from "react";
+
+import Link from "next/link";
+
+
+
 import Styles from "./style.module.scss";
-import { PostType, MenuTab } from "lib/interface";
+
+import type { PostType, MenuTab } from "lib/interface";
 
 interface ArticleMenuProps {
   contentType: PostType;

@@ -1,10 +1,11 @@
 import type { AppProps } from "next/app";
+
 import "../styles/global.scss";
 // TODO: use chakra ui
 //import { ChakraProvider } from "@chakra-ui/react";
 //import theme from "lib/theme";
-import { ThemeProvider } from "next-themes";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import { ThemeProvider } from "next-themes";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 config.autoAddCss = false;

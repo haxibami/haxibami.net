@@ -1,8 +1,37 @@
 plugins:
   - "@typescript-eslint"
+  - import
 extends:
   - next
   - next/core-web-vitals
   - eslint:recommended
   - prettier
   - plugin:@typescript-eslint/recommended
+
+rules:
+  "import/order":
+    - warn
+    - groups:
+        - builtin
+        - external
+        - internal
+        - parent
+        - sibling
+        - index
+        - object
+        - type
+      pathGroups:
+        - pattern: '{react,react-dom/**,react-router-dom}'
+          group: builtin
+          position: after
+        - pattern: '{next,next/**}'
+          group: builtin
+          position: after
+      pathGroupsExcludedImportTypes:
+        - builtin
+      alphabetize:
+        order: asc
+      newlines-between: always
+  '@typescript-eslint/consistent-type-imports':
+    - warn
+    - prefer: type-imports

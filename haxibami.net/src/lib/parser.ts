@@ -1,26 +1,29 @@
 // Markdown parser on "Server" side. Never include frontend code (including rehype-react).
 
 import { join } from "path";
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkGfm from "remark-gfm";
-import remarkGemoji from "remark-gemoji";
-import remarkMath from "remark-math";
-import remarkJaruby from "remark-jaruby";
-import remarkUnwrapImages from "remark-unwrap-images";
-import remarkToc from "remark-toc";
-import remarkMermaid from "./remark-mermaid";
-import remarkRehype from "remark-rehype";
-import type { Options as RemarkRehypeOptions } from "remark-rehype";
-import rehypeKatex from "rehype-katex";
-import * as shiki from "shiki";
+
 import rehypeShiki from "@leafac/rehype-shiki";
-import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeKatex from "rehype-katex";
+import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
-import stripMarkdown from "strip-markdown";
+import remarkGemoji from "remark-gemoji";
+import remarkGfm from "remark-gfm";
+import remarkJaruby from "remark-jaruby";
+import remarkMath from "remark-math";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
 import remarkStringify from "remark-stringify";
+import remarkToc from "remark-toc";
+import remarkUnwrapImages from "remark-unwrap-images";
+import * as shiki from "shiki";
+import stripMarkdown from "strip-markdown";
+import { unified } from "unified";
+
 import { remarkLinkWidget, extLinkHandler } from "./remark-link-widget";
+import remarkMermaid from "./remark-mermaid";
+
+import type { Options as RemarkRehypeOptions } from "remark-rehype";
 
 // Get shiki theme file (`src/styles/shiki/${themename}.json`) full path
 const getThemePath = (themename: string) =>

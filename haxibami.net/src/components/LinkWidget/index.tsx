@@ -1,5 +1,6 @@
-import type { LinkWidgetMeta } from "lib/interface";
 import Styles from "./style.module.scss";
+
+import type { LinkWidgetMeta } from "lib/interface";
 
 export interface LinkWidgetProps {
   children: string;

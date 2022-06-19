@@ -1,6 +1,7 @@
-import Styles from "./style.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import Styles from "./style.module.scss";
 
 const Footer: React.FC = () => {
   const date = new Date();

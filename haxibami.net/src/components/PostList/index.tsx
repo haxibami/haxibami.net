@@ -1,9 +1,16 @@
-import Link from "next/link";
 import React from "react";
-import type { PostItem, PostType } from "lib/interface";
-import { dateVisualizer } from "lib/front";
+
+import Link from "next/link";
+
+
+
 import TagList from "components/TagList";
+import { dateVisualizer } from "lib/front";
+
 import Styles from "./style.module.scss";
+
+import type { PostItem, PostType } from "lib/interface";
+
 
 interface PostListProps {
   posts: PostItem[]; // assigned posts to display

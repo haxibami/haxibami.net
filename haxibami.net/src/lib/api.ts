@@ -1,9 +1,13 @@
 import fs from "fs";
 import { join } from "path";
+
 import matter from "gray-matter";
-import { PostItem, DocItem, PostType, SiteInfo } from "./interface";
-import { MdStrip } from "lib/parser";
 import * as yaml from "js-yaml";
+
+import { MdStrip } from "lib/parser";
+
+import type { PostItem, DocItem, PostType, SiteInfo } from "./interface";
+
 
 export const getArticlesDir = (posttype: PostType) => {
   const ArticlesDir = join(process.cwd(), `src/articles/${posttype}`);

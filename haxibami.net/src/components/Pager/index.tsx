@@ -1,10 +1,12 @@
 import Link from "next/link";
-import Styles from "./style.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
   faChevronCircleLeft,
   faChevronCircleRight,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import Styles from "./style.module.scss";
 
 interface PagerProps {
   top: string;

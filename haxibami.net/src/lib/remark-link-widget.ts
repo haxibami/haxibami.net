@@ -1,11 +1,16 @@
+import getMetadata from "metadata-scraper";
+import { visit } from "unist-util-visit";
+
+import { isParent, isLink, isParagraph } from "./mdast-util-node-is";
+
+import type { Paragraph, Link, Literal } from "mdast";
+import type { H } from "mdast-util-to-hast";
 import type { Plugin, Transformer } from "unified";
 import type { Node, Parent } from "unist";
 import type { VFileCompatible } from "vfile";
-import { visit } from "unist-util-visit";
-import type { Paragraph, Link, Literal } from "mdast";
-import { isParent, isLink, isParagraph } from "./mdast-util-node-is";
-import type { H } from "mdast-util-to-hast";
-import getMetadata from "metadata-scraper";
+
+
+
 
 interface ExtLink extends Literal {
   type: "extlink";

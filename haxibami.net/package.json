@@ -12,7 +12,15 @@
     "lint": "next lint",
     "format": "prettier --check '**/*.{ts, tsx, json}'",
     "analyze": "ANALYZE=true next build",
-    "blog": "./article.sh"
+    "blog": "./article.sh",
+    "prepare": "cd .. && husky install haxibami.net/.husky",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js, ts, jsx, tsx, json}": [
+      "prettier --write",
+      "next lint --fix"
+    ]
   },
   "dependencies": {
     "@fontsource/rubik": "4.5.10",
@@ -75,8 +83,11 @@
     "eslint": "8.17.0",
     "eslint-config-next": "12.1.6",
     "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "^2.26.0",
     "globby": "13.1.2",
+    "husky": "^8.0.1",
     "js-yaml": "4.1.0",
+    "lint-staged": "^13.0.2",
     "prettier": "2.6.2",
     "sass": "1.52.3",
     "typescript": "4.7.3"

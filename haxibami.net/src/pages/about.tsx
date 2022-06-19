@@ -1,15 +1,18 @@
 import type { InferGetStaticPropsType, NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+
+import Footer from "components/Footer";
+import MyHead from "components/MyHead";
+import ThemeChanger from "components/ThemeChanger";
 import { getDocBySlug } from "lib/api";
+import { ogpHost } from "lib/constant";
 import { MdToHtml } from "lib/parser";
 import RehypeReact from "lib/rehype-react";
-import type { PageMetaProps } from "lib/interface";
-import { ogpHost } from "lib/constant";
-import MyHead from "components/MyHead";
 import Styles from "styles/about.module.scss";
-import ThemeChanger from "components/ThemeChanger";
-import Footer from "components/Footer";
+
+import type { PageMetaProps } from "lib/interface";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 

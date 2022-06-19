@@ -3,23 +3,26 @@ import type {
   InferGetStaticPropsType,
   GetStaticPropsContext,
 } from "next";
-import Link from "next/link";
 import Head from "next/head";
+import Link from "next/link";
+
+
+import MyHead from "components/MyHead";
+import TagList from "components/TagList";
+import ThemeChanger from "components/ThemeChanger";
 import {
   getAllPosts,
   getPostBySlug,
   replaceMdwithTxt,
   readYaml,
 } from "lib/api";
-import { dateVisualizer } from "lib/front";
-import type { PageMetaProps, SiteInfo } from "lib/interface";
 import { ogpHost } from "lib/constant";
+import { dateVisualizer } from "lib/front";
 import { MdToHtml } from "lib/parser";
 import RehypeReact from "lib/rehype-react";
-import MyHead from "components/MyHead";
-import TagList from "components/TagList";
 import Styles from "styles/[slug].module.scss";
-import ThemeChanger from "components/ThemeChanger";
+
+import type { PageMetaProps, SiteInfo } from "lib/interface";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 

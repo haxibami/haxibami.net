@@ -1,16 +1,22 @@
+import { createRequire } from "module";
+
+import * as playwright from "playwright";
+import rehypeParse from "rehype-parse";
+import { optimize } from "svgo";
 import { unified } from "unified";
+import { is } from "unist-util-is";
+import { visit } from "unist-util-visit";
+
+import { isParent } from "./mdast-util-node-is";
+
+import type { Code, Paragraph } from "mdast";
+import type { Mermaid } from "mermaid";
+import type { OptimizeOptions, OptimizedSvg } from "svgo";
 import type { Plugin, Transformer } from "unified";
 import type { Node, Parent } from "unist";
-import { is } from "unist-util-is";
-import { Code, Paragraph } from "mdast";
-import type { Mermaid } from "mermaid";
-import rehypeParse from "rehype-parse";
-import * as playwright from "playwright";
-import { optimize, OptimizeOptions, OptimizedSvg } from "svgo";
-import { visit } from "unist-util-visit";
-import { VFileCompatible } from "vfile";
-import { isParent } from "./mdast-util-node-is";
-import { createRequire } from "module";
+import type { VFileCompatible } from "vfile";
+
+
 const require = createRequire(import.meta.url); // esm
 const mermaidjs = require.resolve("mermaid/dist/mermaid.min.js");
 

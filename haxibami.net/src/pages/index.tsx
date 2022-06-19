@@ -1,12 +1,14 @@
 import type { InferGetStaticPropsType, NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { PageMetaProps } from "lib/interface";
-//import * as Svg from "lib/svg";
-import MyHead from "components/MyHead";
-import Tree from "components/Tree";
-import ThemeChanger from "components/ThemeChanger";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import {
+  faGithub,
+  faInstagram,
+  faKeybase,
+  faSpotify,
+  faTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 import {
   faQuestion,
   faBook,
@@ -17,14 +19,16 @@ import {
   faQuoteLeft,
   faChartSimple,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  faGithub,
-  faInstagram,
-  faKeybase,
-  faSpotify,
-  faTwitter,
-} from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+
+import MyHead from "components/MyHead";
+import ThemeChanger from "components/ThemeChanger";
+import Tree from "components/Tree";
+//import * as Svg from "lib/svg";
 import Styles from "styles/index.module.scss";
+
+import type { PageMetaProps } from "lib/interface";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 

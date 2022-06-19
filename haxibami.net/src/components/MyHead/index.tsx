@@ -1,6 +1,10 @@
-import Head from "next/head";
 import React from "react";
-import { PageMetaProps } from "lib/interface";
+
+import Head from "next/head";
+
+
+
+import type { PageMetaProps } from "lib/interface";
 
 const MyHead: React.FC<PageMetaProps> = (props) => {
   return (

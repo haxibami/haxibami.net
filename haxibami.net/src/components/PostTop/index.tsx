@@ -1,8 +1,12 @@
+
+
 import ArticleMenu from "components/ArticleMenu";
-import { PostItem, MenuTab, PostType } from "lib/interface";
-import PostList from "components/PostList";
 import Pager from "components/Pager";
+import PostList from "components/PostList";
+
 import Styles from "./style.module.scss";
+
+import type { PostItem, MenuTab, PostType } from "lib/interface";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
 interface PostTopProps {

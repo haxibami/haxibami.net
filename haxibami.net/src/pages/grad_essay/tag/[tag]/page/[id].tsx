@@ -3,6 +3,12 @@ import type {
   InferGetStaticPropsType,
   GetStaticPropsContext,
 } from "next";
+
+
+import Footer from "components/Footer";
+import MyHead from "components/MyHead";
+import PostTop from "components/PostTop";
+import Header from "components/PostTopHeader";
 import {
   replaceMdwithTxt,
   readYaml,
@@ -11,13 +17,10 @@ import {
   getPostsByTag,
   getPostBySlug,
 } from "lib/api";
-import { SiteInfo, PageMetaProps, PostType } from "lib/interface";
 import { ogpHost, COUNT_PER_PAGE } from "lib/constant";
-import Header from "components/PostTopHeader";
-import PostTop from "components/PostTop";
-import Footer from "components/Footer";
-import MyHead from "components/MyHead";
 import Styles from "styles/posttop.module.scss";
+
+import type { SiteInfo, PageMetaProps, PostType } from "lib/interface";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 

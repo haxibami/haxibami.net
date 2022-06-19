@@ -1,12 +1,15 @@
 import type { NextPage, InferGetStaticPropsType } from "next";
-import { getAllPosts, getPostTags, replaceMdwithTxt, readYaml } from "lib/api";
-import type { PageMetaProps, SiteInfo, PostType } from "lib/interface";
-import { COUNT_PER_PAGE, ogpHost, postMenuTabs } from "lib/constant";
-import MyHead from "components/MyHead";
-import Header from "components/PostTopHeader";
-import PostTop from "components/PostTop";
+
+
 import Footer from "components/Footer";
+import MyHead from "components/MyHead";
+import PostTop from "components/PostTop";
+import Header from "components/PostTopHeader";
+import { getAllPosts, getPostTags, replaceMdwithTxt, readYaml } from "lib/api";
+import { COUNT_PER_PAGE, ogpHost, postMenuTabs } from "lib/constant";
 import Styles from "styles/posttop.module.scss";
+
+import type { PageMetaProps, SiteInfo, PostType } from "lib/interface";
 
 const postType: PostType = "grad_essay";
 

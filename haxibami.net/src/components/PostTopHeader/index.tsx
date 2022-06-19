@@ -1,15 +1,23 @@
-import Link from "next/link";
 import React from "react";
-import Styles from "./style.module.scss";
-import { PostType, SiteInfo } from "lib/interface";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import Link from "next/link";
+
+
+
 import {
   faHouseChimney,
   faRss,
   faQuestionCircle,
 } from "@fortawesome/free-solid-svg-icons";
-//import "@fortawesome/fontawesome-svg-core/styles.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import ThemeChanger from "components/ThemeChanger";
+
+import Styles from "./style.module.scss";
+
+import type { PostType, SiteInfo } from "lib/interface";
+
+//import "@fortawesome/fontawesome-svg-core/styles.css";
 
 interface PostHeaderProps {
   siteinfo: SiteInfo;

@@ -3,6 +3,12 @@ import type {
   InferGetStaticPropsType,
   GetStaticPropsContext,
 } from "next";
+
+
+import Footer from "components/Footer";
+import MyHead from "components/MyHead";
+import PostTop from "components/PostTop";
+import Header from "components/PostTopHeader";
 import {
   getPostBySlug,
   getPostsByTag,
@@ -10,13 +16,10 @@ import {
   replaceMdwithTxt,
   readYaml,
 } from "lib/api";
-import { PageMetaProps, SiteInfo, PostType } from "lib/interface";
 import { COUNT_PER_PAGE, ogpHost } from "lib/constant";
-import MyHead from "components/MyHead";
-import Header from "components/PostTopHeader";
-import PostTop from "components/PostTop";
-import Footer from "components/Footer";
 import Styles from "styles/[tag].module.scss";
+
+import type { PageMetaProps, SiteInfo, PostType } from "lib/interface";
 
 const postType: PostType = "grad_essay";
 

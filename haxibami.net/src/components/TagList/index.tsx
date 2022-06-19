@@ -1,6 +1,8 @@
 import Link from "next/link";
-import type { PostType } from "lib/interface";
+
 import Styles from "./style.module.scss";
+
+import type { PostType } from "lib/interface";
 
 interface TagListProps {
   tags: string[];
