@@ -21,7 +21,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-
 import MyHead from "components/MyHead";
 import ThemeChanger from "components/ThemeChanger";
 import Tree from "components/Tree";

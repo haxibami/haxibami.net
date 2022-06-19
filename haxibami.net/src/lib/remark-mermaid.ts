@@ -16,7 +16,6 @@ import type { Plugin, Transformer } from "unified";
 import type { Node, Parent } from "unist";
 import type { VFileCompatible } from "vfile";
 
-
 const require = createRequire(import.meta.url); // esm
 const mermaidjs = require.resolve("mermaid/dist/mermaid.min.js");
 

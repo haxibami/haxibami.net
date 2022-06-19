@@ -1,4 +1,4 @@
-// Markdown parser on "Server" side. Never include frontend code (including rehype-react).
+// Markdown parser for build-time. Never include frontend code (ex. rehype-react).
 
 import { join } from "path";
 

@@ -6,7 +6,6 @@ import Styles from "./style.module.scss";
 
 import type { MenuTab, PostType } from "lib/interface";
 
-
 interface TagsTopProps {
   tagsMenuTabs: MenuTab[];
   taglists: string[];

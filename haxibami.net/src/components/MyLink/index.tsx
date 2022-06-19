@@ -2,8 +2,6 @@ import type { ReactNode } from "react";
 
 import Link from "next/link";
 
-
-
 export interface MyLinkProps {
   children: ReactNode;
   href?: string;

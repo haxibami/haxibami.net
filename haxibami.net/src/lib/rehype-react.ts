@@ -1,4 +1,4 @@
-// HTML parser on "Client" side. Never include backend code (including remark).
+// HTML parser on "Client" side. Never include build-time code (ex. remark).
 
 import React from "react";
 
@@ -14,8 +14,6 @@ import type { LinkWidgetProps } from "components/LinkWidget";
 import type { MyLinkProps } from "components/MyLink";
 import type { NextImageProps } from "components/NextImage";
 import type { Options as RehypeReactOptions } from "rehype-react";
-
-
 
 // Convert HTML to React Component
 const RehypeReact = (html: string) => {

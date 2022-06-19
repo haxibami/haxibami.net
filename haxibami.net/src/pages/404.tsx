@@ -1,7 +1,6 @@
 import type { InferGetStaticPropsType, NextPage } from "next";
 import Link from "next/link";
 
-
 import MyHead from "components/MyHead";
 import { ogpHost } from "lib/constant";
 import Styles from "styles/404.module.scss";

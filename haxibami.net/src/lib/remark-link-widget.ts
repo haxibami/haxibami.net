@@ -9,9 +9,6 @@ import type { Plugin, Transformer } from "unified";
 import type { Node, Parent } from "unist";
 import type { VFileCompatible } from "vfile";
 
-
-
-
 interface ExtLink extends Literal {
   type: "extlink";
   url: string;

@@ -2,8 +2,6 @@ import React from "react";
 
 import Link from "next/link";
 
-
-
 import Styles from "./style.module.scss";
 
 import type { PostType, MenuTab } from "lib/interface";

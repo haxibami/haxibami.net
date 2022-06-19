@@ -6,7 +6,6 @@ import type {
 import Head from "next/head";
 import Link from "next/link";
 
-
 import MyHead from "components/MyHead";
 import TagList from "components/TagList";
 import ThemeChanger from "components/ThemeChanger";

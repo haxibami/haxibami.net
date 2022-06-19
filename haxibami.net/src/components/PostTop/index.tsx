@@ -1,5 +1,3 @@
-
-
 import ArticleMenu from "components/ArticleMenu";
 import Pager from "components/Pager";
 import PostList from "components/PostList";

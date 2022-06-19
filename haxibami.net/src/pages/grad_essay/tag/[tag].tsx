@@ -4,7 +4,6 @@ import type {
   GetStaticPropsContext,
 } from "next";
 
-
 import Footer from "components/Footer";
 import MyHead from "components/MyHead";
 import PostTop from "components/PostTop";

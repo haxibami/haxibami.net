@@ -8,7 +8,6 @@ import { MdStrip } from "lib/parser";
 
 import type { PostItem, DocItem, PostType, SiteInfo } from "./interface";
 
-
 export const getArticlesDir = (posttype: PostType) => {
   const ArticlesDir = join(process.cwd(), `src/articles/${posttype}`);
   return ArticlesDir;
