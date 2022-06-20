@@ -34,15 +34,15 @@
     "feed": "4.2.2",
     "gray-matter": "4.0.3",
     "mdast-util-to-hast": "12.1.1",
-    "mermaid": "9.1.1",
+    "mermaid": "9.1.2",
     "metadata-scraper": "0.2.56",
     "next": "12.1.6",
     "next-themes": "0.2.0",
     "playwright": "1.22.2",
     "playwright-aws-lambda": "0.8.0",
     "playwright-core": "1.22.2",
-    "react": "18.1.0",
-    "react-dom": "18.1.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "rehype-autolink-headings": "6.1.1",
     "rehype-katex": "6.0.2",
     "rehype-parse": "8.0.4",
@@ -65,7 +65,7 @@
     "unified": "10.1.2",
     "unist-util-is": "5.1.1",
     "unist-util-visit": "4.1.0",
-    "vfile": "5.3.3"
+    "vfile": "5.3.4"
   },
   "devDependencies": {
     "@types/js-yaml": "4.0.5",
