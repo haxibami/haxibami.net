@@ -33,7 +33,7 @@ specifiers:
   lint-staged: 13.0.3
   mdast-util-to-hast: 12.1.1
   mermaid: 9.1.2
-  metadata-scraper: 0.2.56
+  metadata-scraper: 0.2.57
   next: 12.1.6
   next-themes: 0.2.0
   playwright: 1.22.2
@@ -81,7 +81,7 @@ dependencies:
   gray-matter: 4.0.3
   mdast-util-to-hast: 12.1.1
   mermaid: 9.1.2
-  metadata-scraper: 0.2.56
+  metadata-scraper: 0.2.57
   next: 12.1.6_b7sksnfkdyiidz7vzaadim75qm
   next-themes: 0.2.0_2nrpme5s5xmpdgccbbbdwhosda
   playwright: 1.22.2
@@ -3154,8 +3154,8 @@ packages:
       stylis: 4.0.13
     dev: false
 
-  /metadata-scraper/0.2.56:
-    resolution: {integrity: sha512-BwHJ70Jao6lmWz1/DGgqn9Cy8UINd0zekYMsqHgfvQOfi2XvFZgfAxie5PNDF7kj3G5YNmi8kr/8FOmipoWV4w==}
+  /metadata-scraper/0.2.57:
+    resolution: {integrity: sha512-ukPUAiSzsUc0eL+2uh+2I0CwQDDQiN8y1ee3oTli2mr3UL2EEECTBAYPMbUuUY6kS7Oy4Kou3lj5seEiXKbnNQ==}
     dependencies:
       domino: 2.1.6
       got: 11.8.3
