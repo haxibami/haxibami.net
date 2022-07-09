@@ -13,7 +13,54 @@ https://github.com/stars/haxibami/lists/linux-tools
 
 ## 目次
 
-## セッション管理
+## システム
+
+### booster
+
+https://github.com/anatol/booster
+
+Go製の高速なinitramfsジェネレータ。yamlで設定を書く。
+
+```yaml
+modules_force_load: amdgpu
+```
+
+### bottom
+
+https://github.com/ClementTsang/bottom
+
+Rust 製のプロセス監視ツール。Bashtop や GoTop よりシンプルだが、必要十分。
+
+![「topの逆で、bottom」というネーミング](/image/btm-ps.png)
+
+### howdy / fprintd
+
+https://github.com/boltgolt/howdy
+
+https://gitlab.freedesktop.org/libfprint/fprintd
+
+LinuxでもWindows Hello。IRカメラか指紋リーダーさえ付いていれば、howdy / fprintdをセットアップすることでログイン時やsudo実行時に生体認証が使える。
+
+#### 注意点
+
+howdy / fprintdによる認証はパスワードを完全に代替するもの**ではない**。したがって、ログイン時にこれらを利用すると、パスワードによって暗号化されたキーリングは解錠されない（[参照](https://github.com/boltgolt/howdy/issues/39)）。これを避けたい場合、生体認証はsudo用のみ設定することをおすすめする。
+
+さらにリモートログインのことも考慮すると、sudo時に一旦通常通りパスワードを訊ねて、入力が空文字列であった場合のみ生体認証へ移行するのが望ましい。この設定が以下。
+
+```txt
+#%PAM-1.0
+
+# /etc/pam.d/sudo
+
+auth        sufficient      pam_unix.so try_first_pass likeauth nullok
+auth        sufficient      pam_python.so /lib/security/howdy/pam.py
+auth        sufficient      pam_fprintd.so
+auth        include         system-auth
+account     include         system-auth
+session     include         system-auth
+```
+
+## デスクトップ・ディスプレイ
 
 ### lightdm-webkit2-theme-reactive
 
@@ -25,15 +72,45 @@ https://github.com/gitneeraj/lightdm-webkit2-theme-reactive
 
 ![Arch Linux-chan](/image/lightdm.png)
 
-## CLI / TUI ツール
+### ddccontrol
 
-### bottom
+https://github.com/ddccontrol/ddccontrol
 
-https://github.com/ClementTsang/bottom
+外部モニタの輝度・RGB 比を操作できるツール。下みたいな力技ができたりする。
 
-Rust 製のプロセス監視ツール。Bashtop や GoTop よりシンプルだが、現在も継続的にメンテされている。
+```txt
+# ~/.config/sway/config
 
-![Bottom](/image/btm-ps.png)
+# brightness controls (requires non-root access to i2c devices)
+bindsym $mod+F5 exec ddccontrol -f -r 0x10 -W -5 dev:/dev/i2c-1 | grep Brightness | cut -d "/" -f 2 | tee $WOBSOCK
+bindsym $mod+F6 exec ddccontrol -f -r 0x10 -W +5 dev:/dev/i2c-1 | grep Brightness | cut -d "/" -f 2 | tee $WOBSOCK
+```
+
+### Weylus
+
+https://github.com/H-M-H/Weylus
+
+ブラウザ経由で手書き描画を受け付ける面白いディスプレイサーバー（？）。筆圧も感知するようなので、タブレットが余っている人はおもちゃにできる。
+
+## ファイル
+
+### onedriver
+
+https://github.com/jstaf/onedriver
+
+Go製のOneDriveクライアント。
+
+### google-drive-ocamlfuse
+
+https://github.com/astrada/google-drive-ocamlfuse
+
+OCaml製のGoogle Driveクライアント。これがなければLinuxラップトップで大学生活を営むのは難しかったかもしれない。
+
+小さなファイルの同期にややボトルネックがあるが、体感ではWindows版公式クライアントに劣らないパフォーマンスが出る。
+
+![クラウドストレージたち](/image/gdrive-ocamlfuse.png)
+
+## メディア
 
 ### yt-dlp
 
@@ -49,7 +126,7 @@ yt-dlp https://example.com/user/movie/view --cookies-from-browser chrome
 
 https://github.com/altdesktop/playerctl
 
-音声・映像の再生をコマンドラインから制御できるツール。主要なブラウザ、Spotify、mpv や VLC 等の動画プレイヤーに対応し、デーモン（`playerctld`）として常駐させることも可能。ターミナルから操作するだけでも強力だが、真価を発揮するのはキーバインドを設定したときだ。たとえば Sway の場合、以下の設定で前の曲、再生/停止、次の曲、10 秒前/後にそれぞれキーを割り当てられる。
+音声・映像の再生をコマンドラインから制御するツール。ターミナルから操作するだけでも便利だが、キーバインドを設定すると真価を発揮する。たとえば Sway の場合：
 
 ```txt
 # ~/.config/sway/config
@@ -61,29 +138,28 @@ bindsym $mod+shift+comma exec playerctl --player playerctld position -10
 bindsym $mod+shift+slash exec playerctl --player playerctld position +10
 ```
 
-この使用感に慣れてしまうと、もう二度とウィンドウを切り替えてマウスで再生ボタンを押そうなどとは思わない。
+この使用感に慣れてしまうと、もう二度とウィンドウを切り替えてマウスで再生ボタンを押す気にはならない。
 
-そのほかの機能は以下の記事が詳しい。
+そのほかの機能は以下の記事を参照。
 
 https://zenn.dev/fabon/articles/9c8d2d3a6b3fb1
 
-## メディア関連
 
 ### PipeWire
 
 https://pipewire.org/
 
-PipeWire は音声と映像を扱うモダンなマルチメディア・フレームワークだ。`pipewire-pulse`、`pipewire-alsa`、`pipewire-jack`で PulseAudio、ALSA、Jack をそれぞれ代替するほか、Wayland 環境ではブラウザ（WebRTC）での画面共有、OBS での画面録画に使用される。
+> PipeWire is a project that aims to greatly improve handling of audio and video under Linux.
 
-現状、Wayland 環境の Zoom アプリでは一部のデスクトップ環境を除いて画面共有が行えない仕様だが、この PipeWire とブラウザ版 Zoom を利用することで制限を回避できるという事情もある。[^2]
+PipeWire は`pipewire-pulse`、`pipewire-alsa`、`pipewire-jack`で PulseAudio、ALSA、Jack をそれぞれ代替するほか、Wayland 環境では画面共有・録画（WebRTC、OBS）にも使用される[^2]。
 
-[^2]: なお、ブラウザ版 Zoom の利用には[この拡張機能](https://addons.mozilla.org/ja/firefox/addon/zoom-redirector/)が有用。
+[^2]: Tips: 現状、Wayland 環境の Zoom 公式アプリでは一部のデスクトップ環境を除いて画面共有が行えないが、この PipeWire とブラウザ版 Zoom を利用することで制限を回避できる。ブラウザ版 Zoom の利用には[この拡張機能](https://addons.mozilla.org/ja/firefox/addon/zoom-redirector/)が有用。
 
 ### WirePlumber
 
 https://gitlab.freedesktop.org/pipewire/wireplumber
 
-Lua で柔軟に設定を書ける、PipeWire 向けのセッションマネージャ。たとえばデバイスのノード名を変えるには：
+Lua で設定を書けるPipeWireのセッションマネージャ。たとえばデバイスのノード名を変えるには：
 
 ```lua
 -- ~/.config/wireplumber/main.lua.d/51-headset-out-rename.lua
@@ -106,11 +182,13 @@ table.insert(alsa_monitor.rules,rule)
 
 https://github.com/wwmm/easyeffects
 
-PipeWire 向けのサウンドエフェクトツール。
+PipeWire 向けのサウンドエフェクトツール。イコライザーとかいろいろ。
 
 ![イコライザー](/image/easyeffects.png)
 
-systemd を使う場合、以下のように自動で起動できる。
+~~systemd を使う場合、以下のように自動で起動できる。~~
+
+罠で、うまく起動しないことが多い。良いアプローチを模索中。
 
 ```txt
 # ~/.config/systemd/user/easyeffects.service
@@ -134,13 +212,13 @@ WantedBy = default.target
 
 https://github.com/jaakkopasanen/AutoEq
 
-様々なヘッドホン・イヤホンの特性を測定し、機器ごとにもっともニュートラルな出力を与えるイコライザー設定を生成するためのプロジェクト。自前で測定もできるが、もっぱら`results`以下に蓄積された主要な機器のプリセットを利用するのが便利だ。前述の EasyEffects にプリセットの`.txt`ファイルを読み込ませることで使える。
+様々なヘッドホン・イヤホンの特性を測定し、機器ごとにもっともニュートラルな出力を与えるイコライザー設定を生成するためのプロジェクト。自前で測定もできるが、もっぱらリポジトリ内の`results`以下に蓄積された主要な機器の設定を利用するのが便利だ。前述の EasyEffects に`.txt`ファイルを読み込ませることで使える。
 
 ### noise-suppression-for-voice
 
 https://github.com/werman/noise-suppression-for-voice
 
-マイク向けのノイズ抑制プラグイン。タイプ音・呼吸音などを除去してくれる。
+マイク用のノイズ抑制プラグイン。タイプ音・呼吸音などを除去してくれる。
 
 ```txt
 # /etc/pipewire/filter-chain/source-rnnoise.conf
@@ -191,7 +269,7 @@ context.exec = [
 
 https://github.com/cdemoulins/pamixer
 
-PulseAudio 向けのコマンドラインミキサーだが、`pipewire-pulse`に対しても使える。音量やデバイス一覧を簡潔に取り出すのに便利。
+本来はPulseAudio 向けのコマンドラインミキサーだが、`pipewire-pulse`に対しても使える。現在の音量やサウンドデバイスの一覧を簡潔な形で取り出すのに便利。
 
 ```sh
 > pamixer --get-volume
@@ -205,7 +283,7 @@ PulseAudio 向けのコマンドラインミキサーだが、`pipewire-pulse`�
 
 https://aur.archlinux.org/packages/mozc-ut
 
-mozc の辞書強化版。パッケージ名からはわかりにくいが、中身は 2 代目の UT 辞書になっている。地名・人名・キャラクター・ネットスラングにめっぽう強く、（プロプライエタリ版）Google 日本語入力の水準に近い。
+mozc の辞書強化版。パッケージ名からはわかりにくいが、中身は 2 代目の UT 辞書になっている。地名・人名・キャラクター・ネットスラングにめっぽう強く、Windows版Google 日本語入力の水準に近い。
 
 ### Emote
 
@@ -223,27 +301,45 @@ Apple スタイルの絵文字を Linux で使えるようにするパッケー�
 
 > The code provided is for educational purposes only.
 
-## ディスプレイ関連
+### libinput-gestures
 
-### ddccontrol
+https://github.com/bulletmark/libinput-gestures
 
-https://github.com/ddccontrol/ddccontrol
+タッチパッドの三・四本指スワイプに任意のコマンドを割り当てられるlibinputの拡張ツール。ブラウザバックとか、ワークスペースの切り替えとか。
 
-外部モニタの輝度・RGB 比を操作できるツール。下みたいな力技ができたりする。
+```txt
+# ~/.config/libinput-gestures.conf
+
+gesture: swipe right 3 ~/.config/libinput-gestures/gestures backward
+gesture: swipe left 3 ~/.config/libinput-gestures/gestures forward
+gesture: swipe right 4 swaymsg workspace prev
+gesture: swipe left 4 swaymsg workspace next
+```
+
+```sh
+#!/bin/sh
+
+# ~/.config/libinput-gestures/gestures
+
+case "$@" in
+    forward )
+        echo "Forward" >> /tmp/gestures.log
+        swaymsg seat seat0 cursor press BTN_EXTRA
+        swaymsg seat seat0 cursor release BTN_EXTRA
+        ;;
+    backward )
+        echo "Backward" >> /tmp/gestures.log
+        swaymsg seat seat0 cursor press BTN_SIDE
+        swaymsg seat seat0 cursor release BTN_SIDE
+        ;;
+esac
+```
 
 ```txt
 # ~/.config/sway/config
 
-# brightness controls (requires non-root access to i2c devices)
-bindsym $mod+F5 exec ddccontrol -f -r 0x10 -W -5 dev:/dev/i2c-1 | grep Brightness | cut -d "/" -f 2 | tee $WOBSOCK
-bindsym $mod+F6 exec ddccontrol -f -r 0x10 -W +5 dev:/dev/i2c-1 | grep Brightness | cut -d "/" -f 2 | tee $WOBSOCK
+exec libinput-gestures-setup start
 ```
-
-### Weylus
-
-https://github.com/H-M-H/Weylus
-
-ブラウザ経由で手書き描画を受け付ける面白いディスプレイサーバー（？）。タブレットが余っている人は遊んでみると面白い。
 
 ## その他
 
