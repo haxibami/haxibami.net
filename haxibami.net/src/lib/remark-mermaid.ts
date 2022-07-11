@@ -182,7 +182,7 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
     const html = `<!DOCTYPE html>`;
     await page.setContent(html);
     await page.addScriptTag({
-      url: "https://unpkg.com/mermaid/dist/mermaid.min.js"
+      url: "https://unpkg.com/mermaid/dist/mermaid.min.js",
     });
     await page.setViewportSize({ width: 1000, height: 3000 });
     visit(node, isMermaid, visitor);
