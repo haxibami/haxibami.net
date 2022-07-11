@@ -1,5 +1,3 @@
-import { createRequire } from "module";
-
 import * as playwright from "playwright";
 import rehypeParse from "rehype-parse";
 import { optimize } from "svgo";
@@ -15,9 +13,6 @@ import type { OptimizeOptions, OptimizedSvg } from "svgo";
 import type { Plugin, Transformer } from "unified";
 import type { Node, Parent } from "unist";
 import type { VFileCompatible } from "vfile";
-
-const require = createRequire(import.meta.url); // esm
-const mermaidjs = require.resolve("mermaid/dist/mermaid.min.js");
 
 declare const mermaid: Mermaid;
 
@@ -187,7 +182,7 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
     const html = `<!DOCTYPE html>`;
     await page.setContent(html);
     await page.addScriptTag({
-      path: mermaidjs,
+      url: "https://unpkg.com/mermaid/dist/mermaid.min.js",
     });
     await page.setViewportSize({ width: 1000, height: 3000 });
     visit(node, isMermaid, visitor);
