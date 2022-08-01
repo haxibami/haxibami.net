@@ -2,10 +2,10 @@ lockfileVersion: 5.4
 
 specifiers:
   '@fontsource/rubik': 4.5.10
-  '@fortawesome/fontawesome-svg-core': 6.1.1
-  '@fortawesome/free-brands-svg-icons': 6.1.1
-  '@fortawesome/free-regular-svg-icons': 6.1.1
-  '@fortawesome/free-solid-svg-icons': 6.1.1
+  '@fortawesome/fontawesome-svg-core': 6.1.2
+  '@fortawesome/free-brands-svg-icons': 6.1.2
+  '@fortawesome/free-regular-svg-icons': 6.1.2
+  '@fortawesome/free-solid-svg-icons': 6.1.2
   '@fortawesome/react-fontawesome': 0.2.0
   '@leafac/rehype-shiki': 2.1.2
   '@next/bundle-analyzer': 12.2.3
@@ -36,9 +36,9 @@ specifiers:
   metadata-scraper: 0.2.57
   next: 12.2.3
   next-themes: 0.2.0
-  playwright: 1.24.0
+  playwright: 1.24.2
   playwright-aws-lambda: 0.9.0
-  playwright-core: 1.24.0
+  playwright-core: 1.24.2
   prettier: 2.7.1
   react: 18.2.0
   react-dom: 18.2.0
@@ -70,11 +70,11 @@ specifiers:
 
 dependencies:
   '@fontsource/rubik': 4.5.10
-  '@fortawesome/fontawesome-svg-core': 6.1.1
-  '@fortawesome/free-brands-svg-icons': 6.1.1
-  '@fortawesome/free-regular-svg-icons': 6.1.1
-  '@fortawesome/free-solid-svg-icons': 6.1.1
-  '@fortawesome/react-fontawesome': 0.2.0_sdfg7szeivrzzj63kiqxwaxkwu
+  '@fortawesome/fontawesome-svg-core': 6.1.2
+  '@fortawesome/free-brands-svg-icons': 6.1.2
+  '@fortawesome/free-regular-svg-icons': 6.1.2
+  '@fortawesome/free-solid-svg-icons': 6.1.2
+  '@fortawesome/react-fontawesome': 0.2.0_tebjjym7ugcdduvdrfbg7ugwxq
   '@leafac/rehype-shiki': 2.1.2_shiki@0.10.1
   '@next/bundle-analyzer': 12.2.3
   feed: 4.2.2
@@ -84,9 +84,9 @@ dependencies:
   metadata-scraper: 0.2.57
   next: 12.2.3_pmtxwaud2i7t46nnb7sfofmose
   next-themes: 0.2.0_53oqlnqnxhbetdy4ljlkkvmoby
-  playwright: 1.24.0
-  playwright-aws-lambda: 0.9.0_playwright-core@1.24.0
-  playwright-core: 1.24.0
+  playwright: 1.24.2
+  playwright-aws-lambda: 0.9.0_playwright-core@1.24.2
+  playwright-core: 1.24.2
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   rehype-autolink-headings: 6.1.1
@@ -180,51 +180,51 @@ packages:
     resolution: {integrity: sha512-VQuuko0lAKgI6p9lylpeJ/xcG/FpQqUYgPC+NUwVGvYvZNSQYT20UT13MKjPk2bPuxSuSHeeOyZ9x/6eRy4pfQ==}
     dev: false
 
-  /@fortawesome/fontawesome-common-types/6.1.1:
-    resolution: {integrity: sha512-wVn5WJPirFTnzN6tR95abCx+ocH+3IFLXAgyavnf9hUmN0CfWoDjPT/BAWsUVwSlYYVBeCLJxaqi7ZGe4uSjBA==}
+  /@fortawesome/fontawesome-common-types/6.1.2:
+    resolution: {integrity: sha512-wBaAPGz1Awxg05e0PBRkDRuTsy4B3dpBm+zreTTyd9TH4uUM27cAL4xWyWR0rLJCrRwzVsQ4hF3FvM6rqydKPA==}
     engines: {node: '>=6'}
     requiresBuild: true
     dev: false
 
-  /@fortawesome/fontawesome-svg-core/6.1.1:
-    resolution: {integrity: sha512-NCg0w2YIp81f4V6cMGD9iomfsIj7GWrqmsa0ZsPh59G7PKiGN1KymZNxmF00ssuAlo/VZmpK6xazsGOwzKYUMg==}
-    engines: {node: '>=6'}
-    requiresBuild: true
-    dependencies:
-      '@fortawesome/fontawesome-common-types': 6.1.1
-    dev: false
-
-  /@fortawesome/free-brands-svg-icons/6.1.1:
-    resolution: {integrity: sha512-mFbI/czjBZ+paUtw5NPr2IXjun5KAC8eFqh1hnxowjA4mMZxWz4GCIksq6j9ZSa6Uxj9JhjjDVEd77p2LN2Blg==}
+  /@fortawesome/fontawesome-svg-core/6.1.2:
+    resolution: {integrity: sha512-853G/Htp0BOdXnPoeCPTjFrVwyrJHpe8MhjB/DYE9XjwhnNDfuBCd3aKc2YUYbEfHEcBws4UAA0kA9dymZKGjA==}
     engines: {node: '>=6'}
     requiresBuild: true
     dependencies:
-      '@fortawesome/fontawesome-common-types': 6.1.1
+      '@fortawesome/fontawesome-common-types': 6.1.2
     dev: false
 
-  /@fortawesome/free-regular-svg-icons/6.1.1:
-    resolution: {integrity: sha512-xXiW7hcpgwmWtndKPOzG+43fPH7ZjxOaoeyooptSztGmJxCAflHZxXNK0GcT0uEsR4jTGQAfGklDZE5NHoBhKg==}
+  /@fortawesome/free-brands-svg-icons/6.1.2:
+    resolution: {integrity: sha512-b2eMfXQBsSxh52pcPtYchURQs6BWNh3zVTG8XH8Lv6V4kDhEg7D0kHN+K1SZniDiPb/e5tBlaygsinMUvetITA==}
     engines: {node: '>=6'}
     requiresBuild: true
     dependencies:
-      '@fortawesome/fontawesome-common-types': 6.1.1
+      '@fortawesome/fontawesome-common-types': 6.1.2
     dev: false
 
-  /@fortawesome/free-solid-svg-icons/6.1.1:
-    resolution: {integrity: sha512-0/5exxavOhI/D4Ovm2r3vxNojGZioPwmFrKg0ZUH69Q68uFhFPs6+dhAToh6VEQBntxPRYPuT5Cg1tpNa9JUPg==}
+  /@fortawesome/free-regular-svg-icons/6.1.2:
+    resolution: {integrity: sha512-xR4hA+tAwsaTHGfb+25H1gVU/aJ0Rzu+xIUfnyrhaL13yNQ7TWiI2RvzniAaB+VGHDU2a+Pk96Ve+pkN3/+TTQ==}
     engines: {node: '>=6'}
     requiresBuild: true
     dependencies:
-      '@fortawesome/fontawesome-common-types': 6.1.1
+      '@fortawesome/fontawesome-common-types': 6.1.2
     dev: false
 
-  /@fortawesome/react-fontawesome/0.2.0_sdfg7szeivrzzj63kiqxwaxkwu:
+  /@fortawesome/free-solid-svg-icons/6.1.2:
+    resolution: {integrity: sha512-lTgZz+cMpzjkHmCwOG3E1ilUZrnINYdqMmrkv30EC3XbRsGlbIOL8H9LaNp5SV4g0pNJDfQ4EdTWWaMvdwyLiQ==}
+    engines: {node: '>=6'}
+    requiresBuild: true
+    dependencies:
+      '@fortawesome/fontawesome-common-types': 6.1.2
+    dev: false
+
+  /@fortawesome/react-fontawesome/0.2.0_tebjjym7ugcdduvdrfbg7ugwxq:
     resolution: {integrity: sha512-uHg75Rb/XORTtVt7OS9WoK8uM276Ufi7gCzshVWkUJbHhh3svsUUeqXerrM96Wm7fRiDzfKRwSoahhMIkGAYHw==}
     peerDependencies:
       '@fortawesome/fontawesome-svg-core': ~1 || ~6
       react: '>=16.3'
     dependencies:
-      '@fortawesome/fontawesome-svg-core': 6.1.1
+      '@fortawesome/fontawesome-svg-core': 6.1.2
       prop-types: 15.8.1
       react: 18.2.0
     dev: false
@@ -3776,29 +3776,29 @@ packages:
     hasBin: true
     dev: true
 
-  /playwright-aws-lambda/0.9.0_playwright-core@1.24.0:
+  /playwright-aws-lambda/0.9.0_playwright-core@1.24.2:
     resolution: {integrity: sha512-MnzLTZ4B9I4JdWJ+eq7BbrhFjL6VyT0bF+ccNjBCwjwlBNQaTEXOcrkAe+p8YkOXnYUqBbsrZj5Ene8PqKosiw==}
     engines: {node: '>= 8.0.0'}
     peerDependencies:
       playwright-core: ^1
     dependencies:
       lambdafs: 2.1.1
-      playwright-core: 1.24.0
+      playwright-core: 1.24.2
     dev: false
 
-  /playwright-core/1.24.0:
-    resolution: {integrity: sha512-BkDWdVsoEEC8m2glQlfNu1EN2qvjBsLIg5bD0wjrfwv9zVHktIsp80yYFObAcWreLNYhfRP4PlXE04lr5R4DFQ==}
+  /playwright-core/1.24.2:
+    resolution: {integrity: sha512-zfAoDoPY/0sDLsgSgLZwWmSCevIg1ym7CppBwllguVBNiHeixZkc1AdMuYUPZC6AdEYc4CxWEyLMBTw2YcmRrA==}
     engines: {node: '>=14'}
     hasBin: true
     dev: false
 
-  /playwright/1.24.0:
-    resolution: {integrity: sha512-oA9HzuYhskm9iEm9DeiWoLuJps+yzZ35zwR0EHhGFUd9ikUVMN5NqNAORvq+JesgoMlEu4IUdKK9jigFWm7olA==}
+  /playwright/1.24.2:
+    resolution: {integrity: sha512-iMWDLgaFRT+7dXsNeYwgl8nhLHsUrzFyaRVC+ftr++P1dVs70mPrFKBZrGp1fOKigHV9d1syC03IpPbqLKlPsg==}
     engines: {node: '>=14'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      playwright-core: 1.24.0
+      playwright-core: 1.24.2
     dev: false
 
   /postcss/8.4.14:
