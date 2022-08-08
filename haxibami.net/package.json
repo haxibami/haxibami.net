@@ -72,16 +72,16 @@
     "@types/mdast": "3.0.10",
     "@types/mermaid": "8.2.9",
     "@types/node": "17.0.21",
-    "@types/prettier": "2.6.4",
+    "@types/prettier": "2.7.0",
     "@types/prismjs": "1.26.0",
-    "@types/react": "18.0.15",
+    "@types/react": "18.0.16",
     "@types/react-dom": "18.0.6",
     "@types/svgo": "2.6.3",
     "@types/unist": "2.0.6",
     "@typescript-eslint/eslint-plugin": "5.32.0",
     "@typescript-eslint/parser": "5.32.0",
     "eslint": "8.21.0",
-    "eslint-config-next": "12.2.3",
+    "eslint-config-next": "12.2.4",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-import": "2.26.0",
     "globby": "13.1.2",
@@ -89,7 +89,7 @@
     "js-yaml": "4.1.0",
     "lint-staged": "13.0.3",
     "prettier": "2.7.1",
-    "sass": "1.54.0",
+    "sass": "1.54.3",
     "typescript": "4.7.4"
   }
 }
