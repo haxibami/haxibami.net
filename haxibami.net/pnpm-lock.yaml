@@ -15,7 +15,7 @@ specifiers:
   '@types/node': 17.0.21
   '@types/prettier': 2.7.0
   '@types/prismjs': 1.26.0
-  '@types/react': 18.0.16
+  '@types/react': 18.0.17
   '@types/react-dom': 18.0.6
   '@types/svgo': 2.6.3
   '@types/unist': 2.0.6
@@ -92,7 +92,7 @@ dependencies:
   rehype-autolink-headings: 6.1.1
   rehype-katex: 6.0.2
   rehype-parse: 8.0.4
-  rehype-react: 7.1.1_@types+react@18.0.16
+  rehype-react: 7.1.1_@types+react@18.0.17
   rehype-slug: 5.0.1
   rehype-stringify: 9.0.3
   remark-gemoji: 7.0.1
@@ -120,7 +120,7 @@ devDependencies:
   '@types/node': 17.0.21
   '@types/prettier': 2.7.0
   '@types/prismjs': 1.26.0
-  '@types/react': 18.0.16
+  '@types/react': 18.0.17
   '@types/react-dom': 18.0.6
   '@types/svgo': 2.6.3
   '@types/unist': 2.0.6
@@ -556,11 +556,11 @@ packages:
   /@types/react-dom/18.0.6:
     resolution: {integrity: sha512-/5OFZgfIPSwy+YuIBP/FgJnQnsxhZhjjrnxudMddeblOouIodEQ75X14Rr4wGSG/bknL+Omy9iWlLo1u/9GzAA==}
     dependencies:
-      '@types/react': 18.0.16
+      '@types/react': 18.0.17
     dev: true
 
-  /@types/react/18.0.16:
-    resolution: {integrity: sha512-3vX1dzVucqc2nhXtzyaParTIIRZeNbisRqLE7QdeLomVybEyeiuAouzZXgz71P+2kbJOqj3dy0fzoATg2I06GQ==}
+  /@types/react/18.0.17:
+    resolution: {integrity: sha512-38ETy4tL+rn4uQQi7mB81G7V1g0u2ryquNmsVIOKUAEIDK+3CUjZ6rSRpdvS99dNBnkLFL83qfmtLacGOTIhwQ==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
@@ -3976,14 +3976,14 @@ packages:
       unified: 10.1.2
     dev: false
 
-  /rehype-react/7.1.1_@types+react@18.0.16:
+  /rehype-react/7.1.1_@types+react@18.0.17:
     resolution: {integrity: sha512-6yaitxM95JFsuTA74OH54OyvTAeRqR4/A6f45S2sEk2FEG04iGgsObcmEIFQRsjK9pfAhc74lR4iGf/W2G/sBw==}
     peerDependencies:
       '@types/react': '>=17'
     dependencies:
       '@mapbox/hast-util-table-cell-style': 0.2.0
       '@types/hast': 2.3.4
-      '@types/react': 18.0.16
+      '@types/react': 18.0.17
       hast-to-hyperscript: 10.0.1
       hast-util-whitespace: 2.0.0
       unified: 10.1.2
