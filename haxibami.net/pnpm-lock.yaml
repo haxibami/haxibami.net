@@ -32,7 +32,7 @@ specifiers:
   js-yaml: 4.1.0
   lint-staged: 13.0.3
   mdast-util-to-hast: 12.2.0
-  mermaid: 9.1.5
+  mermaid: 9.1.6
   metadata-scraper: 0.2.58
   next: 12.2.5
   next-themes: 0.2.0
@@ -65,7 +65,7 @@ specifiers:
   typescript: 4.7.4
   unified: 10.1.2
   unist-util-is: 5.1.1
-  unist-util-visit: 4.1.0
+  unist-util-visit: 4.1.1
   vfile: 5.3.4
 
 dependencies:
@@ -80,7 +80,7 @@ dependencies:
   feed: 4.2.2
   gray-matter: 4.0.3
   mdast-util-to-hast: 12.2.0
-  mermaid: 9.1.5
+  mermaid: 9.1.6
   metadata-scraper: 0.2.58
   next: 12.2.5_ivfob5dyaiglqb5g2zdrumbbbm
   next-themes: 0.2.0_3xcjr4wz26biff45sz3jtokgje
@@ -110,7 +110,7 @@ dependencies:
   svgo: 2.8.0
   unified: 10.1.2
   unist-util-is: 5.1.1
-  unist-util-visit: 4.1.0
+  unist-util-visit: 4.1.1
   vfile: 5.3.4
 
 devDependencies:
@@ -3115,7 +3115,7 @@ packages:
       unist-builder: 3.0.0
       unist-util-generated: 2.0.0
       unist-util-position: 4.0.1
-      unist-util-visit: 4.1.0
+      unist-util-visit: 4.1.1
     dev: false
 
   /mdast-util-to-markdown/1.3.0:
@@ -3126,7 +3126,7 @@ packages:
       longest-streak: 3.0.0
       mdast-util-to-string: 3.1.0
       micromark-util-decode-string: 1.0.1
-      unist-util-visit: 4.1.0
+      unist-util-visit: 4.1.1
       zwitch: 2.0.2
     dev: false
 
@@ -3164,8 +3164,8 @@ packages:
     engines: {node: '>= 8'}
     dev: true
 
-  /mermaid/9.1.5:
-    resolution: {integrity: sha512-XoikwsOTTwsf/bKrTKjE5vCWXuhrOocA+/v3ynmdb0PIO1UEdfRLUNb70Cssz4TxTADX6HzeWYsUBCATBi7F1w==}
+  /mermaid/9.1.6:
+    resolution: {integrity: sha512-oBuQk7s55wQgEgH/AK0GYY8U0kBqOIGK9QlJL+VYxh+1kZQtU9tNwoy0gWCfBJDaFIRdfpc/fm9PagaIXg6XFQ==}
     dependencies:
       '@braintree/sanitize-url': 6.0.0
       d3: 7.3.0
@@ -3951,7 +3951,7 @@ packages:
       hast-util-heading-rank: 2.1.0
       hast-util-is-element: 2.1.1
       unified: 10.1.2
-      unist-util-visit: 4.1.0
+      unist-util-visit: 4.1.1
     dev: false
 
   /rehype-katex/6.0.2:
@@ -3964,7 +3964,7 @@ packages:
       rehype-parse: 8.0.4
       unified: 10.1.2
       unist-util-remove-position: 4.0.1
-      unist-util-visit: 4.1.0
+      unist-util-visit: 4.1.1
     dev: false
 
   /rehype-parse/8.0.4:
@@ -3998,7 +3998,7 @@ packages:
       hast-util-heading-rank: 2.1.0
       hast-util-to-string: 2.0.0
       unified: 10.1.2
-      unist-util-visit: 4.1.0
+      unist-util-visit: 4.1.1
     dev: false
 
   /rehype-stringify/9.0.3:
@@ -4015,7 +4015,7 @@ packages:
       '@types/mdast': 3.0.10
       gemoji: 7.1.0
       unified: 10.1.2
-      unist-util-visit: 4.1.0
+      unist-util-visit: 4.1.1
     dev: false
 
   /remark-gfm/3.0.1:
@@ -4074,7 +4074,7 @@ packages:
       github-slugger: 1.4.0
       mdast-util-to-string: 3.1.0
       unified: 10.1.2
-      unist-util-visit: 4.1.0
+      unist-util-visit: 4.1.1
     dev: false
 
   /remark-stringify/10.0.2:
@@ -4099,7 +4099,7 @@ packages:
       '@types/mdast': 3.0.10
       hast-util-whitespace: 2.0.0
       unified: 10.1.2
-      unist-util-visit: 4.1.0
+      unist-util-visit: 4.1.1
     dev: false
 
   /resolve-alpn/1.2.1:
@@ -4623,7 +4623,7 @@ packages:
     resolution: {integrity: sha512-0yDkppiIhDlPrfHELgB+NLQD5mfjup3a8UYclHruTJWmY74je8g+CIFr79x5f6AkmzSwlvKLbs63hC0meOMowQ==}
     dependencies:
       '@types/unist': 2.0.6
-      unist-util-visit: 4.1.0
+      unist-util-visit: 4.1.1
     dev: false
 
   /unist-util-stringify-position/3.0.0:
@@ -4645,8 +4645,8 @@ packages:
       unist-util-is: 5.1.1
     dev: false
 
-  /unist-util-visit-parents/5.1.0:
-    resolution: {integrity: sha512-y+QVLcY5eR/YVpqDsLf/xh9R3Q2Y4HxkZTp7ViLDU6WtJCEcPmRzW1gpdWDCDIqIlhuPDXOgttqPlykrHYDekg==}
+  /unist-util-visit-parents/5.1.1:
+    resolution: {integrity: sha512-gks4baapT/kNRaWxuGkl5BIhoanZo7sC/cUT/JToSRNL1dYoXRFl75d++NkjYk4TAu2uv2Px+l8guMajogeuiw==}
     dependencies:
       '@types/unist': 2.0.6
       unist-util-is: 5.1.1
@@ -4666,12 +4666,12 @@ packages:
       unist-util-visit-parents: 4.1.1
     dev: false
 
-  /unist-util-visit/4.1.0:
-    resolution: {integrity: sha512-n7lyhFKJfVZ9MnKtqbsqkQEk5P1KShj0+//V7mAcoI6bpbUjh3C/OG8HVD+pBihfh6Ovl01m8dkcv9HNqYajmQ==}
+  /unist-util-visit/4.1.1:
+    resolution: {integrity: sha512-n9KN3WV9k4h1DxYR1LoajgN93wpEi/7ZplVe02IoB4gH5ctI1AaF2670BLHQYbwj+pY83gFtyeySFiyMHJklrg==}
     dependencies:
       '@types/unist': 2.0.6
       unist-util-is: 5.1.1
-      unist-util-visit-parents: 5.1.0
+      unist-util-visit-parents: 5.1.1
     dev: false
 
   /uri-js/4.4.1:
