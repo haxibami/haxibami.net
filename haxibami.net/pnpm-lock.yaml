@@ -7,7 +7,7 @@ specifiers:
   '@fortawesome/free-regular-svg-icons': 6.2.0
   '@fortawesome/free-solid-svg-icons': 6.2.0
   '@fortawesome/react-fontawesome': 0.2.0
-  '@leafac/rehype-shiki': 2.1.2
+  '@leafac/rehype-shiki': 2.2.1
   '@next/bundle-analyzer': 12.3.0
   '@types/js-yaml': 4.0.5
   '@types/mdast': 3.0.10
@@ -31,8 +31,8 @@ specifiers:
   husky: 8.0.1
   js-yaml: 4.1.0
   lint-staged: 13.0.3
-  mdast-util-to-hast: 12.2.1
-  mermaid: 9.1.6
+  mdast-util-to-hast: 12.2.2
+  mermaid: 9.1.7
   metadata-scraper: 0.2.60
   next: 12.3.0
   next-themes: 0.2.1
@@ -75,12 +75,12 @@ dependencies:
   '@fortawesome/free-regular-svg-icons': 6.2.0
   '@fortawesome/free-solid-svg-icons': 6.2.0
   '@fortawesome/react-fontawesome': 0.2.0_6j2wdqxompc6mcokhxkpep2gqu
-  '@leafac/rehype-shiki': 2.1.2_shiki@0.11.1
+  '@leafac/rehype-shiki': 2.2.1_shiki@0.11.1
   '@next/bundle-analyzer': 12.3.0
   feed: 4.2.2
   gray-matter: 4.0.3
-  mdast-util-to-hast: 12.2.1
-  mermaid: 9.1.6
+  mdast-util-to-hast: 12.2.2
+  mermaid: 9.1.7
   metadata-scraper: 0.2.60
   next: 12.3.0_wgobgza36qebbzsbfctw2tohpy
   next-themes: 0.2.1_c3hne4hwj64hb7tofigd3bvkji
@@ -260,10 +260,10 @@ packages:
       sanitize-xml-string: 1.1.0
     dev: false
 
-  /@leafac/rehype-shiki/2.1.2_shiki@0.11.1:
-    resolution: {integrity: sha512-9MLPga+h1kCIN41v7FacT7K2baZeHYwZSGctefphHqAAQuLPC3W5Wq/xkeDXvZWXu3E64UiWK77qCYOvLaKj3w==}
+  /@leafac/rehype-shiki/2.2.1_shiki@0.11.1:
+    resolution: {integrity: sha512-rN2r98YDdy1q61TppykZmk1np01K6jFBC/3FsLHbDYhMu0wpJ+1XW8LjrjotpBSoyy0MOzrnlVf74nUT6RJ4jA==}
     peerDependencies:
-      shiki: ^0.10.0
+      shiki: ^0.11.1
     dependencies:
       '@leafac/html': 3.0.0
       hast-util-to-text: 3.1.1
@@ -1698,8 +1698,8 @@ packages:
     resolution: {integrity: sha512-3VdM/SXBZX2omc9JF9nOPCtDaYQ67BGp5CoLpIQlO2KCAPETs8TcDHacF26jXadGbvUteZzRTeos2fhID5+ucQ==}
     dev: false
 
-  /dompurify/2.3.10:
-    resolution: {integrity: sha512-o7Fg/AgC7p/XpKjf/+RC3Ok6k4St5F7Q6q6+Nnm3p2zGWioAY6dh0CbbuwOhH2UcSzKsdniE/YnE2/92JcsA+g==}
+  /dompurify/2.4.0:
+    resolution: {integrity: sha512-Be9tbQMZds4a3C6xTmz68NlMfeONA//4dOavl/1rNw50E+/QO0KVpbcU0PcaW0nsQxurXls9ZocqFxk8R2mWEA==}
     dev: false
 
   /domutils/2.8.0:
@@ -3112,8 +3112,8 @@ packages:
       mdast-util-to-markdown: 1.3.0
     dev: false
 
-  /mdast-util-to-hast/12.2.1:
-    resolution: {integrity: sha512-dyindR2P7qOqXO1hQirZeGtVbiX7xlNQbw7gGaAwN4A1dh4+X8xU/JyYmRoyB8Fu1uPXzp7mlL5QwW7k+knvgA==}
+  /mdast-util-to-hast/12.2.2:
+    resolution: {integrity: sha512-lVkUttV9wqmdXFtEBXKcepvU/zfwbhjbkM5rxrquLW55dS1DfOrnAXCk5mg1be1sfY/WfMmayGy1NsbK1GLCYQ==}
     dependencies:
       '@types/hast': 2.3.4
       '@types/mdast': 3.0.10
@@ -3174,14 +3174,14 @@ packages:
     engines: {node: '>= 8'}
     dev: true
 
-  /mermaid/9.1.6:
-    resolution: {integrity: sha512-oBuQk7s55wQgEgH/AK0GYY8U0kBqOIGK9QlJL+VYxh+1kZQtU9tNwoy0gWCfBJDaFIRdfpc/fm9PagaIXg6XFQ==}
+  /mermaid/9.1.7:
+    resolution: {integrity: sha512-MRVHXy5FLjnUQUG7YS3UN9jEN6FXCJbFCXVGJQjVIbiR6Vhw0j/6pLIjqsiah9xoHmQU6DEaKOvB3S1g/1nBPA==}
     dependencies:
       '@braintree/sanitize-url': 6.0.0
       d3: 7.3.0
       dagre: 0.8.5
       dagre-d3: 0.6.4
-      dompurify: 2.3.10
+      dompurify: 2.4.0
       graphlib: 2.1.8
       khroma: 2.0.0
       moment-mini: 2.24.0
@@ -4072,7 +4072,7 @@ packages:
     dependencies:
       '@types/hast': 2.3.4
       '@types/mdast': 3.0.10
-      mdast-util-to-hast: 12.2.1
+      mdast-util-to-hast: 12.2.2
       unified: 10.1.2
     dev: false
 
