@@ -21,24 +21,43 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.node-version }}
-      - name: Cache pnpm modules
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: ${{ env.pnpm-version }}
+          run_install: false
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+      - name: pnpm modules & next build cache
         uses: actions/cache@v3
         with:
           path: |
-              ~/.pnpm-store
-              ${{ github.workspace }}/.next/cache
-              ~/.cache/ms-playwright
+            ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+            ${{ github.workspace }}/.next/cache
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.2
-        env: 
+      - name: playwright binary cache
+        id: playwright-cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+      - name: Install node dependencies
+        run: pnpm install
+        env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
-        with: 
-          version: ${{ env.pnpm-version }}
-          run_install: |
-            - recursive: true
+      - name: Install playwright (without cache)
+        run: pnpm playwright install chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+      - name: Install playwright (with cache)
+        run: pnpm playwright install-deps chromium
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
       - name: TypeScript compiler check
         run: pnpm run ts-check
       - name: Next.js linter
@@ -56,33 +75,51 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.node-version }}
-      - name: Cache pnpm modules
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.2
+        with:
+          version: ${{ env.pnpm-version }}
+          run_install: false
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+      - name: pnpm modules & next build cache
         uses: actions/cache@v3
         with:
           path: |
-              ~/.pnpm-store
-              ${{ github.workspace }}/.next/cache
-              ~/.cache/ms-playwright
+            ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+            ${{ github.workspace }}/.next/cache
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.2
+      - name: playwright binary cache
+        id: playwright-cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+      - name: Install node dependencies
+        run: pnpm install
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
-        with: 
-          version: ${{ env.pnpm-version }}
-          run_install: |
-            - recursive: true
-              args: [--strict-peer-dependencies=false]
+      - name: Install playwright (without cache)
+        run: pnpm playwright install chromium
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+      - name: Install playwright (with cache)
+        run: pnpm playwright install-deps chromium
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
       - name: Test build
         run: pnpm run build
       - name: Preview deployment
         uses: amondnet/vercel-action@v25
         with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}     # Required
-          github-token: ${{ secrets.GITHUB_TOKEN }}     # Optional 
-          vercel-org-id: ${{ secrets.ORG_ID }}          # Required
-          vercel-project-id: ${{ secrets.PROJECT_ID }}  # Required
-          alias-domains: |                              # Optional
+          vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
+          github-token: ${{ secrets.GITHUB_TOKEN }} # Optional
+          vercel-org-id: ${{ secrets.ORG_ID }} # Required
+          vercel-project-id: ${{ secrets.PROJECT_ID }} # Required
+          alias-domains: | # Optional
             staging.haxibami.net
