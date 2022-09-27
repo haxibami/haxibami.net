@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "prebuild": "node hooks/before-build.mjs",
-    "build": "playwright install chromium && next build",
+    "build": "next build",
     "postbuild": "node hooks/after-build.mjs",
     "start": "next start",
+    "pw-install": "playwright install chromium",
     "ts-check": "tsc --noEmit",
     "lint": "next lint",
     "format": "prettier --check '**/*.{ts, tsx, json}'",
