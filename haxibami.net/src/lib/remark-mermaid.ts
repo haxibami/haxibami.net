@@ -8,7 +8,7 @@ import { visit } from "unist-util-visit";
 import { isParent } from "./mdast-util-node-is";
 
 import type { Code, Paragraph } from "mdast";
-import type { Mermaid } from "mermaid";
+import type { Mermaid, Config } from "mermaid";
 import type { OptimizeOptions, OptimizedSvg } from "svgo";
 import type { Plugin, Transformer } from "unified";
 import type { Node, Parent } from "unist";
@@ -17,22 +17,14 @@ import type { VFileCompatible } from "vfile";
 declare const mermaid: Mermaid;
 
 export const UserTheme = {
-  Base: "base",
   Forest: "forest",
   Dark: "dark",
   Default: "default",
   Neutral: "neutral",
+  Null: "null",
 } as const;
 
-export type UserTheme = typeof UserTheme[keyof typeof UserTheme];
-
-enum Theme {
-  Base = "base",
-  Forest = "forest",
-  Dark = "dark",
-  Default = "default",
-  Neutral = "neutral",
-}
+export type Theme = typeof UserTheme[keyof typeof UserTheme];
 
 export const defaultSVGOOptions: OptimizeOptions = {
   js2svg: {
@@ -119,7 +111,7 @@ export interface RemarkMermaidOptions {
    *
    * @default 'default'
    */
-  theme?: UserTheme;
+  theme?: Theme;
 
   /**
    * Whether to wrap svg with <div> element.
@@ -230,13 +222,16 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
 async function getSvg(
   node: Code,
   page: playwright.Page,
-  theme: UserTheme,
+  theme: Theme,
   svgo: OptimizeOptions
 ) {
   const graph = await page.evaluate(
-    ([code, t]) => {
+    ([code, theme]) => {
       const id = "a";
-      mermaid.initialize({ theme: t as Theme });
+      const config: Config = {
+        theme: theme as Theme,
+      };
+      mermaid.initialize(config);
       const div = document.createElement("div");
       div.innerHTML = mermaid.render(id, code);
       return div.innerHTML;
