@@ -31,14 +31,14 @@ specifiers:
   husky: 8.0.1
   js-yaml: 4.1.0
   lint-staged: 13.0.3
-  mdast-util-to-hast: 12.2.2
+  mdast-util-to-hast: 12.2.4
   mermaid: 9.1.7
-  metadata-scraper: 0.2.60
+  metadata-scraper: 0.2.61
   next: 12.3.1
   next-themes: 0.2.1
-  playwright: 1.26.0
+  playwright: 1.26.1
   playwright-aws-lambda: 0.9.0
-  playwright-core: 1.26.0
+  playwright-core: 1.26.1
   prettier: 2.7.1
   react: 18.2.0
   react-dom: 18.2.0
@@ -79,14 +79,14 @@ dependencies:
   '@next/bundle-analyzer': 12.3.1
   feed: 4.2.2
   gray-matter: 4.0.3
-  mdast-util-to-hast: 12.2.2
+  mdast-util-to-hast: 12.2.4
   mermaid: 9.1.7
-  metadata-scraper: 0.2.60
+  metadata-scraper: 0.2.61
   next: 12.3.1_2mygebwfgdyopr3fy2qddu2eli
   next-themes: 0.2.1_azq6kxkn3od7qdylwkyksrwopy
-  playwright: 1.26.0
-  playwright-aws-lambda: 0.9.0_playwright-core@1.26.0
-  playwright-core: 1.26.0
+  playwright: 1.26.1
+  playwright-aws-lambda: 0.9.0_playwright-core@1.26.1
+  playwright-core: 1.26.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   rehype-autolink-headings: 6.1.1
@@ -527,10 +527,6 @@ packages:
     resolution: {integrity: sha512-W864tg/Osz1+9f4lrGTZpCSO5/z4608eUp19tbozkq2HJK6i3z1kT0H9tlADXuYIb1YYOBByU4Jsqkk75q48qA==}
     dependencies:
       '@types/unist': 2.0.6
-
-  /@types/mdurl/1.0.2:
-    resolution: {integrity: sha512-eC4U9MlIcu2q0KQmXszyn5Akca/0jrQmwDRgpAMJai7qBWq4amIQhZyNau4VYGtCeALvW1/NtjzJJ567aZxfKA==}
-    dev: false
 
   /@types/mermaid/9.1.0:
     resolution: {integrity: sha512-rc8QqhveKAY7PouzY/p8ljS+eBSNCv7o79L97RSub/Ic2SQ34ph1Ng3s8wFLWVjvaEt6RLOWtSCsgYWd95NY8A==}
@@ -3218,15 +3214,13 @@ packages:
       mdast-util-to-markdown: 1.3.0
     dev: false
 
-  /mdast-util-to-hast/12.2.2:
-    resolution: {integrity: sha512-lVkUttV9wqmdXFtEBXKcepvU/zfwbhjbkM5rxrquLW55dS1DfOrnAXCk5mg1be1sfY/WfMmayGy1NsbK1GLCYQ==}
+  /mdast-util-to-hast/12.2.4:
+    resolution: {integrity: sha512-a21xoxSef1l8VhHxS1Dnyioz6grrJkoaCUgGzMD/7dWHvboYX3VW53esRUfB5tgTyz4Yos1n25SPcj35dJqmAg==}
     dependencies:
       '@types/hast': 2.3.4
       '@types/mdast': 3.0.10
-      '@types/mdurl': 1.0.2
       mdast-util-definitions: 5.1.0
-      mdurl: 1.0.1
-      micromark-util-sanitize-uri: 1.0.0
+      micromark-util-sanitize-uri: 1.1.0
       trim-lines: 3.0.1
       unist-builder: 3.0.0
       unist-util-generated: 2.0.0
@@ -3267,10 +3261,6 @@ packages:
     resolution: {integrity: sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow==}
     dev: false
 
-  /mdurl/1.0.1:
-    resolution: {integrity: sha512-/sKlQJCBYVY9Ers9hqzKou4H6V5UWc/M59TH2dvkt+84itfnq7uFOMLpOiOS4ujvHP4etln18fmIxA5R5fll0g==}
-    dev: false
-
   /merge-stream/2.0.0:
     resolution: {integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==}
     dev: true
@@ -3294,8 +3284,8 @@ packages:
       stylis: 4.0.13
     dev: false
 
-  /metadata-scraper/0.2.60:
-    resolution: {integrity: sha512-ET78O85mh7YZyzDUlRljETKeVCl8Bx4XPYuV+Lb6SHsLcd3eJyrSOGjjVGfTySZhLKN2O57QqyZXcfTwwHjlCA==}
+  /metadata-scraper/0.2.61:
+    resolution: {integrity: sha512-ECV8r10nIVgn7Y5vY8lnlvi9vF1YgYBJjn2R1zrOcKRe47ra9Yg25ZE1ejL3Equqi8u2Mp346KHqIcR4PLdyTA==}
     dependencies:
       domino: 2.1.6
       got: 11.8.3
@@ -3326,7 +3316,7 @@ packages:
     resolution: {integrity: sha512-i3dmvU0htawfWED8aHMMAzAVp/F0Z+0bPh3YrbTPPL1v4YAlCZpy5rBO5p0LPYiZo0zFVkoYh7vDU7yQSiCMjg==}
     dependencies:
       micromark-util-character: 1.1.0
-      micromark-util-sanitize-uri: 1.0.0
+      micromark-util-sanitize-uri: 1.1.0
       micromark-util-symbol: 1.0.1
       micromark-util-types: 1.0.2
       uvu: 0.5.3
@@ -3339,7 +3329,7 @@ packages:
       micromark-factory-space: 1.0.0
       micromark-util-character: 1.1.0
       micromark-util-normalize-identifier: 1.0.0
-      micromark-util-sanitize-uri: 1.0.0
+      micromark-util-sanitize-uri: 1.1.0
       micromark-util-symbol: 1.0.1
       uvu: 0.5.3
     dev: false
@@ -3465,7 +3455,7 @@ packages:
     resolution: {integrity: sha512-agJ5B3unGNJ9rJvADMJ5ZiYjBRyDpzKAOk01Kpi1TKhlT1APx3XZk6eN7RtSz1erbWHC2L8T3xLZ81wdtGRZzg==}
     dependencies:
       micromark-util-symbol: 1.0.1
-      micromark-util-types: 1.0.1
+      micromark-util-types: 1.0.2
     dev: false
 
   /micromark-util-chunked/1.0.0:
@@ -3524,8 +3514,8 @@ packages:
       micromark-util-types: 1.0.2
     dev: false
 
-  /micromark-util-sanitize-uri/1.0.0:
-    resolution: {integrity: sha512-cCxvBKlmac4rxCGx6ejlIviRaMKZc0fWm5HdCHEeDWRSkn44l6NdYVRyU+0nT1XC72EQJMZV8IPHF+jTr56lAg==}
+  /micromark-util-sanitize-uri/1.1.0:
+    resolution: {integrity: sha512-RoxtuSCX6sUNtxhbmsEFQfWzs8VN7cTctmBPvYivo98xb/kDEoTCtJQX5wyzIYEmk/lvNFTat4hL8oW0KndFpg==}
     dependencies:
       micromark-util-character: 1.1.0
       micromark-util-encode: 1.0.0
@@ -3571,7 +3561,7 @@ packages:
       micromark-util-encode: 1.0.0
       micromark-util-normalize-identifier: 1.0.0
       micromark-util-resolve-all: 1.0.0
-      micromark-util-sanitize-uri: 1.0.0
+      micromark-util-sanitize-uri: 1.1.0
       micromark-util-subtokenize: 1.0.2
       micromark-util-symbol: 1.0.1
       micromark-util-types: 1.0.2
@@ -3948,29 +3938,29 @@ packages:
     hasBin: true
     dev: true
 
-  /playwright-aws-lambda/0.9.0_playwright-core@1.26.0:
+  /playwright-aws-lambda/0.9.0_playwright-core@1.26.1:
     resolution: {integrity: sha512-MnzLTZ4B9I4JdWJ+eq7BbrhFjL6VyT0bF+ccNjBCwjwlBNQaTEXOcrkAe+p8YkOXnYUqBbsrZj5Ene8PqKosiw==}
     engines: {node: '>= 8.0.0'}
     peerDependencies:
       playwright-core: ^1
     dependencies:
       lambdafs: 2.1.1
-      playwright-core: 1.26.0
+      playwright-core: 1.26.1
     dev: false
 
-  /playwright-core/1.26.0:
-    resolution: {integrity: sha512-p8huU8eU4gD3VkJd3DA1nA7R3XA6rFvFL+1RYS96cSljCF2yJE9CWEHTPF4LqX8KN9MoWCrAfVKP5381X3CZqg==}
+  /playwright-core/1.26.1:
+    resolution: {integrity: sha512-hzFchhhxnEiPc4qVPs9q2ZR+5eKNifY2hQDHtg1HnTTUuphYCBP8ZRb2si+B1TR7BHirgXaPi48LIye5SgrLAA==}
     engines: {node: '>=14'}
     hasBin: true
     dev: false
 
-  /playwright/1.26.0:
-    resolution: {integrity: sha512-XxTVlvFEYHdatxUkh1KiPq9BclNtFKMi3BgQnl/aactmhN4G9AkZUXwt0ck6NDAOrDFlfibhbM7A1kZwQJKSBw==}
+  /playwright/1.26.1:
+    resolution: {integrity: sha512-WQmEdCgYYe8jOEkhkW9QLcK0PB+w1RZztBLYIT10MEEsENYg251cU0IzebDINreQsUt+HCwwRhtdz4weH9ICcQ==}
     engines: {node: '>=14'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      playwright-core: 1.26.0
+      playwright-core: 1.26.1
     dev: false
 
   /postcss/8.4.14:
@@ -4189,7 +4179,7 @@ packages:
     dependencies:
       '@types/hast': 2.3.4
       '@types/mdast': 3.0.10
-      mdast-util-to-hast: 12.2.2
+      mdast-util-to-hast: 12.2.4
       unified: 10.1.2
     dev: false
 
