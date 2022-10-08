@@ -2,6 +2,7 @@ import fs from "fs";
 import prettier from "prettier";
 import { globby } from "globby";
 import { dateConverter } from "./lib.mjs";
+import type { IndexItem } from "./interface.mjs";
 
 // variables
 const HOST = "https://www.haxibami.net";
@@ -12,7 +13,8 @@ const indexFile = fs.readFileSync("src/share/index.json", "utf-8");
 const index = JSON.parse(indexFile);
 
 // format xml
-const formatXml = (sitemap) => prettier.format(sitemap, { parser: "html" });
+const formatXml = (sitemap: string) =>
+  prettier.format(sitemap, { parser: "html" });
 
 // generate sitemap & robots.txt
 const sitemapGenerator = async () => {
@@ -37,7 +39,7 @@ const sitemapGenerator = async () => {
 
   const allBlogs = index.articles.blog;
 
-  const blogInfos = allBlogs.map((item) => {
+  const blogInfos = allBlogs.map((item: IndexItem) => {
     const blogInfo = {
       relpath: `blog/posts/${item.slug}`,
       lastmod: dateConverter(item.date),
@@ -88,7 +90,7 @@ Sitemap: https://www.haxibami.net/sitemap.xml
 };
 
 const GenSitemap = () => {
-  return new Promise((resolve) => {
+  return new Promise<void>((resolve) => {
     sitemapGenerator();
     resolve();
   });

@@ -1,11 +1,15 @@
 import fs from "fs";
+
 import { Feed } from "feed";
-import { readYaml, getAllPosts, MdToHtml, dateConverter } from "./lib.mjs";
+
+import type { SiteInfo } from "../../src/lib/interface";
+
+import { readYaml, MdToHtml, dateConverter, getAllPosts } from "./lib.mjs";
 
 // variables
 const HOST = "https://www.haxibami.net";
 
-const meta = readYaml("meta.yaml");
+const meta = readYaml("meta.yaml") as SiteInfo;
 
 // generate feed
 const feedGenerator = () => {
@@ -54,7 +58,7 @@ const feedGenerator = () => {
 };
 
 const GenFeed = () => {
-  return new Promise((resolve) => {
+  return new Promise<void>((resolve) => {
     feedGenerator();
     resolve();
   });

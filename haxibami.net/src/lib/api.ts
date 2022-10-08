@@ -26,7 +26,7 @@ export const getPostSlugs = (posttype: PostType) => {
 
 export const getPostBySlug = (
   slug: string,
-  fields: string[] = [],
+  fields: string[],
   posttype: PostType
 ) => {
   const fullPath = join(getArticlesDir(posttype), `${slug}.md`);
@@ -58,7 +58,7 @@ export const getPostBySlug = (
   return Post;
 };
 
-export const getDocBySlug = (slug: string, fields: string[] = []) => {
+export const getDocBySlug = (slug: string, fields: string[]) => {
   const fullPath = join(getDocsDir(), `${slug}.md`);
   const fileContent = fs.readFileSync(fullPath, "utf-8");
   const { data, content } = matter(fileContent);
@@ -86,7 +86,7 @@ export const getDocBySlug = (slug: string, fields: string[] = []) => {
   return Post;
 };
 
-export const getAllPosts = (fields: string[] = [], posttype: PostType) => {
+export const getAllPosts = (fields: string[], posttype: PostType) => {
   const slugs: string[] = getPostSlugs(posttype);
   const posts: PostItem[] = slugs
     .map((slug) => getPostBySlug(slug, fields, posttype))
