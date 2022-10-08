@@ -1,12 +1,16 @@
 import fs from "fs";
-import { getAllPosts } from "./lib.mjs";
+
 import prettier from "prettier";
+
+import { getAllPosts } from "./lib.mjs";
+
+import type { IndexItem } from "./interface.mjs";
 
 const articleIndexer = () => {
   const allBlogs = getAllPosts(["slug", "title", "date"], "blog");
   const allGrads = getAllPosts(["slug", "title", "date"], "grad_essay");
   const blogIndex = allBlogs.map((item) => {
-    const indexitem = {
+    const indexitem: IndexItem = {
       slug: item.slug,
       title: item.title,
       date: item.date,
@@ -14,7 +18,7 @@ const articleIndexer = () => {
     return indexitem;
   });
   const gradIndex = allGrads.map((item) => {
-    const indexitem = {
+    const indexitem: IndexItem = {
       slug: item.slug,
       title: item.title,
       date: item.date,
@@ -29,14 +33,16 @@ const articleIndexer = () => {
     },
   };
 
-  const formatted = (json) => prettier.format(json, { parser: "json" });
+  const formatted = (json: string) => prettier.format(json, { parser: "json" });
 
   fs.writeFileSync("src/share/index.json", formatted(JSON.stringify(index)));
 };
 
-export default () => {
-  return new Promise(async (resolve) => {
+const exp = () => {
+  return new Promise<void>((resolve) => {
     articleIndexer();
     resolve();
   });
 };
+
+export default exp;

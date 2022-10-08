@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node hooks/before-build.mjs",
+    "prebuild": "ts-node --esm hooks/before-build.mts",
     "build": "next build",
-    "postbuild": "node hooks/after-build.mjs",
+    "postbuild": "ts-node --esm hooks/after-build.mts",
     "start": "next start",
     "pw-install": "playwright install chromium",
     "ts-check": "tsc --noEmit",
@@ -91,6 +91,7 @@
     "lint-staged": "13.0.3",
     "prettier": "2.7.1",
     "sass": "1.55.0",
+    "ts-node": "^10.9.1",
     "typescript": "4.8.4"
   }
 }

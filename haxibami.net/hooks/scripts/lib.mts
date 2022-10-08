@@ -13,13 +13,15 @@ import remarkRehype from "remark-rehype";
 import rehypeKatex from "rehype-katex";
 import rehypeStringify from "rehype-stringify";
 
-export const getArticlesDir = (articletype) => {
-  const ArticlesDir = join(process.cwd(), `src/articles/${articletype}`);
+import type { PostType, PostItem, SiteInfo } from "../../src/lib/interface";
+
+export const getArticlesDir = (posttype: PostType) => {
+  const ArticlesDir = join(process.cwd(), `src/articles/${posttype}`);
   return ArticlesDir;
 };
 
-export const getPostSlugs = (articletype) => {
-  const allobjects = fs.readdirSync(getArticlesDir(articletype), {
+export const getPostSlugs = (posttype: PostType) => {
+  const allobjects = fs.readdirSync(getArticlesDir(posttype), {
     withFileTypes: true,
   });
   return allobjects
@@ -28,16 +30,15 @@ export const getPostSlugs = (articletype) => {
 };
 
 export const getPostBySlug = (
-  slug, // string
-  fields, // string[]
-  articletype //ArticleType
+  slug: string,
+  fields: string[],
+  posttype: PostType
 ) => {
-  const fullPath = join(getArticlesDir(articletype), `${slug}.md`);
+  const fullPath = join(getArticlesDir(posttype), `${slug}.md`);
   const fileContent = fs.readFileSync(fullPath, "utf-8");
   const { data, content } = matter(fileContent);
 
-  const Post = {
-    // BlogItem
+  const Post: PostItem = {
     slug: "",
     title: "",
     date: "",
@@ -62,16 +63,13 @@ export const getPostBySlug = (
   return Post;
 };
 
-export const getAllPosts = (
-  fields = [], // string[]
-  articletype // ArticleType
-) => {
-  const slugs = getPostSlugs(articletype); // string[]
-  const posts = slugs // BlogItem[]
-    .map((slug) => getPostBySlug(slug, fields, articletype))
+export const getAllPosts = (fields: string[], posttype: PostType) => {
+  const slugs: string[] = getPostSlugs(posttype);
+  const posts: PostItem[] = slugs
+    .map((slug) => getPostBySlug(slug, fields, posttype))
     .sort((a, b) => {
-      const dateA = Number(a.date); // number
-      const dateB = Number(b.date); // number
+      const dateA = Number(a.date);
+      const dateB = Number(b.date);
 
       return dateB - dateA;
     });
@@ -79,24 +77,21 @@ export const getAllPosts = (
   return posts;
 };
 
-export const getPostTags = (articletype) => {
-  // ArticleType
-  const alltags = getAllPosts(["tags"], articletype);
-  let taglist = []; // string[]
+export const getPostTags = (posttype: PostType) => {
+  const alltags = getAllPosts(["tags"], posttype);
+  let taglist: string[] = [];
   alltags.forEach(
-    (tagset) => (taglist = taglist.concat(tagset.tags)) // BlogItem
+    (tagset: PostItem) => (taglist = taglist.concat(tagset.tags))
   );
-  const res = Array.from(new Set(taglist)); // string[]
+  const res: string[] = Array.from(new Set(taglist)).sort();
 
   return res;
 };
 
-export const getPostsByTag = (tag, articletype) => {
-  // string, ArticleType
-  const stpair = getAllPosts(["slug", "tags", "date"], articletype); // BlogItem[]
-  let taggedposts = []; // string[]
-  stpair.forEach((item) => {
-    // BlogItem
+export const getPostsByTag = (tag: string, posttype: PostType) => {
+  const stpair: PostItem[] = getAllPosts(["slug", "tags", "date"], posttype);
+  const taggedposts: string[] = [];
+  stpair.forEach((item: PostItem) => {
     if (item.tags.includes(tag)) {
       taggedposts.push(item.slug);
     }
@@ -110,13 +105,13 @@ export const getShareDir = () => {
   return shareDir;
 };
 
-export const readYaml = (filename) => {
+export const readYaml = (filename: string) => {
   const fullPath = join(getShareDir(), filename);
-  const content = yaml.load(fs.readFileSync(fullPath, "utf8"));
+  const content = yaml.load(fs.readFileSync(fullPath, "utf8")) as SiteInfo;
   return content;
 };
 
-export const MdToHtml = (md) => {
+export const MdToHtml = (md: string) => {
   const result = unified()
     .use(remarkParse)
     .use(stripMarkdown, {
@@ -134,6 +129,6 @@ export const MdToHtml = (md) => {
   return result.toString();
 };
 
-export const dateConverter = (date) => {
+export const dateConverter = (date: string) => {
   return date.slice(0, 4) + "-" + date.slice(4, 6) + "-" + date.slice(6);
 };
