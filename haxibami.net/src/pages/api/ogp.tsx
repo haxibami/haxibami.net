@@ -1,173 +1,119 @@
 import fs from "fs";
-import path from "path";
 
 import React from "react";
-import ReactDomServer from "react-dom/server";
 
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextRequest } from "next/server";
 
-import * as chromium from "playwright-aws-lambda";
+import { ImageResponse } from "@vercel/og";
 
-import OgpImage from "components/OgpImage";
-
-import type { OgpInfo } from "components/OgpImage";
-
-// full path resolve
-const baseFullPath = path.resolve("./");
-
-// image paths
-const iconPath = path.join(baseFullPath, "public/icon_ange_glasses_192.webp");
-const icon: string = fs.readFileSync(iconPath, "base64");
-
-// font paths
-const monopath = path.join(
-  baseFullPath,
-  "public/fonts/RobotoMono-Medium.woff2"
-);
-const mono = fs.readFileSync(monopath).toString("base64");
-
-const notopath = path.join(
-  baseFullPath,
-  "public/fonts/NotoSansCJKjp-Bold.woff2"
-);
-const noto = fs.readFileSync(notopath).toString("base64");
-
-const style = `
-@font-face {
-  font-family: "Noto Sans CJK JP";
-  font-style: normal;
-  font-weight: bold;
-  src: url(data:font/woff2;charset=utf-8;base64,${noto}) format("woff2");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Roboto Mono";
-  font-style: normal;
-  font-weight: 500;
-  src: url(data:font/woff2;charset=utf-8;base64,${mono}) format("woff2");
-  font-display: swap;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-}
-
-html,
-body {
-  width: 100%;
-  height: 100%;
-  background: #292433;
-  font-family: "Noto Sans CJK JP", sans-serif;
-  font-size: 125%;
-  color: #d2ced9;
-}
-
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(to right bottom, #d9989c, #a6b4de);
-}
-
-#Wrapper {
-  margin: 50px;
-  background: white;
-  grid-gap: 30px;
-  border-radius: 30px;
-  background: #1c1921;
-  box-shadow: 10px 10px 20px rgba(28, 25, 33, 0.4),
-    -10px -10px 20px rgba(28, 25, 33, 0.4);
-  padding: 50px;
-  display: grid;
-  grid-template-rows: 280px 100px;
-  grid-template-columns: 700px 250px;
-  grid-template-areas: "Title Title" "Name Date";
-}
-#Wrapper #Title {
-  font-size: 60px;
-  grid-area: Title;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-#Wrapper #Title p {
-  max-height: 100%;
-  overflow-wrap: anywhere;
-}
-#Wrapper #Name {
-  grid-area: Name;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 20px;
-}
-#Wrapper #Name img {
-  margin-right: 20px;
-  border-radius: 50%;
-}
-#Wrapper #Date {
-  grid-area: Date;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  font-family: "Roboto Mono", monospace;
-}
-`;
-
-const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const playwrightArgs = {
-      production: {
-        args: chromium.getChromiumArgs(true),
-      },
-      development: {
-        executablePath: "/opt/google/chrome/google-chrome",
-        headless: true,
-        args: chromium.getChromiumArgs(false),
-      },
-      test: {},
-    }[process.env.NODE_ENV];
-
-    const viewport = { width: 1200, height: 630 };
-
-    const browser = await chromium.launchChromium(playwrightArgs);
-    const context = await browser.newContext({ viewport: viewport });
-    const page = await context.newPage();
-    await page.setExtraHTTPHeaders({
-      "Accept-Language": "ja-JP",
-    });
-
-    const title = req.query.title ?? "";
-
-    const date = req.query.date ?? "";
-
-    const ogpinfo: OgpInfo = {
-      title: title.toString(),
-      date: date.toString(),
-      icon: icon,
-      style: style,
-    };
-
-    const markup = ReactDomServer.renderToStaticMarkup(
-      <OgpImage {...ogpinfo} />
-    );
-    const html = `<!doctype html>${markup}`;
-
-    await page.setContent(html);
-    const image = await page.screenshot({ type: "png" });
-    await browser.close();
-
-    res.setHeader("Cache-Control", "s-maxage=5256000, stale-while-revalidate");
-    res.setHeader("Content-Type", "image/png");
-
-    res.end(image);
-  } catch (error) {
-    console.log("[Error]: ", error);
-    res.status(500).send("Internal Server Error");
-  }
+export const config = {
+  runtime: "experimental-edge",
 };
 
-export default OgpGen;
+export default async function handler(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+
+    // ?title=<title>
+    const hasTitle = searchParams.has("title");
+    const title = hasTitle
+      ? (searchParams.get("title")?.slice(0, 40) as string)
+      : "";
+
+    // ?date=<date>
+    const hasDate = searchParams.has("date");
+    const date = hasDate
+      ? `📅 ― ${searchParams.get("date")?.slice(0, 100)}`
+      : "";
+
+    const notoFontData = await fetch(
+      new URL("../../assets/NotoSansCJKjp-Bold.woff", import.meta.url)
+    ).then((res) => res.arrayBuffer());
+
+    const robotoFontData = await fetch(
+      new URL("../../assets/RobotoMono-Medium.woff", import.meta.url)
+    ).then((res) => res.arrayBuffer());
+
+    const pngIcon = new URL(
+      "../../assets/icon_ange_glasses_192.png",
+      import.meta.url
+    ).toString();
+
+    return new ImageResponse(
+      (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "30px",
+            fontFamily: "Noto Sans CJK JP",
+            backgroundColor: "#171726",
+            color: "#f2f0e6",
+          }}
+        >
+          <div tw="flex flex-col p-12 w-full h-full border-solid border-4 border-white rounded-xl shadow-lg shadow-black">
+            <div tw="flex flex-1 max-w-full items-center max-h-full">
+              <h1 tw="text-6xl leading-normal max-w-full">
+                <p tw="w-full justify-center">{title}</p>
+              </h1>
+            </div>
+            <div tw="flex flex-row justify-between items-center w-full">
+              <div tw="flex items-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={pngIcon}
+                  alt="haxicon"
+                  width={100}
+                  height={100}
+                  tw="rounded-full mr-5"
+                />
+                <h2 tw="text-4xl mr-5">
+                  <p
+                    style={{
+                      fontFamily: "Roboto Mono",
+                    }}
+                  >
+                    haxibami.net
+                  </p>
+                </h2>
+              </div>
+              <div tw="flex">
+                <h2 tw="text-4xl">
+                  <p>{date}</p>
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+      {
+        width: 1200,
+        height: 630,
+        fonts: [
+          {
+            name: "Noto Sans CJK JP",
+            data: notoFontData,
+            weight: 700,
+            style: "normal",
+          },
+          {
+            name: "Roboto Mono",
+            data: robotoFontData,
+            weight: 500,
+            style: "normal",
+          },
+        ],
+        emoji: "twemoji",
+      }
+    );
+  } catch (e) {
+    console.log(`${e}`);
+    return new Response(`Failed to generate the image`, {
+      status: 500,
+    });
+  }
+}
