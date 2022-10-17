@@ -1,7 +1,3 @@
-import fs from "fs";
-
-import React from "react";
-
 import type { NextRequest } from "next/server";
 
 import { ImageResponse } from "@vercel/og";
