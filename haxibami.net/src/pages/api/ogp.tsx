@@ -14,16 +14,17 @@ const handler: NextApiHandler = async (req) => {
     // ?title=<title>
     const hasTitle = searchParams.has("title");
     const title = hasTitle
-      ? (searchParams.get("title")?.slice(0, 100) as string)
+      ? (searchParams.get("title")?.slice(0, 80) as string)
       : "";
 
     // ?date=<date>
     const hasDate = searchParams.has("date");
     const date = hasDate ? `📅 ― ${searchParams.get("date")?.slice(0, 8)}` : "";
 
-    //     const notoFontData = await fetch(
-    //       "https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff"
-    //     ).then((res) => res.arrayBuffer());
+    // CJK font is so large that if placed locally it easily exceeds the 1MB Edge Function limit >_<
+    const notoFontData = await fetch(
+      "https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff"
+    ).then((res) => res.arrayBuffer());
 
     const robotoFontData = await fetch(
       new URL("../../assets/RobotoMono-Medium.woff", import.meta.url)
@@ -45,15 +46,14 @@ const handler: NextApiHandler = async (req) => {
             alignItems: "center",
             justifyContent: "center",
             padding: "30px",
-            fontFamily: "sans-serif",
+            fontFamily: "Noto Sans CJK JP",
             backgroundColor: "#171726",
-            fontWeight: "bold",
             color: "#f2f0e6",
           }}
         >
           <div tw="flex flex-col p-12 w-full h-full border-solid border-4 border-white rounded-xl shadow-lg shadow-black">
             <div tw="flex flex-1 max-w-full items-center max-h-full">
-              <h1 tw="text-6xl leading-normal max-w-full">
+              <h1 tw="text-6xl leading-tight max-w-full">
                 <p tw="w-full justify-center">{title}</p>
               </h1>
             </div>
@@ -90,13 +90,12 @@ const handler: NextApiHandler = async (req) => {
         width: 1200,
         height: 630,
         fonts: [
-          // CJK font is so large that it easily exceeds the 1MB Edge Function limit >_<
-          //           {
-          //             name: "Noto Sans CJK JP",
-          //             data: notoFontData,
-          //             weight: 700,
-          //             style: "normal",
-          //           },
+          {
+            name: "Noto Sans CJK JP",
+            data: notoFontData,
+            weight: 700,
+            style: "normal",
+          },
           {
             name: "Roboto Mono",
             data: robotoFontData,
