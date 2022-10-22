@@ -22,7 +22,7 @@ const handler: NextApiHandler = async (req) => {
     const date = hasDate ? `📅 ― ${searchParams.get("date")?.slice(0, 8)}` : "";
 
     const notoFontData = await fetch(
-      new URL("../../assets/NotoSansCJKjp-Bold.woff")
+      new URL("../../assets/NotoSansCJKjp-Bold.woff", import.meta.url)
     ).then((res) => res.arrayBuffer());
 
     //     const robotoFontData = await fetch(
@@ -78,7 +78,13 @@ const handler: NextApiHandler = async (req) => {
               </div>
               <div tw="flex">
                 <h2 tw="text-4xl">
-                  <p>{date}</p>
+                  <p
+                    style={{
+                      fontFamily: "monospace",
+                    }}
+                  >
+                    {date}
+                  </p>
                 </h2>
               </div>
             </div>
