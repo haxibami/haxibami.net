@@ -21,14 +21,14 @@ const handler: NextApiHandler = async (req) => {
     const hasDate = searchParams.has("date");
     const date = hasDate ? `📅 ― ${searchParams.get("date")?.slice(0, 8)}` : "";
 
-    const notoFontData = await fetch(
-      new URL("../../assets/NotoSansCJKjp-Bold.woff", import.meta.url)
-    ).then((res) => res.arrayBuffer());
+    //      const robotoFontData = await fetch(
+    //        new URL("../../assets/NotoSansCJKjp-Bold.woff", import.meta.url)
+    //      ).then((res) => res.arrayBuffer());
 
-    //     const pngIcon = new URL(
-    //       "../../assets/icon_ange_glasses_192.png",
-    //       import.meta.url
-    //     ).toString();
+    const pngIcon = new URL(
+      "../../assets/icon_ange_glasses_192.png",
+      import.meta.url
+    ).toString();
 
     return new ImageResponse(
       (
@@ -56,7 +56,7 @@ const handler: NextApiHandler = async (req) => {
               <div tw="flex items-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="https://github.com/haxibami.png"
+                  src={pngIcon}
                   alt="haxicon"
                   width={100}
                   height={100}
@@ -90,14 +90,14 @@ const handler: NextApiHandler = async (req) => {
       {
         width: 1200,
         height: 630,
-        fonts: [
-          {
-            name: "Noto Sans CJK JP",
-            data: notoFontData,
-            weight: 700,
-            style: "normal",
-          },
-        ],
+        //         fonts: [
+        //           {
+        //             name: "Roboto Mono",
+        //             data: robotoFontData,
+        //             weight: 700,
+        //             style: "normal",
+        //           },
+        //         ],
       }
     );
   } catch (e) {
