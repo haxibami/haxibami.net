@@ -21,14 +21,13 @@ const handler: NextApiHandler = async (req) => {
     const hasDate = searchParams.has("date");
     const date = hasDate ? `📅 ― ${searchParams.get("date")?.slice(0, 8)}` : "";
 
-    // CJK font is so large that if placed locally it easily exceeds the 1MB Edge Function limit >_<
     const notoFontData = await fetch(
-      "https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff"
+      new URL("../../assets/NotoSansCJKjp-Bold.woff")
     ).then((res) => res.arrayBuffer());
 
-    const robotoFontData = await fetch(
-      new URL("../../assets/RobotoMono-Medium.woff", import.meta.url)
-    ).then((res) => res.arrayBuffer());
+    //     const robotoFontData = await fetch(
+    //       new URL("../../assets/RobotoMono-Medium.woff", import.meta.url)
+    //     ).then((res) => res.arrayBuffer());
 
     const pngIcon = new URL(
       "../../assets/icon_ange_glasses_192.png",
@@ -70,7 +69,7 @@ const handler: NextApiHandler = async (req) => {
                 <h2 tw="text-4xl mr-5">
                   <p
                     style={{
-                      fontFamily: "Roboto Mono",
+                      fontFamily: "monospace",
                     }}
                   >
                     haxibami.net
@@ -96,12 +95,12 @@ const handler: NextApiHandler = async (req) => {
             weight: 700,
             style: "normal",
           },
-          {
-            name: "Roboto Mono",
-            data: robotoFontData,
-            weight: 500,
-            style: "normal",
-          },
+          //           {
+          //             name: "Roboto Mono",
+          //             data: robotoFontData,
+          //             weight: 500,
+          //             style: "normal",
+          //           },
         ],
       }
     );
