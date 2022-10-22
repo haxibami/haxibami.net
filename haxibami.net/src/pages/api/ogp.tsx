@@ -25,14 +25,10 @@ const handler: NextApiHandler = async (req) => {
       new URL("../../assets/NotoSansCJKjp-Bold.woff", import.meta.url)
     ).then((res) => res.arrayBuffer());
 
-    //     const robotoFontData = await fetch(
-    //       new URL("../../assets/RobotoMono-Medium.woff", import.meta.url)
-    //     ).then((res) => res.arrayBuffer());
-
-    const pngIcon = new URL(
-      "../../assets/icon_ange_glasses_192.png",
-      import.meta.url
-    ).toString();
+    //     const pngIcon = new URL(
+    //       "../../assets/icon_ange_glasses_192.png",
+    //       import.meta.url
+    //     ).toString();
 
     return new ImageResponse(
       (
@@ -50,7 +46,7 @@ const handler: NextApiHandler = async (req) => {
             color: "#f2f0e6",
           }}
         >
-          <div tw="flex flex-col p-12 w-full h-full border-solid border-4 border-white rounded-xl shadow-lg shadow-black">
+          <div tw="flex flex-col p-12 w-full h-full border-solid border-4 border-white rounded-xl">
             <div tw="flex flex-1 max-w-full items-center max-h-full">
               <h1 tw="text-6xl leading-tight max-w-full">
                 <p tw="w-full justify-center">{title}</p>
@@ -60,7 +56,7 @@ const handler: NextApiHandler = async (req) => {
               <div tw="flex items-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={pngIcon}
+                  src="https://github.com/haxibami.png"
                   alt="haxicon"
                   width={100}
                   height={100}
@@ -101,12 +97,6 @@ const handler: NextApiHandler = async (req) => {
             weight: 700,
             style: "normal",
           },
-          //           {
-          //             name: "Roboto Mono",
-          //             data: robotoFontData,
-          //             weight: 500,
-          //             style: "normal",
-          //           },
         ],
       }
     );
