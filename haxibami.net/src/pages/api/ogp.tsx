@@ -15,18 +15,20 @@ const handler = async (req: NextRequest) => {
     const date = searchParams.has("date")
       ? `📅 ― ${searchParams.get("date")?.slice(0, 8)}`
       : "";
+
+    // CJK font is so large that if placed locally it easily exceeds the 1MB Edge Function limit >_<
     const notoFontData = await fetch(
-      new URL("../../assets/NotoSansCJKjp-Bold.woff", import.meta.url)
+      "https://rawcdn.githack.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff"
     ).then((res) => res.arrayBuffer());
 
-    //     const robotoFontData = await fetch(
-    //       new URL("../../assets/RobotoMono-Medium.woff", import.meta.url)
-    //     ).then((res) => res.arrayBuffer());
-    //
-    //     const pngIcon = new URL(
-    //       "../../assets/icon_ange_glasses_192.png",
-    //       import.meta.url
-    //     ).toString();
+    const robotoFontData = await fetch(
+      new URL("../../assets/RobotoMono-Medium.woff", import.meta.url)
+    ).then((res) => res.arrayBuffer());
+
+    const pngIcon = new URL(
+      "../../assets/icon_ange_glasses_192.png",
+      import.meta.url
+    ).toString();
 
     return new ImageResponse(
       (
@@ -54,7 +56,7 @@ const handler = async (req: NextRequest) => {
               <div tw="flex items-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="https://github.com/haxibami.png"
+                  src={pngIcon}
                   alt="haxicon"
                   width={100}
                   height={100}
@@ -63,7 +65,7 @@ const handler = async (req: NextRequest) => {
                 <h2 tw="text-4xl mr-5">
                   <p
                     style={{
-                      fontFamily: "monospace",
+                      fontFamily: "Roboto Mono",
                     }}
                   >
                     haxibami.net
@@ -87,12 +89,12 @@ const handler = async (req: NextRequest) => {
             weight: 700,
             style: "normal",
           },
-          //           {
-          //             name: "Roboto Mono",
-          //             data: robotoFontData,
-          //             weight: 500,
-          //             style: "normal",
-          //           },
+          {
+            name: "Roboto Mono",
+            data: robotoFontData,
+            weight: 500,
+            style: "normal",
+          },
         ],
       }
     );
