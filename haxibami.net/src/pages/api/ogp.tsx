@@ -1,4 +1,4 @@
-import type { NextApiHandler } from "next";
+import type { NextRequest } from "next/server";
 
 import { ImageResponse } from "@vercel/og";
 
@@ -6,29 +6,27 @@ export const config = {
   runtime: "experimental-edge",
 };
 
-const handler: NextApiHandler = async (req) => {
+const handler = async (req: NextRequest) => {
   try {
-    if (!req.url) throw Error("not supported.");
     const { searchParams } = new URL(req.url);
-
-    // ?title=<title>
-    const hasTitle = searchParams.has("title");
-    const title = hasTitle
-      ? (searchParams.get("title")?.slice(0, 80) as string)
+    const title = searchParams.has("title")
+      ? searchParams.get("title")?.slice(0, 80)
       : "";
+    const date = searchParams.has("date")
+      ? `📅 ― ${searchParams.get("date")?.slice(0, 8)}`
+      : "";
+    const notoFontData = await fetch(
+      new URL("../../assets/NotoSansCJKjp-Bold.woff", import.meta.url)
+    ).then((res) => res.arrayBuffer());
 
-    // ?date=<date>
-    const hasDate = searchParams.has("date");
-    const date = hasDate ? `📅 ― ${searchParams.get("date")?.slice(0, 8)}` : "";
-
-    //      const robotoFontData = await fetch(
-    //        new URL("../../assets/NotoSansCJKjp-Bold.woff", import.meta.url)
-    //      ).then((res) => res.arrayBuffer());
-
-    const pngIcon = new URL(
-      "../../assets/icon_ange_glasses_192.png",
-      import.meta.url
-    ).toString();
+    //     const robotoFontData = await fetch(
+    //       new URL("../../assets/RobotoMono-Medium.woff", import.meta.url)
+    //     ).then((res) => res.arrayBuffer());
+    //
+    //     const pngIcon = new URL(
+    //       "../../assets/icon_ange_glasses_192.png",
+    //       import.meta.url
+    //     ).toString();
 
     return new ImageResponse(
       (
@@ -56,7 +54,7 @@ const handler: NextApiHandler = async (req) => {
               <div tw="flex items-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={pngIcon}
+                  src="https://github.com/haxibami.png"
                   alt="haxicon"
                   width={100}
                   height={100}
@@ -74,13 +72,7 @@ const handler: NextApiHandler = async (req) => {
               </div>
               <div tw="flex">
                 <h2 tw="text-4xl">
-                  <p
-                    style={{
-                      fontFamily: "monospace",
-                    }}
-                  >
-                    {date}
-                  </p>
+                  <p>{date}</p>
                 </h2>
               </div>
             </div>
@@ -88,16 +80,20 @@ const handler: NextApiHandler = async (req) => {
         </div>
       ),
       {
-        width: 1200,
-        height: 630,
-        //         fonts: [
-        //           {
-        //             name: "Roboto Mono",
-        //             data: robotoFontData,
-        //             weight: 700,
-        //             style: "normal",
-        //           },
-        //         ],
+        fonts: [
+          {
+            name: "Noto Sans CJK JP",
+            data: notoFontData,
+            weight: 700,
+            style: "normal",
+          },
+          //           {
+          //             name: "Roboto Mono",
+          //             data: robotoFontData,
+          //             weight: 500,
+          //             style: "normal",
+          //           },
+        ],
       }
     );
   } catch (e) {
