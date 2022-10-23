@@ -1,4 +1,4 @@
-import type { NextApiHandler } from "next";
+import type { NextRequest } from "next/server";
 
 import { ImageResponse } from "@vercel/og";
 
@@ -6,24 +6,19 @@ export const config = {
   runtime: "experimental-edge",
 };
 
-const handler: NextApiHandler = async (req) => {
+const handler = async (req: NextRequest) => {
   try {
-    if (!req.url) throw Error("not supported.");
     const { searchParams } = new URL(req.url);
-
-    // ?title=<title>
-    const hasTitle = searchParams.has("title");
-    const title = hasTitle
-      ? (searchParams.get("title")?.slice(0, 80) as string)
+    const title = searchParams.has("title")
+      ? searchParams.get("title")?.slice(0, 80)
       : "";
-
-    // ?date=<date>
-    const hasDate = searchParams.has("date");
-    const date = hasDate ? `📅 ― ${searchParams.get("date")?.slice(0, 8)}` : "";
+    const date = searchParams.has("date")
+      ? `📅 ― ${searchParams.get("date")?.slice(0, 8)}`
+      : "";
 
     // CJK font is so large that if placed locally it easily exceeds the 1MB Edge Function limit >_<
     const notoFontData = await fetch(
-      "https://raw.githubusercontent.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff"
+      "https://rawcdn.githack.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff"
     ).then((res) => res.arrayBuffer());
 
     const robotoFontData = await fetch(
@@ -51,7 +46,7 @@ const handler: NextApiHandler = async (req) => {
             color: "#f2f0e6",
           }}
         >
-          <div tw="flex flex-col p-12 w-full h-full border-solid border-4 border-white rounded-xl shadow-lg shadow-black">
+          <div tw="flex flex-col p-12 w-full h-full border-solid border-4 border-white rounded-xl">
             <div tw="flex flex-1 max-w-full items-center max-h-full">
               <h1 tw="text-6xl leading-tight max-w-full">
                 <p tw="w-full justify-center">{title}</p>
@@ -87,8 +82,6 @@ const handler: NextApiHandler = async (req) => {
         </div>
       ),
       {
-        width: 1200,
-        height: 630,
         fonts: [
           {
             name: "Noto Sans CJK JP",
