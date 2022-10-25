@@ -9,7 +9,6 @@ import { isParent } from "./mdast-util-node-is";
 
 import type { Code, Paragraph } from "mdast";
 import type { Mermaid, Config } from "mermaid";
-import type { OptimizeOptions, OptimizedSvg } from "svgo";
 import type { Plugin, Transformer } from "unified";
 import type { Node, Parent } from "unist";
 import type { VFileCompatible } from "vfile";
@@ -26,69 +25,6 @@ export const UserTheme = {
 
 export type Theme = typeof UserTheme[keyof typeof UserTheme];
 
-export const defaultSVGOOptions: OptimizeOptions = {
-  js2svg: {
-    indent: 2,
-    pretty: true,
-  },
-  multipass: false,
-  plugins: [
-    { name: "addAttributesToSVGElement", active: false },
-    { name: "addClassesToSVGElement", active: false },
-    { name: "cleanupAttrs", active: true },
-    { name: "cleanupEnableBackground", active: false },
-    { name: "cleanupListOfValues", active: false },
-    { name: "cleanupNumericValues", active: true },
-    { name: "convertColors", active: true },
-    { name: "convertEllipseToCircle", active: true },
-    { name: "convertPathData", active: true },
-    { name: "convertShapeToPath", active: false },
-    { name: "convertTransform", active: true },
-    { name: "minifyStyles", active: true },
-    { name: "inlineStyles", active: true, params: { onlyMatchedOnce: false } },
-    { name: "convertStyleToAttrs", active: true },
-    { name: "mergePaths", active: true },
-    { name: "moveElemsAttrsToGroup", active: false },
-    { name: "moveGroupAttrsToElems", active: false },
-    { name: "prefixIds", active: false },
-    { name: "removeAttributesBySelector", active: false },
-    { name: "removeComments", active: true },
-    { name: "removeDesc", active: true },
-    { name: "removeDimensions", active: false },
-    { name: "removeDoctype", active: true },
-    { name: "removeEditorsNSData", active: true },
-    { name: "removeElementsByAttr", active: false },
-    { name: "removeEmptyAttrs", active: false },
-    { name: "removeEmptyContainers", active: true },
-    { name: "removeEmptyText", active: true },
-    { name: "removeHiddenElems", active: true },
-    { name: "removeMetadata", active: true },
-    { name: "removeNonInheritableGroupAttrs", active: true },
-    { name: "removeOffCanvasPaths", active: true },
-    { name: "removeRasterImages", active: true },
-    { name: "removeScriptElement", active: true },
-    { name: "removeStyleElement", active: true },
-    { name: "removeTitle", active: true },
-    { name: "removeUnknownsAndDefaults", active: true },
-    { name: "removeUnusedNS", active: true },
-    { name: "removeUselessDefs", active: true },
-    {
-      name: "removeUselessStrokeAndFill",
-      active: true,
-      params: { removeNone: true },
-    },
-    { name: "removeViewBox", active: true },
-    { name: "removeXMLNS", active: true },
-    { name: "removeXMLProcInst", active: true },
-    { name: "reusePaths", active: true },
-    { name: "removeAttrs", active: true, params: { attrs: ["class"] } },
-    { name: "cleanupIDs", active: true },
-    { name: "sortAttrs", active: true },
-    { name: "sortDefsChildren", active: true },
-    { name: "collapseGroups", active: true },
-  ],
-};
-
 export interface RemarkMermaidOptions {
   /**
    * Launch options to pass to playwright.
@@ -96,15 +32,6 @@ export interface RemarkMermaidOptions {
    * @default {}
    */
   launchOptions?: playwright.LaunchOptions;
-
-  /**
-   * SVGO options used to minify the SVO output.
-   *
-   * Set to `null` explicitly to disable this.
-   *
-   * @default defaultSVGOOptions
-   */
-  svgo?: OptimizeOptions;
 
   /**
    * The Mermaid theme to use.
@@ -140,14 +67,6 @@ function isMermaid(node: unknown): node is Code {
   return true;
 }
 
-function isOptimized(arg: unknown): arg is OptimizedSvg {
-  return (
-    typeof arg === "object" &&
-    arg !== null &&
-    typeof (arg as OptimizedSvg).data === "string"
-  );
-}
-
 const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
   options
 ): Transformer {
@@ -155,7 +74,6 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
     launchOptions: {
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     },
-    svgo: defaultSVGOOptions,
     theme: "default",
     wrap: false,
     classname: [],
@@ -186,7 +104,7 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
         return;
       }
       promises.push(async () => {
-        const svg = await getSvg(node, page, settings.theme, settings.svgo);
+        const svg = await getSvg(node, page, settings.theme);
         if (settings.wrap) {
           parent.children[index] = {
             type: "parent",
@@ -219,12 +137,7 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
   };
 };
 
-async function getSvg(
-  node: Code,
-  page: playwright.Page,
-  theme: Theme,
-  svgo: OptimizeOptions
-) {
+async function getSvg(node: Code, page: playwright.Page, theme: Theme) {
   const graph = await page.evaluate(
     ([code, theme]) => {
       const id = "a";
@@ -239,12 +152,40 @@ async function getSvg(
     [node.value, theme]
   );
 
-  let value = graph;
+  const svgoOptions = {
+    js2svg: {
+      indent: 2,
+      pretty: true,
+    },
+    multipass: false,
+    plugins: [
+      { name: "cleanupEnableBackground", active: false },
+      { name: "convertShapeToPath", active: false },
+      {
+        name: "inlineStyles",
+        active: true,
+        params: { onlyMatchedOnce: false },
+      },
+      { name: "convertStyleToAttrs", active: true },
+      { name: "moveElemsAttrsToGroup", active: false },
+      { name: "moveGroupAttrsToElems", active: false },
+      { name: "removeEmptyAttrs", active: false },
+      { name: "removeOffCanvasPaths", active: true },
+      { name: "removeRasterImages", active: true },
+      { name: "removeScriptElement", active: true },
+      { name: "removeStyleElement", active: true },
+      {
+        name: "removeUselessStrokeAndFill",
+        active: true,
+        params: { removeNone: true },
+      },
+      { name: "removeXMLNS", active: true },
+      { name: "reusePaths", active: true },
+      { name: "removeAttrs", active: true, params: { attrs: ["class"] } },
+    ],
+  };
 
-  if (svgo) {
-    const tmp = optimize(graph, svgo);
-    value = isOptimized(tmp) ? tmp.data : graph;
-  }
+  const value = optimize(graph, svgoOptions).data;
   return value;
 }
 
