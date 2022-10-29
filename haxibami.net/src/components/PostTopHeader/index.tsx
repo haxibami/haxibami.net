@@ -29,38 +29,38 @@ const PostHeader: React.FC<PostHeaderProps> = ({ siteinfo, posttype }) => {
         <span id={Styles.Title}>
           <h1>
             <Link href={`/${posttype}`}>
-              <a>{siteinfo.siteinfo[posttype].title}</a>
+              {siteinfo.siteinfo[posttype].title}
             </Link>
           </h1>
           <p>{siteinfo.siteinfo[posttype].description}</p>
         </span>
         <span id={Styles.Icons}>
           <Link href={"/"}>
-            <a>
-              <FontAwesomeIcon
-                icon={faHouseChimney}
-                color={"#9986bf"}
-                size={"2x"}
-              />
-            </a>
+
+            <FontAwesomeIcon
+              icon={faHouseChimney}
+              color={"#9986bf"}
+              size={"2x"}
+            />
+
           </Link>
           <Link href={`/${posttype}/posts/about`}>
-            <a>
-              <FontAwesomeIcon
-                icon={faQuestionCircle}
-                color={"#86bfb6"}
-                size={"2x"}
-              />
-            </a>
+
+            <FontAwesomeIcon
+              icon={faQuestionCircle}
+              color={"#86bfb6"}
+              size={"2x"}
+            />
+
           </Link>
           <Link
             href={
               "https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fwww.haxibami.net%2Frss%2Ffeed.xml"
             }
           >
-            <a>
-              <FontAwesomeIcon icon={faRss} color={"#abbf86"} size={"2x"} />
-            </a>
+
+            <FontAwesomeIcon icon={faRss} color={"#abbf86"} size={"2x"} />
+
           </Link>
           <ThemeChanger />
         </span>
@@ -70,17 +70,17 @@ const PostHeader: React.FC<PostHeaderProps> = ({ siteinfo, posttype }) => {
           {posttype === "blog" ? (
             <h1>
               <Link href={`/${posttype.toString()}`}>
-                <a>
-                  <div>なま</div>
-                  <div>あたたかくて</div>
-                  <div>おいしい</div>
-                </a>
+
+                <div>なま</div>
+                <div>あたたかくて</div>
+                <div>おいしい</div>
+
               </Link>
             </h1>
           ) : posttype === "grad_essay" ? (
             <h1>
               <Link href={`/${posttype}`}>
-                <a>{siteinfo.siteinfo[posttype].title}</a>
+                {siteinfo.siteinfo[posttype].title}
               </Link>
             </h1>
           ) : (
@@ -90,24 +90,24 @@ const PostHeader: React.FC<PostHeaderProps> = ({ siteinfo, posttype }) => {
         <ul>
           <li>
             <Link href={"/"}>
-              <a>
-                <FontAwesomeIcon
-                  icon={faHouseChimney}
-                  color={"#9986bf"}
-                  size={"2x"}
-                />
-              </a>
+
+              <FontAwesomeIcon
+                icon={faHouseChimney}
+                color={"#9986bf"}
+                size={"2x"}
+              />
+
             </Link>
           </li>
           <li>
             <Link href={`/${posttype}/posts/about`}>
-              <a>
-                <FontAwesomeIcon
-                  icon={faQuestionCircle}
-                  color={"#86bfb6"}
-                  size={"2x"}
-                />
-              </a>
+
+              <FontAwesomeIcon
+                icon={faQuestionCircle}
+                color={"#86bfb6"}
+                size={"2x"}
+              />
+
             </Link>
           </li>
           <li>
@@ -116,9 +116,9 @@ const PostHeader: React.FC<PostHeaderProps> = ({ siteinfo, posttype }) => {
                 "https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fwww.haxibami.net%2Frss%2Ffeed.xml"
               }
             >
-              <a>
-                <FontAwesomeIcon icon={faRss} color={"#abbf86"} size={"2x"} />
-              </a>
+
+              <FontAwesomeIcon icon={faRss} color={"#abbf86"} size={"2x"} />
+
             </Link>
           </li>
           <li>

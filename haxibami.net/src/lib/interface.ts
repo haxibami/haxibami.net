@@ -58,12 +58,3 @@ export interface MenuTab {
   link: string;
   focus: boolean;
 }
-
-// values passed to global state via /[slug].tsx
-export interface LinkWidgetMeta {
-  url: string;
-  title: string;
-  description: string;
-  image: string;
-  icon: string;
-}

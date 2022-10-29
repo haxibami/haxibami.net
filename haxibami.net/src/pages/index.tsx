@@ -27,6 +27,8 @@ import Tree from "components/Tree";
 //import * as Svg from "lib/svg";
 import Styles from "styles/index.module.scss";
 
+import icon from "../../public/icon_ange_glasses_192.webp";
+
 import type { PageMetaProps } from "lib/interface";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
@@ -57,27 +59,19 @@ const Home: NextPage<Props> = ({ metaprops }) => {
         </div>
         <div id={Styles.Icon_box}>
           <Link href="/about">
-            <a>
-              <Image
-                id={Styles.Icon}
-                src="/icon_ange_glasses_192.webp"
-                alt="haxibami"
-                layout={"fill"}
-                objectFit={"cover"}
-              />
-            </a>
+            <Image
+              id={Styles.Icon}
+              src={icon}
+              alt="haxibami"
+              placeholder="blur"
+              fill={true}
+            />
           </Link>
         </div>
 
         <div id={Styles.About_box}>
           <Link href="about">
-            <a>
-              <FontAwesomeIcon
-                icon={faQuestion}
-                id={Styles.About}
-                size={"2x"}
-              />
-            </a>
+            <FontAwesomeIcon icon={faQuestion} id={Styles.About} size={"2x"} />
           </Link>
         </div>
         <div id={Styles.Twitter_box}>
@@ -104,9 +98,7 @@ const Home: NextPage<Props> = ({ metaprops }) => {
         </div>
         <div id={Styles.Mail_box}>
           <Link href="mail">
-            <a>
-              <FontAwesomeIcon icon={faEnvelope} id={Styles.Mail} size={"2x"} />
-            </a>
+            <FontAwesomeIcon icon={faEnvelope} id={Styles.Mail} size={"2x"} />
           </Link>
         </div>
         <div id={Styles.Github_box}>
@@ -133,9 +125,7 @@ const Home: NextPage<Props> = ({ metaprops }) => {
         </div>
         <div id={Styles.Book_box}>
           <Link href="works">
-            <a>
-              <FontAwesomeIcon icon={faBook} id={Styles.Book} size={"2x"} />
-            </a>
+            <FontAwesomeIcon icon={faBook} id={Styles.Book} size={"2x"} />
           </Link>
         </div>
         <div id={Styles.Blog1_box}>
@@ -149,9 +139,7 @@ const Home: NextPage<Props> = ({ metaprops }) => {
         </div>
         <div id={Styles.Blog2_box}>
           <Link href={`/blog`}>
-            <a>
-              <FontAwesomeIcon icon={faBlog} id={Styles.Blog2} size={"2x"} />
-            </a>
+            <FontAwesomeIcon icon={faBlog} id={Styles.Blog2} size={"2x"} />
           </Link>
         </div>
 

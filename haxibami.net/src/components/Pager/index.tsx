@@ -31,26 +31,26 @@ const Pager: React.FC<PagerProps> = (props) => {
       <span className={Styles.PagerItem}>
         {prevPage ? (
           prevPage === 1 ? (
-            <Link href={top}>
-              <a>
-                <div className={Styles.Visible} id={Styles.Prev}>
-                  <FontAwesomeIcon
-                    icon={faChevronCircleLeft}
-                    width={20}
-                    height={20}
-                  />
-                  Prev
-                </div>
-              </a>
-            </Link>
+            (<Link href={top}>
+
+              <div className={Styles.Visible} id={Styles.Prev}>
+                <FontAwesomeIcon
+                  icon={faChevronCircleLeft}
+                  width={20}
+                  height={20}
+                />
+                Prev
+              </div>
+
+            </Link>)
           ) : (
-            <Link href={`${top}/page/${prevPage}`}>
-              <a>
-                <div className={Styles.Visible} id={Styles.Prev}>
-                  Prev
-                </div>
-              </a>
-            </Link>
+            (<Link href={`${top}/page/${prevPage}`}>
+
+              <div className={Styles.Visible} id={Styles.Prev}>
+                Prev
+              </div>
+
+            </Link>)
           )
         ) : (
           <div className={Styles.Invisible}></div>
@@ -63,18 +63,18 @@ const Pager: React.FC<PagerProps> = (props) => {
       </span>
       <span className={Styles.PagerItem}>
         {nextPage ? (
-          <Link href={`${top}/page/${nextPage}`}>
-            <a>
-              <div className={Styles.Visible} id={Styles.Next}>
-                Next
-                <FontAwesomeIcon
-                  icon={faChevronCircleRight}
-                  width={20}
-                  height={20}
-                />
-              </div>
-            </a>
-          </Link>
+          (<Link href={`${top}/page/${nextPage}`}>
+
+            <div className={Styles.Visible} id={Styles.Next}>
+              Next
+              <FontAwesomeIcon
+                icon={faChevronCircleRight}
+                width={20}
+                height={20}
+              />
+            </div>
+
+          </Link>)
         ) : (
           <div className={Styles.Invisible}></div>
         )}
