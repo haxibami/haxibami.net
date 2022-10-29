@@ -22,7 +22,7 @@ const TagsTop: React.FC<TagsTopProps> = (props) => {
           {taglists.map((tag) => (
             <li className={Styles.TagTile} key={tag}>
               <Link href={`/${postType}/tag/${tag}`}>
-                <a>#{tag}</a>
+                #{tag}
               </Link>
             </li>
           ))}

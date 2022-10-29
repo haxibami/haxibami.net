@@ -86,8 +86,7 @@ const AllBlog: NextPage<Props> = ({ metaprops, post, content }) => {
         <Head>
           <link
             rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css"
-            integrity="sha384-KiWOvVjnN8qwAZbuQyWDIbfCLFhLXNETzBQjA/92pIowpC0d2O3nppDGQVgwd2nB"
+            href="https://unpkg.com/katex/dist/katex.min.css"
             crossOrigin="anonymous"
           />
         </Head>
@@ -95,9 +94,7 @@ const AllBlog: NextPage<Props> = ({ metaprops, post, content }) => {
           <div className={Styles.Title}>
             <div className={Styles.TopLink}>
               <Link href={"/blog"}>
-                <a>
-                  <h2>{"Raw, Warm, Tasty"}</h2>
-                </a>
+                <h2>{"Raw, Warm, Tasty"}</h2>
               </Link>
             </div>
             <ThemeChanger />

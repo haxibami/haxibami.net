@@ -19,7 +19,7 @@ interface LinkWidgetMeta {
   url: string;
   title: string;
   description: string;
-  image: string;
+  og: string;
   icon: string;
 }
 
@@ -48,7 +48,7 @@ function fetchMeta(url: string) {
       url: url,
       title: data.title ?? "",
       description: data.description ?? "",
-      image: data.image ?? "",
+      og: data.image ?? "",
       icon: data.icon ?? "",
     };
     return metaData;
@@ -94,6 +94,13 @@ export function extLinkHandler(_h: H, node: ExtLink) {
   return {
     type: "element",
     tagName: "extlink",
-    children: [{ type: "text", value: JSON.stringify(node.meta) }],
+    properties: {
+      url: node.meta.url,
+      title: node.meta.title,
+      description: node.meta.description,
+      og: node.meta.og,
+      icon: node.meta.icon,
+    },
+    children: [],
   };
 }

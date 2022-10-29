@@ -62,10 +62,7 @@ const NotFound: NextPage<Props> = ({ metaprops }) => {
             </p>
             <p>
               <span className={Styles.notfound}>
-                404 not found. Go back to{" "}
-                <Link href="/">
-                  <a>Home</a>
-                </Link>
+                404 not found. Go back to <Link href="/">Home</Link>
               </span>
             </p>
 

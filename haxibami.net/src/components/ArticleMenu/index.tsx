@@ -19,7 +19,7 @@ const ArticleMenu: React.FC<ArticleMenuProps> = (props) => {
         return (
           <div className={tab.focus ? Styles.Focus : ""} key={tab.name}>
             <Link href={`/${contentType}/${tab.link}`} scroll={false}>
-              <a>{tab.name}</a>
+              {tab.name}
             </Link>
           </div>
         );

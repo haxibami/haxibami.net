@@ -11,6 +11,8 @@ import { MdToHtml } from "lib/parser";
 import RehypeReact from "lib/rehype-react";
 import Styles from "styles/about.module.scss";
 
+import icon from "../../public/icon_ange_glasses_512.webp";
+
 import type { PageMetaProps } from "lib/interface";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
@@ -43,14 +45,12 @@ const About: NextPage<Props> = ({ metaprops, doc, content }) => {
         <div id={Styles.HeaderBox}>
           <h2>
             <Link href={"/"}>
-              <a>
-                <span className={Styles.Red}>ha</span>
-                <span className={Styles.Yellow}>xi</span>
-                <span className={Styles.Green}>ba</span>
-                <span className={Styles.Cyan}>mi</span>
-                <span className={Styles.Blue}>.n</span>
-                <span className={Styles.Magenta}>et</span>
-              </a>
+              <span className={Styles.Red}>ha</span>
+              <span className={Styles.Yellow}>xi</span>
+              <span className={Styles.Green}>ba</span>
+              <span className={Styles.Cyan}>mi</span>
+              <span className={Styles.Blue}>.n</span>
+              <span className={Styles.Magenta}>et</span>
             </Link>
           </h2>
           <ThemeChanger />
@@ -61,10 +61,9 @@ const About: NextPage<Props> = ({ metaprops, doc, content }) => {
           <div id={Styles.Icon}>
             <Image
               id={Styles.IconImage}
-              src="/icon_ange_glasses_512.webp"
+              src={icon}
               alt="icon"
-              width={175}
-              height={175}
+              placeholder="blur"
             />
           </div>
           <span id={Styles.Name}>
