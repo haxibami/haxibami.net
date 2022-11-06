@@ -1,5 +1,35 @@
 @use "variable" as var;
 
+@keyframes tooltips-down {
+  to {
+    opacity: 0.9;
+    transform: translate(-50%, -5px);
+  }
+}
+
+@keyframes tooltips-up {
+  to {
+    opacity: 0.9;
+    transform: translate(-50%, +5px);
+  }
+}
+
+@keyframes tooltips-icon {
+  0% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(-20deg);
+  }
+  70% {
+    transform: rotate(20deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
 #Wrapper {
   #Main {
     min-width: 500px;
@@ -14,7 +44,7 @@
     canvas {
       z-index: -1;
     }
-    
+
     #ThemeChanger {
       position: absolute;
       right: 50px;
@@ -27,7 +57,47 @@
       height: 100px;
       border-radius: 50%;
       border: 5px solid var.$blue;
-      overflow: hidden;
+
+      img {
+        border-radius: 50%;
+      }
+
+      a {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .TooltipUp {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        top: -25px;
+        right: -25px;
+        display: inline-block;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        white-space: nowrap;
+        font-size: 1rem;
+        line-height: 1.3;
+        background: var(--foreground);
+        color: var(--background);
+        border-radius: 50%;
+      }
+
+      &:hover .TooltipUp {
+        visibility: visible;
+        opacity: 0.9;
+        animation: tooltips-icon 0.3s ease-in-out forwards;
+      }
     }
 
     @each $brandname, $values in var.$brands {
@@ -37,12 +107,17 @@
         align-items: center;
         position: absolute;
         left: calc(50% - 0.5 * nth($values, 8) + nth($values, 6));
-        transform-origin: calc(0.5 * nth($values, 8) - nth($values, 6)) calc(0.5 * nth($values, 8));
+        transform-origin: calc(0.5 * nth($values, 8) - nth($values, 6))
+          calc(0.5 * nth($values, 8));
         transform: rotate(nth($values, 7));
         width: nth($values, 8);
         height: nth($values, 8);
         border-radius: 50%;
-        background: linear-gradient(calc(135deg - nth($values, 7)), nth($values, 1), nth($values, 2));
+        background: linear-gradient(
+          calc(135deg - nth($values, 7)),
+          nth($values, 1),
+          nth($values, 2)
+        );
 
         a {
           width: 100%;
@@ -51,7 +126,54 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          transform: rotate(- nth($values, 7));
+          transform: rotate(-1 * nth($values, 7));
+          position: relative;
+          cursor: pointer;
+        }
+
+        .TooltipDown {
+          opacity: 0;
+          visibility: hidden;
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          bottom: -40px;
+          display: inline-block;
+          padding: 5px 8px;
+          white-space: nowrap;
+          font-size: 1rem;
+          line-height: 1.3;
+          background: var(--foreground);
+          color: var(--background);
+          border-radius: 3px;
+          // transition: 0.1s ease-in;
+        }
+
+        .TooltipUp {
+          opacity: 0;
+          visibility: hidden;
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          top: -40px;
+          display: inline-block;
+          padding: 5px 8px;
+          white-space: nowrap;
+          font-size: 1rem;
+          line-height: 1.3;
+          background: var(--foreground);
+          color: var(--background);
+          border-radius: 3px;
+        }
+
+        &:hover .TooltipDown {
+          visibility: visible;
+          animation: tooltips-down 0.2s ease-in forwards;
+        }
+
+        &:hover .TooltipUp {
+          visibility: visible;
+          animation: tooltips-up 0.2s ease-in forwards;
         }
 
         ##{$brandname} {

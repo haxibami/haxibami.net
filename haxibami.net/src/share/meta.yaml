@@ -1,11 +1,7 @@
 siteinfo:
   blog:
-    title:
-      "なまあたたかくておいしい"
-    description:
-      "ポップ、フィクショナール、スペクタクル？"
+    title: "なまあたたかくておいしい"
+    description: "神話募集中"
   grad_essay:
-    title:
-      "卒業文集"
-    description:
-      "記憶"
+    title: "卒業文集"
+    description: "記憶"
