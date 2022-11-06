@@ -25,9 +25,9 @@ const ThemeChanger = () => {
         {mounted && (
           <div>
             {resolvedTheme === "dark" ? (
-              <FontAwesomeIcon icon={faMoon} size={"2x"} color={"#d9c77e"} />
+              <FontAwesomeIcon icon={faMoon} size={"2x"} color={"#f2f0e6"} />
             ) : (
-              <FontAwesomeIcon icon={faSun} size={"2x"} color={"#ff6f21"} />
+              <FontAwesomeIcon icon={faSun} size={"2x"} color={"#171726"} />
             )}
           </div>
         )}

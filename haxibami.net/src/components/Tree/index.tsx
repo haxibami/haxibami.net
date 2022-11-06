@@ -20,8 +20,8 @@ const Tree: React.FC = () => {
       if (isClient && window.innerWidth < 600) {
         {
           return {
-            prewidth: isClient ? 500 : 0,
-            preheight: isClient ? 900 : 0,
+            prewidth: isClient ? 550 : 0,
+            preheight: isClient ? 950 : 0,
           };
         }
       }
@@ -48,8 +48,10 @@ const Tree: React.FC = () => {
   const height = preheight;
 
   const { resolvedTheme } = useTheme();
-  const [fg, bg] =
-    resolvedTheme === "light" ? ["#706570", "#d2ced9"] : ["#8a8299", "#14111a"];
+  const [fg, firstbg, secondbg] =
+    resolvedTheme === "light"
+      ? ["#706570", "#eeaeca", "#94bbe9"]
+      : ["#8a8299", "#242473", "#7e5960"];
 
   useIsomorphicLayoutEffect(() => {
     const scale = window.devicePixelRatio;
@@ -60,7 +62,10 @@ const Tree: React.FC = () => {
       canvasRef.current.style.height = height.toString() + "px";
       canvasRef.current.width = width * scale;
       canvasRef.current.height = height * scale;
-      canvasRef.current.style.setProperty("background", bg);
+      canvasRef.current.style.setProperty(
+        "background",
+        `linear-gradient(135deg, ${firstbg} 0%, ${secondbg} 100%)`
+      );
 
       if (renderCtx) {
         setContext(renderCtx);
@@ -115,7 +120,7 @@ const Tree: React.FC = () => {
       { st: 50, len: 50, deg: 170, c: fg, w: 5 },
       { st: 100, len: 50, deg: 150, c: fg, w: 5 },
       { st: 100, len: 50, deg: 190, c: fg, w: 5 },
-      { st: 50, len: 50, deg: 230, c: "#9986bf", w: 5 },
+      { st: 50, len: 50, deg: 230, c: "#6b8fb3", w: 5 },
     ];
 
     if (context) {
@@ -151,7 +156,7 @@ const Tree: React.FC = () => {
         Branch(branch);
       });
     }
-  }, [context, width, height, bg, fg]);
+  }, [context, width, height, firstbg, fg]);
 
   return <canvas ref={canvasRef} />;
 };

@@ -8,9 +8,14 @@ title: "About"
 | key      | val         |
 | -------- | ----------- |
 | Latin    | haxibami    |
-| Cyrillic | хашибами    |
 | 漢字     | 端食        |
+| ひらがな | はしばみ    |
+| Cyrillic | хашибами    |
 | IPA      | [haɕibamʲi] |
+
+### Country
+
+:jp: Japan
 
 ### Education
 
@@ -19,47 +24,38 @@ title: "About"
 
 ### Contact
 
-- [contact@haxibami.net](mailto:contact@haxibami.net)
+- [contact\<at\>haxibami.net](mailto:contact@haxibami.net)
 
 ## :sparkles: Favorites
 
 ### Discipline
 
-- 嘘、記号、意味
-  - SF、幻想文学、短歌
-- 人間存在の根源
-  - 神経科学、心の哲学
-- 周囲の地域世界
-  - 地理学、地球惑星科学
-- 社会機構と権威
-  - 法哲学、政治学
-- 情報処理と自由
-  - 情報科学、OSS プロジェクト
+- SF、幻想文学
+- 法と政治
+- 情報科学、オープンソースプロジェクト
+- 神経科学、心の哲学
+- 地理学、地球惑星科学
 
 ### Book
 
-- 『伝奇集』ホルヘ・ルイス・ボルヘス
-- 『ぬるめた』こかむも
-- 『あなたの人生の物語』テッド・チャン
-- 『資本主義リアリズム』マーク・フィッシャー
-- 『夜は短し歩けよ乙女』森見登美彦
-- 『闘争領域の拡大』ミシェル・ウエルベック
-- 『グラン・ヴァカンス』飛浩隆
+- 『伝奇集』 - ホルヘ・ルイス・ボルヘス
+- 『ぬるめた』 - こかむも
+- 『あなたの人生の物語』 - テッド・チャン
 
 ### Music
 
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1rrcstuv7f3SoULWaWq8Rx?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
-その時点での好み。移り変わるものであるからして。
+いま聴いてるやつ
 
 ### Anime
 
 - [少女歌劇レヴュースタァライト](https://revuestarlight.com)
 - [プリンセス・プリンシパル](https://pripri-anime.jp)
 
-https://revuestarlight.com
+<https://revuestarlight.com>
 
-https://pripri-anime.jp
+<https://pripri-anime.jp>
 
 ### Software
 
@@ -69,36 +65,31 @@ https://pripri-anime.jp
 
 ## :butterfly: Portfolio
 
-### Award
-
-- 科学地理オリンピック
-  - 19' 銀, 20' & 21' 金
-
 ### Project
 
+- [hotate](https://github.com/haxibami/hotate)
+  - 縦書きエディタ
 - [urara.vim](https://github.com/haxibami/urara.vim)
   - Vim カラースキーム
-- [ruslovo-tufs](https://github.com/haxibami/ruslovo-tufs)
-  - ロシア語辞書検索用 CLI ツール
 
-https://github.com/haxibami/urara.vim
+<https://github.com/haxibami/hotate>
 
-https://github.com/haxibami/ruslovo-tufs
+<https://github.com/haxibami/urara.vim>
 
 ### Involved
 
 - [六代目：生活の困難](https://umector.hatenablog.jp)
 
-https://umector.hatenablog.jp
+<https://umector.hatenablog.jp>
 
-𝙂𝙊𝙊𝘿 𝙄𝙉𝙏𝙀𝙍𝙉𝙀𝙏
+**_GOOD INTERNET_**
 
 ## Link
 
 - [Top](/)
 - [Blog](/blog)
 
-https://www.haxibami.net/blog
+<https://www.haxibami.net/blog>
 
 ### フォロワー・相互リンクのサイト
 
