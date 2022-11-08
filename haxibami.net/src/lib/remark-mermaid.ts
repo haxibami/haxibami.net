@@ -8,12 +8,14 @@ import { visit } from "unist-util-visit";
 import { isParent } from "./mdast-util-node-is";
 
 import type { Code, Paragraph } from "mdast";
-import type { Mermaid, Config } from "mermaid";
+import type Mermaid from "mermaid";
+import type { MermaidConfig } from "mermaid";
 import type { Plugin, Transformer } from "unified";
 import type { Node, Parent } from "unist";
 import type { VFileCompatible } from "vfile";
 
-declare const mermaid: Mermaid;
+// we want to check types for browser-executed mermaid codes, but don't want to "import" any mermaid modules in them.
+declare const mermaid: typeof Mermaid;
 
 export const UserTheme = {
   Forest: "forest",
@@ -92,7 +94,8 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
     const html = `<!DOCTYPE html>`;
     await page.setContent(html);
     await page.addScriptTag({
-      url: "https://unpkg.com/mermaid@9.1.7/dist/mermaid.min.js",
+      url: "https://unpkg.com/mermaid/dist/mermaid.min.js",
+      type: "module",
     });
     await page.setViewportSize({ width: 1000, height: 3000 });
     visit(node, isMermaid, visitor);
@@ -141,12 +144,15 @@ async function getSvg(node: Code, page: playwright.Page, theme: Theme) {
   const graph = await page.evaluate(
     ([code, theme]) => {
       const id = "a";
-      const config: Config = {
+      const config: MermaidConfig = {
         theme: theme as Theme,
+        startOnLoad: false,
       };
-      mermaid.initialize(config);
+      mermaid.mermaidAPI.initialize(config);
       const div = document.createElement("div");
-      div.innerHTML = mermaid.render(id, code);
+      mermaid.mermaidAPI.render(id, code, (svg: string) => {
+        div.innerHTML = svg;
+      });
       return div.innerHTML;
     },
     [node.value, theme]
