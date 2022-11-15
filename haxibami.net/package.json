@@ -31,7 +31,7 @@
     "@fortawesome/react-fontawesome": "0.2.0",
     "@leafac/rehype-shiki": "2.2.1",
     "@next/bundle-analyzer": "13.0.3",
-    "@next/font": "^13.0.0",
+    "@next/font": "13.0.3",
     "@vercel/og": "0.0.20",
     "feed": "4.2.2",
     "gray-matter": "4.0.3",
@@ -70,6 +70,7 @@
     "vfile": "5.3.5"
   },
   "devDependencies": {
+    "@types/csso": "^5.0.0",
     "@types/js-yaml": "4.0.5",
     "@types/mdast": "3.0.10",
     "@types/node": "18.11.9",

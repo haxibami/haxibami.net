@@ -8,7 +8,8 @@ specifiers:
   '@fortawesome/react-fontawesome': 0.2.0
   '@leafac/rehype-shiki': 2.2.1
   '@next/bundle-analyzer': 13.0.3
-  '@next/font': ^13.0.0
+  '@next/font': 13.0.3
+  '@types/csso': ^5.0.0
   '@types/js-yaml': 4.0.5
   '@types/mdast': 3.0.10
   '@types/node': 18.11.9
@@ -76,7 +77,7 @@ dependencies:
   '@fortawesome/react-fontawesome': 0.2.0_6j2wdqxompc6mcokhxkpep2gqu
   '@leafac/rehype-shiki': 2.2.1_shiki@0.11.1
   '@next/bundle-analyzer': 13.0.3
-  '@next/font': 13.0.0
+  '@next/font': 13.0.3
   '@vercel/og': 0.0.20
   feed: 4.2.2
   gray-matter: 4.0.3
@@ -115,6 +116,7 @@ dependencies:
   vfile: 5.3.5
 
 devDependencies:
+  '@types/csso': 5.0.0
   '@types/js-yaml': 4.0.5
   '@types/mdast': 3.0.10
   '@types/node': 18.11.9
@@ -314,8 +316,8 @@ packages:
       glob: 7.1.7
     dev: true
 
-  /@next/font/13.0.0:
-    resolution: {integrity: sha512-r5dYkgMD1Qmoip1OhJSrqCSQdZ4eshkQPfe1hhQiKbZoXIbViJksPRLC6GVOgEQE6W4+CXuAXR6IYBy5M6Rixg==}
+  /@next/font/13.0.3:
+    resolution: {integrity: sha512-J3bZooNyhzhRshEJZlc4Kagfx6f8LQkPdCsP0nZm63dAUaoeMaQRidFFhbL68WZ3S5XleVfpGYypZuBSyJqYtw==}
     dev: false
 
   /@next/swc-android-arm-eabi/13.0.3:
@@ -525,6 +527,16 @@ packages:
       '@types/node': 18.11.9
       '@types/responselike': 1.0.0
     dev: false
+
+  /@types/css-tree/2.0.0:
+    resolution: {integrity: sha512-mY2sXRLBnUPMYw6mkOT+6dABeaNxAEKZz6scE9kQPNJx8fKe1fOsm8Honl7+xFYe6TKX8WNk2+7oMp2vBArJ9Q==}
+    dev: true
+
+  /@types/csso/5.0.0:
+    resolution: {integrity: sha512-EMrCTGpXRUsbFfZBzn2jcW6Sqg8kxWXkJcpvAGYSEzFqAJ2THDJSwiMeS2fPUw+0p6RQNT/n8F/skEc9hUBc0g==}
+    dependencies:
+      '@types/css-tree': 2.0.0
+    dev: true
 
   /@types/debug/4.1.7:
     resolution: {integrity: sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==}

@@ -10,6 +10,7 @@ import { isParent } from "./mdast-util-node-is";
 import type { Code, Paragraph } from "mdast";
 import type Mermaid from "mermaid";
 import type { MermaidConfig } from "mermaid";
+import type { Config as SvgoConfig } from "svgo";
 import type { Plugin, Transformer } from "unified";
 import type { Node, Parent } from "unist";
 import type { VFileCompatible } from "vfile";
@@ -158,36 +159,44 @@ async function getSvg(node: Code, page: playwright.Page, theme: Theme) {
     [node.value, theme]
   );
 
-  const svgoOptions = {
+  const svgoOptions: SvgoConfig = {
     js2svg: {
       indent: 2,
       pretty: true,
     },
     multipass: false,
     plugins: [
-      { name: "cleanupEnableBackground", active: false },
-      { name: "convertShapeToPath", active: false },
       {
-        name: "inlineStyles",
-        active: true,
-        params: { onlyMatchedOnce: false },
+        name: "preset-default",
+        params: {
+          overrides: {
+            cleanupEnableBackground: false,
+            convertShapeToPath: false,
+            inlineStyles: {
+              onlyMatchedOnce: false,
+            },
+            moveElemsAttrsToGroup: false,
+            moveGroupAttrsToElems: false,
+            removeEmptyAttrs: false,
+            removeUselessStrokeAndFill: {
+              removeNone: true,
+            },
+          },
+        },
       },
-      { name: "convertStyleToAttrs", active: true },
-      { name: "moveElemsAttrsToGroup", active: false },
-      { name: "moveGroupAttrsToElems", active: false },
-      { name: "removeEmptyAttrs", active: false },
-      { name: "removeOffCanvasPaths", active: true },
-      { name: "removeRasterImages", active: true },
-      { name: "removeScriptElement", active: true },
-      { name: "removeStyleElement", active: true },
+      "convertStyleToAttrs",
+      "removeOffCanvasPaths",
+      "removeRasterImages",
+      "removeScriptElement",
+      "removeStyleElement",
+      "removeXMLNS",
+      "reusePaths",
       {
-        name: "removeUselessStrokeAndFill",
-        active: true,
-        params: { removeNone: true },
+        name: "removeAttrs",
+        params: {
+          attrs: ["class"],
+        },
       },
-      { name: "removeXMLNS", active: true },
-      { name: "reusePaths", active: true },
-      { name: "removeAttrs", active: true, params: { attrs: ["class"] } },
     ],
   };
 
