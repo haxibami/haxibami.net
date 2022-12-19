@@ -59,7 +59,7 @@ specifiers:
   remark-toc: 8.0.1
   remark-unwrap-images: 3.0.1
   sass: 1.57.0
-  shiki: 0.12.0
+  shiki: 0.12.1
   strip-markdown: 5.0.0
   svgo: 3.0.2
   ts-node: 10.9.1
@@ -75,7 +75,7 @@ dependencies:
   '@fortawesome/free-regular-svg-icons': 6.2.1
   '@fortawesome/free-solid-svg-icons': 6.2.1
   '@fortawesome/react-fontawesome': 0.2.0_z27bm67dtmuyyvss23ckjdrcuy
-  '@leafac/rehype-shiki': 2.2.1_shiki@0.12.0
+  '@leafac/rehype-shiki': 2.2.1_shiki@0.12.1
   '@next/bundle-analyzer': 13.0.7
   '@next/font': 13.0.7
   '@vercel/og': 0.0.21
@@ -107,7 +107,7 @@ dependencies:
   remark-stringify: 10.0.2
   remark-toc: 8.0.1
   remark-unwrap-images: 3.0.1
-  shiki: 0.12.0
+  shiki: 0.12.1
   strip-markdown: 5.0.0
   svgo: 3.0.2
   unified: 10.1.2
@@ -277,7 +277,7 @@ packages:
       sanitize-xml-string: 1.1.0
     dev: false
 
-  /@leafac/rehype-shiki/2.2.1_shiki@0.12.0:
+  /@leafac/rehype-shiki/2.2.1_shiki@0.12.1:
     resolution: {integrity: sha512-rN2r98YDdy1q61TppykZmk1np01K6jFBC/3FsLHbDYhMu0wpJ+1XW8LjrjotpBSoyy0MOzrnlVf74nUT6RJ4jA==}
     peerDependencies:
       shiki: ^0.11.1
@@ -285,7 +285,7 @@ packages:
       '@leafac/html': 3.0.0
       hast-util-to-text: 3.1.1
       rehype-parse: 8.0.4
-      shiki: 0.12.0
+      shiki: 0.12.1
       unified: 10.1.2
       unist-util-modify-children: 3.0.0
     dev: false
@@ -4346,8 +4346,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /shiki/0.12.0:
-    resolution: {integrity: sha512-YDmjxrHnp8RUliAYM5b66OAKODAdOtlZtRbdp9BFtORB3eH0z1YIGZ+W5xz46JSi2emwrJqJ8lS9cvPxfgvCUw==}
+  /shiki/0.12.1:
+    resolution: {integrity: sha512-aieaV1m349rZINEBkjxh2QbBvFFQOlgqYTNtCal82hHj4dDZ76oMlQIX+C7ryerBTDiga3e5NfH6smjdJ02BbQ==}
     dependencies:
       jsonc-parser: 3.2.0
       vscode-oniguruma: 1.7.0
