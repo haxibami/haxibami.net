@@ -6,7 +6,7 @@ on:
       - dev
 
 env:
-  node-version: 14
+  node-version: 18
   pnpm-version: latest
   workdir: ./haxibami.net
 
