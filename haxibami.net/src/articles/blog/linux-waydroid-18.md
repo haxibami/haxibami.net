@@ -2,8 +2,11 @@
 slug: "linux-waydroid-18"
 title: "Linux / Waydroid でAndroid 11を動かし、ウマ娘をプレイする"
 date: "20220901"
+description: "【令和最新版】Linuxでもウマ娘をプレイする方法"
 tags: ["tech", "linux", "android"]
 ---
+
+![いい話](/image/waydroid_uma.png)
 
 ちなみに私はウマ娘をプレイしたことがない。したがって、確認しているのはアプリの起動・オープニングムービーの表示までである。
 
@@ -11,9 +14,9 @@ tags: ["tech", "linux", "android"]
 
 知られている通り、Android カーネルはほぼ Linux そのものである。これを逆手に取り、Linux カーネルで Android を動かそうと試みた賢い人々がおり、結果として以下のような形に結実した。
 
-https://waydro.id/
+<https://waydro.id/>
 
-https://github.com/waydroid/waydroid/
+<https://github.com/waydroid/waydroid/>
 
 これまでも単なる Android エミュレータなら無数にあったが、Waydroid はエミュレーションという手法を慎重に避ける。代わりに`lxc`で立てたコンテナ内で Android を動かすアプローチを取っており、これに伴って以下のメリットがある。
 
@@ -142,11 +145,11 @@ sudo waydroid init
 
 導入にあたっては以下のスクリプトが助けになる。
 
-https://github.com/casualsnek/waydroid_script
+<https://github.com/casualsnek/waydroid_script>
 
 手前味噌ではあるが、以下のフォークでは Android 11 向けにいくつかの点を改善している。こちらを使うことを推奨する。
 
-https://github.com/haxibami/waydroid_script
+<https://github.com/haxibami/waydroid_script>
 
 ここからは**流入者のリテラシーを保障する**ため踏み込んだ説明は避けるが、README のとおり
 
@@ -154,9 +157,7 @@ https://github.com/haxibami/waydroid_script
 2. libhoudini を導入し
 3. Android ID を取得し、[Google のページ](https://www.google.com/android/uncertified/?pli=1)で登録する
 
-手続きで、Play Store と ARM エミュレーションが動作する。うまくいくとこんな感じになる。
-
-![いい話](/image/waydroid_uma.png)
+手続きで、Play Store と ARM エミュレーションが動作する。うまくいくと冒頭のような感じになる。
 
 ターミナルの右半分は GPU の使用状況、画面最上部のバーの桃色部分は CPU 使用率をそれぞれ示している。CPU 使用率はごく低く、GPU もハードウェアアクセラレーションが効いているのが確認できる。
 

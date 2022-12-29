@@ -1,6 +1,8 @@
 ---
 slug: "about"
 title: "About"
+jatitle: "私について"
+description: "自己紹介"
 ---
 
 ## :sunglasses: Meta

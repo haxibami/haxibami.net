@@ -156,7 +156,7 @@
 }
 
 @mixin code_inline {
-  code {
+  :not(pre) > code {
     background: var(--code);
     transition-property: background;
     transition-duration: 0.2s;
@@ -171,21 +171,26 @@
 @mixin code_block {
   pre {
     width: 100%;
-    font-size: 1rem;
     display: flex;
-    margin: var.$paragraph_gap 0;
+    margin: 0 0 var.$paragraph_gap 0;
+    background: var(--codebg);
+    border-radius: var.$code_corner;
+    contain: paint;
     code {
-      background: transparent;
+      display: grid;
+      counter-reset: line;
       width: 100%;
-      padding: 1rem;
       overflow: auto;
-      margin: 0.25rem;
+      padding: 0;
       font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco,
         Consolas, monospace;
-      @media (max-width: var.$media_border) {
-        font-size: 0.7rem;
-      }
     }
+  }
+  pre:only-child {
+    padding: 0.75rem 0;
+  }
+  pre:not(:only-child) {
+    padding: 3rem 0 0.75rem 0;
   }
 }
 

@@ -15,9 +15,7 @@ const TagList: React.FC<TagListProps> = (props) => {
     <span className={Styles.TileTags}>
       {tags.map((tag) => (
         <span className={Styles.TileTag} key={tag}>
-          <Link href={`/${postType}/tag/${tag}`}>
-            #{tag}
-          </Link>
+          <Link href={`/${postType}/tag/${tag}`}>#{tag}</Link>
         </span>
       ))}
     </span>

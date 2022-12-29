@@ -1,7 +1,8 @@
 import genFeed from "./scripts/feed.mjs";
-import articleIndexer from "./scripts/indexer.mjs";
+import postsIndexer from "./scripts/indexer.mjs";
+// import cachePostData from "./scripts/postdata.mjs";
 
-const promises = [articleIndexer(), genFeed()];
+const promises = [genFeed(), postsIndexer()];
 
 (async () => {
   await Promise.all(promises);

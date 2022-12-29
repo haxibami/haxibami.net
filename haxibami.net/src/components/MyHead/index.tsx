@@ -2,9 +2,9 @@ import React from "react";
 
 import Head from "next/head";
 
-import type { PageMetaProps } from "lib/interface";
+import type { PageMetaData } from "lib/interface";
 
-const MyHead: React.FC<PageMetaProps> = (props) => {
+const MyHead: React.FC<PageMetaData> = (props) => {
   return (
     <Head>
       <title>{props.title}</title>

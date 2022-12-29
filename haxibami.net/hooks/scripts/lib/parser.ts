@@ -7,7 +7,7 @@ import stripMarkdown from "strip-markdown";
 import { unified } from "unified";
 import { matter } from "vfile-matter";
 
-import type { PostMeta } from "./interface";
+import type { PostMeta } from "./interface.js";
 import type { VFile } from "vfile-matter";
 
 /**

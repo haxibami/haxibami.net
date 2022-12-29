@@ -1,4 +1,4 @@
-import type { InferGetStaticPropsType, NextPage } from "next";
+import type { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -25,33 +25,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MyHead from "components/MyHead";
 import ThemeChanger from "components/ThemeChanger";
 import Tree from "components/Tree";
+import { FEEDLY_URL, HOST } from "lib/constant";
 import Styles from "styles/index.module.scss";
 
 import icon from "../../public/icon_ange_glasses_192.webp";
 
-import type { PageMetaProps } from "lib/interface";
+import type { PageMetaData } from "lib/interface";
 
-type Props = InferGetStaticPropsType<typeof getStaticProps>;
-
-export const getStaticProps = async () => {
-  const metaprops: PageMetaProps = {
+const Home: NextPage = () => {
+  const pageMetaData: PageMetaData = {
     title: "haxibami",
-    sitename: "haxibami.net",
+    sitename: `${HOST}`,
     description: "私の系統樹",
-    ogImageUrl: "https://www.haxibami.net/icon_ange_glasses_512.webp",
+    ogImageUrl: `https://${HOST}/icon_ange_glasses_512.webp`,
     pageRelPath: "",
     pagetype: "website",
     twcardtype: "summary",
   };
-  return {
-    props: { metaprops },
-  };
-};
-
-const Home: NextPage<Props> = ({ metaprops }) => {
   return (
     <div id={Styles.Wrapper}>
-      <MyHead {...metaprops} />
+      <MyHead {...pageMetaData} />
       <main id={Styles.Main}>
         <Tree />
         <div id={Styles.ThemeChanger}>
@@ -143,11 +136,7 @@ const Home: NextPage<Props> = ({ metaprops }) => {
           </Link>
         </div>
         <div id={Styles.Blog1_box}>
-          <a
-            href="https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fwww.haxibami.net%2Frss%2Ffeed.xml"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={`${FEEDLY_URL}`} target="_blank" rel="noopener noreferrer">
             <span className={Styles.TooltipDown}>Blog RSS</span>
             <FontAwesomeIcon icon={faRssSquare} id={Styles.Blog1} size={"2x"} />
           </a>

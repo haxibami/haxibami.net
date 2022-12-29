@@ -11,7 +11,6 @@ import type { VFileCompatible } from "vfile";
 
 interface ExtLink extends Literal {
   type: "extlink";
-  url: string;
   meta: LinkWidgetMeta;
 }
 
@@ -82,7 +81,6 @@ export const remarkLinkWidget: Plugin = function extLinkTrans(): Transformer {
         const data = await fetchMeta(child.url);
         parent.children[index] = {
           type: "extlink",
-          url: child.url,
           meta: data,
         } as ExtLink;
       });
@@ -92,7 +90,7 @@ export const remarkLinkWidget: Plugin = function extLinkTrans(): Transformer {
 
 export function extLinkHandler(_h: H, node: ExtLink) {
   return {
-    type: "element",
+    type: "element" as const,
     tagName: "extlink",
     properties: {
       url: node.meta.url,

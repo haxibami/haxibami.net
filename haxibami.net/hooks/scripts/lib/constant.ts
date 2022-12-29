@@ -1,4 +1,4 @@
-import type { MenuTab } from "./interface";
+import type { MenuTab } from "./interface.js";
 
 export const SITEDATA = {
   blog: {
@@ -16,11 +16,11 @@ export const HOST = "www.haxibami.net";
 export const FEEDLY_URL =
   "https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fwww.haxibami.net%2Frss%2Ffeed.xml";
 
-export const OGPHOST = {
-  production: "https://www.haxibami.net",
-  development: "http://localhost:3000",
-  test: "https://www.haxibami.net",
-}[process.env.NODE_ENV];
+// export const OGPHOST = {
+//   production: "https://www.haxibami.net",
+//   development: "http://localhost:3000",
+//   test: "https://www.haxibami.net",
+// }[process.env.NODE_ENV];
 
 export const COUNT_PER_PAGE = 5;
 

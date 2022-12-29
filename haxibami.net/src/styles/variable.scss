@@ -72,6 +72,16 @@ $prevfg: $dark;
 $prevfg-night: #abbf86;
 $docsbg: $white;
 $docsbg-night: $darker;
+$codebg: #232136;
+$codebg-night: #232136;
+$codefg: #e0def4;
+$codefg-night: #e0def4;
+$codehl: #403d52;
+$codehl-night: #403d52;
+$codetitlebg: #403d52;
+$codetitlebg-night: #403d52;
+$codetitlefg: #e0def4;
+$codetitlefg-night: #e0def4;
 
 // size definitions
 $line_width: min(5vw, 5rem);
@@ -80,6 +90,7 @@ $inner_width: 55rem;
 $container_max: calc(50vw + $inner_width * 0.5);
 $container_width: calc(100vw - $line_width * 3);
 $container: min($container_max, $container_width);
+$code_corner: 0.75rem;
 
 // responsive definitions
 $media_border: 700px;

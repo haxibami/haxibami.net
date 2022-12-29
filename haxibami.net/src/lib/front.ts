@@ -1,5 +1,5 @@
-export const dateVisualizer = (date: string) => {
-  if (date.length !== 8) {
+export const dateVisualizer = (date: string | undefined) => {
+  if (date?.length !== 8 || !date) {
     return date;
   } else {
     return (

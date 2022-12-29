@@ -2,6 +2,7 @@
 slug: "nextdns-install"
 title: "NextDNSを導入する"
 date: "20220226"
+description: "いかにして私がNextDNSでインターネット広告を粉砕するに至ったか"
 tags: ["tech", "web", "life"]
 ---
 
@@ -93,7 +94,7 @@ NextDNS は月間 300000 クエリまでは無料だが、それ以上はフィ�
 
 それなりに満足している。試用するぶんには無料なので、ぜひみなさんも試してアフィリエイトサイトに突撃してほしい。
 
-https://nextdns.io/?from=qwqkwe56
+<https://nextdns.io/?from=qwqkwe56>
 
 :point_up_2: ところで[^1]
 

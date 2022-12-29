@@ -1,6 +1,6 @@
-import sitemap from "./scripts/sitemap.mjs";
+import genSitemap from "./scripts/sitemap.mjs";
 
-const promises = [sitemap()];
+const promises = [genSitemap()];
 
 (async () => {
   await Promise.all(promises);

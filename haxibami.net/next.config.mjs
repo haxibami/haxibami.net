@@ -10,9 +10,10 @@ const withBundleAnalyzer = analyze({
 /** @type {import('next').NextConfig} */
 let nextConfig = {
   reactStrictMode: true,
-  //   experimental: {
-  //     appDir: true,
-  //   },
+  experimental: {
+    scrollRestoration: true,
+    //     appDir: true,
+  },
   swcMinify: true,
   sassOptions: {
     includePaths: [

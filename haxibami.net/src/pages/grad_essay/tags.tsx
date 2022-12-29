@@ -4,43 +4,40 @@ import Footer from "components/Footer";
 import MyHead from "components/MyHead";
 import Header from "components/PostTopHeader";
 import TagsTop from "components/TagsTop";
-import { getPostTags, readYaml } from "lib/api";
-import { ogpHost, tagsMenuTabs } from "lib/constant";
+import { OGPHOST, SITEDATA, tagsMenuTabs } from "lib/constant";
+import { getTags } from "lib/fs";
 import Styles from "styles/tags.module.scss";
 
-import type { PageMetaProps, SiteInfo, PostType } from "lib/interface";
+import type { PageMetaData, PostType } from "lib/interface";
 
 const postType: PostType = "grad_essay";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 export const getStaticProps = async () => {
-  const taglists = getPostTags("grad_essay");
-
-  const sitename: SiteInfo = readYaml("meta.yaml");
-
-  const metaprops: PageMetaProps = {
-    title: "タグ一覧",
-    sitename: sitename.siteinfo.grad_essay.title,
-    description: "タグ別記事",
-    ogImageUrl: encodeURI(`${ogpHost}/api/ogp?title=タグ一覧`),
-    pageRelPath: `${postType}/tags`,
-    pagetype: "article",
-    twcardtype: "summary",
-  };
+  const taglists = await getTags("articles/grad_essay");
 
   return {
-    props: { taglists, metaprops, siteinfo: sitename },
+    props: { taglists },
   };
 };
 
 const Tags: NextPage<Props> = (props) => {
-  const { taglists, metaprops, siteinfo } = props;
+  const { taglists } = props;
+  const pageMetaData: PageMetaData = {
+    title: "タグ一覧",
+    sitename: SITEDATA.grad_essay.title,
+    description: "タグ別記事",
+    ogImageUrl: encodeURI(`${OGPHOST}/api/ogp?title=タグ一覧`),
+    pageRelPath: `${postType}/tags`,
+    pagetype: "article",
+    twcardtype: "summary",
+  };
   return (
     <div>
       <div id={Styles.Wrapper}>
-        <MyHead {...metaprops} />
-        <Header siteinfo={siteinfo} posttype={postType} />
+        <MyHead {...pageMetaData} />
+        <Header posttype={postType} />
         <TagsTop
           tagsMenuTabs={tagsMenuTabs}
           taglists={taglists}

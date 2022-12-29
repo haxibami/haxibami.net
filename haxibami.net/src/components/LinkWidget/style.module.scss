@@ -28,6 +28,8 @@
     padding: 1rem;
     flex: 4 1 180px;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
   .Image {
     max-width: 200px;

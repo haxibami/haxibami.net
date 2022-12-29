@@ -1,16 +1,19 @@
 import fs from "fs";
-import prettier from "prettier";
+
 import { globby } from "globby";
-import { dateConverter } from "./lib.mjs";
-import type { IndexItem } from "./interface.mjs";
+import prettier from "prettier";
+
+import { dateConverter } from "./lib/build.js";
+import { HOST } from "./lib/constant.js";
+
+import type { PostData } from "./lib/interface.js";
 
 // variables
-const HOST = "https://www.haxibami.net";
 const XMLFILE = "sitemap.xml";
 
 // Article index file
-const indexFile = fs.readFileSync("src/share/index.json", "utf-8");
-const index = JSON.parse(indexFile);
+const postIndexFile = fs.readFileSync("src/share/index.json", "utf-8");
+const postIndex = JSON.parse(postIndexFile);
 
 // format xml
 const formatXml = (sitemap: string) =>
@@ -26,28 +29,28 @@ const sitemapGenerator = async () => {
     ],
   });
 
-  const solidInfos = solidPaths.map((filePath) => {
-    const solidInfo = {
+  const solidPageInfos = solidPaths.map((filePath) => {
+    const solidPageInfo = {
       relpath: filePath
         .replace("src/pages/", "")
         .replace(".tsx", "")
         .replace("index", ""),
       lastmod: new Date().toISOString(),
     };
-    return solidInfo;
+    return solidPageInfo;
   });
 
-  const allBlogs = index.articles.blog;
+  const blogposts = postIndex.articles.blog;
 
-  const blogInfos = allBlogs.map((item: IndexItem) => {
+  const blogInfos = blogposts.map((post: PostData) => {
     const blogInfo = {
-      relpath: `blog/posts/${item.slug}`,
-      lastmod: dateConverter(item.date),
+      relpath: `blog/posts/${post.data?.slug}`,
+      lastmod: dateConverter(post.data?.date),
     };
     return blogInfo;
   });
 
-  const sitemapInfos = solidInfos.concat(blogInfos);
+  const sitemapInfos = solidPageInfos.concat(blogInfos);
 
   const pagesSitemap = `
 
@@ -55,7 +58,7 @@ const sitemapGenerator = async () => {
     .map((info) => {
       return `
         <url>
-          <loc>${HOST}/${info.relpath}</loc>
+          <loc>https://${HOST}/${info.relpath}</loc>
           <lastmod>${info.lastmod}</lastmod>
         </url>
       `;
@@ -64,14 +67,14 @@ const sitemapGenerator = async () => {
   `;
 
   const generatedSitemap = `
-    <?xml version="1.0" encoding="UTF-8"?>
-    <urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
-    >
-      ${pagesSitemap}
-    </urlset>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+>
+  ${pagesSitemap}
+</urlset>
   `;
 
   const robots = `# *
@@ -89,11 +92,11 @@ Sitemap: https://www.haxibami.net/sitemap.xml
   fs.writeFileSync("public/robots.txt", robots);
 };
 
-const GenSitemap = () => {
+const genSitemap = () => {
   return new Promise<void>((resolve) => {
     sitemapGenerator();
     resolve();
   });
 };
 
-export default GenSitemap;
+export default genSitemap;
