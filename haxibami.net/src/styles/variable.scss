@@ -3,26 +3,26 @@
 $haxibami_color: #bd93f9;
 
 // urara colors
-$dark: #171726;
-$grad-0: #262640;
-$grad-1: #4d4d80;
-$grad-2: #8a8299;
+$dark: #191724;
+$grad-0: #1f1d2e;
+$grad-1: #524f67;
+$grad-2: #6e6a86;
 $light: #f7f7fa;
 $white: #edebef;
-$blue: #6b8fb3;
-$magenta: #b898d9;
-$cyan: #5c9999;
+$blue: #31748f;
+$magenta: #c4a7e7;
+$cyan: #9ccfd8;
 $green: #8fb36b;
-$yellow: #f2ceaa;
-$red: #cca3a3;
+$yellow: #f6c177;
+$red: #eb6f92;
 
-$darker: #14111a;
+$darker: #120e12;
 
 // brand colors
 $brands: (
   // Brandname:(top-left, bottom-right, darker, lighter, foreground, radius, rotate, box-width)
-  About: ($blue, $blue, #8f48f5, #f6f1fe, #edebef, 100px, 230deg, 50px),
-  Twitter: (#1da1f2, #1da1f2, #0c84cd, #c8defb, #edebef, 250px, 140deg, 50px),
+  About: ($blue, $blue, #8f48f5, #f6f1fe, #edebef, 100px, 230deg, 35px),
+  Twitter: (#1da1f2, #1da1f2, #0c84cd, #c8defb, #edebef, 250px, 140deg, 32px),
   Instagram: (
     #ffdc80,
     #e1306c,
@@ -31,18 +31,18 @@ $brands: (
     #edebef,
     250px,
     120deg,
-    50px
+    35px
   ),
-  Mail: (#1855f0, #11defe, #0d41c6, #aeefff, #edebef, 200px, 100deg, 50px),
-  Github: (#333333, #333333, #1d1d1d, #666666, #edebef, 200px, -10deg, 50px),
-  Keybase: (#ff6f21, #ff6f21, #ff6f21, #ff6f21, #edebef, 200px, 20deg, 50px),
-  Bookmark: (#64bc4b, #64bc4b, #ff9523, #ffe4c7, #edebef, 150px, 150deg, 50px),
-  Book: (#a6b4de, #a6b4de, #ff2ea6, #ffd7ee, #edebef, 150px, -90deg, 50px),
-  Blog1: (#2bb24c, #2bb24c, #6dcce0, #ebfbff, #edebef, 200px, 75deg, 50px),
-  Blog2: ($cyan, $cyan, #20dc60, #e8ffe9, #edebef, 200px, 45deg, 50px),
-  Write: (#2792ca, #2792ca, #000000, #5e627d, #edebef, 200px, -35deg, 50px),
-  Poem: ($red, $red, #ea0000, #ffe5e1, #edebef, 200px, -65deg, 50px),
-  Spotify: (#1db954, #1db954, #179443, #a1dea8, #edebef, 150px, 190deg, 50px)
+  Mail: (#1855f0, #11defe, #0d41c6, #aeefff, #edebef, 200px, 100deg, 32px),
+  Github: (#333333, #333333, #1d1d1d, #666666, #edebef, 200px, -10deg, 35px),
+  Keybase: (#ff6f21, #ff6f21, #ff6f21, #ff6f21, #edebef, 200px, 20deg, 35px),
+  Read: (#64bc4b, #64bc4b, #ff9523, #ffe4c7, #edebef, 150px, 150deg, 35px),
+  Works: (#a6b4de, #a6b4de, #ff2ea6, #ffd7ee, #edebef, 150px, -90deg, 32px),
+  Rss: (#2bb24c, #2bb24c, #6dcce0, #ebfbff, #edebef, 200px, 75deg, 35px),
+  Blog: ($cyan, $cyan, #20dc60, #e8ffe9, #edebef, 200px, 45deg, 32px),
+  Kakuyomu: (#2792ca, #2792ca, #000000, #5e627d, #edebef, 200px, -35deg, 32px),
+  Poem: ($red, $red, #ea0000, #ffe5e1, #edebef, 200px, -65deg, 35px),
+  Spotify: (#1db954, #1db954, #179443, #a1dea8, #edebef, 150px, 190deg, 35px)
 );
 
 // element colors
@@ -62,8 +62,8 @@ $line: #8a829955;
 $line-night: $line;
 $shadow: #1c192166;
 $shadow-night: #d2ced966;
-$blog_link: $cyan;
-$blog_link-night: $cyan;
+$blog_link: $blue;
+$blog_link-night: $red;
 $code: $white;
 $code-night: $grad-0;
 $nextbg: $dark;
@@ -72,28 +72,33 @@ $prevfg: $dark;
 $prevfg-night: #abbf86;
 $docsbg: $white;
 $docsbg-night: $darker;
-$codebg: #232136;
-$codebg-night: #232136;
+$codebg: #1b1e28;
+$codebg-night: #1b1e28;
 $codefg: #e0def4;
 $codefg-night: #e0def4;
 $codehl: #403d52;
 $codehl-night: #403d52;
-$codetitlebg: #403d52;
-$codetitlebg-night: #403d52;
-$codetitlefg: #e0def4;
-$codetitlefg-night: #e0def4;
+$codefind: #add7ff40;
+$codefind-night: #add7ff40;
+$codelinenum: #767c9d50;
+$codelinenum-night: #767c9d50;
+$codetitlebg: #303340;
+$codetitlebg-night: #303340;
+$codetitlefg: #a6accd;
+$codetitlefg-night: #a6accd;
 
 // size definitions
 $line_width: min(5vw, 5rem);
 $line_bottom_margin: 2.5rem;
-$inner_width: 55rem;
+$inner_width: 50rem;
 $container_max: calc(50vw + $inner_width * 0.5);
 $container_width: calc(100vw - $line_width * 3);
 $container: min($container_max, $container_width);
-$code_corner: 0.75rem;
+$code_corner: 0.375rem;
 
 // responsive definitions
 $media_border: 700px;
 $image_max: min(70vw, 70vh);
 $graph_max: min(70vw, 70vh);
-$paragraph_gap: 2rem;
+$element_gap: 1.5rem;
+$heading_gap: 2.5rem;

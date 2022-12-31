@@ -12,18 +12,18 @@ tags: ["tech", "web", "nextjs"]
 
 ブログを自作した。決め手は以下の四つ。
 
-1. 適度な距離感
+1. 適度な距離
 1. メンテナンス性
 1. 高速性・拡張性
 1. 無広告
 
-### 1. 適度な距離感
+### 1. 適度な距離
 
-あらゆるものが最適化されて提供される環境にあっては、遅配や誤配の確率は十分に低くなる。大きなプラットフォームはユーザーの buzz をすすんで後押しし、かれに向けて、かれのために、とパーソナライズに躍起だ。書き手と読み手の距離は透明に、コミュニケーションは確実に。だがそうではない形式もあった。ひょっとしたら誰かに拾われるかもしれない、あるいはクローラにさえ拾われないかもしれない、そうした確率論的な雲のなかに自らの書いたものを打ち上げる。そして祈る。{古き良き日々}^(グッド・オールド・インターネッツ)は理想郷ではなかったにしても、あの誰かのものになる前の世界の、その歪な手触りを覚えておくための、この距離感。
+あらゆるものが最適化されて提供される現代にあっては、遅配や誤配の確率はとても低い。大きなプラットフォームはユーザーの buzz をすすんで後押しし、かれに向けて、かれのために、とパーソナライズに躍起だ。書き手と読み手の距離は透明に、コミュニケーションは確実に。だがそうではない形式も（かつては？）あった。ひょっとしたら誰かに拾われるかもしれない、あるいはクローラにさえ拾われないかもしれない、そうした確率論的な雲のなかに自らの書いたものを打ち上げる。そして祈る。{古き良き日々}^(グッド・オールド・インターネッツ)は理想郷ではなかったにしても、あの誰かのものになる前の世界の、その歪な手触りを覚えておくための、この距離感。
 
 ### 2. メンテナンス性
 
-ご存知のとおり、この手のサイトは管理・移行が億劫になった時点で**エタる**。放置された「〇〇の部屋」、消えて還らない借りもののドメイン、むなしく刻む入室カウンターたちを眺めるたびに、せめて記事くらいは慣れたファイル形式で楽に扱いたいと思うようになった。そういうわけで Markdown（コンテンツ） + tsx（テンプレート）、さらに GitHub デプロイでの自動ビルド。この組み合わせならそう簡単には廃れないだろうし、いつか別サービス・別フレームワークに移るときにもそれほど困らない。
+先人たちが示してきたとおり、この手のサイトは管理・移行が億劫になった時点で**エタる**。放置された「〇〇の部屋」、消えて還らない借りもののドメイン、むなしく刻む入室カウンターたちを眺めるたびに、せめて記事くらいは慣れたファイル形式で楽に扱いたいと思うようになった。そういうわけで Markdown（コンテンツ） + tsx（テンプレート）。この組み合わせならそう簡単には廃れないだろうし、いつか別サービス・別フレームワークに移るときにもそれほど困らない（コンテンツが独立している限り）。
 
 （2022/12/28 更新）
 
@@ -31,7 +31,7 @@ Markdown の処理系について。以前は`remark` + `rehype`の出力を`reh
 
 <https://github.com/hashicorp/next-mdx-remote>
 
-これは 名前の通り MDX / Markdown を処理するユーティリティで、内部では`remark` / `rehype`系の API を用いているため、ほぼ変更なくツールチェインを持ち込める。またバンドルサイズの削減にも注意が払われている[らしく](https://github.com/hashicorp/next-mdx-remote#background--theory)、実際に私の環境では `rehype-react`比で 200KB ほどバンドルが小さくなった。
+これは名前の通り、Next.js で MDX / Markdown を処理するユーティリティで、Webpack loader を使う Next.js の[公式ガイド](https://nextjs.org/docs/advanced-features/using-mdx)とは異なり、`getStaticProps`経由でデータを取得する設計になっている。また内部では`remark` / `rehype`系の API が用いられており、これらの系列のプラグインが利用できる。
 
 ```ts title="lib/compile.ts"
 import { serialize } from "next-mdx-remote/serialize";
@@ -46,13 +46,14 @@ import remarkJaruby from "remark-jaruby";
 import remarkMath from "remark-math";
 import remarkUnwrapImages from "remark-unwrap-images";
 
-import { remarkLinkWidget, extLinkHandler } from "lib/remark-link-card";
-import remarkMermaid from "lib/remark-mermaid";
+import rehypeImageOpt from "./rehype-image-opt";
+import { remarkLinkWidget, extLinkHandler } from "./remark-link-card";
+import remarkMermaid from "./remark-mermaid";
 
 import type { Options } from "rehype-pretty-code";
 
 export const compileMdx = async (file: string) => {
-  const options: Partial<Options> = {
+  const rpcOptions: Partial<Options> = {
     theme: {
       dark: "rose-pine-moon",
     },
@@ -69,7 +70,7 @@ export const compileMdx = async (file: string) => {
     },
   };
 
-  // compile md(x)
+  // compile md
   const mdxSource = await serialize(file, {
     mdxOptions: {
       remarkPlugins: [
@@ -94,7 +95,8 @@ export const compileMdx = async (file: string) => {
         rehypeSlug,
         [rehypeAutolinkHeadings, { behavior: "wrap" }],
         rehypeKatex,
-        [rehypePrettyCode, options],
+        [rehypePrettyCode, rpcOptions],
+        rehypeImageOpt,
         rehypeRaw,
       ],
       remarkRehypeOptions: {
@@ -112,25 +114,29 @@ export const compileMdx = async (file: string) => {
 };
 ```
 
-![before](/image/bundlesize_pre.png)
+[開発背景](https://github.com/hashicorp/next-mdx-remote#background--theory)に記載があるように、バンドルサイズの削減にも注意が払われているらしく、実際に私の環境では（`rehype-react`比で）200KB ほどバンドルが小さくなった。
 
-![after](/image/bundlesize_post.png)
+![with rehype-react](/image/bundlesize_pre.png)
+
+![with next-mdx-remote](/image/bundlesize_post.png)
 
 ### 3. 高速性・拡張性
 
-個人サイトに Next.js は若干オーバーキル感もあるが、まあページ遷移が気持ちいいし、Vercel なら画像最適化効くし……こうしてベンダーロックインへと突き進んでゆくのでした。あと少々複雑なことをしようとしてもフレームワークの守備範囲をはみ出さないというのは良い。
+Next.js。
+
+個人サイトには若干オーバーキルという感もある。ただページ遷移がやっぱり気持ちいいし、Vercel なら画像の最適化も効くし……こうしてベンダーロックインへと突き進んでゆくのでした。あと少々複雑なことをしようとしてもフレームワークの守備範囲をはみ出さないのは良い。
 
 ### 4. 広告や統計の排除
 
 過剰な広告・統計に対して憎悪を抱いているため、このサイトには一切設置していない。唯一、このサイトのホスト先である Vercel が行っているアナリティクスだけは確認している。[こちらの記事](/blog/posts/nextdns-install)も参照。
 
-## 展示会
+## 機能一覧と実装
 
-以下はこのブログの機能・実装の展示会。
+以下はこのブログの機能・実装のギャラリー。
 
-### 記事メタデータの取り扱い
+### 記事メタデータ
 
-`remark-frontmatter`と`vfile-matter`で frontmatter から記事のメタデータを取得。また`strip-markdown`で本文中の余分な要素を除去し、冒頭 300 字程度を抽出したものを各記事のプレビューとして表示している。
+Markdown 内の frontmatter からデータを取得。また`strip-markdown`で本文を plain text 化し、冒頭を抽出したものを各記事のプレビューとして流している。
 
 <https://github.com/remarkjs/remark-frontmatter>
 
@@ -145,59 +151,6 @@ title: "Next.jsでブログをつくった"
 date: "20220326"
 tags: ["tech", "web", "nextjs"]
 ---
-```
-
-```ts title="lib/parser.ts"
-// Markdown parser for metadata & preview data
-
-import remarkFrontmatter from "remark-frontmatter";
-import remarkParse from "remark-parse";
-import remarkStringify from "remark-stringify";
-import stripMarkdown from "strip-markdown";
-import { unified } from "unified";
-import { matter } from "vfile-matter";
-
-import type { VFile } from "vfile-matter";
-
-declare module "vfile" {
-  interface DataMap {
-    matter: {
-      slug: string;
-      title: string;
-      date?: string;
-      description: string;
-      tags?: string[];
-    };
-  }
-}
-
-/**
- * Plugin to parse YAML frontmatter and expose it at `file.data.matter`.
- *
- * @type {import('unified').Plugin<Array<void>>}
- */
-export default function remarkParseMatter() {
-  return function (_: void, file: VFile) {
-    matter(file);
-  };
-}
-
-export const mdInfo = async (md: string) => {
-  const result = await unified()
-    .use(remarkParse)
-    .use(stripMarkdown, {
-      remove: ["heading", "list", "blockquote", "code", "image"],
-    })
-    .use(remarkStringify)
-    .use(remarkFrontmatter)
-    .use(remarkParseMatter)
-    .process(md);
-
-  return {
-    preview: result.toString().substring(0, 300),
-    data: result.data.matter,
-  };
-};
 ```
 
 ### GitHub Flavored Markdown
@@ -215,7 +168,12 @@ export const mdInfo = async (md: string) => {
 みたいな生のリンクも置けるし
 
 - こうやって
-  - リストが書ける。さらに、[^1]
+  - リストが書ける。
+
+ほかにも、
+
+- [x] TODO
+- [ ] リストや、[^1]
 
 [^1]: 脚注も使える
 ```
@@ -230,7 +188,13 @@ export const mdInfo = async (md: string) => {
 みたいな生のリンクも置けるし
 
 - こうやって
-  - リストが書ける。さらに、[^1]
+  - リストが書ける。
+
+ほかにも、
+
+- [x] TODO
+- [ ] リスト
+- [ ] や、[^1]
 
 [^1]: 脚注も使える
 
@@ -246,24 +210,7 @@ export const mdInfo = async (md: string) => {
 
 <https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex>
 
-フォントの設置は必要ないが、KaTeX のスタイルシートを置いておく必要がある。
-
-```tsx title="pages/blog/posts/[slug].tsx"
-const Blog: NextPage<Props> = ({ pageMetaData, post, content }) => {
-  return (
-    <div id={Styles.Wrapper}>
-      <div id={Styles.Container}>
-        <MyHead {...pageMetaData} />
-        <Head>
-          <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css"
-            integrity="sha384-KiWOvVjnN8qwAZbuQyWDIbfCLFhLXNETzBQjA/92pIowpC0d2O3nppDGQVgwd2nB"
-            crossOrigin="anonymous"
-          />
-        </Head>
-// (略)
-```
+適当なところで KaTeX のスタイルシートを読み込む必要がある（忘れがち）。
 
 ```md
 > $$
@@ -275,11 +222,15 @@ const Blog: NextPage<Props> = ({ pageMetaData, post, content }) => {
 > ( \sum_{k=1}^{n} a_k b_k )^2 \leq ( \sum_{k=1}^{n} {a_k}^2 ) ( \sum_{k=1}^{n} {b_k}^2 )
 > $$
 
+```md
+> $e^{i\pi} + 1 = 0$ :arrow_left: インライン数式
+```
+
 $e^{i\pi} + 1 = 0$ :arrow_left: インライン数式
 
 ### ルビ
 
-`remark-ruby`というパッケージをフォークする形で、別パッケージ（`remark-jaruby`）を実装。
+やや古い既存のパッケージ（`remark-ruby`）をフォークして、別パッケージ（`remark-jaruby`）を実装。
 
 <https://github.com/haxibami/remark-jaruby>
 
@@ -295,11 +246,13 @@ $e^{i\pi} + 1 = 0$ :arrow_left: インライン数式
 
 <https://github.com/rehypejs/rehype-autolink-headings>
 
-[はじめに](#はじめに)に飛べるよ
+:arrow_right: [はじめに](#はじめに) に飛べるよ
 
 ### Mermaid Diagram
 
-[remark-mermaidjs](https://github.com/remcohaszing/remark-mermaidjs)をベースに remark プラグインを書いた。裏でヘッドレス Chromium を立ち上げて SVG を描画、出力している。サイト内に JS を設置してユーザー側で動的にレンダリングさせることもできるが、事前に静的な SVG に変換できたほうが嬉しい。
+[remark-mermaidjs](https://github.com/remcohaszing/remark-mermaidjs)をベースに remark プラグインを書いた。ビルド時にヘッドレス Chromium 上で SVG を描画させてから取り出している（わざわざ？　の感もあるが仕方ない[^2]）。サイト内に JS を設置してユーザー側で動的にレンダリングさせることもできるが、事前に変換できたほうが（SSG としては）嬉しい。
+
+[^2]: 調べた & 試した限り、mermaid は node 上の DOM ライブラリ（JSDOM や happy-dom）では動かない
 
 ```ts title="lib/remark-mermaid.ts"
 ...
@@ -318,7 +271,6 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
 
   const settings = Object.assign({}, DEFAULT_SETTINGS, options);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return async (node: Node, _file: VFileCompatible) => {
     const promises: (() => Promise<void>)[] = [];
     const browser = await playwright.chromium.launch(settings.launchOptions);
@@ -439,7 +391,7 @@ pie
 
 ### シンタックスハイライト
 
-`rehype-pretty-code`を採用。このパッケージは内部で[shiki](https://shiki.matsu.io)を利用しており、ファイル名や行数の表示、行ハイライトなどの機能を追加した実質的なラッパーになっている。shiki はコード解析・スタイル適用がビルド時にすべて済む（出力が静的）、VSCode のカラースキームファイルが使える、などの強みがある。
+`rehype-pretty-code`を採用。このプラグインの内部処理には[shiki](https://shiki.matsu.io)が使われており、コード解析とスタイル適用がビルド時に済む（追加 CSS が不要）、VSCode のカラースキームが使える、などの利点がある。
 
 <https://github.com/atomiks/rehype-pretty-code>
 
@@ -447,11 +399,13 @@ pie
 
 ### リンクカード
 
+:arrow_down: このもこっとしたカード
+
 <https://zenn.dev/tomi/articles/2021-03-22-blog-card>
 
 <https://zenn.dev/januswel/articles/745787422d425b01e0c1>
 
-:point_up_2: を参考にしつつ、unified の Transformer プラグインとして実装した。文書中のリンク（`Paragraph`ノードかつ、子要素が単一の`Link`ノードであるもの）を取得し、適当な独自ノード（`<extlink>`）に置き換えたのち、リンク先にアクセスして得たメタ情報（title、description、OGP 画像 URL 等）を持たせている。これを`<MDXRemote>`の`components`オプションを使ってカスタムコンポーネントに変換することで、好きなスタイルでリンクカードが表示できる。
+上の記事を参考に、unified の Transformer プラグインとして実装した。文書中に単独で貼られたリンク（`Paragraph`ノードかつ、子要素が単一の`Link`ノードであるもの）を適当な独自ノード（`<extlink>`）に置き換え、リンク先にアクセスして得たメタ情報（title、description、OG image URL）を付加している。この一式を`<MDXRemote>`の`components`オプションを使って自作コンポーネントに変換することで、好きなスタイルで画像付きリンクカードが表示できる。
 
 ```ts title="lib/remark-link-card.ts"
 import getMetadata from "metadata-scraper";
@@ -467,15 +421,13 @@ import type { VFileCompatible } from "vfile";
 
 interface ExtLink extends Literal {
   type: "extlink";
-  meta: LinkWidgetMeta;
-}
-
-interface LinkWidgetMeta {
-  url: string;
-  title: string;
-  description: string;
-  og: string;
-  icon: string;
+  meta: {
+    url: string;
+    title: string;
+    description: string;
+    og: string;
+    icon: string;
+  };
 }
 
 function isExtLink(node: unknown): node is Paragraph {
@@ -490,7 +442,13 @@ function isExtLink(node: unknown): node is Paragraph {
   }
 
   const singleChild = children[0];
-  if (!(isLink(singleChild) && singleChild.children[0].type == "text")) {
+  if (
+    !(
+      isLink(singleChild) &&
+      singleChild.children[0].type == "text" &&
+      singleChild.url.startsWith("http")
+    )
+  ) {
     return false;
   }
 
@@ -499,7 +457,7 @@ function isExtLink(node: unknown): node is Paragraph {
 
 function fetchMeta(url: string) {
   const metas = getMetadata(url).then((data) => {
-    const metaData: LinkWidgetMeta = {
+    const metaData = {
       url: url,
       title: data.title ?? "",
       description: data.description ?? "",
@@ -560,11 +518,38 @@ export function extLinkHandler(_h: H, node: ExtLink) {
 }
 ```
 
-なお、内部で`fetch`を行っている都合上、作成したプラグインは非同期プラグインとなることに留意。具体的には unified で`processSync`が[使えなくなる](https://github.com/unifiedjs/unified#processorprocesssyncfile)。
+取得したメタデータは 以下のように props 経由で受け渡しできる。型の扱いが雑だけど……ヨシ！（炎上）
 
-### 画像とリンクの処理
+```tsx title="components/MdxComponent/index.tsx" /props/
+import LinkWidget from "components/LinkWidget";
+import MyLink from "components/MyLink";
+import NextImage from "components/NextImage";
 
-Markdown で挿入した画像はそのままでは通常の`<img>`タグに変換されるため、Next.js の画像最適化の対象にはならない。が、これも`<MDXRemote>`の`components`オプションで独自のコンポーネントに置換することで解決できる。以下の例では画像にリンクを付加し、`alt`テキストをキャプションとして追記している。同様のことがリンク（`<a>`タグ →`<Link>`）についても可能。
+import type { LinkWidgetProps } from "components/LinkWidget";
+import type { MyLinkProps } from "components/MyLink";
+import type { NextImageProps } from "components/NextImage";
+import type { MDXComponents } from "mdx/types";
+
+type ProvidedComponents = MDXComponents & {
+  a?: typeof MyLink;
+  img?: typeof NextImage;
+  extlink?: typeof LinkWidget;
+};
+
+const components = {
+  a: (props: MyLinkProps) => <MyLink {...props} />,
+  img: (props: NextImageProps) => <NextImage {...props} />,
+  extlink: (props: LinkWidgetProps) => <LinkWidget {...props} />,
+} as ProvidedComponents;
+
+export default components;
+```
+
+なお、プラグイン内部で`fetch`を行っている都合上、作成したプラグイン全体が非同期となることに留意。具体的には unified で`processSync`が[使えなくなる](https://github.com/unifiedjs/unified#processorprocesssyncfile)。
+
+### 画像処理
+
+Markdown で挿入した画像はそのままでは通常の`<img>`タグに変換され、Next.js の画像最適化の対象にならないが、これも[リンクカード](#リンクカード)と同様の手順で`next/image`に置換することで解決できる。
 
 ```tsx title="components/NextImage.tsx"
 import React from "react";
@@ -577,19 +562,23 @@ import Styles from "./style.module.scss";
 export type NextImageProps = {
   src: string;
   alt?: string;
+  aspectRatio: string;
+  blurDataURL: string;
 };
 
 const NextImage: React.FC<NextImageProps> = (props) => {
-  const { src, alt } = props;
+  const { src, alt, aspectRatio, blurDataURL } = props;
   return alt !== "asciicast" ? (
     <figure className={Styles.Figure}>
       <Link href={src} scroll={false}>
-        <div className={Styles.ImgBox}>
+        <div className={Styles.ImgBox} style={{ aspectRatio: aspectRatio }}>
           <Image
             className={Styles.Img}
             src={src}
             alt={alt || src}
             fill={true}
+            placeholder="blur"
+            blurDataURL={blurDataURL}
           />
         </div>
       </Link>
@@ -605,17 +594,67 @@ const NextImage: React.FC<NextImageProps> = (props) => {
 export default NextImage;
 ```
 
+```ts title="lib/rehype-image-opt.ts"
+import { getPlaiceholder } from "plaiceholder";
+import { visit } from "unist-util-visit";
+
+import type { Element } from "hast";
+import type { Node } from "unist";
+import type { VFileCompatible } from "vfile";
+
+export default function rehypeImageOpt() {
+  return async (tree: Node, _file: VFileCompatible) => {
+    const promises: (() => Promise<void>)[] = [];
+    visit(tree, "element", (node: Element) => {
+      if (
+        node.tagName === "img" &&
+        node.properties &&
+        node.properties.src &&
+        typeof node.properties.src === "string"
+      ) {
+        const src = node.properties.src;
+
+        promises.push(async () => {
+          if (node.properties) {
+            const blur = await getPlaiceholder(src);
+            node.properties.src = blur.img.src;
+            node.properties.width = blur.img.width;
+            node.properties.height = blur.img.height;
+            node.properties.aspectRatio = `${blur.img.width} / ${blur.img.height}`;
+            node.properties.blurDataURL = blur.base64;
+          }
+        });
+      }
+    });
+    await Promise.all(promises.map((t) => t()));
+  };
+}
+```
+
+上の例では変換処理に加えて、画像のサイズ取得・プレースホルダー生成を行う rehype プラグインを実装し、
+
+- 画像読み込み前のプレースホルダーの設定
+- 画像を収納する親要素のサイズ調整（画像のアスペクト比を利用）
+
+などを行っている。
+
+参考：
+
+<https://zenn.dev/elpnt/articles/c17727e9d254ef00ea60>
+
+<https://nextjs.org/docs/api-reference/next/image#blurdataurl>
+
 ### ダークモード
 
 外部ライブラリを使用。
 
 <https://github.com/pacocoursey/next-themes>
 
-### 動的 OGP 画像の自動生成
+### OGP 画像の生成
 
 （2022/12/28 更新）
 
-以前のヘッドレス Chromium を使った実装から、Vercel 公式が提供する[新しいアプローチ](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation)（`@vercel/og`）に乗り換えた。[yoga-layout](https://yogalayout.com/)かなにかのスタイリングエンジンを WASM で動かしているらしく、かなり速い。しかも Tailwind が使える（ただし使える CSS ルールは限定的）。
+ヘッドレス Chromium を使った古い実装から、Vercel 公式が提供する[新しいアプローチ](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation)（`@vercel/og`）に乗り換えた。どうやら[yoga-layout](https://yogalayout.com/)のスタイリングエンジンを WASM で動かしているらしく、かなり速い。しかも Tailwind が使える。
 
 ```tsx title="pages/api/ogp.tsx"
 import type { NextRequest } from "next/server";
@@ -729,11 +768,11 @@ const handler = async (req: NextRequest) => {
 export default handler;
 ```
 
-なお、この関数は Edge 環境で実行されるため、総容量制限は**1MB**とかなり厳しい。日本語フォントは内蔵のもの（Noto Sans JP？）で妥協するか、サブセット化したものを Web フォントとしてロードするしかない。
+ちなみにこの関数は Edge 環境で実行されるため、総容量制限は **1MB** とかなり厳しい。日本語フォントは内蔵のもの（Noto Sans JP？）で妥協するか、サブセット化したものを Web フォントとしてロードするしかない。
 
 ### サイトマップ生成
 
-frontmatter に記載した情報に合わせてサイトマップを生成したかったので、[このへん](https://www.mk-engineer.com/posts/nextjs-before-build)を参考にしつつ自分で書いた。npm scripts を活用し、
+frontmatter に記載した記事情報に合わせてサイトマップを生成したかったので、[このへん](https://www.mk-engineer.com/posts/nextjs-before-build)を参考にしつつ自分で書いた。npm scripts を活用し、
 
 1. ビルド前に記事のインデックスをキャッシュ
 1. キャッシュに基づいて`public/sitemap.xml`と`public/robots.txt`を生成
@@ -847,7 +886,7 @@ export default genSitemap;
 
 ### フィード対応
 
-`Feed`というライブラリを使った。上と同じ要領で、ビルド時に`/public/rss`以下に RSS、Atom、JSON Feed 用のファイル三種を吐かせている。
+`Feed`というライブラリで形式を整え、サイトマップと同じ要領でビルド時に RSS、Atom、JSON Feed 用のファイルを吐かせている。
 
 <https://github.com/jpmonette/feed>
 
@@ -923,12 +962,4 @@ export default GenFeed;
 
 ## 感想
 
-以上で、はてブや Qiita、Zenn あたりに劣らぬ書き心地になった。
-
-~~肝心の記事は全然増えないけど~~
-
-:sob:
-
-## TODO
-
-- [ ] Twitter コンテンツの静的埋め込み
+~~時間をドブに捨てた~~地道な改修の結果、はてなブログや Qiita、Zenn あたりに負けない書き心地になってきた。ちなみに肝心の記事は全然増えていない。

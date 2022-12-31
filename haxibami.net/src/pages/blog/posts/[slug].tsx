@@ -11,7 +11,6 @@ import { MDXRemote } from "next-mdx-remote";
 import MdxComponent from "components/MdxComponent";
 import MyHead from "components/MyHead";
 import TagList from "components/TagList";
-import ThemeChanger from "components/ThemeChanger";
 import { compileMdx } from "lib/compile";
 import { SITEDATA, OGPHOST } from "lib/constant";
 import { dateVisualizer } from "lib/front";
@@ -89,7 +88,6 @@ const Blog: NextPage<Props> = ({ mdxSource }) => {
                 <h2>{SITEDATA.blog.title}</h2>
               </Link>
             </div>
-            <ThemeChanger />
           </div>
           <div>
             <span className={Styles.Date}>

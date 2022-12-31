@@ -9,7 +9,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import ThemeChanger from "components/ThemeChanger";
 import { SITEDATA, FEEDLY_URL } from "lib/constant";
 
 import Styles from "./style.module.scss";
@@ -50,7 +49,6 @@ const PostHeader: React.FC<PostHeaderProps> = ({ posttype }) => {
           <Link href={`${FEEDLY_URL}`}>
             <FontAwesomeIcon icon={faRss} color={"#abbf86"} size={"2x"} />
           </Link>
-          <ThemeChanger />
         </span>
       </div>
       <div className={Styles.Mobile}>
@@ -97,9 +95,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({ posttype }) => {
               <FontAwesomeIcon icon={faRss} color={"#abbf86"} size={"2x"} />
             </Link>
           </li>
-          <li>
-            <ThemeChanger />
-          </li>
+          <li></li>
         </ul>
       </div>
     </header>

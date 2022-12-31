@@ -45,11 +45,11 @@
       z-index: -1;
     }
 
-    #ThemeChanger {
-      position: absolute;
-      right: 50px;
-      top: 50px;
-    }
+    //     #ThemeChanger {
+    //       position: absolute;
+    //       right: 50px;
+    //       top: 50px;
+    //     }
 
     #Icon_box {
       position: absolute;
@@ -71,6 +71,12 @@
         align-items: center;
         position: relative;
         cursor: pointer;
+      }
+
+      #Icon {
+        width: 25px;
+        height: 25px;
+        fill: currentColor;
       }
 
       .TooltipUp {
@@ -106,12 +112,11 @@
         justify-content: center;
         align-items: center;
         position: absolute;
-        left: calc(50% - 0.5 * nth($values, 8) + nth($values, 6));
-        transform-origin: calc(0.5 * nth($values, 8) - nth($values, 6))
-          calc(0.5 * nth($values, 8));
+        left: calc(50% - 0.5 * 50px + nth($values, 6));
+        transform-origin: calc(0.5 * 50px - nth($values, 6)) calc(0.5 * 50px);
         transform: rotate(nth($values, 7));
-        width: nth($values, 8);
-        height: nth($values, 8);
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
         background: linear-gradient(
           calc(135deg - nth($values, 7)),
@@ -129,6 +134,7 @@
           transform: rotate(-1 * nth($values, 7));
           position: relative;
           cursor: pointer;
+          object-fit: contain;
         }
 
         .TooltipDown {
@@ -177,7 +183,9 @@
         }
 
         ##{$brandname} {
-          color: nth($values, 5);
+          fill: nth($values, 5);
+          width: nth($values, 8);
+          height: nth($values, 8);
         }
       }
     }

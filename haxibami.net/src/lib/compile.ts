@@ -16,6 +16,7 @@ import remarkMath from "remark-math";
 import remarkUnwrapImages from "remark-unwrap-images";
 // import * as shiki from "shiki";
 
+import rehypeImageOpt from "./rehype-image-opt";
 import { remarkLinkWidget, extLinkHandler } from "./remark-link-card";
 import remarkMermaid from "./remark-mermaid";
 
@@ -27,9 +28,10 @@ export const compileMdx = async (file: string) => {
   //     join(process.cwd(), "src/styles/shiki", `${themename}.json`);
   // const myShikiTheme = await shiki.loadTheme(getThemePath("urara-color-theme"));
 
-  const options: Partial<Options> = {
+  const rpcOptions: Partial<Options> = {
     theme: {
-      dark: "rose-pine-moon",
+      light: "poimandres",
+      // dark: "rose-pine",
     },
     // theme: JSON.parse(readFileSync(getThemePath("urara-color-theme"), "utf-8")),
     onVisitLine(node) {
@@ -81,11 +83,8 @@ export const compileMdx = async (file: string) => {
         rehypeSlug,
         [rehypeAutolinkHeadings, { behavior: "wrap" }],
         rehypeKatex,
-        //         [
-        //           rehypeShiki,
-        //           { highlighter: await shiki.getHighlighter({ theme: myShikiTheme }) },
-        //         ],
-        [rehypePrettyCode, options],
+        [rehypePrettyCode, rpcOptions],
+        rehypeImageOpt,
         rehypeRaw,
       ],
       remarkRehypeOptions: {

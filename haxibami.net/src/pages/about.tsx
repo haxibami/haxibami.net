@@ -7,7 +7,6 @@ import { MDXRemote } from "next-mdx-remote";
 import Footer from "components/Footer";
 import MdxComponent from "components/MdxComponent";
 import MyHead from "components/MyHead";
-import ThemeChanger from "components/ThemeChanger";
 import { compileMdx } from "lib/compile";
 import { OGPHOST } from "lib/constant";
 import { getPost } from "lib/fs";
@@ -56,7 +55,6 @@ const About: NextPage<Props> = ({ mdxSource }) => {
               <span className={Styles.Magenta}>et</span>
             </Link>
           </h2>
-          <ThemeChanger />
         </div>
       </header>
       <main id={Styles.Main}>

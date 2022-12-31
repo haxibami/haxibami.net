@@ -120,7 +120,7 @@ const Tree: React.FC = () => {
       { st: 50, len: 50, deg: 170, c: fg, w: 5 },
       { st: 100, len: 50, deg: 150, c: fg, w: 5 },
       { st: 100, len: 50, deg: 190, c: fg, w: 5 },
-      { st: 50, len: 50, deg: 230, c: "#6b8fb3", w: 5 },
+      { st: 50, len: 50, deg: 230, c: "#31748f", w: 5 },
     ];
 
     if (context) {

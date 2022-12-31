@@ -2,40 +2,31 @@
 @use "lib";
 
 #Wrapper {
-  display: flex;
-  flex-flow: column;
-  align-items: flex-end;
-  position: relative;
-  min-height: 100vh;
-  width: 100%;
-  @media (min-width: var.$media_border) {
-    font-size: 1.1rem;
-  }
-
   @include lib.color;
 
   #Container {
+    min-height: 100vh;
+    position: relative;
     width: var.$container;
+    margin: 0 0 0 auto;
     display: flex;
     flex-flow: column;
-    padding-right: var.$line_width;
     padding-top: var.$line_bottom_margin;
-    gap: var.$line_bottom_margin;
-  }
-
-  // vertical line
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: calc(var.$container + var.$line_width);
-    height: 100%;
-    width: var.$line_width;
-    background: var(--bar);
-    transition-property: background;
-    transition-duration: 0.2s;
-    transition-timing-function: ease;
+    padding-right: var.$line_width;
+    // vertical line
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: calc(var.$container + var.$line_width);
+      height: 100%;
+      width: var.$line_width;
+      background: var(--bar);
+      transition-property: background;
+      transition-duration: 0.2s;
+      transition-timing-function: ease;
+    }
   }
 
   header {

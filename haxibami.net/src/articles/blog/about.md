@@ -2,20 +2,20 @@
 slug: "about"
 title: "このサイトについて"
 date: "20220211"
-description: "mythfinder"
+description: "ごく基本的な情報"
 tags: ["info", "meta"]
 ---
 
 ## 私について
 
-:arrow_right: [プロフィール](/about)
+[プロフィール](/about)を参照。
 
 ## 内容
 
-神話募集中です。
+神話募集中。
 
-なお、書いたものをパッチワーク的に改稿する癖があるため、公開しているテクストは不変ではありません。
+なお、書いたものをパッチワーク的に改稿する癖があるため、公開しているテクストは不変ではない。
 
 ## 技術面
 
-:arrow_right: [Next.js でブログをつくった](/blog/posts/blog-renewal)
+- [Next.js でブログをつくった](/blog/posts/blog-renewal)

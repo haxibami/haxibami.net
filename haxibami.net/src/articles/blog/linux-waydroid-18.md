@@ -6,7 +6,7 @@ description: "【令和最新版】Linuxでもウマ娘をプレイする方法"
 tags: ["tech", "linux", "android"]
 ---
 
-![いい話](/image/waydroid_uma.png)
+![結果](/image/waydroid_uma.png)
 
 ちなみに私はウマ娘をプレイしたことがない。したがって、確認しているのはアプリの起動・オープニングムービーの表示までである。
 

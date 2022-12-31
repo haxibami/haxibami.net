@@ -2,6 +2,7 @@ import * as path from "path";
 import { fileURLToPath } from "url";
 
 import analyze from "@next/bundle-analyzer";
+import { withPlaiceholder } from "@plaiceholder/next";
 
 const withBundleAnalyzer = analyze({
   enabled: process.env.ANALYZE === "true",
@@ -25,4 +26,4 @@ let nextConfig = {
   },
 };
 
-export default withBundleAnalyzer(nextConfig);
+export default withBundleAnalyzer(withPlaiceholder(nextConfig));

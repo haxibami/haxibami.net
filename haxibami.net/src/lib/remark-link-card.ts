@@ -11,15 +11,13 @@ import type { VFileCompatible } from "vfile";
 
 interface ExtLink extends Literal {
   type: "extlink";
-  meta: LinkWidgetMeta;
-}
-
-interface LinkWidgetMeta {
-  url: string;
-  title: string;
-  description: string;
-  og: string;
-  icon: string;
+  meta: {
+    url: string;
+    title: string;
+    description: string;
+    og: string | undefined;
+    icon: string | undefined;
+  };
 }
 
 function isExtLink(node: unknown): node is Paragraph {
@@ -34,7 +32,13 @@ function isExtLink(node: unknown): node is Paragraph {
   }
 
   const singleChild = children[0];
-  if (!(isLink(singleChild) && singleChild.children[0].type == "text")) {
+  if (
+    !(
+      isLink(singleChild) &&
+      singleChild.children[0].type == "text" &&
+      singleChild.url.startsWith("http")
+    )
+  ) {
     return false;
   }
 
@@ -43,12 +47,12 @@ function isExtLink(node: unknown): node is Paragraph {
 
 function fetchMeta(url: string) {
   const metas = getMetadata(url).then((data) => {
-    const metaData: LinkWidgetMeta = {
+    const metaData = {
       url: url,
-      title: data.title ?? "",
+      title: data.title ?? "(No title)",
       description: data.description ?? "",
-      og: data.image ?? "",
-      icon: data.icon ?? "",
+      og: data.image,
+      icon: data.icon,
     };
     return metaData;
   });

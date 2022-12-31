@@ -31,15 +31,17 @@ export const mdInfo = async (md: string) => {
   const result = await unified()
     .use(remarkParse)
     .use(stripMarkdown, {
-      remove: ["heading", "list", "blockquote", "code", "image"],
+      remove: ["heading", "list", "blockquote", "code", "image", "link"],
     })
     .use(remarkStringify)
     .use(remarkFrontmatter)
     .use(remarkParseMatter)
     .process(md);
 
+  const regex = "\n*";
+
   return {
-    preview: result.toString().replaceAll("\n", "").substring(0, 300),
+    preview: result.toString().replaceAll(regex, " ").substring(0, 150),
     data: result.data.matter,
   };
 };
