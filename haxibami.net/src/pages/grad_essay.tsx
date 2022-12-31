@@ -4,11 +4,11 @@ import Footer from "components/Footer";
 import MyHead from "components/MyHead";
 import PostTop from "components/PostTop";
 import Header from "components/PostTopHeader";
-import { getAllPosts, getPostTags, replaceMdwithTxt, readYaml } from "lib/api";
-import { COUNT_PER_PAGE, ogpHost, postMenuTabs } from "lib/constant";
+import { SITEDATA, COUNT_PER_PAGE, OGPHOST, postMenuTabs } from "lib/constant";
+import { getPostsData } from "lib/fs";
 import Styles from "styles/posttop.module.scss";
 
-import type { PageMetaProps, SiteInfo, PostType } from "lib/interface";
+import type { PageMetaData, PostType } from "lib/interface";
 
 const postType: PostType = "grad_essay";
 
@@ -18,65 +18,46 @@ export const getStaticProps = async () => {
   const id = 1;
   const end = COUNT_PER_PAGE;
   const start = 0;
-  const allPostsPre = getAllPosts(
-    ["slug", "title", "date", "tags", "content"],
-    postType
-  );
 
-  const total = allPostsPre.length;
-  const postAssign = allPostsPre.slice(start, end);
+  const postsInfo = await getPostsData("articles/grad_essay");
+  const total = postsInfo.length;
+  const assign = postsInfo.slice(start, end);
 
-  const taglists = getPostTags(postType);
+  return {
+    props: {
+      assign,
+      id,
+      total,
+    },
+  };
+};
 
-  const posts = await Promise.all(
-    postAssign.map(async (item) => {
-      const processed = await replaceMdwithTxt(item);
-      return processed;
-    })
-  );
-
-  const sitename: SiteInfo = readYaml("meta.yaml");
-
-  const metaprops: PageMetaProps = {
+const GradEssayTop: NextPage<Props> = (props) => {
+  const { assign, id, total } = props;
+  const pageMetaData: PageMetaData = {
     title: "トップ",
-    sitename: sitename.siteinfo.grad_essay.title,
-    description: sitename.siteinfo.grad_essay.description,
+    sitename: SITEDATA.grad_essay.title,
+    description: SITEDATA.grad_essay.description,
     ogImageUrl: encodeURI(
-      `${ogpHost}/api/ogp?title=${sitename.siteinfo.grad_essay.title}`
+      `${OGPHOST}/api/ogp?title=${SITEDATA.grad_essay.title}`
     ),
     pageRelPath: "grad_essay",
     pagetype: "website",
     twcardtype: "summary",
   };
 
-  return {
-    props: {
-      posts,
-      taglists,
-      id,
-      total,
-      perPage: COUNT_PER_PAGE,
-      postType,
-      metaprops,
-      siteinfo: sitename,
-    },
-  };
-};
-
-const GradEssayTop: NextPage<Props> = (props) => {
-  const { posts, id, total, perPage, postType, metaprops, siteinfo } = props;
   return (
     <div>
       <div id={Styles.Wrapper}>
-        <MyHead {...metaprops} />
-        <Header siteinfo={siteinfo} posttype={postType} />
+        <MyHead {...pageMetaData} />
+        <Header posttype={postType} />
         <PostTop
           top={`/${postType}`}
           postMenuTabs={postMenuTabs}
-          posts={posts}
+          assign={assign}
           id={id}
           total={total}
-          perPage={perPage}
+          perPage={COUNT_PER_PAGE}
           postType={postType}
         />
         <Footer />

@@ -2,6 +2,7 @@
 slug: "review-survivor-yojyouhann"
 title: "感想: パラニューク『サバイバー』、森見登美彦『四畳半神話大系』"
 date: "20220217"
+description: "記事の枠を埋めるためだけに書かれた感想"
 tags: ["book", "review"]
 ---
 

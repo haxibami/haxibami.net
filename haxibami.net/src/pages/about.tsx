@@ -2,45 +2,47 @@ import type { InferGetStaticPropsType, NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+import { MDXRemote } from "next-mdx-remote";
+
 import Footer from "components/Footer";
+import MdxComponent from "components/MdxComponent";
 import MyHead from "components/MyHead";
-import ThemeChanger from "components/ThemeChanger";
-import { getDocBySlug } from "lib/api";
-import { ogpHost } from "lib/constant";
-import { MdToHtml } from "lib/parser";
-import RehypeReact from "lib/rehype-react";
+import { compileMdx } from "lib/compile";
+import { OGPHOST } from "lib/constant";
+import { getPost } from "lib/fs";
 import Styles from "styles/about.module.scss";
 
 import icon from "../../public/icon_ange_glasses_512.webp";
 
-import type { PageMetaProps } from "lib/interface";
+import type { PageMetaData } from "lib/interface";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 export const getStaticProps = async () => {
-  const doc = getDocBySlug("about", ["slug", "title", "content"]);
+  const file = getPost("about", "docs");
 
-  const content = await MdToHtml(doc.content);
-
-  const metaprops: PageMetaProps = {
-    title: "私について",
-    sitename: "haxibami.net",
-    description: "自己紹介",
-    ogImageUrl: encodeURI(`${ogpHost}/api/ogp?title=私について`),
-    pageRelPath: "profile",
-    pagetype: "article",
-    twcardtype: "summary_large_image",
-  };
+  const mdxSource = await compileMdx(file);
 
   return {
-    props: { metaprops, doc, content },
+    props: { mdxSource },
   };
 };
 
-const About: NextPage<Props> = ({ metaprops, doc, content }) => {
+const About: NextPage<Props> = ({ mdxSource }) => {
+  const pageMetaData: PageMetaData = {
+    title: "私について",
+    sitename: "haxibami.net",
+    description: `${mdxSource.frontmatter?.description}`,
+    ogImageUrl: encodeURI(
+      `${OGPHOST}/api/ogp?title=${mdxSource.frontmatter?.jatitle}`
+    ),
+    pageRelPath: "about",
+    pagetype: "article",
+    twcardtype: "summary_large_image",
+  };
   return (
     <div id={Styles.Wrapper}>
-      <MyHead {...metaprops} />
+      <MyHead {...pageMetaData} />
       <header>
         <div id={Styles.HeaderBox}>
           <h2>
@@ -53,7 +55,6 @@ const About: NextPage<Props> = ({ metaprops, doc, content }) => {
               <span className={Styles.Magenta}>et</span>
             </Link>
           </h2>
-          <ThemeChanger />
         </div>
       </header>
       <main id={Styles.Main}>
@@ -67,10 +68,12 @@ const About: NextPage<Props> = ({ metaprops, doc, content }) => {
             />
           </div>
           <span id={Styles.Name}>
-            <h1>{doc.title}</h1>
+            <h1>{mdxSource.frontmatter?.title}</h1>
           </span>
         </div>
-        <article>{RehypeReact(content)}</article>
+        <article>
+          <MDXRemote {...mdxSource} components={MdxComponent} />
+        </article>
       </main>
       <Footer />
     </div>

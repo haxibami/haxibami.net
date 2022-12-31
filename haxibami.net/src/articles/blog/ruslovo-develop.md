@@ -2,6 +2,7 @@
 slug: "ruslovo-develop"
 title: "はじめてのRust: CLIツール"
 date: "20220215"
+description: "Rustでロシア語辞書検索ツールを作った話"
 tags: ["tech", "rust", "russian"]
 ---
 
@@ -45,25 +46,25 @@ https://github.com/haxibami/ruslovo-tufs
 
 ### ureq
 
-https://github.com/algesten/ureq
+<https://github.com/algesten/ureq>
 
 軽量の[reqwest](https://github.com/seanmonstar/reqwest)オルタナティヴ。
 
 ### clap
 
-https://github.com/clap-rs/clap
+<https://github.com/clap-rs/clap>
 
 コマンドライン引数のパーサ。簡単に引数が取得できて、 `--help` やらの出力設定も勝手に行われる。ややオーバーキル感がある。
 
 ### tl
 
-https://github.com/y21/tl
+<https://github.com/y21/tl>
 
 HTML のパーサ。何と比べればいいのかよくわからないが、少なくとも今回の処理で速度上の問題を感じることはない程度には高速だった。
 
 ### tabled
 
-https://github.com/zhiburt/tabled
+<https://github.com/zhiburt/tabled>
 
 struct をいい感じに整形して出力してくれるクレート。
 

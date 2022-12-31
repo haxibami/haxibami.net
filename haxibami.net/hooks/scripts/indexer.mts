@@ -2,26 +2,36 @@ import fs from "fs";
 
 import prettier from "prettier";
 
-import { getAllPosts } from "./lib.mjs";
+import { getPostsData } from "./lib/fs.js";
 
-import type { IndexItem } from "./interface.mjs";
+import type { PostData } from "./lib/interface.js";
 
-const articleIndexer = () => {
-  const allBlogs = getAllPosts(["slug", "title", "date"], "blog");
-  const allGrads = getAllPosts(["slug", "title", "date"], "grad_essay");
-  const blogIndex = allBlogs.map((item) => {
-    const indexitem: IndexItem = {
-      slug: item.slug,
-      title: item.title,
-      date: item.date,
+const articleIndexer = async () => {
+  const blogs = await getPostsData("articles/blog");
+  const grads = await getPostsData("articles/grad_essay");
+  const blogIndex = blogs.map((item) => {
+    const indexitem: PostData = {
+      preview: item.preview,
+      data: {
+        slug: `${item.data?.slug}`,
+        title: `${item.data?.title}`,
+        date: item.data?.date,
+        description: `${item.data?.description}`,
+        tags: item.data?.tags,
+      },
     };
     return indexitem;
   });
-  const gradIndex = allGrads.map((item) => {
-    const indexitem: IndexItem = {
-      slug: item.slug,
-      title: item.title,
-      date: item.date,
+  const gradIndex = grads.map((item) => {
+    const indexitem: PostData = {
+      preview: item.preview,
+      data: {
+        slug: `${item.data?.slug}`,
+        title: `${item.data?.title}`,
+        date: item.data?.date,
+        description: `${item.data?.description}`,
+        tags: item.data?.tags,
+      },
     };
     return indexitem;
   });

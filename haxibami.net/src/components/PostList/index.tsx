@@ -7,39 +7,40 @@ import { dateVisualizer } from "lib/front";
 
 import Styles from "./style.module.scss";
 
-import type { PostItem, PostType } from "lib/interface";
+import type { PostData, PostType } from "lib/interface";
 
 interface PostListProps {
-  posts: PostItem[]; // assigned posts to display
+  assign: PostData[]; // assigned posts to display
   postType: PostType; // post type
 }
 
 const PostList: React.FC<PostListProps> = (props) => {
-  const { posts, postType } = props;
+  const { assign, postType } = props;
   return (
     <ul className={Styles.PostList}>
-      {posts.map((post) => (
-        (<Link href={`/${postType}/posts/${post.slug}`} key={post.slug}>
-
-          <li className={Styles.PostTile} key={post.slug}>
-            <div className={Styles.TileTitle}>
-              <h2>{post.title}</h2>
-            </div>
-            <div className={Styles.TileDate}>
-              <div>{dateVisualizer(post.date)}</div>
-            </div>
-            <div className={Styles.TilePreview}>
-              {post.content.substring(0, 200)}...
-            </div>
-            <div className={Styles.TileTags}>
-              <div>
-                <TagList tags={post.tags} postType={postType} />
-              </div>
-            </div>
+      {assign.map((post) => {
+        const { preview, data } = post;
+        return (
+          <li key={data?.slug}>
+            <span className={Styles.PostTile}>
+              <Link href={`/${postType}/posts/${data?.slug}`}>
+                <span className={Styles.TileTitle}>
+                  <h2>{data?.title}</h2>
+                </span>
+              </Link>
+              <span className={Styles.TileDate}>
+                <span>{dateVisualizer(data?.date)}</span>
+              </span>
+              <span className={Styles.TilePreview}>{preview}...</span>
+              <span className={Styles.TileTags}>
+                <span>
+                  <TagList tags={data?.tags ?? []} postType={postType} />
+                </span>
+              </span>
+            </span>
           </li>
-
-        </Link>)
-      ))}
+        );
+      })}
     </ul>
   );
 };

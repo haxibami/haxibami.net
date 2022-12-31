@@ -2,6 +2,7 @@
 slug: "urara-vim-develop"
 title: "Vimのテーマを作った"
 date: "20220218"
+description: "urara.vimという穏やかなVimテーマを作った話"
 tags: ["tech", "vim"]
 ---
 
@@ -9,7 +10,7 @@ tags: ["tech", "vim"]
 
 Repo はここ :point_down:
 
-https://github.com/haxibami/urara.vim
+<https://github.com/haxibami/urara.vim>
 
 ## きっかけ
 
@@ -24,7 +25,7 @@ https://github.com/haxibami/urara.vim
 
 > Aufheben on two major background trends (dark-blue & dark-brown).
 
-（https://github.com/haxibami/urara.vim より）
+（<https://github.com/haxibami/urara.vim> より）
 
 ## 作る
 

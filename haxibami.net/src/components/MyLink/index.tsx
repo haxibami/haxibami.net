@@ -15,9 +15,7 @@ const MyLink: React.FC<MyLinkProps> = (props) => {
   } else {
     return href.startsWith("/") || href === "" ? (
       // internal
-      <Link href={href}>
-        {children}
-      </Link>
+      <Link href={href}>{children}</Link>
     ) : href.startsWith("#user-content") ? (
       // inside page (footnote)
       <a

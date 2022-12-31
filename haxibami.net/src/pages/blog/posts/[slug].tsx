@@ -6,33 +6,30 @@ import type {
 import Head from "next/head";
 import Link from "next/link";
 
+import { MDXRemote } from "next-mdx-remote";
+
+import MdxComponent from "components/MdxComponent";
 import MyHead from "components/MyHead";
 import TagList from "components/TagList";
-import ThemeChanger from "components/ThemeChanger";
-import {
-  getAllPosts,
-  getPostBySlug,
-  replaceMdwithTxt,
-  readYaml,
-} from "lib/api";
-import { ogpHost } from "lib/constant";
+import { compileMdx } from "lib/compile";
+import { SITEDATA, OGPHOST } from "lib/constant";
 import { dateVisualizer } from "lib/front";
-import { MdToHtml } from "lib/parser";
-import RehypeReact from "lib/rehype-react";
+import { getSlugs, getPost } from "lib/fs";
 import Styles from "styles/[slug].module.scss";
 
-import type { PageMetaProps, SiteInfo } from "lib/interface";
+import type { PageMetaData } from "lib/interface";
+import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 export const getStaticPaths = async () => {
-  const posts = getAllPosts(["slug"], "blog");
+  const slugs = getSlugs("articles/blog");
 
   return {
-    paths: posts.map((post) => {
+    paths: slugs.map((slug) => {
       return {
         params: {
-          slug: post.slug,
+          slug,
         },
       };
     }),
@@ -45,44 +42,38 @@ export const getStaticProps = async (
 ) => {
   const { params } = context;
   const slug = params?.slug ?? "";
-  const post = getPostBySlug(
-    slug,
-    ["slug", "title", "date", "tags", "content"],
-    "blog"
-  );
 
-  const content = await MdToHtml(post.content);
+  const file = getPost(slug, "articles/blog");
 
-  const description = (await replaceMdwithTxt(post)).content.substring(0, 300);
-
-  const sitename: SiteInfo = readYaml("meta.yaml");
-
-  const metaprops: PageMetaProps = {
-    title: post.title,
-    sitename: sitename.siteinfo.blog.title,
-    description: description,
-    ogImageUrl: encodeURI(
-      `${ogpHost}/api/ogp?title=${post.title}&date=${post.date}`
-    ),
-    pageRelPath: `blog/posts/${post.slug}`,
-    pagetype: "article",
-    twcardtype: "summary_large_image",
-  };
+  const mdxSource: MDXRemoteSerializeResult<
+    Record<string, unknown>,
+    Record<string, any>
+  > = await compileMdx(file);
 
   return {
     props: {
-      metaprops,
-      post,
-      content,
+      mdxSource,
     },
   };
 };
 
-const AllBlog: NextPage<Props> = ({ metaprops, post, content }) => {
+const Blog: NextPage<Props> = ({ mdxSource }) => {
+  const frontmatter = mdxSource.frontmatter;
+  const pageMetaData: PageMetaData = {
+    title: `${frontmatter?.title}`,
+    sitename: SITEDATA.blog.title,
+    description: `${frontmatter?.description}`,
+    ogImageUrl: encodeURI(
+      `${OGPHOST}/api/ogp?title=${frontmatter?.title}&date=${frontmatter?.date}`
+    ),
+    pageRelPath: `blog/posts/${frontmatter?.slug}`,
+    pagetype: "article",
+    twcardtype: "summary_large_image",
+  };
   return (
     <div id={Styles.Wrapper}>
       <div id={Styles.Container}>
-        <MyHead {...metaprops} />
+        <MyHead {...pageMetaData} />
         <Head>
           <link
             rel="stylesheet"
@@ -94,21 +85,24 @@ const AllBlog: NextPage<Props> = ({ metaprops, post, content }) => {
           <div className={Styles.Title}>
             <div className={Styles.TopLink}>
               <Link href={"/blog"}>
-                <h2>{"Raw, Warm, Tasty"}</h2>
+                <h2>{SITEDATA.blog.title}</h2>
               </Link>
             </div>
-            <ThemeChanger />
           </div>
           <div>
-            <span className={Styles.Date}>{dateVisualizer(post.date)}</span>
+            <span className={Styles.Date}>
+              {dateVisualizer(frontmatter?.date)}
+            </span>
           </div>
           <div>
-            <TagList tags={post.tags} postType={"blog"} />
+            <TagList tags={frontmatter?.tags} postType={"blog"} />
           </div>
-          <h1 id={Styles.Title}>{post.title}</h1>
+          <h1 id={Styles.Title}>{mdxSource.frontmatter?.title}</h1>
         </header>
         <main>
-          <article>{RehypeReact(content)}</article>
+          <article>
+            <MDXRemote {...mdxSource} components={MdxComponent} />
+          </article>
         </main>
         <footer></footer>
       </div>
@@ -116,4 +110,4 @@ const AllBlog: NextPage<Props> = ({ metaprops, post, content }) => {
   );
 };
 
-export default AllBlog;
+export default Blog;

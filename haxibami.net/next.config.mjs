@@ -2,6 +2,7 @@ import * as path from "path";
 import { fileURLToPath } from "url";
 
 import analyze from "@next/bundle-analyzer";
+import { withPlaiceholder } from "@plaiceholder/next";
 
 const withBundleAnalyzer = analyze({
   enabled: process.env.ANALYZE === "true",
@@ -10,9 +11,10 @@ const withBundleAnalyzer = analyze({
 /** @type {import('next').NextConfig} */
 let nextConfig = {
   reactStrictMode: true,
-  //   experimental: {
-  //     appDir: true,
-  //   },
+  experimental: {
+    scrollRestoration: true,
+    //     appDir: true,
+  },
   swcMinify: true,
   sassOptions: {
     includePaths: [
@@ -24,4 +26,4 @@ let nextConfig = {
   },
 };
 
-export default withBundleAnalyzer(nextConfig);
+export default withBundleAnalyzer(withPlaiceholder(nextConfig));

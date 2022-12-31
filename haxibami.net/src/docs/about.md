@@ -1,6 +1,8 @@
 ---
 slug: "about"
 title: "About"
+jatitle: "私について"
+description: "自己紹介"
 ---
 
 ## :sunglasses: Meta
@@ -98,3 +100,4 @@ title: "About"
 - [人造日本人](https://mikanixonable.github.io) - みかぶる
 - [sno2wman.net](https://sno2wman.net) - sno2wman
 - [みそは入ってませんけど](https://not-miso-inside.netlify.app) - 一階堂洋
+- [ふぁぼんのホームページ](https://www.fabon.info/) - ふぁぼん

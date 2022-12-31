@@ -8,30 +8,40 @@ import Footer from "components/Footer";
 import MyHead from "components/MyHead";
 import PostTop from "components/PostTop";
 import Header from "components/PostTopHeader";
-import { replaceMdwithTxt, getAllPosts, readYaml, pageIdGen } from "lib/api";
-import { ogpHost, COUNT_PER_PAGE, postMenuTabs } from "lib/constant";
+import { SITEDATA, OGPHOST, COUNT_PER_PAGE, postMenuTabs } from "lib/constant";
+import { pageIdGen, getPostsData, getSlugs } from "lib/fs";
 import Styles from "styles/posttop.module.scss";
 
-import type { SiteInfo, PageMetaProps, PostType } from "lib/interface";
+import type { PageMetaData, PostType } from "lib/interface";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 
 const postType: PostType = "blog";
 
 const Gallery: NextPage<Props> = (props) => {
-  const { posts, id, total, perPage, postType, metaprops, siteinfo } = props;
+  const { assign, id, total } = props;
+  const pageMetaData: PageMetaData = {
+    title: `${SITEDATA.blog.title}: ページ${id}`,
+    sitename: SITEDATA.blog.title,
+    description: SITEDATA.blog.description,
+    ogImageUrl: encodeURI(`${OGPHOST}/api/ogp?title=ページ${id}`),
+    pageRelPath: `${postType}/page/${id}`,
+    pagetype: "article",
+    twcardtype: "summary_large_image",
+  };
+
   return (
     <div>
       <div id={Styles.Wrapper}>
-        <MyHead {...metaprops} />
-        <Header siteinfo={siteinfo} posttype={postType} />
+        <MyHead {...pageMetaData} />
+        <Header posttype={postType} />
         <PostTop
           top={`/${postType}`}
           postMenuTabs={postMenuTabs}
-          posts={posts}
+          assign={assign}
           id={id}
           total={total}
-          perPage={perPage}
+          perPage={COUNT_PER_PAGE}
           postType={postType}
         />
         <Footer />
@@ -41,8 +51,8 @@ const Gallery: NextPage<Props> = (props) => {
 };
 
 export const getStaticPaths = async () => {
-  const posts = getAllPosts(["slug"], postType);
-  const pages = pageIdGen(Math.ceil(posts.length / COUNT_PER_PAGE));
+  const slugs = getSlugs("articles/blog");
+  const pages = pageIdGen(Math.ceil(slugs.length / COUNT_PER_PAGE));
   const paths = pages.map((page) => ({
     params: { id: `${page}` },
   }));
@@ -57,40 +67,16 @@ export const getStaticProps = async (
   const id = parseInt(params?.id ?? ``, 10);
   const end = COUNT_PER_PAGE * id;
   const start = end - COUNT_PER_PAGE;
-  const allPostsPre = getAllPosts(
-    ["slug", "title", "date", "tags", "content"],
-    postType
-  );
-  const total = allPostsPre.length;
-  const postsAssign = allPostsPre.slice(start, end);
-  const posts = await Promise.all(
-    postsAssign.map(async (item) => {
-      const processed = await replaceMdwithTxt(item);
-      return processed;
-    })
-  );
 
-  const sitename: SiteInfo = readYaml("meta.yaml");
-
-  const metaprops: PageMetaProps = {
-    title: `${sitename.siteinfo.blog.title}: ページ${id}`,
-    sitename: sitename.siteinfo.blog.title,
-    description: sitename.siteinfo.blog.description,
-    ogImageUrl: encodeURI(`${ogpHost}/api/ogp?title=ページ${id}`),
-    pageRelPath: `${postType}/page/${id}`,
-    pagetype: "article",
-    twcardtype: "summary_large_image",
-  };
+  const postsInfo = await getPostsData("articles/blog");
+  const total = postsInfo.length;
+  const assign = postsInfo.slice(start, end);
 
   return {
     props: {
-      posts: posts,
-      id: id,
-      total: total,
-      perPage: COUNT_PER_PAGE,
-      postType: postType,
-      metaprops: metaprops,
-      siteinfo: sitename,
+      assign,
+      id,
+      total,
     },
   };
 };

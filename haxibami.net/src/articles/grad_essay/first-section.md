@@ -2,6 +2,7 @@
 slug: "first-section"
 title: "セクション: 1"
 date: "20220213"
+description: "卒業文集のセクション1"
 tags: ["meta", "tech"]
 ---
 

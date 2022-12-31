@@ -2,17 +2,15 @@ import fs from "fs";
 
 import { Feed } from "feed";
 
-import type { SiteInfo } from "../../src/lib/interface";
-
-import { readYaml, MdToHtml, dateConverter, getAllPosts } from "./lib.mjs";
+import { dateConverter } from "./lib/build.js";
+import { SITEDATA } from "./lib/constant.js";
+import { getPostsData } from "./lib/fs.js";
 
 // variables
 const HOST = "https://www.haxibami.net";
 
-const meta = readYaml("meta.yaml") as SiteInfo;
-
 // generate feed
-const feedGenerator = () => {
+const feedGenerator = async () => {
   const author = {
     name: "haxibami",
     email: "contact@haxibami.net",
@@ -21,8 +19,8 @@ const feedGenerator = () => {
 
   const date = new Date();
   const feed = new Feed({
-    title: meta.siteinfo.blog.title,
-    description: meta.siteinfo.blog.description,
+    title: SITEDATA.blog.title,
+    description: SITEDATA.blog.description,
     id: HOST,
     link: HOST,
     language: "ja",
@@ -38,23 +36,25 @@ const feedGenerator = () => {
     author: author,
   });
 
-  const allBlogs = getAllPosts(["slug", "title", "date", "content"], "blog");
+  const blogs = await getPostsData("articles/blog");
 
-  allBlogs.forEach((post) => {
-    const url = `${HOST}/blog/posts/${post.slug}`;
+  blogs.forEach((post) => {
+    const url = `${HOST}/blog/posts/${post.data?.slug}`;
     feed.addItem({
-      title: post.title,
-      description: `<p>${MdToHtml(post.content).substring(0, 300)}</p>`,
+      title: `${post.data?.title}`,
+      description: `${post.preview}`,
       id: url,
       link: url,
-      date: new Date(dateConverter(post.date)),
+      date: new Date(dateConverter(post.data?.date)),
     });
   });
 
   fs.mkdirSync("public/rss", { recursive: true });
-  fs.writeFileSync("public/rss/feed.xml", feed.rss2());
-  fs.writeFileSync("public/rss/atom.xml", feed.atom1());
-  fs.writeFileSync("public/rss/feed.json", feed.json1());
+  await Promise.all([
+    fs.promises.writeFile("public/rss/feed.xml", feed.rss2()),
+    fs.promises.writeFile("public/rss/atom.xml", feed.atom1()),
+    fs.promises.writeFile("public/rss/feed.json", feed.json1()),
+  ]);
 };
 
 const GenFeed = () => {

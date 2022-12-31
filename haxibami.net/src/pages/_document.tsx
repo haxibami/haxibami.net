@@ -1,5 +1,7 @@
 import { Html, Head, Main, NextScript } from "next/document";
 
+import { SITEDATA, HOST } from "lib/constant";
+
 export default function Document() {
   return (
     <Html lang="ja">
@@ -7,20 +9,20 @@ export default function Document() {
         <link
           rel="alternate"
           type="application/rss+xml"
-          title="なまあたたかくておいしい"
-          href="https://www.haxibami.net/rss/feed.xml"
+          title={SITEDATA.blog.title}
+          href={`https://${HOST}/rss/feed.xml`}
         />
         <link
           rel="alternate"
           type="application/atom+xml"
-          title="なまあたたかくておいしい"
-          href="https://www.haxibami.net/rss/atom.xml"
+          title={SITEDATA.blog.title}
+          href={`https://${HOST}/rss/atom.xml`}
         />
         <link
           rel="alternate"
           type="application/json"
-          title="なまあたたかくておいしい"
-          href="https://www.haxibami.net/rss/feed.json"
+          title={SITEDATA.blog.title}
+          href={`https://${HOST}/rss/feed.json`}
         />
       </Head>
       <body>

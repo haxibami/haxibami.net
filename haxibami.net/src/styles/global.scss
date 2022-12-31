@@ -1,22 +1,7 @@
 @use "variable" as var;
+@use "lib";
 
-* {
-  margin: 0;
-  padding: 0;
-  line-height: 1.75em;
-  box-sizing: border-box;
-  list-style-position: inside;
-}
-
-body,
-html {
-  font-family: Rubik, Helvetica Neue, Helvetica, Apple Color Emoji,
-    Segoe UI Emoji, NotoColorEmoji, Noto Color Emoji, Segoe UI Symbol,
-    Android Emoji, EmojiSymbols, -apple-system, BlinkMacSystemFont, Segoe UI,
-    Roboto, Noto Sans, sans-serif;
-  font-display: swap;
-  font-size: 1rem;
-}
+@include lib.reset_global;
 
 :root {
   --foreground: #{var.$fg};
@@ -32,6 +17,13 @@ html {
   --nextbg: #{var.$nextbg};
   --prevfg: #{var.$prevfg};
   --docsbg: #{var.$docsbg};
+  --codebg: #{var.$codebg};
+  --codefg: #{var.$codefg};
+  --codehl: #{var.$codehl};
+  --codefind: #{var.$codefind};
+  --codelinenum: #{var.$codelinenum};
+  --codetitlebg: #{var.$codetitlebg};
+  --codetitlefg: #{var.$codetitlefg};
 }
 
 [data-theme="dark"] {
@@ -48,9 +40,11 @@ html {
   --nextbg: #{var.$nextbg-night};
   --prevfg: #{var.$prevfg-night};
   --docsbg: #{var.$docsbg-night};
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
+  --codebg: #{var.$codebg-night};
+  --codefg: #{var.$codefg-night};
+  --codehl: #{var.$codehl-night};
+  --codefind: #{var.$codefind-night};
+  --codelinenum: #{var.$codelinenum-night};
+  --codetitlebg: #{var.$codetitlebg-night};
+  --codetitlefg: #{var.$codetitlefg-night};
 }

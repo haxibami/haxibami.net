@@ -42,7 +42,7 @@ const handler = async (req: NextRequest) => {
             justifyContent: "center",
             padding: "30px",
             fontFamily: "Noto Sans CJK JP",
-            backgroundColor: "#171726",
+            backgroundColor: "#120e12",
             color: "#f2f0e6",
           }}
         >

@@ -2,69 +2,147 @@
 slug: "blog-renewal"
 title: "Next.jsでブログをつくった"
 date: "20220326"
+description: "自作ブログの実装について"
 tags: ["tech", "web", "nextjs"]
 ---
 
-## 目次
+## はじめに
 
-## 要点
+<https://github.com/haxibami/haxibami.net>
 
-ブログを自作した。欲しかったのは以下だ：
+ブログを自作した。決め手は以下の四つ。
 
-1. 自由
-1. 管理しやすさ
+1. 適度な距離
+1. メンテナンス性
 1. 高速性・拡張性
 1. 無広告
 
-### 自由
+### 1. 適度な距離
 
-外部サービスに書くということは自らを明示的に見世物にするということにほかならない。どうせインターネットに上げれば同じ、というのは誤りで、Note やはてブの投稿はピックアップされ、サジェストされ、誰かの画面に躍り出る。これら閲覧を支援する機構（舞台装置だ！）は書き手を舞台の上に連れ出し、スポットライトの存在を嫌でも意識させる。そして本来なら触れるはずもなかった観客と向かい合わせる。
+あらゆるものが最適化されて提供される現代にあっては、遅配や誤配の確率はとても低い。大きなプラットフォームはユーザーの buzz をすすんで後押しし、かれに向けて、かれのために、とパーソナライズに躍起だ。書き手と読み手の距離は透明に、コミュニケーションは確実に。だがそうではない形式も（かつては？）あった。ひょっとしたら誰かに拾われるかもしれない、あるいはクローラにさえ拾われないかもしれない、そうした確率論的な雲のなかに自らの書いたものを打ち上げる。そして祈る。{古き良き日々}^(グッド・オールド・インターネッツ)は理想郷ではなかったにしても、あの誰かのものになる前の世界の、その歪な手触りを覚えておくための、この距離感。
 
-一方、個人ブログに辿り着くのはあえて勧められてもいないリンクを踏んだ人間だけだ。なんでこんなの読んでるんですか？　検索エンジンもサイトと読者を引き合わせる役割を持つが、そこには偶然性の占める割合が大きく、結果として外部サービスに書かれたものより明らかに到達コストは高くなる。
+### 2. メンテナンス性
 
-重要なのはここだ。到達コストのかかる場所に置かれるものは、公衆の目に触れるか否か不確かになる。買い物メモレベルの俗さから始まって、ただ書いておくという事実のためだけに言語化された感情、果ては延々と専門事項が書き連ねられた SSL 未対応のサイトまで、あえて演者としての露出を偶然性に委ねながら書かれたテクストには、それ自体独特の風味がある。広告資本主義のおこがましさがないのはもちろん、ある意味では読まれるために書かれたもの以上の真正性すら感じさせる。そしてこの性質は、明確な書き手として場に固定されれば消えてしまう種類のものだ。
+先人たちが示してきたとおり、この手のサイトは管理・移行が億劫になった時点で**エタる**。放置された「〇〇の部屋」、消えて還らない借りもののドメイン、むなしく刻む入室カウンターたちを眺めるたびに、せめて記事くらいは慣れたファイル形式で楽に扱いたいと思うようになった。そういうわけで Markdown（コンテンツ） + tsx（テンプレート）。この組み合わせならそう簡単には廃れないだろうし、いつか別サービス・別フレームワークに移るときにもそれほど困らない（コンテンツが独立している限り）。
 
-ここで私は書き手が視線に晒されること自体を糾弾しているのではない。書き手と読み手という一方性が定式化されて提供され、{舞台装置}^(プラットフォーム)によって増幅されることで失われるものを考えている。書くことは広く伝えること、という刷り込みは極めて強力だが、必ずしも表現を拡張するものではない。読み手からしても、なげやりに打ち出された吐露、あるいは限られた対象にのみ向けられた事実をほとんど窃視のような形で目にするほうがより愉快であることも当然ある。そしてこういうものは、書き手が各人の自由な**シマ**を持っていなければ難しいことだ。「公開されているが公開されているわけではない」このゆるやかな断絶を実現できるのは、個人ブログくらいしかないのではないかとすら思う。
+（2022/12/28 更新）
 
-### 管理しやすさ
+Markdown の処理系について。以前は`remark` + `rehype`の出力を`rehype-react` でレンダリングしていたが、`rehype-react`（厳密にいえばその依存先の`parse5`）のバンドルサイズがバカにならないので、`next-mdx-remote`に乗り換えた。
 
-#### 記事
+<https://github.com/hashicorp/next-mdx-remote>
 
-われわれには先人の記憶というものがあり、すなわちこの手のサイトは記事管理が億劫になった時点で**エタる**。放置された「〇〇の部屋」、消えて還らない借りドメイン、むなしく刻む入室カウンターたちを眺めるたびに、せめて記事くらいは慣れたファイル形式で楽に扱いたいと思うようになった。そういうわけで Markdown（内容管理） + tsx（テンプレートエンジン）。Markdown ならそう簡単には廃れないだろうし、いつか別サービスにも投げ込める安心感がある。
+これは名前の通り、Next.js で MDX / Markdown を処理するユーティリティで、Webpack loader を使う Next.js の[公式ガイド](https://nextjs.org/docs/advanced-features/using-mdx)とは異なり、`getStaticProps`経由でデータを取得する設計になっている。また内部では`remark` / `rehype`系の API が用いられており、これらの系列のプラグインが利用できる。
 
-Markdown の処理系には remark / rehype を選択した。[unified](https://github.com/unifiedjs/unified)の API が使えて、後述の豊富なプラグイン群が揃っているのが理由だ。その反面、同じことを実装するのにも選択肢が複数ある。たとえば今回のように Markdown から Next.js の ページを生成するだけでも、以下の五種類（以上）から選ぶことになる。
+```ts title="lib/compile.ts"
+import { serialize } from "next-mdx-remote/serialize";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypeKatex from "rehype-katex";
+import rehypePrettyCode from "rehype-pretty-code";
+import rehypeRaw from "rehype-raw";
+import rehypeSlug from "rehype-slug";
+import remarkGemoji from "remark-gemoji";
+import remarkGfm from "remark-gfm";
+import remarkJaruby from "remark-jaruby";
+import remarkMath from "remark-math";
+import remarkUnwrapImages from "remark-unwrap-images";
 
-- `unified`上で実行するもの
-  - `remark-parse` + `remark-rehype` + `rehype-stringify`
-  - `remark-parse` + `remark-rehype` + `rehype-react`
-- そうでないもの（上の処理が複合されたプラグイン）
-  - `remark` + `remark-html`
-  - `react-remark`
-  - `react-markdown`
+import rehypeImageOpt from "./rehype-image-opt";
+import { remarkLinkWidget, extLinkHandler } from "./remark-link-card";
+import remarkMermaid from "./remark-mermaid";
 
-自分は柔軟にプラグインを組み合わせ、React コンポーネントとも融和させたかったため、このうち上から二番目を採った（後述するが、`rehype-react`がかなり魅力的だ）。
+import type { Options } from "rehype-pretty-code";
 
-#### CI・ビルド・ホスティング
+export const compileMdx = async (file: string) => {
+  const rpcOptions: Partial<Options> = {
+    theme: {
+      dark: "rose-pine-moon",
+    },
+    onVisitLine(node) {
+      if (node.children.length === 0) {
+        node.children = [{ type: "text", value: " " }];
+      }
+    },
+    onVisitHighlightedLine(node) {
+      node.properties.className.push("highlighted");
+    },
+    onVisitHighlightedWord(node) {
+      node.properties.className = ["word"];
+    },
+  };
 
-テストとプレビューを GitHub Actions、ライブラリ更新を renovate で自動化している。これが全部無料で回るのだから本当に頭が上がらない。ホスティングは素直に Vercel に投げたが、とくに拘りはないので Cloudflare Pages あたりに変えても良いかもしれない。ちなみに Vercel 側のビルド回数を抑えるため、デフォルトのレポジトリ連携は切り、CI で念入りにテストしてから Vercel CLI 経由でのデプロイを行うようにしてある（[vercel-action](https://github.com/amondnet/vercel-action/)）。せめてもの配慮（？）だ。
+  // compile md
+  const mdxSource = await serialize(file, {
+    mdxOptions: {
+      remarkPlugins: [
+        remarkGfm,
+        remarkGemoji,
+        remarkMath,
+        remarkJaruby,
+        remarkLinkWidget,
+        remarkUnwrapImages,
+        [
+          remarkMermaid,
+          {
+            launchOptions: {
+              args: ["--no-sandbox", "--disable-setuid-sandbox"],
+            },
+            wrap: true,
+            className: ["mermaid"],
+          },
+        ],
+      ],
+      rehypePlugins: [
+        rehypeSlug,
+        [rehypeAutolinkHeadings, { behavior: "wrap" }],
+        rehypeKatex,
+        [rehypePrettyCode, rpcOptions],
+        rehypeImageOpt,
+        rehypeRaw,
+      ],
+      remarkRehypeOptions: {
+        handlers: {
+          extlink: extLinkHandler,
+        },
+      },
+      format: "md",
+      development: false,
+    },
+    parseFrontmatter: true,
+  });
 
-### 高速性・拡張性
+  return mdxSource;
+};
+```
 
-パフォーマンスが良いらしいと聞いて Next.js の SSG を選択した。SSG とはいいながら、ページ遷移のたびに JS が走るので動きはなめらかだ（言い方を変えれば、ピュアではない）。画像最適化やルーティングの抽象化も向こうでやってくれる。かといって Gatsby みたいにプラグインでガチガチに固める感じでもないので、引っ張ってきたライブラリや自作の処理も素直に持ち込めるのが良いと思った。
+[開発背景](https://github.com/hashicorp/next-mdx-remote#background--theory)に記載があるように、バンドルサイズの削減にも注意が払われているらしく、実際に私の環境では（`rehype-react`比で）200KB ほどバンドルが小さくなった。
 
-### 無広告
+![with rehype-react](/image/bundlesize_pre.png)
 
-[この記事](/blog/posts/nextdns-install)からわかるように、広告の遍在に対して個人的な憎悪を燃やしているため、このサイトには一切置いていない。あるのは Vercel が（おそらく）行っているアナリティクスだけだ。
+![with next-mdx-remote](/image/bundlesize_post.png)
 
-## 機能
+### 3. 高速性・拡張性
 
-以下では具体的に実装できた機能と、使ったライブラリを書く。
+Next.js。
 
-### Frontmatter
+個人サイトには若干オーバーキルという感もある。ただページ遷移がやっぱり気持ちいいし、Vercel なら画像の最適化も効くし……こうしてベンダーロックインへと突き進んでゆくのでした。あと少々複雑なことをしようとしてもフレームワークの守備範囲をはみ出さないのは良い。
 
-Markdown 冒頭に記事のメタデータを記載し、`grey-matter`で取り出している（これは unified の処理ではない）。
+### 4. 広告や統計の排除
 
-https://github.com/jonschlinkert/gray-matter
+過剰な広告・統計に対して憎悪を抱いているため、このサイトには一切設置していない。唯一、このサイトのホスト先である Vercel が行っているアナリティクスだけは確認している。[こちらの記事](/blog/posts/nextdns-install)も参照。
+
+## 機能一覧と実装
+
+以下はこのブログの機能・実装のギャラリー。
+
+### 記事メタデータ
+
+Markdown 内の frontmatter からデータを取得。また`strip-markdown`で本文を plain text 化し、冒頭を抽出したものを各記事のプレビューとして流している。
+
+<https://github.com/remarkjs/remark-frontmatter>
+
+<https://github.com/vfile/vfile-matter>
+
+<https://github.com/remarkjs/strip-markdown>
 
 ```md
 ---
@@ -77,9 +155,7 @@ tags: ["tech", "web", "nextjs"]
 
 ### GitHub Flavored Markdown
 
-`remark-gfm`で対応。
-
-https://github.com/remarkjs/remark-gfm
+<https://github.com/remarkjs/remark-gfm>
 
 ```md
 | 表を     | 作る       |
@@ -87,12 +163,17 @@ https://github.com/remarkjs/remark-gfm
 | たとえば | このように |
 | 要素を   | 増やす     |
 
-https://www.haxibami.net
+<https://www.haxibami.net>
 
 みたいな生のリンクも置けるし
 
 - こうやって
-  - リストが書ける。さらに、[^1]
+  - リストが書ける。
+
+ほかにも、
+
+- [x] TODO
+- [ ] リストや、[^1]
 
 [^1]: 脚注も使える
 ```
@@ -102,30 +183,34 @@ https://www.haxibami.net
 | たとえば | このように |
 | 要素を   | 増やす     |
 
-https://www.haxibami.net
+<https://www.haxibami.net>
 
 みたいな生のリンクも置けるし
 
 - こうやって
-  - リストが書ける。さらに、[^1]
+  - リストが書ける。
+
+ほかにも、
+
+- [x] TODO
+- [ ] リスト
+- [ ] や、[^1]
 
 [^1]: 脚注も使える
 
 ### 絵文字
 
-`remark-gemoji`で変換。
+<https://github.com/remarkjs/remark-gemoji>
 
-https://github.com/remarkjs/remark-gemoji
-
-`:v:`が :v: になる。
+`:v:`が :v: に。
 
 ### 数式
 
-`remark-math`と`rehype-katex`を噛ませる。
+<https://github.com/remarkjs/remark-math>
 
-https://github.com/remarkjs/remark-math
+<https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex>
 
-https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex
+適当なところで KaTeX のスタイルシートを読み込む必要がある（忘れがち）。
 
 ```md
 > $$
@@ -137,36 +222,17 @@ https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex
 > ( \sum_{k=1}^{n} a_k b_k )^2 \leq ( \sum_{k=1}^{n} {a_k}^2 ) ( \sum_{k=1}^{n} {b_k}^2 )
 > $$
 
-$e^{i\pi} + 1 = 0$ のようなインライン数式もいける。
-
-フォントの設置は必要なく、スタイルシートを読ませればよい。
-
-```tsx
-// pages/blog/posts/[slug].tsx
-
-const AllBlog: NextPage<Props> = ({ metaprops, post, content }) => {
-  return (
-    <div id={Styles.Wrapper}>
-      <div id={Styles.Container}>
-        <MyHead {...metaprops} />
-        <Head>
-          <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css"
-            integrity="sha384-KiWOvVjnN8qwAZbuQyWDIbfCLFhLXNETzBQjA/92pIowpC0d2O3nppDGQVgwd2nB"
-            crossOrigin="anonymous"
-          />
-        </Head>
-// (略)
+```md
+> $e^{i\pi} + 1 = 0$ :arrow_left: インライン数式
 ```
+
+$e^{i\pi} + 1 = 0$ :arrow_left: インライン数式
 
 ### ルビ
 
-[remark-ruby](https://github.com/laysent/remark-ruby)というパッケージがルビを実装しているが、依存関係と API が古くなっていたため、ほぼフォークのような形で別パッケージ（`remark-jaruby`）を実装した。
+やや古い既存のパッケージ（`remark-ruby`）をフォークして、別パッケージ（`remark-jaruby`）を実装。
 
-https://github.com/haxibami/remark-jaruby
-
-パーサ部分（[micromark-extension-jaruby](https://github.com/haxibami/micromark-extension-jaruby)）、構文木操作部分（[mdast-util-jaruby](https://github.com/haxibami/mdast-util-jaruby)）の拡張機能に分割し、これらを`remark-jaruby`から参照している。
+<https://github.com/haxibami/remark-jaruby>
 
 ```md
 > 昨日午後、{†聖剣†}^(エクスカリバー)を振り回す{全裸中年男性}^(無敵の人)が出現し……
@@ -174,27 +240,114 @@ https://github.com/haxibami/remark-jaruby
 
 > 昨日午後、{†聖剣†}^(エクスカリバー)を振り回す{全裸中年男性}^(無敵の人)が出現し……
 
-### ページ内リンク・目次
+### ページ内リンク
 
-`rehype-slug`、`rehype-autolink-headings`、`remark-toc`で実現。
+<https://github.com/rehypejs/rehype-slug>
 
-https://github.com/rehypejs/rehype-slug
+<https://github.com/rehypejs/rehype-autolink-headings>
 
-https://github.com/rehypejs/rehype-autolink-headings
+:arrow_right: [はじめに](#はじめに) に飛べるよ
 
-https://github.com/remarkjs/remark-toc
+### Mermaid Diagram
 
-heading に slug を振ってくれるそうな。
+[remark-mermaidjs](https://github.com/remcohaszing/remark-mermaidjs)をベースに remark プラグインを書いた。ビルド時にヘッドレス Chromium 上で SVG を描画させてから取り出している（わざわざ？　の感もあるが仕方ない[^2]）。サイト内に JS を設置してユーザー側で動的にレンダリングさせることもできるが、事前に変換できたほうが（SSG としては）嬉しい。
 
-### 内容プレビュー
+[^2]: 調べた & 試した限り、mermaid は node 上の DOM ライブラリ（JSDOM や happy-dom）では動かない
 
-[トップ](https://haxibami.net/blog)の記事一覧には内容のプレビューを表示している。このために生の Markdown を流し込むのも気が引けたので、なんとかして plaintext 形式に変換できないかと考えていたら、`strip-markdown`というのがあった。これで`<h1>`, `<blockquote>`等を除去し、冒頭 200 字を抽出している。
+```ts title="lib/remark-mermaid.ts"
+...
 
-https://github.com/remarkjs/strip-markdown
+const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
+  options
+): Transformer {
+  const DEFAULT_SETTINGS = {
+    launchOptions: {
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    },
+    theme: "default",
+    wrap: false,
+    classname: [],
+  };
 
-### Mermaid のサポート
+  const settings = Object.assign({}, DEFAULT_SETTINGS, options);
 
-[remark-mermaid](https://github.com/temando/remark-mermaid)は古く、[remark-mermaidjs](https://github.com/remcohaszing/remark-mermaidjs)は API が unified のものではなかったため、後者をベースにしつつ手元で実装した。裏でヘッドレス Chromium を立ち上げて SVG を生成しているとは思えないほど高速だ。
+  return async (node: Node, _file: VFileCompatible) => {
+    const promises: (() => Promise<void>)[] = [];
+    const browser = await playwright.chromium.launch(settings.launchOptions);
+    const context = await browser.newContext({
+      viewport: { width: 1000, height: 3000 },
+    });
+    const page = await context.newPage();
+    const html = `<!DOCTYPE html>`;
+    await page.setContent(html);
+    await page.addScriptTag({
+      url: "https://unpkg.com/mermaid/dist/mermaid.min.js",
+      type: "module",
+    });
+    await page.setViewportSize({ width: 1000, height: 3000 });
+    visit(node, isMermaid, visitor);
+    await Promise.all(promises.map((t) => t()));
+    await browser.close();
+
+    function visitor(node: Code, index: number, parent: Parent | undefined) {
+      if (!isParent(parent)) {
+        return;
+      }
+      promises.push(async () => {
+        const svg = await getSvg(node, page, settings.theme);
+        if (settings.wrap) {
+          parent.children[index] = {
+            type: "parent",
+            children: [],
+            data: {
+              hChildren: [
+                {
+                  type: "element",
+                  children: [svgParse(svg)],
+                  tagName: "div",
+                  properties: {
+                    className: settings.classname,
+                  },
+                },
+              ],
+            },
+          } as Parent;
+        } else {
+          parent.children[index] = {
+            type: "paragraph",
+            children: [],
+            data: {
+              hChildren: [svgParse(svg)],
+            },
+          } as Paragraph;
+        }
+      });
+      return true;
+    }
+  };
+};
+
+async function getSvg(node: Code, page: playwright.Page, theme: Theme) {
+  const graph = await page.evaluate(
+    ([code, theme]) => {
+      const id = "a";
+      const config: MermaidConfig = {
+        theme: theme as Theme,
+        startOnLoad: false,
+      };
+      mermaid.mermaidAPI.initialize(config);
+      const div = document.createElement("div");
+      mermaid.mermaidAPI.render(id, code, (svg: string) => {
+        div.innerHTML = svg;
+      });
+      return div.innerHTML;
+    },
+    [node.value, theme]
+  );
+
+  ...
+}
+```
 
 ````md
 ```mermaid
@@ -238,44 +391,43 @@ pie
 
 ### シンタックスハイライト
 
-最初は[prism.js](https://prismjs.com)を使っていたが、使えるカラースキームがあまりに少なかったため[shiki](https://shiki.matsu.io)に変更した。公式サイトにある通り、こちらは VSCode のカラースキームファイルが流用できる。せっかくなので自作の[urara-vscode](https://github.com/haxibami/urara-vscode)を使用してみた。
+`rehype-pretty-code`を採用。このプラグインの内部処理には[shiki](https://shiki.matsu.io)が使われており、コード解析とスタイル適用がビルド時に済む（追加 CSS が不要）、VSCode のカラースキームが使える、などの利点がある。
 
-https://github.com/shikijs/shiki
+<https://github.com/atomiks/rehype-pretty-code>
+
+<https://github.com/shikijs/shiki>
 
 ### リンクカード
 
-外部リンクをカードに変換するやつ。
+:arrow_down: このもこっとしたカード
 
-https://zenn.dev/tomi/articles/2021-03-22-blog-card
+<https://zenn.dev/tomi/articles/2021-03-22-blog-card>
 
-https://zenn.dev/januswel/articles/745787422d425b01e0c1
+<https://zenn.dev/januswel/articles/745787422d425b01e0c1>
 
-:point_up_2: を参考にしつつ、unified の Transformer プラグインとして実装した。文書中のリンク（`Paragraph`ノードかつ、子要素が単一の`Link`ノードであるもの）を取得し、適当な独自要素（`<extlink>`）に置き換えたのち、リンク先にアクセスして得たメタ情報（title、description、OGP 画像 URL 等）を挿入している。これを`rehype-react`の`components`オプションを使ってカスタムコンポーネントに変換することで、任意のスタイルでカードが表示できる。
+上の記事を参考に、unified の Transformer プラグインとして実装した。文書中に単独で貼られたリンク（`Paragraph`ノードかつ、子要素が単一の`Link`ノードであるもの）を適当な独自ノード（`<extlink>`）に置き換え、リンク先にアクセスして得たメタ情報（title、description、OG image URL）を付加している。この一式を`<MDXRemote>`の`components`オプションを使って自作コンポーネントに変換することで、好きなスタイルで画像付きリンクカードが表示できる。
 
-```ts
-// lib/remark-link-widget.ts
+```ts title="lib/remark-link-card.ts"
+import getMetadata from "metadata-scraper";
+import { visit } from "unist-util-visit";
 
+import { isParent, isLink, isParagraph } from "./mdast-util-node-is";
+
+import type { Paragraph, Link, Literal } from "mdast";
+import type { H } from "mdast-util-to-hast";
 import type { Plugin, Transformer } from "unified";
 import type { Node, Parent } from "unist";
 import type { VFileCompatible } from "vfile";
-import { visit } from "unist-util-visit";
-import type { Paragraph, Link, Literal } from "mdast";
-import { isParent, isLink, isParagraph } from "./mdast-util-node-is";
-import type { H } from "mdast-util-to-hast";
-import getMetadata from "metadata-scraper";
 
 interface ExtLink extends Literal {
   type: "extlink";
-  url: string;
-  meta: LinkWidgetMeta;
-}
-
-interface LinkWidgetMeta {
-  url: string;
-  title: string;
-  description: string;
-  image: string;
-  icon: string;
+  meta: {
+    url: string;
+    title: string;
+    description: string;
+    og: string;
+    icon: string;
+  };
 }
 
 function isExtLink(node: unknown): node is Paragraph {
@@ -290,7 +442,13 @@ function isExtLink(node: unknown): node is Paragraph {
   }
 
   const singleChild = children[0];
-  if (!(isLink(singleChild) && singleChild.children[0].type == "text")) {
+  if (
+    !(
+      isLink(singleChild) &&
+      singleChild.children[0].type == "text" &&
+      singleChild.url.startsWith("http")
+    )
+  ) {
     return false;
   }
 
@@ -299,11 +457,11 @@ function isExtLink(node: unknown): node is Paragraph {
 
 function fetchMeta(url: string) {
   const metas = getMetadata(url).then((data) => {
-    const metaData: LinkWidgetMeta = {
+    const metaData = {
       url: url,
       title: data.title ?? "",
       description: data.description ?? "",
-      image: data.image ?? "",
+      og: data.image ?? "",
       icon: data.icon ?? "",
     };
     return metaData;
@@ -312,8 +470,9 @@ function fetchMeta(url: string) {
 }
 
 export const remarkLinkWidget: Plugin = function extLinkTrans(): Transformer {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return async (tree: Node, _file: VFileCompatible) => {
-    const promises: any[] = [];
+    const promises: (() => Promise<void>)[] = [];
     visit(tree, isExtLink, visitor);
     await Promise.all(promises.map((t) => t()));
 
@@ -336,7 +495,6 @@ export const remarkLinkWidget: Plugin = function extLinkTrans(): Transformer {
         const data = await fetchMeta(child.url);
         parent.children[index] = {
           type: "extlink",
-          url: child.url,
           meta: data,
         } as ExtLink;
       });
@@ -346,64 +504,89 @@ export const remarkLinkWidget: Plugin = function extLinkTrans(): Transformer {
 
 export function extLinkHandler(_h: H, node: ExtLink) {
   return {
-    type: "element",
+    type: "element" as const,
     tagName: "extlink",
-    children: [{ type: "text", value: JSON.stringify(node.meta) }],
+    properties: {
+      url: node.meta.url,
+      title: node.meta.title,
+      description: node.meta.description,
+      og: node.meta.og,
+      icon: node.meta.icon,
+    },
+    children: [],
   };
 }
 ```
 
-メタ情報の取得には、`metadata-scraper`という便利なライブラリを使った。
+取得したメタデータは 以下のように props 経由で受け渡しできる。型の扱いが雑だけど……ヨシ！（炎上）
 
-https://github.com/BetaHuhn/metadata-scraper#readme
+```tsx title="components/MdxComponent/index.tsx" /props/
+import LinkWidget from "components/LinkWidget";
+import MyLink from "components/MyLink";
+import NextImage from "components/NextImage";
 
-なお、内部で`fetch`を行っている都合上、作成したプラグインは非同期プラグインとなることに留意。具体的には unified で`processSync`が[使えなくなる](https://github.com/unifiedjs/unified#processorprocesssyncfilevalue)。
+import type { LinkWidgetProps } from "components/LinkWidget";
+import type { MyLinkProps } from "components/MyLink";
+import type { NextImageProps } from "components/NextImage";
+import type { MDXComponents } from "mdx/types";
 
-### キャプション・画像・リンク処理
+type ProvidedComponents = MDXComponents & {
+  a?: typeof MyLink;
+  img?: typeof NextImage;
+  extlink?: typeof LinkWidget;
+};
 
-Markdown で挿入した画像は通常の`<img>`タグに変換されるため、そのままでは Next.js の画像最適化の対象にはならない。が、これも`rehype-react`の`components`オプションで独自のコンポーネントに置換することで解決できる。たとえば以下のような関数コンポーネントを作れば、画像にリンクを付加し、`alt`テキストをキャプションとして追記できる。同様のことがリンク（`<a>`タグ →`<Link>`）についても可能。
+const components = {
+  a: (props: MyLinkProps) => <MyLink {...props} />,
+  img: (props: NextImageProps) => <NextImage {...props} />,
+  extlink: (props: LinkWidgetProps) => <LinkWidget {...props} />,
+} as ProvidedComponents;
 
-```tsx
-// components/NextImage.tsx
+export default components;
+```
 
+なお、プラグイン内部で`fetch`を行っている都合上、作成したプラグイン全体が非同期となることに留意。具体的には unified で`processSync`が[使えなくなる](https://github.com/unifiedjs/unified#processorprocesssyncfile)。
+
+### 画像処理
+
+Markdown で挿入した画像はそのままでは通常の`<img>`タグに変換され、Next.js の画像最適化の対象にならないが、これも[リンクカード](#リンクカード)と同様の手順で`next/image`に置換することで解決できる。
+
+```tsx title="components/NextImage.tsx"
 import React from "react";
+
 import Image from "next/image";
 import Link from "next/link";
+
 import Styles from "./style.module.scss";
 
 export type NextImageProps = {
   src: string;
   alt?: string;
+  aspectRatio: string;
+  blurDataURL: string;
 };
 
 const NextImage: React.FC<NextImageProps> = (props) => {
-  const { src, alt } = props;
+  const { src, alt, aspectRatio, blurDataURL } = props;
   return alt !== "asciicast" ? (
     <figure className={Styles.Figure}>
-      <div className={Styles.ImgBox}>
-        <Link href={src} scroll={false}>
-          <a>
-            <Image
-              className={Styles.Img}
-              src={src}
-              alt={alt || src}
-              layout="fill"
-              objectFit="contain"
-            />
-          </a>
-        </Link>
-      </div>
+      <Link href={src} scroll={false}>
+        <div className={Styles.ImgBox} style={{ aspectRatio: aspectRatio }}>
+          <Image
+            className={Styles.Img}
+            src={src}
+            alt={alt || src}
+            fill={true}
+            placeholder="blur"
+            blurDataURL={blurDataURL}
+          />
+        </div>
+      </Link>
       <figcaption>{alt}</figcaption>
     </figure>
   ) : (
     <div className={Styles.ImgBox}>
-      <Image
-        className={Styles.Img}
-        src={src}
-        alt={alt}
-        layout="fill"
-        objectFit="contain"
-      />
+      <Image className={Styles.Img} src={src} alt={alt} fill={true} />
     </div>
   );
 };
@@ -411,407 +594,245 @@ const NextImage: React.FC<NextImageProps> = (props) => {
 export default NextImage;
 ```
 
-以上を合わせた`remark-parse` / `remark-rehype`まわりのメソッドチェーンが下の通り。[^2]
+```ts title="lib/rehype-image-opt.ts"
+import { getPlaiceholder } from "plaiceholder";
+import { visit } from "unist-util-visit";
 
-[^2]: 変なファイル処理が入っているのは、shiki がテーマファイルを読み込むにあたって**自分のインストールされた位置**（メインプロジェクトの`node_modules`以下）からの相対パスか、ファイルシステムの絶対パスかのいずれかしか受け付けないため。
+import type { Element } from "hast";
+import type { Node } from "unist";
+import type { VFileCompatible } from "vfile";
 
-```ts
-// lib/parser.ts
-// Markdown parser on "Server" side. Never include frontend code (including rehype-react).
+export default function rehypeImageOpt() {
+  return async (tree: Node, _file: VFileCompatible) => {
+    const promises: (() => Promise<void>)[] = [];
+    visit(tree, "element", (node: Element) => {
+      if (
+        node.tagName === "img" &&
+        node.properties &&
+        node.properties.src &&
+        typeof node.properties.src === "string"
+      ) {
+        const src = node.properties.src;
 
-import { join } from "path";
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkGfm from "remark-gfm";
-import remarkGemoji from "remark-gemoji";
-import remarkMath from "remark-math";
-import remarkJaruby from "remark-jaruby";
-import remarkUnwrapImages from "remark-unwrap-images";
-import remarkToc from "remark-toc";
-import remarkMermaid from "./remark-mermaid";
-import remarkRehype from "remark-rehype";
-import type { Options as RemarkRehypeOptions } from "remark-rehype";
-import rehypeKatex from "rehype-katex";
-import * as shiki from "shiki";
-import rehypeShiki from "@leafac/rehype-shiki";
-import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeStringify from "rehype-stringify";
-import stripMarkdown from "strip-markdown";
-import remarkStringify from "remark-stringify";
-import { remarkLinkWidget, extLinkHandler } from "./remark-link-widget";
-
-// Get shiki theme file (`src/styles/shiki/${themename}.json`) full path
-const getThemePath = (themename: string) =>
-  join(process.cwd(), "src/styles/shiki", `${themename}.json`);
-
-// Convert Markdown to HTML
-export const MdToHtml = async (md: string) => {
-  const myShikiTheme = await shiki.loadTheme(getThemePath("urara-color-theme"));
-  const result = await unified()
-    .use(remarkParse)
-    .use(remarkGfm)
-    .use(remarkGemoji)
-    .use(remarkMath)
-    .use(remarkJaruby)
-    .use(remarkLinkWidget)
-    .use(remarkUnwrapImages)
-    .use(remarkToc, {
-      heading: "目次",
-      tight: true,
-    })
-    .use(remarkMermaid, {
-      launchOptions: {
-        args: ["--no-sandbox", "--disable-setuid-sandbox"],
-      },
-      wrap: true,
-      classname: ["mermaid"],
-    })
-    .use(remarkRehype, {
-      handlers: {
-        extlink: extLinkHandler,
-      },
-    } as RemarkRehypeOptions)
-    .use(rehypeKatex)
-    .use(rehypeShiki, {
-      highlighter: await shiki.getHighlighter({ theme: myShikiTheme }),
-    })
-    .use(rehypeSlug)
-    .use(rehypeAutolinkHeadings, {
-      behavior: "wrap",
-    })
-    .use(rehypeStringify)
-    .process(md);
-
-  return result.toString();
-};
-
-// Convert Markdown to plaintext: for preview in top pages
-export const MdStrip = async (md: string) => {
-  const result = unified()
-    .use(remarkParse)
-    .use(stripMarkdown, {
-      remove: ["heading", "list", "blockquote", "code", "image"],
-    })
-    .use(remarkStringify)
-    .processSync(md);
-
-  return result.toString();
-};
+        promises.push(async () => {
+          if (node.properties) {
+            const blur = await getPlaiceholder(src);
+            node.properties.src = blur.img.src;
+            node.properties.width = blur.img.width;
+            node.properties.height = blur.img.height;
+            node.properties.aspectRatio = `${blur.img.width} / ${blur.img.height}`;
+            node.properties.blurDataURL = blur.base64;
+          }
+        });
+      }
+    });
+    await Promise.all(promises.map((t) => t()));
+  };
+}
 ```
 
-また、`rehype-react`関連の処理は以下のようになる。
+上の例では変換処理に加えて、画像のサイズ取得・プレースホルダー生成を行う rehype プラグインを実装し、
 
-```ts
-// lib/rehype-react.ts
-// HTML parser on "Client" side. Never include backend code (including remark).
+- 画像読み込み前のプレースホルダーの設定
+- 画像を収納する親要素のサイズ調整（画像のアスペクト比を利用）
 
-import { unified } from "unified";
-import rehypeParse from "rehype-parse";
-import rehypeReact from "rehype-react";
-import type { Options as RehypeReactOptions } from "rehype-react";
-import React from "react";
-import MyLink from "components/MyLink";
-import type { MyLinkProps } from "components/MyLink";
-import LinkWidget from "components/LinkWidget";
-import type { LinkWidgetProps } from "components/LinkWidget";
-import NextImage from "components/NextImage";
-import type { NextImageProps } from "components/NextImage";
+などを行っている。
 
-// Convert HTML to React Component
-export const HtmlToReact = (html: string) => {
-  const result = unified()
-    .use(rehypeParse, {
-      fragment: true,
-    })
-    .use(rehypeReact, {
-      createElement: React.createElement,
-      components: {
-        a: (props: MyLinkProps) => {
-          return MyLink(props);
-        },
-        img: (props: NextImageProps) => {
-          return NextImage(props);
-        },
-        extlink: (props: LinkWidgetProps) => {
-          return LinkWidget(props);
-        },
-      },
-    } as RehypeReactOptions)
-    .processSync(html);
-  return result.result;
-};
-```
+参考：
 
-以上で、はてブや Qiita、Zenn あたりと似た書き心地になった。
+<https://zenn.dev/elpnt/articles/c17727e9d254ef00ea60>
+
+<https://nextjs.org/docs/api-reference/next/image#blurdataurl>
 
 ### ダークモード
 
 外部ライブラリを使用。
 
-https://github.com/pacocoursey/next-themes
+<https://github.com/pacocoursey/next-themes>
 
-### 動的 OGP 画像の自動生成
+### OGP 画像の生成
 
-Vercel のサーバレス関数機能を使い、
+（2022/12/28 更新）
 
-1. ヘッドレス Chromium（playwright）を起動
-2. クエリパラメータに応じた内容の React コンポーネントを生成
-3. `renderToStaticMarkup`で静的 HTML 化
-4. 表示してスクリーンショットを撮影
+ヘッドレス Chromium を使った古い実装から、Vercel 公式が提供する[新しいアプローチ](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation)（`@vercel/og`）に乗り換えた。どうやら[yoga-layout](https://yogalayout.com/)のスタイリングエンジンを WASM で動かしているらしく、かなり速い。しかも Tailwind が使える。
 
-する API を設置して実現した。表示する内容を手元で書けるぶん、他の手法と比べてデザインの自由度が高い。
+```tsx title="pages/api/ogp.tsx"
+import type { NextRequest } from "next/server";
 
-Chromium バイナリには[playwright-aws-lambda](https://github.com/JupiterOne/playwright-aws-lambda)を使った。[chrome-aws-lambda](https://github.com/alixaxel/chrome-aws-lambda)より容量が小さくバージョンも新しいため、こちらを使わない手はない。
+import { ImageResponse } from "@vercel/og";
 
-```tsx
-// pages/api/ogp.tsx
+export const config = {
+  runtime: "experimental-edge",
+};
 
-import * as chromium from "playwright-aws-lambda";
-import React from "react";
-import type { NextApiRequest, NextApiResponse } from "next";
-import ReactDomServer from "react-dom/server";
-import path from "path";
-import fs from "fs";
-import OgpImage, { OgpInfo } from "components/OgpImage";
-
-// full path resolve
-const baseFullPath = path.resolve("./");
-
-// image paths
-const iconPath = path.join(baseFullPath, "public/icon_ange_glasses_192.webp");
-const icon: string = fs.readFileSync(iconPath, "base64");
-
-// font paths
-const monopath = path.join(
-  baseFullPath,
-  "public/fonts/RobotoMono-Medium.woff2"
-);
-const mono = fs.readFileSync(monopath).toString("base64");
-
-const notopath = path.join(
-  baseFullPath,
-  "public/fonts/NotoSansCJKjp-Bold.woff2"
-);
-const noto = fs.readFileSync(notopath).toString("base64");
-
-const style = `
-@font-face {
-  font-family: "Noto Sans CJK JP";
-  font-style: normal;
-  font-weight: bold;
-  src: url(data:font/woff2;charset=utf-8;base64,${noto}) format("woff2");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Roboto Mono";
-  font-style: normal;
-  font-weight: 500;
-  src: url(data:font/woff2;charset=utf-8;base64,${mono}) format("woff2");
-  font-display: swap;
-}
-
-/*@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');*/
-/*@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');*/
-* {
-  margin: 0;
-  padding: 0;
-}
-
-html, body {
-  width: 100%;
-  height: 100%;
-  background: #292433;
-  font-family: "Noto Sans CJK JP", "Noto Sans JP", sans-serif;
-  font-size: 125%;
-  color: #d2ced9;
-}
-
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(to right bottom, #d9989c, #a6b4de);
-}
-
-#Wrapper {
-  margin: 50px;
-  background: white;
-  grid-gap: 30px;
-  border-radius: 30px;
-  background: #1c1921;
-  box-shadow: 10px 10px 20px #1c192166, -10px -10px 20px #1c192166;
-  padding: 50px;
-  display: grid;
-  grid-template-rows: 280px 100px;
-  grid-template-columns: 700px 250px;
-  grid-template-areas: "Title Title" "Name Date";
-}
-#Wrapper #Title {
-  font-size: 60px;
-  grid-area: Title;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-#Wrapper #Title p {
-  max-height: 100%;
-  overflow-wrap: anywhere;
-}
-#Wrapper #Name {
-  grid-area: Name;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-#Wrapper #Name img {
-  border-radius: 50%;
-}
-#Wrapper #Date {
-  grid-area: Date;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  font-family: "Roboto Mono", monospace;
-}
-`;
-
-const OgpGen = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextRequest) => {
   try {
-    const playwrightArgs = {
-      production: {
-        args: chromium.getChromiumArgs(true),
-      },
-      development: {
-        executablePath: "/opt/google/chrome/google-chrome",
-        headless: true,
-        args: chromium.getChromiumArgs(false),
-      },
-      test: {},
-    }[process.env.NODE_ENV];
+    const { searchParams } = new URL(req.url);
+    const title = searchParams.has("title")
+      ? searchParams.get("title")?.slice(0, 80)
+      : "";
+    const date = searchParams.has("date")
+      ? `📅 ― ${searchParams.get("date")?.slice(0, 8)}`
+      : "";
 
-    const viewport = { width: 1200, height: 630 };
+    // CJK font is so large that if placed locally it easily exceeds the 1MB Edge Function limit >_<
+    const notoFontData = await fetch(
+      "https://rawcdn.githack.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff"
+    ).then((res) => res.arrayBuffer());
 
-    const browser = await chromium.launchChromium(playwrightArgs);
-    const context = await browser.newContext({ viewport: viewport });
-    const page = await context.newPage();
-    await page.setExtraHTTPHeaders({
-      "Accept-Language": "ja-JP",
-    });
+    const robotoFontData = await fetch(
+      new URL("../../assets/RobotoMono-Medium.woff", import.meta.url)
+    ).then((res) => res.arrayBuffer());
 
-    const longtitle =
-      typeof req.query.title !== "undefined" ? req.query.title.toString() : "";
+    const pngIcon = new URL(
+      "../../assets/icon_ange_glasses_192.png",
+      import.meta.url
+    ).toString();
 
-    const date =
-      typeof req.query.date !== "undefined" ? req.query.date.toString() : "";
-
-    const ogpinfo: OgpInfo = {
-      title: longtitle,
-      date: date,
-      icon: icon,
-      style: style,
-    };
-
-    const markup = ReactDomServer.renderToStaticMarkup(
-      <OgpImage {...ogpinfo} />
+    return new ImageResponse(
+      (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "30px",
+            fontFamily: "Noto Sans CJK JP",
+            backgroundColor: "#171726",
+            color: "#f2f0e6",
+          }}
+        >
+          <div tw="flex flex-col p-12 w-full h-full border-solid border-4 border-white rounded-xl">
+            <div tw="flex flex-1 max-w-full items-center max-h-full">
+              <h1 tw="text-6xl leading-tight max-w-full">
+                <p tw="w-full justify-center">{title}</p>
+              </h1>
+            </div>
+            <div tw="flex flex-row justify-between items-center w-full">
+              <div tw="flex items-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={pngIcon}
+                  alt="haxicon"
+                  width={100}
+                  height={100}
+                  tw="rounded-full mr-5"
+                />
+                <h2 tw="text-4xl mr-5">
+                  <p
+                    style={{
+                      fontFamily: "Roboto Mono",
+                    }}
+                  >
+                    haxibami.net
+                  </p>
+                </h2>
+              </div>
+              <div tw="flex">
+                <h2 tw="text-4xl">
+                  <p>{date}</p>
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+      {
+        fonts: [
+          {
+            name: "Noto Sans CJK JP",
+            data: notoFontData,
+            weight: 700,
+            style: "normal",
+          },
+          {
+            name: "Roboto Mono",
+            data: robotoFontData,
+            weight: 500,
+            style: "normal",
+          },
+        ],
+      }
     );
-    const html = `<!doctype html>${markup}`;
-
-    await page.setContent(html, { waitUntil: "networkidle" });
-    const image = await page.screenshot({ type: "png" });
-    await browser.close();
-
-    res.setHeader("Cache-Control", "s-maxage=5256000, stale-while-revalidate");
-    res.setHeader("Content-Type", "image/png");
-
-    res.end(image);
-  } catch (error) {
-    console.error("[Error]: ", error);
-    res.status(404).json({ message: "cannot render og-image" });
+  } catch (e) {
+    console.log(`${e}`);
+    return new Response(`Failed to generate the image`, {
+      status: 500,
+    });
   }
 };
 
-export default OgpGen;
+export default handler;
 ```
 
-![OGP画像](/image/ogp.png)
-
-以上でこんな :point_up_2: 感じのものがつくれる。
-
-![Lambda環境のログ](/image/lambda-fn.png)
-
-レスポンス改善を期待してフォントはローカル（`/public/fonts`以下）に設置した。ログを見た感じかなり容量がギリギリだが、普通に動いている。なお、ローカルフォントを読み込む際には base64 エンコードしたものを CSS に渡す必要があるため注意。Vercel 公式の[og-image](https://github.com/vercel/og-image/blob/0b76def1f56808f8f1aa2cd7ede8b8d9ef7ef7b7/api/_lib/template.ts)あたりの実装が参考になるだろう。
+ちなみにこの関数は Edge 環境で実行されるため、総容量制限は **1MB** とかなり厳しい。日本語フォントは内蔵のもの（Noto Sans JP？）で妥協するか、サブセット化したものを Web フォントとしてロードするしかない。
 
 ### サイトマップ生成
 
-[next-sitemap](https://github.com/iamvishnusankar/next-sitemap)を使ったところ、`<lastmod>`がすべて最終ビルド時を示していて発狂しかけた。この挙動はある意味正しく、なぜなら自分が触れていないページでもビルドするたびに**静的アセットの slug 名が変わってしまう**ためである。仕方がないので[このへん](https://www.mk-engineer.com/posts/nextjs-before-build)を参考にしつつ書いた。npm scripts を活用し、
+frontmatter に記載した記事情報に合わせてサイトマップを生成したかったので、[このへん](https://www.mk-engineer.com/posts/nextjs-before-build)を参考にしつつ自分で書いた。npm scripts を活用し、
 
-1. ビルド前に`share/index.json`に記事のインデックスを作成
-1. ビルド後にインデックスに基づいて`public/sitemap.xml`と`public/robots.txt`を生成
+1. ビルド前に記事のインデックスをキャッシュ
+1. キャッシュに基づいて`public/sitemap.xml`と`public/robots.txt`を生成
 
 するようにしてある。
 
-```js
-// hooks/scripts/sitemap.mjs
-
+```js title="hooks/scripts/sitemap.mts"
 import fs from "fs";
-import prettier from "prettier";
+
 import { globby } from "globby";
+import prettier from "prettier";
+
+import { dateConverter } from "./lib/build.js";
+import { HOST } from "./lib/constant.js";
+
+import type { PostData } from "./lib/interface.js";
 
 // variables
-const HOST = "https://www.haxibami.net";
 const XMLFILE = "sitemap.xml";
 
 // Article index file
-const indexFile = fs.readFileSync("src/share/index.json", "utf-8");
-const index = JSON.parse(indexFile);
+const postIndexFile = fs.readFileSync("src/share/index.json", "utf-8");
+const postIndex = JSON.parse(postIndexFile);
 
-// formatted xml
-const formatted = (sitemap) => prettier.format(sitemap, { parser: "html" });
+// format xml
+const formatXml = (sitemap: string) =>
+  prettier.format(sitemap, { parser: "html" });
 
+// generate sitemap & robots.txt
 const sitemapGenerator = async () => {
-  const solidPaths = await globby(
-    ["src/pages/*.tsx", "src/pages/blog/*.tsx", "src/pages/grad_essay/*.tsx"],
-    { ignore: ["src/pages/_*.tsx", "src/pages/404.tsx"] }
-  );
+  const solidPaths = await globby(["src/pages/*.tsx", "src/pages/blog/*.tsx"], {
+    ignore: [
+      "src/pages/_*.tsx",
+      "src/pages/404.tsx",
+      "src/pages/grad_essay.tsx",
+    ],
+  });
 
-  const solidInfos = solidPaths.map((filePath) => {
-    const solidInfo = {
+  const solidPageInfos = solidPaths.map((filePath) => {
+    const solidPageInfo = {
       relpath: filePath
         .replace("src/pages/", "")
         .replace(".tsx", "")
         .replace("index", ""),
       lastmod: new Date().toISOString(),
     };
-    return solidInfo;
+    return solidPageInfo;
   });
 
-  const allBlogs = index.articles.blog;
-  const allGrads = index.articles.grad_essay;
+  const blogposts = postIndex.articles.blog;
 
-  const dateConverter = (date) => {
-    return date.slice(0, 4) + "-" + date.slice(4, 6) + "-" + date.slice(6);
-  };
-
-  const blogInfos = allBlogs.map((item) => {
+  const blogInfos = blogposts.map((post: PostData) => {
     const blogInfo = {
-      relpath: `blog/posts/${item.slug}`,
-      lastmod: dateConverter(item.date),
+      relpath: `blog/posts/${post.data?.slug}`,
+      lastmod: dateConverter(post.data?.date),
     };
     return blogInfo;
   });
 
-  const gradInfos = allGrads.map((item) => {
-    const gradInfo = {
-      relpath: `grad_essay/posts/${item.slug}`,
-      lastmod: dateConverter(item.date),
-    };
-    return gradInfo;
-  });
-
-  const sitemapInfos = solidInfos.concat(blogInfos, gradInfos);
+  const sitemapInfos = solidPageInfos.concat(blogInfos);
 
   const pagesSitemap = `
 
@@ -819,7 +840,7 @@ const sitemapGenerator = async () => {
     .map((info) => {
       return `
         <url>
-          <loc>${HOST}/${info.relpath}</loc>
+          <loc>https://${HOST}/${info.relpath}</loc>
           <lastmod>${info.lastmod}</lastmod>
         </url>
       `;
@@ -828,14 +849,14 @@ const sitemapGenerator = async () => {
   `;
 
   const generatedSitemap = `
-    <?xml version="1.0" encoding="UTF-8"?>
-    <urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
-    >
-      ${pagesSitemap}
-    </urlset>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
+>
+  ${pagesSitemap}
+</urlset>
   `;
 
   const robots = `# *
@@ -849,36 +870,40 @@ Host: https://www.haxibami.net
 Sitemap: https://www.haxibami.net/sitemap.xml
 `;
 
-  fs.writeFileSync(`public/${XMLFILE}`, formatted(generatedSitemap));
+  fs.writeFileSync(`public/${XMLFILE}`, formatXml(generatedSitemap));
   fs.writeFileSync("public/robots.txt", robots);
 };
 
-export default () => {
-  return new Promise(async (resolve) => {
+const genSitemap = () => {
+  return new Promise<void>((resolve) => {
     sitemapGenerator();
     resolve();
   });
 };
+
+export default genSitemap;
 ```
 
 ### フィード対応
 
-`Feed`というライブラリを使った。上と同じ要領で、ビルド時に`/public/rss`以下に RSS、Atom、JSON Feed 用のファイル三種を吐かせている。
+`Feed`というライブラリで形式を整え、サイトマップと同じ要領でビルド時に RSS、Atom、JSON Feed 用のファイルを吐かせている。
 
-https://github.com/jpmonette/feed
+<https://github.com/jpmonette/feed>
 
-```js
-// hooks/scripts/feed.mjs
+```js title="hooks/scripts/feed.mts"
 import fs from "fs";
+
 import { Feed } from "feed";
-import { readYaml, getAllPosts, MdToHtml, dateConverter } from "./lib.mjs";
+
+import { dateConverter } from "./lib/build.js";
+import { SITEDATA } from "./lib/constant.js";
+import { getPostsData } from "./lib/fs.js";
 
 // variables
 const HOST = "https://www.haxibami.net";
 
-const meta = readYaml("meta.yaml");
-
-const genRssFeed = () => {
+// generate feed
+const feedGenerator = async () => {
   const author = {
     name: "haxibami",
     email: "contact@haxibami.net",
@@ -887,12 +912,13 @@ const genRssFeed = () => {
 
   const date = new Date();
   const feed = new Feed({
-    title: meta.siteinfo.blog.title,
-    description: meta.siteinfo.blog.description,
+    title: SITEDATA.blog.title,
+    description: SITEDATA.blog.description,
     id: HOST,
     link: HOST,
     language: "ja",
-    image: `${HOST}/favicon.png`,
+    image: `${HOST}/icon_ange_glasses_192.png`,
+    favicon: `${HOST}/favicon.ico`,
     copyright: `All rights reserved ${date.getFullYear()}, ${author.name}`,
     updated: date,
     feedLinks: {
@@ -903,39 +929,37 @@ const genRssFeed = () => {
     author: author,
   });
 
-  const allBlogs = getAllPosts(["slug", "title", "date", "content"], "blog");
+  const blogs = await getPostsData("articles/blog");
 
-  allBlogs.forEach((post) => {
-    const url = `${HOST}/blog/posts/${post.slug}`;
+  blogs.forEach((post) => {
+    const url = `${HOST}/blog/posts/${post.data?.slug}`;
     feed.addItem({
-      title: post.title,
-      description: `<p>${MdToHtml(post.content).substring(0, 300)}</p>`,
+      title: `${post.data?.title}`,
+      description: `${post.preview}`,
       id: url,
       link: url,
-      date: new Date(dateConverter(post.date)),
+      date: new Date(dateConverter(post.data?.date)),
     });
   });
 
   fs.mkdirSync("public/rss", { recursive: true });
-  fs.writeFileSync("public/rss/feed.xml", feed.rss2());
-  fs.writeFileSync("public/rss/atom.xml", feed.atom1());
-  fs.writeFileSync("public/rss/feed.json", feed.json1());
+  await Promise.all([
+    fs.promises.writeFile("public/rss/feed.xml", feed.rss2()),
+    fs.promises.writeFile("public/rss/atom.xml", feed.atom1()),
+    fs.promises.writeFile("public/rss/feed.json", feed.json1()),
+  ]);
 };
 
-export default genRssFeed;
+const GenFeed = () => {
+  return new Promise<void>((resolve) => {
+    feedGenerator();
+    resolve();
+  });
+};
+
+export default GenFeed;
 ```
 
 ## 感想
 
-いい感じ〜 :sunglasses:
-
-Next.js の抽象化と、unified はじめ充実した外部処理系に助けられてかなり簡単に動いた。デベロッパーに五体投地しつつ、改修・保守をやっていく。
-
-## TODO
-
-- [x] ルビの実装（2022/03/06）
-- [x] フィード（RSS, Atom）対応（2022/03/10）
-- [x] 外部リンクのカード化（2022/03/15）
-- [x] ダークモードのサポート（2022/03/22）
-- [x] Mermaid のサポート（2022/03/26）
-- [ ] Twitter コンテンツの静的埋め込み
+~~時間をドブに捨てた~~地道な改修の結果、はてなブログや Qiita、Zenn あたりに負けない書き心地になってきた。ちなみに肝心の記事は全然増えていない。
