@@ -31,7 +31,7 @@ export const mdInfo = async (md: string) => {
   const result = await unified()
     .use(remarkParse)
     .use(stripMarkdown, {
-      remove: ["heading", "list", "blockquote", "code", "image"],
+      remove: ["heading", "list", "blockquote", "code", "image", "link"],
     })
     .use(remarkStringify)
     .use(remarkFrontmatter)

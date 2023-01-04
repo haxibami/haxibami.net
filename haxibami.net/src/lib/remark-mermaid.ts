@@ -70,6 +70,8 @@ function isMermaid(node: unknown): node is Code {
   return true;
 }
 
+type MermaidBlock = [Code, number, Parent];
+
 const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
   options
 ): Transformer {
@@ -86,79 +88,87 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return async (node: Node, _file: VFileCompatible) => {
-    const promises: (() => Promise<void>)[] = [];
+    const mermaidBlocks = getMermaidBlocks(node);
+    if (mermaidBlocks.length === 0) {
+      return;
+    }
     const browser = await playwright.chromium.launch(settings.launchOptions);
     const context = await browser.newContext({
       viewport: { width: 1000, height: 3000 },
     });
     const page = await context.newPage();
-    const html = `<!DOCTYPE html>`;
-    await page.setContent(html);
+    await page.setContent(`<!DOCTYPE html>`);
     await page.addScriptTag({
       url: "https://unpkg.com/mermaid/dist/mermaid.min.js",
       type: "module",
     });
-    await page.setViewportSize({ width: 1000, height: 3000 });
-    visit(node, isMermaid, visitor);
-    await Promise.all(promises.map((t) => t()));
+    // await page.setViewportSize({ width: 1000, height: 3000 });
+    const svgResults = await page.evaluate(
+      ({ blocks, theme }) => {
+        const config: MermaidConfig = {
+          theme: theme,
+          startOnLoad: false,
+        };
+        mermaid.mermaidAPI.initialize(config);
+        return blocks.map(([code, ,], id) => {
+          const svg = mermaid.mermaidAPI.render(`mermaid-${id}`, code.value);
+          return svg;
+        });
+      },
+      { blocks: mermaidBlocks, theme: settings.theme }
+    );
     await browser.close();
 
-    function visitor(node: Code, index: number, parent: Parent | undefined) {
-      if (!isParent(parent)) {
-        return;
-      }
-      promises.push(async () => {
-        const svg = await getSvg(node, page, settings.theme);
-        if (settings.wrap) {
-          parent.children[index] = {
-            type: "parent",
-            children: [],
-            data: {
-              hChildren: [
-                {
-                  type: "element",
-                  children: [svgParse(svg)],
-                  tagName: "div",
-                  properties: {
-                    className: settings.classname,
-                  },
+    mermaidBlocks.forEach(([, index, parent], i) => {
+      const svgAst = svgParse(optSvg(svgResults[i]));
+      if (settings.wrap) {
+        parent.children[index] = {
+          type: "parent",
+          children: [],
+          data: {
+            hChildren: [
+              {
+                type: "element",
+                children: [svgAst],
+                tagName: "div",
+                properties: {
+                  className: settings.classname,
                 },
-              ],
-            },
-          } as Parent;
-        } else {
-          parent.children[index] = {
-            type: "paragraph",
-            children: [],
-            data: {
-              hChildren: [svgParse(svg)],
-            },
-          } as Paragraph;
-        }
-      });
-      return true;
-    }
+              },
+            ],
+          },
+        } as Parent;
+      } else {
+        parent.children[index] = {
+          type: "paragraph",
+          children: [],
+          data: {
+            hChildren: [svgAst],
+          },
+        } as Paragraph;
+      }
+    });
   };
 };
 
-async function getSvg(node: Code, page: playwright.Page, theme: Theme) {
-  const graph = await page.evaluate(
-    ([code, theme]) => {
-      const id = "a";
-      const config: MermaidConfig = {
-        theme: theme as Theme,
-        startOnLoad: false,
-      };
-      mermaid.mermaidAPI.initialize(config);
-      const div = document.createElement("div");
-      mermaid.mermaidAPI.render(id, code, (svg: string) => {
-        div.innerHTML = svg;
-      });
-      return div.innerHTML;
-    },
-    [node.value, theme]
+function getMermaidBlocks(node: Node): MermaidBlock[] {
+  const blocks: MermaidBlock[] = [];
+
+  visit(
+    node,
+    isMermaid,
+    (node: Code, index: number, parent: Parent | undefined) => {
+      if (!isParent(parent)) {
+        return;
+      }
+      blocks.push([node, index, parent]);
+    }
   );
 
+  return blocks;
+}
+
+function optSvg(svg: string) {
   const svgoOptions: SvgoConfig = {
     js2svg: {
       indent: 2,
@@ -200,7 +210,7 @@ async function getSvg(node: Code, page: playwright.Page, theme: Theme) {
     ],
   };
 
-  const value = optimize(graph, svgoOptions).data;
+  const value = optimize(svg, svgoOptions).data;
   return value;
 }
 

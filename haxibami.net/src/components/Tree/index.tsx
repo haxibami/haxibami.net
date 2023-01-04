@@ -11,42 +11,54 @@ import { useTheme } from "next-themes";
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
+const useWindowDimensions = () => {
+  const isClient = typeof window === "object";
+  const minWidth = 550;
+  const minHeight = 550;
+  const getWindowDimensions = useCallback(() => {
+    if (isClient && window.innerWidth < minWidth) {
+      if (window.innerHeight < minHeight) {
+        return { width: minWidth, height: minHeight };
+      }
+      return {
+        width: isClient ? minWidth : 0,
+        height: isClient
+          ? (minWidth * window.innerHeight) / window.innerWidth
+          : 0,
+      };
+    } else {
+      if (isClient && window.innerHeight < minHeight) {
+        return {
+          width: isClient
+            ? (minHeight * window.innerWidth) / window.innerHeight
+            : 0,
+          height: isClient ? minHeight : 0,
+        };
+      }
+      return {
+        width: isClient ? window.innerWidth : 0,
+        height: isClient ? window.innerHeight : 0,
+      };
+    }
+  }, [isClient]);
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+  useIsomorphicLayoutEffect(() => {
+    const onResize = () => {
+      setWindowDimensions(getWindowDimensions());
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [getWindowDimensions]);
+  return windowDimensions;
+};
+
 const Tree: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null);
-  const useWindowDimensions = () => {
-    const isClient = typeof window === "object";
-    const getWindowDimensions = useCallback(() => {
-      if (isClient && window.innerWidth < 600) {
-        {
-          return {
-            prewidth: isClient ? 550 : 0,
-            preheight: isClient ? 950 : 0,
-          };
-        }
-      }
-      return {
-        prewidth: isClient ? window.innerWidth : 0,
-        preheight: isClient ? window.innerHeight : 0,
-      };
-    }, [isClient]);
-    const [windowDimensions, setWindowDimensions] = useState(
-      getWindowDimensions()
-    );
-    useEffect(() => {
-      const onResize = () => {
-        setWindowDimensions(getWindowDimensions());
-      };
-      window.addEventListener("resize", onResize);
-      return () => window.removeEventListener("resize", onResize);
-    }, [getWindowDimensions]);
-    return windowDimensions;
-  };
 
-  const { prewidth, preheight } = useWindowDimensions();
-  const width = prewidth;
-  const height = preheight;
-
+  const { width, height } = useWindowDimensions();
   const { resolvedTheme } = useTheme();
   const [fg, firstbg, secondbg] =
     resolvedTheme === "light"
@@ -58,8 +70,8 @@ const Tree: React.FC = () => {
 
     if (canvasRef.current) {
       const renderCtx = canvasRef.current.getContext("2d");
-      canvasRef.current.style.width = width.toString() + "px";
-      canvasRef.current.style.height = height.toString() + "px";
+      canvasRef.current.style.width = `${width.toString()}px`;
+      canvasRef.current.style.height = `${height.toString()}px`;
       canvasRef.current.width = width * scale;
       canvasRef.current.height = height * scale;
       canvasRef.current.style.setProperty(
@@ -158,7 +170,17 @@ const Tree: React.FC = () => {
     }
   }, [context, width, height, firstbg, fg]);
 
-  return <canvas ref={canvasRef} />;
+  return (
+    <canvas
+      ref={canvasRef}
+      style={
+        {
+          // minWidth: "100vw",
+          // minHeight: "100vh",
+        }
+      }
+    />
+  );
 };
 
 export default Tree;
