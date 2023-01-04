@@ -20,7 +20,7 @@ tags: ["tech", "linux"]
 
 Go 製の高速な initramfs ジェネレータ。yaml で設定を書く。
 
-```yaml
+```yaml title="/etc/booster.yaml"
 modules_force_load: amdgpu
 ```
 
@@ -46,10 +46,8 @@ howdy / fprintd による認証はパスワードを完全に代替するもの*
 
 さらにリモートログインのことも考慮すると、sudo 時に一旦通常通りパスワードを訊ねて、入力が空文字列であった場合のみ生体認証へ移行するのが望ましい。この設定が以下。
 
-```txt
+```txt title="/etc/pam.d/sudo"
 #%PAM-1.0
-
-# /etc/pam.d/sudo
 
 auth        sufficient      pam_unix.so try_first_pass likeauth nullok
 auth        sufficient      pam_python.so /lib/security/howdy/pam.py
@@ -77,9 +75,7 @@ session     include         system-auth
 
 外部モニタの輝度・RGB 比を操作できるツール。下みたいな力技ができたりする。
 
-```txt
-# ~/.config/sway/config
-
+```txt title="~/.config/sway/config"
 # brightness controls (requires non-root access to i2c devices)
 bindsym $mod+F5 exec ddccontrol -f -r 0x10 -W -5 dev:/dev/i2c-1 | grep Brightness | cut -d "/" -f 2 | tee $WOBSOCK
 bindsym $mod+F6 exec ddccontrol -f -r 0x10 -W +5 dev:/dev/i2c-1 | grep Brightness | cut -d "/" -f 2 | tee $WOBSOCK
@@ -127,9 +123,7 @@ yt-dlp https://example.com/user/movie/view --cookies-from-browser chrome
 
 音声・映像の再生をコマンドラインから制御するツール。ターミナルから操作するだけでも便利だが、キーバインドを設定すると真価を発揮する。たとえば Sway の場合：
 
-```txt
-# ~/.config/sway/config
-
+```txt title="~/.config/sway/config"
 bindsym $mod+comma exec playerctl previous
 bindsym $mod+period exec playerctl play-pause
 bindsym $mod+slash exec playerctl next
@@ -151,29 +145,27 @@ bindsym $mod+shift+slash exec playerctl --player playerctld position +10
 
 PipeWire は`pipewire-pulse`、`pipewire-alsa`、`pipewire-jack`で PulseAudio、ALSA、Jack をそれぞれ代替するほか、Wayland 環境では画面共有・録画（WebRTC、OBS）にも使用される[^2]。
 
-[^2]: Tips: 現状、Wayland 環境の Zoom 公式アプリでは一部のデスクトップ環境を除いて画面共有が行えないが、この PipeWire とブラウザ版 Zoom を利用することで制限を回避できる。ブラウザ版 Zoom の利用には[この拡張機能](https://addons.mozilla.org/ja/firefox/addon/zoom-redirector/)が有用。
+[^2]: Tips: 現状、GNOME 以外の Wayland 環境ではちょっと工夫しないと Zoom アプリでの画面共有が行えないが、この PipeWire とブラウザ版 Zoom を利用することで制限を回避できる。ブラウザ版 Zoom の利用には[この拡張機能](https://addons.mozilla.org/ja/firefox/addon/zoom-redirector/)が有用。
 
 ### WirePlumber
 
 <https://gitlab.freedesktop.org/pipewire/wireplumber>
 
-Lua で設定を書ける PipeWire のセッションマネージャ。たとえばデバイスのノード名を変えるには：
+Lua で設定を書ける PipeWire のセッションマネージャ。たとえばデバイスの表示名を変えるには：
 
-```lua
--- ~/.config/wireplumber/main.lua.d/51-headset-out-rename.lua
-
+```lua title="~/.config/wireplumber/main.lua.d/51-headset-in-rename.lua"
 rule = {
   matches = {
     {
-      { "node.name", "matches", "alsa_output.pci-0000_00_1f.3.analog-stereo" },
+      { 'node.name', 'matches', 'alsa_input.pci-0000_00_1f.3.analog-stereo' },
     },
   },
   apply_properties = {
-    ["node.name"] = "Headset_output",
+    ['node.nick'] = 'Headset_input',
   },
 }
 
-table.insert(alsa_monitor.rules,rule)
+table.insert(alsa_monitor.rules, rule)
 ```
 
 ### EasyEffects
@@ -184,33 +176,28 @@ PipeWire 向けのサウンドエフェクトツール。イコライザーと�
 
 ![イコライザー](/image/easyeffects.png)
 
-~~systemd を使う場合、以下のように自動で起動できる。~~
+systemd を使う場合、以下のように自動で起動できる。
 
-罠で、うまく起動しないことが多い。良いアプローチを模索中。
-
-```txt
-# ~/.config/systemd/user/easyeffects.service
-
+```txt title="~/.config/systemd/user/easyeffects.service"
 [Unit]
-Description = EasyEffects daemon
-Requires = pipewire-pulse.service
-After = pipewire-pulse.service
+Description=easyeffects daemon
+PartOf=graphical-session.target
+After=graphical-session.target
 
 [Service]
-ExecStart = /usr/bin/easyeffects --gapplication-service
-Restart = always
-RestartSec = 5
-TimeoutStopSec = 15
+Environment="G_MESSAGES_DEBUG=easyeffects"
+ExecStart=/usr/bin/easyeffects --gapplication-service
+Restart=on-failure
 
 [Install]
-WantedBy = default.target
+WantedBy=graphical-session.target
 ```
 
 ### AutoEq
 
 <https://github.com/jaakkopasanen/AutoEq>
 
-様々なヘッドホン・イヤホンの特性を測定し、機器ごとにもっともニュートラルな出力を与えるイコライザー設定を生成するためのプロジェクト。自前で測定もできるが、もっぱらリポジトリ内の`results`以下に蓄積された主要な機器の設定を利用するのが便利だ。前述の EasyEffects に`.txt`ファイルを読み込ませることで使える。
+様々なヘッドホン・イヤホンの特性を測定し、機器ごとにもっともニュートラルな出力を与えるイコライザー設定を生成するプロジェクト。もっぱらリポジトリ内の`results`以下に蓄積された計測結果を利用するのが便利だ。前述の EasyEffects に`.txt`ファイルを読み込ませることで使える。
 
 ### noise-suppression-for-voice
 
@@ -218,15 +205,10 @@ WantedBy = default.target
 
 マイク用のノイズ抑制プラグイン。タイプ音・呼吸音などを除去してくれる。
 
-```txt
-# /etc/pipewire/filter-chain/source-rnnoise.conf
-
-...
+```txt title="/etc/pipewire/filter-chain/source-rnnoise.conf"
 context.modules = [
-    ...
     { name = libpipewire-module-filter-chain
         args = {
-            node.name        = "effect_input.rnnoise"
             node.description = "Noise Canceling source"
             media.name       = "Noise Canceling source"
             filter.graph = {
@@ -237,42 +219,33 @@ context.modules = [
                         plugin = /usr/lib/ladspa/librnnoise_ladspa.so
                         label  = noise_suppressor_stereo
                         control = {
-                            "VAD Threshold (%)" 40.0
+                            "VAD Threshold (%)" 50.0
                         }
                     }
                 ]
             }
+            audio.position = [ FL FR ]
             capture.props = {
+                node.name = "effect_input.rnnoise"
                 node.passive = true
             }
             playback.props = {
+                node.name = "effect_output.rnnoise"
                 media.class = Audio/Source
             }
         }
     }
 ]
-...
 ```
 
-```txt
-# /etc/pipewire/pipewire.conf
-...
-context.exec = [
-    { path = "/usr/bin/pipewire" args = "-c /usr/share/pipewire/filter-chain/source-rnnoise.conf" }
-]
-...
-```
+### wpctl
 
-### pamixer
-
-<https://github.com/cdemoulins/pamixer>
-
-本来は PulseAudio 向けのコマンドラインミキサーだが、`pipewire-pulse`に対しても使える。現在の音量やサウンドデバイスの一覧を簡潔な形で取り出すのに便利。
+WirePlumber の操作系。現在の音量等の情報を取り出せる。
 
 ```sh
-> pamixer --get-volume
+> wpctl get-volume @DEFAULT_SINK@
 
-90
+Volume: 0.50
 ```
 
 ## 入力関連
@@ -283,41 +256,33 @@ context.exec = [
 
 mozc の辞書強化版。パッケージ名からはわかりにくいが、中身は 2 代目の UT 辞書になっている。地名・人名・キャラクター・ネットスラングにめっぽう強く、Windows 版 Google 日本語入力の水準に近い。
 
-### Emote
+### rofimoji
 
-<https://github.com/tom-james-watson/Emote>
+<https://github.com/fdw/rofimoji>
 
-GTK を利用した絵文字パレット。あらゆる入力欄で Twitter / Discord 相当の絵文字が使えるようになる。
-
-![emote](/image/emote.png)
+rofi / wofi 等のランチャーを利用する絵文字パレット。あらゆる入力欄で Twitter / Discord 相当の絵文字が使えるようになる。
 
 ### apple-emoji-linux
 
 <https://github.com/samuelngs/apple-emoji-linux>
 
-Apple スタイルの絵文字を Linux で使えるようにするパッケージ。なお、
-
-> The code provided is for educational purposes only.
+Apple スタイルの絵文字を Linux で使えるようにするパッケージ。
 
 ### libinput-gestures
 
 <https://github.com/bulletmark/libinput-gestures>
 
-タッチパッドの三・四本指スワイプに任意のコマンドを割り当てられる libinput の拡張ツール。ブラウザバックとか、ワークスペースの切り替えとか。
+`libinput`を拡張し、タッチパッドの三・四本指スワイプに任意のコマンドを割り当てられるようにするツール。ブラウザバックとか、ワークスペースの切り替えとか。主にノート PC で便利。
 
-```txt
-# ~/.config/libinput-gestures.conf
-
+```txt title="~/.config/libinput-gestures.conf"
 gesture: swipe right 3 ~/.config/libinput-gestures/gestures backward
 gesture: swipe left 3 ~/.config/libinput-gestures/gestures forward
 gesture: swipe right 4 swaymsg workspace prev
 gesture: swipe left 4 swaymsg workspace next
 ```
 
-```sh
+```sh title="~/.config/libinput-gestures/gestures"
 #!/bin/sh
-
-# ~/.config/libinput-gestures/gestures
 
 case "$@" in
     forward )
@@ -331,12 +296,6 @@ case "$@" in
         swaymsg seat seat0 cursor release BTN_SIDE
         ;;
 esac
-```
-
-```txt
-# ~/.config/sway/config
-
-exec libinput-gestures-setup start
 ```
 
 ## その他

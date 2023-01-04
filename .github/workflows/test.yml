@@ -30,12 +30,12 @@ jobs:
       - name: Get pnpm store directory
         id: pnpm-cache
         run: |
-          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
       - name: pnpm modules & next build cache
         uses: actions/cache@v3
         with:
           path: |
-            ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+            ${{ steps.pnpm-cache.outputs.STORE_PATH }}
             ${{ github.workspace }}/.next/cache
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |

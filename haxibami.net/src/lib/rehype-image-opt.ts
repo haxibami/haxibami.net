@@ -2,10 +2,11 @@ import { getPlaiceholder } from "plaiceholder";
 import { visit } from "unist-util-visit";
 
 import type { Element } from "hast";
+import type { Plugin, Transformer } from "unified";
 import type { Node } from "unist";
 import type { VFileCompatible } from "vfile";
 
-export default function rehypeImageOpt() {
+const rehypeImageOpt: Plugin<[void]> = function imageOpt(): Transformer {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return async (tree: Node, _file: VFileCompatible) => {
     const promises: (() => Promise<void>)[] = [];
@@ -33,4 +34,6 @@ export default function rehypeImageOpt() {
     });
     await Promise.all(promises.map((t) => t()));
   };
-}
+};
+
+export default rehypeImageOpt;

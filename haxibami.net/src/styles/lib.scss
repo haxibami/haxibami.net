@@ -305,6 +305,7 @@
 @mixin quote {
   blockquote {
     color: var.$grad-2;
+    margin: var.$element_gap 0;
     padding: 0 1.5rem;
     position: relative;
     display: flex;
