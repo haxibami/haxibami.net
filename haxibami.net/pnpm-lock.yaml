@@ -20,7 +20,7 @@ specifiers:
   '@types/unist': 2.0.6
   '@typescript-eslint/eslint-plugin': 5.47.1
   '@typescript-eslint/parser': 5.47.1
-  '@vercel/og': 0.0.21
+  '@vercel/og': 0.0.22
   eslint: 8.31.0
   eslint-config-next: 13.1.1
   eslint-config-prettier: 8.5.0
@@ -30,23 +30,23 @@ specifiers:
   husky: 8.0.2
   image-size: ^1.0.2
   lint-staged: 13.1.0
-  mdast-util-to-hast: 12.2.4
+  mdast-util-to-hast: 12.2.5
   mermaid: 9.3.0
   metadata-scraper: 0.2.61
   next: 13.1.1
-  next-mdx-remote: 4.2.0
+  next-mdx-remote: 4.2.1
   next-themes: 0.2.1
   plaiceholder: ^2.5.0
-  playwright: 1.29.1
+  playwright: 1.29.2
   playwright-aws-lambda: 0.9.0
-  playwright-core: 1.29.1
+  playwright-core: 1.29.2
   prettier: 2.8.1
   react: 18.2.0
   react-dom: 18.2.0
   rehype-autolink-headings: 6.1.1
   rehype-katex: 6.0.2
   rehype-parse: 8.0.4
-  rehype-pretty-code: 0.6.0
+  rehype-pretty-code: 0.7.0
   rehype-raw: 6.1.1
   rehype-slug: 5.1.0
   remark-frontmatter: 4.0.1
@@ -80,24 +80,24 @@ dependencies:
   '@fortawesome/react-fontawesome': 0.2.0_z27bm67dtmuyyvss23ckjdrcuy
   '@next/bundle-analyzer': 13.1.1
   '@next/font': 13.1.1
-  '@vercel/og': 0.0.21
+  '@vercel/og': 0.0.22
   feed: 4.2.2
   image-size: 1.0.2
-  mdast-util-to-hast: 12.2.4
+  mdast-util-to-hast: 12.2.5
   mermaid: 9.3.0
   metadata-scraper: 0.2.61
   next: 13.1.1_3duxcpitbtplz62feflag7fwby
-  next-mdx-remote: 4.2.0_biqbaboplfbrettd7655fr4n2y
+  next-mdx-remote: 4.2.1_biqbaboplfbrettd7655fr4n2y
   next-themes: 0.2.1_q76c2b4vyoegvsbrcwkfvimnai
-  playwright: 1.29.1
-  playwright-aws-lambda: 0.9.0_playwright-core@1.29.1
-  playwright-core: 1.29.1
+  playwright: 1.29.2
+  playwright-aws-lambda: 0.9.0_playwright-core@1.29.2
+  playwright-core: 1.29.2
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   rehype-autolink-headings: 6.1.1
   rehype-katex: 6.0.2
   rehype-parse: 8.0.4
-  rehype-pretty-code: 0.6.0_shiki@0.12.1
+  rehype-pretty-code: 0.7.0_shiki@0.12.1
   rehype-raw: 6.1.1
   rehype-slug: 5.1.0
   remark-frontmatter: 4.0.1
@@ -799,12 +799,12 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
-  /@vercel/og/0.0.21:
-    resolution: {integrity: sha512-WgMahG5c8UM7xtn/mT+ljUpDMSDnSlu8AXL52JtTwxb1odrd0GWqZg2N1X38wulPj+sCccNpDdFmmAuw0GLc+Q==}
+  /@vercel/og/0.0.22:
+    resolution: {integrity: sha512-HJjYfjpuNVnxwH7GnEv5QxzdIV4xytjY2RkVmhaOAKlms4X071WSPR9Jp6vjZ3Zmjz0tKSiRnrT5uN/PkW/q9Q==}
     engines: {node: '>=16'}
     dependencies:
       '@resvg/resvg-wasm': 2.0.0-alpha.4
-      satori: 0.0.44
+      satori: 0.0.45
       yoga-wasm-web: 0.1.2
     dev: false
 
@@ -3371,8 +3371,8 @@ packages:
       - supports-color
     dev: false
 
-  /mdast-util-to-hast/12.2.4:
-    resolution: {integrity: sha512-a21xoxSef1l8VhHxS1Dnyioz6grrJkoaCUgGzMD/7dWHvboYX3VW53esRUfB5tgTyz4Yos1n25SPcj35dJqmAg==}
+  /mdast-util-to-hast/12.2.5:
+    resolution: {integrity: sha512-EFNhT35ZR/VZ85/EedDdCNTq0oFM+NM/+qBomVGQ0+Lcg0nhI8xIwmdCzNMlVlCJNXRprpobtKP/IUh8cfz6zQ==}
     dependencies:
       '@types/hast': 2.3.4
       '@types/mdast': 3.0.10
@@ -3534,7 +3534,7 @@ packages:
       micromark-extension-gfm-tagfilter: 1.0.1
       micromark-extension-gfm-task-list-item: 1.0.3
       micromark-util-combine-extensions: 1.0.0
-      micromark-util-types: 1.0.1
+      micromark-util-types: 1.0.2
     dev: false
 
   /micromark-extension-jaruby/0.1.0:
@@ -3892,8 +3892,8 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
-  /next-mdx-remote/4.2.0_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-X5RhD7f7b78pH2abbuusObSGgII5l54OdusS/2iXljN7WN1cel6ToLlZeCZcyxx9cR4wmBGQYGongIttDYNmAA==}
+  /next-mdx-remote/4.2.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-PcVF1r5XTBjiNVXw0GyaIcOwQsklHo36+7ycfmtJb52TIkT0nM4Hzv4wgJwNg7+jvTbap99qWsMwdKUYR9WxAA==}
     engines: {node: '>=14', npm: '>=7'}
     peerDependencies:
       react: '>=16.x <=18.x'
@@ -4275,29 +4275,29 @@ packages:
       sharp: 0.31.3
     dev: true
 
-  /playwright-aws-lambda/0.9.0_playwright-core@1.29.1:
+  /playwright-aws-lambda/0.9.0_playwright-core@1.29.2:
     resolution: {integrity: sha512-MnzLTZ4B9I4JdWJ+eq7BbrhFjL6VyT0bF+ccNjBCwjwlBNQaTEXOcrkAe+p8YkOXnYUqBbsrZj5Ene8PqKosiw==}
     engines: {node: '>= 8.0.0'}
     peerDependencies:
       playwright-core: ^1
     dependencies:
       lambdafs: 2.1.1
-      playwright-core: 1.29.1
+      playwright-core: 1.29.2
     dev: false
 
-  /playwright-core/1.29.1:
-    resolution: {integrity: sha512-20Ai3d+lMkWpI9YZYlxk8gxatfgax5STW8GaMozAHwigLiyiKQrdkt7gaoT9UQR8FIVDg6qVXs9IoZUQrDjIIg==}
+  /playwright-core/1.29.2:
+    resolution: {integrity: sha512-94QXm4PMgFoHAhlCuoWyaBYKb92yOcGVHdQLoxQ7Wjlc7Flg4aC/jbFW7xMR52OfXMVkWicue4WXE7QEegbIRA==}
     engines: {node: '>=14'}
     hasBin: true
     dev: false
 
-  /playwright/1.29.1:
-    resolution: {integrity: sha512-lasC+pMqsQ2uWhNurt3YK3xo0gWlMjslYUylKbHcqF/NTjwp9KStRGO7S6wwz2f52GcSnop8XUK/GymJjdzrxw==}
+  /playwright/1.29.2:
+    resolution: {integrity: sha512-hKBYJUtdmYzcjdhYDkP9WGtORwwZBBKAW8+Lz7sr0ZMxtJr04ASXVzH5eBWtDkdb0c3LLFsehfPBTRfvlfKJOA==}
     engines: {node: '>=14'}
     hasBin: true
     requiresBuild: true
     dependencies:
-      playwright-core: 1.29.1
+      playwright-core: 1.29.2
     dev: false
 
   /postcss-value-parser/4.2.0:
@@ -4473,8 +4473,8 @@ packages:
       unified: 10.1.2
     dev: false
 
-  /rehype-pretty-code/0.6.0_shiki@0.12.1:
-    resolution: {integrity: sha512-VfntYoWYOBVURXYDdB8p/E1sZTm2W5ry89fJyY94WJAo1jUH/5sVhDC7cX5PPnksMyW9PYMxRLNfjkBpSgJrzQ==}
+  /rehype-pretty-code/0.7.0_shiki@0.12.1:
+    resolution: {integrity: sha512-dWdNYALc6ApIx6Qlyk+13JVrEdZiy73rIjRkZgNG05d2iHzfIWMMZ6NM/WsuS0KEAPq9vgulqRah98b9HFpPlw==}
     engines: {node: ^12.16.0 || >=13.2.0}
     peerDependencies:
       shiki: '*'
@@ -4576,7 +4576,7 @@ packages:
     dependencies:
       '@types/hast': 2.3.4
       '@types/mdast': 3.0.10
-      mdast-util-to-hast: 12.2.4
+      mdast-util-to-hast: 12.2.5
       unified: 10.1.2
     dev: false
 
@@ -4725,8 +4725,8 @@ packages:
       immutable: 4.0.0
       source-map-js: 1.0.2
 
-  /satori/0.0.44:
-    resolution: {integrity: sha512-WKUxXC2qeyno6J3ucwwLozPL6j1HXOZiN5wIUf7iqAhlx1RUC/6ePIKHi7iPc3Cy6DYuZcJriZXxXkSdo2FQHg==}
+  /satori/0.0.45:
+    resolution: {integrity: sha512-jF7AAK5ddZQVE6r6gTG07YxOvhldev0wBrFqBXRNbPH/mEy15gfIqA4xjGfVHczcGYZvY/VWmKri6DzRJF8cgQ==}
     engines: {node: '>=16'}
     dependencies:
       '@shuding/opentype.js': 1.4.0-beta.0
