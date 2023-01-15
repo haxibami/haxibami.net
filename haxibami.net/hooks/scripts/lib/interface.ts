@@ -27,7 +27,7 @@ export const PostType = {
   Grad_Essay: "grad_essay",
 } as const;
 
-export type PostType = typeof PostType[keyof typeof PostType];
+export type PostType = (typeof PostType)[keyof typeof PostType];
 
 // site info stored in src/share/meta.yml
 export interface SiteData {
@@ -40,7 +40,7 @@ const PageType = {
   Website: "website",
 } as const;
 
-type PageType = typeof PageType[keyof typeof PageType];
+type PageType = (typeof PageType)[keyof typeof PageType];
 
 // twitter card: summary / summary_large_image
 const TwCardType = {
@@ -48,7 +48,7 @@ const TwCardType = {
   Summary_Large_Image: "summary_large_image",
 } as const;
 
-type TwCardType = typeof TwCardType[keyof typeof TwCardType];
+type TwCardType = (typeof TwCardType)[keyof typeof TwCardType];
 
 export interface PageMetaData {
   title: string;

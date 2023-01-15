@@ -1,4 +1,4 @@
-import getMetadata from "metadata-scraper";
+import fetchSiteMetadata from "fetch-site-metadata";
 import { visit } from "unist-util-visit";
 
 import { isParent, isLink, isParagraph } from "./mdast-util-node-is";
@@ -46,12 +46,12 @@ function isExtLink(node: unknown): node is Paragraph {
 }
 
 function fetchMeta(url: string) {
-  const metas = getMetadata(url).then((data) => {
+  const metas = fetchSiteMetadata(url).then((data) => {
     const metaData = {
       url: url,
       title: data.title ?? "(No title)",
       description: data.description ?? "",
-      og: data.image,
+      og: data.image?.src,
       icon: data.icon,
     };
     return metaData;
