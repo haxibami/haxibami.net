@@ -26,7 +26,7 @@ export const UserTheme = {
   Null: "null",
 } as const;
 
-export type Theme = typeof UserTheme[keyof typeof UserTheme];
+export type Theme = (typeof UserTheme)[keyof typeof UserTheme];
 
 export interface RemarkMermaidOptions {
   /**
