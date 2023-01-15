@@ -93,7 +93,6 @@ export const compileMdx = async (file: string) => {
         },
       },
       format: "md",
-      development: false,
     },
     parseFrontmatter: true,
   });
