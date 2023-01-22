@@ -5,7 +5,6 @@ import { unified } from "unified";
 import { is } from "unist-util-is";
 import { visit } from "unist-util-visit";
 
-
 import type { Code, Paragraph } from "mdast";
 import type Mermaid from "mermaid";
 import type { MermaidConfig } from "mermaid";

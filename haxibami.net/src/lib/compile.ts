@@ -22,7 +22,6 @@ import rehypeImageOpt from "./rehype-image-opt";
 import { remarkLinkCard, extLinkHandler } from "./remark-link-card";
 import remarkMermaid from "./remark-mermaid";
 
-
 export const compileMdx = async (file: string) => {
   // Get shiki theme file
   //   const getThemePath = (themename: string) =>
