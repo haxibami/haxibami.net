@@ -12,9 +12,9 @@ import { OGPHOST } from "lib/constant";
 import { getPost } from "lib/fs";
 import Styles from "styles/about.module.scss";
 
-import icon from "../../public/icon_ange_glasses_512.webp";
-
 import type { PageMetaData } from "lib/interface";
+
+import icon from "../../public/icon_ange_glasses_512.webp";
 
 type Props = InferGetStaticPropsType<typeof getStaticProps>;
 

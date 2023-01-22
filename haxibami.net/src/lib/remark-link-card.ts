@@ -1,9 +1,10 @@
 import fetchSiteMetadata from "fetch-site-metadata";
 import { visit } from "unist-util-visit";
 
+import type { Paragraph, Link, Literal } from "mdast";
+
 import { isParent, isLink, isParagraph } from "./mdast-util-node-is";
 
-import type { Paragraph, Link, Literal } from "mdast";
 import type { H } from "mdast-util-to-hast";
 import type { Plugin, Transformer } from "unified";
 import type { Node, Parent } from "unist";
@@ -59,7 +60,7 @@ function fetchMeta(url: string) {
   return metas;
 }
 
-export const remarkLinkWidget: Plugin = function extLinkTrans(): Transformer {
+export const remarkLinkCard: Plugin = function extLinkTrans(): Transformer {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return async (tree: Node, _file: VFileCompatible) => {
     const promises: (() => Promise<void>)[] = [];
