@@ -47,7 +47,7 @@ import remarkMath from "remark-math";
 import remarkUnwrapImages from "remark-unwrap-images";
 
 import rehypeImageOpt from "./rehype-image-opt";
-import { remarkLinkWidget, extLinkHandler } from "./remark-link-card";
+import { remarkLinkCard, extLinkHandler } from "./remark-link-card";
 import remarkMermaid from "./remark-mermaid";
 
 import type { Options } from "rehype-pretty-code";
@@ -78,7 +78,7 @@ export const compileMdx = async (file: string) => {
         remarkGemoji,
         remarkMath,
         remarkJaruby,
-        remarkLinkWidget,
+        remarkLinkCard,
         remarkUnwrapImages,
         [
           remarkMermaid,
@@ -476,7 +476,7 @@ function fetchMeta(url: string) {
   return metas;
 }
 
-export const remarkLinkWidget: Plugin = function extLinkTrans(): Transformer {
+export const remarkLinkCard: Plugin = function extLinkTrans(): Transformer {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return async (tree: Node, _file: VFileCompatible) => {
     const promises: (() => Promise<void>)[] = [];
@@ -528,11 +528,11 @@ export function extLinkHandler(_h: H, node: ExtLink) {
 取得したメタデータは 以下のように props 経由で受け渡しできる。型の扱いが雑だけど……ヨシ！（炎上）
 
 ```tsx title="components/MdxComponent/index.tsx" /props/
-import LinkWidget from "components/LinkWidget";
+import LinkCard from "components/LinkCard";
 import MyLink from "components/MyLink";
 import NextImage from "components/NextImage";
 
-import type { LinkWidgetProps } from "components/LinkWidget";
+import type { LinkCardProps } from "components/LinkCard";
 import type { MyLinkProps } from "components/MyLink";
 import type { NextImageProps } from "components/NextImage";
 import type { MDXComponents } from "mdx/types";
@@ -540,13 +540,13 @@ import type { MDXComponents } from "mdx/types";
 type ProvidedComponents = MDXComponents & {
   a?: typeof MyLink;
   img?: typeof NextImage;
-  extlink?: typeof LinkWidget;
+  extlink?: typeof LinkCard;
 };
 
 const components = {
   a: (props: MyLinkProps) => <MyLink {...props} />,
   img: (props: NextImageProps) => <NextImage {...props} />,
-  extlink: (props: LinkWidgetProps) => <LinkWidget {...props} />,
+  extlink: (props: LinkCardProps) => <LinkCard {...props} />,
 } as ProvidedComponents;
 
 export default components;

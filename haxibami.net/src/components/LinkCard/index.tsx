@@ -2,7 +2,7 @@ import { ArticleIcon, LinkIcon } from "components/Svg";
 
 import Styles from "./style.module.scss";
 
-export interface LinkWidgetProps {
+export interface LinkCardProps {
   url: string;
   title: string;
   description: string;
@@ -10,7 +10,7 @@ export interface LinkWidgetProps {
   icon: string | undefined;
 }
 
-const LinkWidget: React.FC<LinkWidgetProps> = (props) => {
+const LinkCard: React.FC<LinkCardProps> = (props) => {
   const { url, title, description, og, icon } = props;
   return (
     <div className={Styles.Wrapper}>
@@ -53,4 +53,4 @@ const LinkWidget: React.FC<LinkWidgetProps> = (props) => {
   );
 };
 
-export default LinkWidget;
+export default LinkCard;

@@ -36,8 +36,6 @@ DNS でのフィルタリング自体は汎用的な手法で、たとえば[Pi-
 
 さらに CLI クライアントではローカルに問い合わせ結果がキャッシュされる。環境依存だが、私の手元では家庭用ルータのデフォルト（プロバイダの DNS）に任せるより明らかにレスポンスが高速だった。
 
-[![asciicast](https://asciinema.org/a/471558.svg)](https://asciinema.org/a/471558)
-
 ### トラフィックの監視
 
 ![microsoft.comにアクセスしてみる](/image/nextdns_log.png)

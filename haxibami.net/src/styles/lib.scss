@@ -173,6 +173,8 @@
 
 @mixin table {
   table {
+    display: block;
+    overflow-x: scroll;
     margin-top: var.$element_gap;
     table-layout: fixed;
     border-collapse: collapse;

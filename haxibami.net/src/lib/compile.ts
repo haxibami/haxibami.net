@@ -16,11 +16,12 @@ import remarkMath from "remark-math";
 import remarkUnwrapImages from "remark-unwrap-images";
 // import * as shiki from "shiki";
 
+import type { Options } from "rehype-pretty-code";
+
 import rehypeImageOpt from "./rehype-image-opt";
-import { remarkLinkWidget, extLinkHandler } from "./remark-link-card";
+import { remarkLinkCard, extLinkHandler } from "./remark-link-card";
 import remarkMermaid from "./remark-mermaid";
 
-import type { Options } from "rehype-pretty-code";
 
 export const compileMdx = async (file: string) => {
   // Get shiki theme file
@@ -57,7 +58,7 @@ export const compileMdx = async (file: string) => {
         remarkGemoji,
         remarkMath,
         remarkJaruby,
-        remarkLinkWidget,
+        remarkLinkCard,
         remarkUnwrapImages,
         //         [
         //           remarkToc,

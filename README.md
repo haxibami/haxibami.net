@@ -3,11 +3,8 @@
 [![Preview deployment](https://github.com/haxibami/haxibami.net/actions/workflows/dev.yml/badge.svg)](https://github.com/haxibami/haxibami.net/actions/workflows/dev.yml)
 [![Production deployment](https://github.com/haxibami/haxibami.net/actions/workflows/prod.yml/badge.svg)](https://github.com/haxibami/haxibami.net/actions/workflows/prod.yml)
 
-my website. includes:
+Personal website.
 
-- portfolio
-- blog
+:point_down: Visit!
 
-etc...
-
-![系統樹](https://raw.githubusercontent.com/haxibami/haxibami.net/main/haxibami.net/public/tree.png)
+[![系統樹](https://raw.githubusercontent.com/haxibami/haxibami.net/main/haxibami.net/public/avangard.png)](https://www.haxibami.net)
