@@ -6,9 +6,9 @@ import type {
 
 import Footer from "components/Footer";
 import MyHead from "components/MyHead";
-import PostTop from "components/PostTop";
+import PostDisplay from "components/PostDisplay";
 import Header from "components/PostTopHeader";
-import { COUNT_PER_PAGE, SITEDATA, OGPHOST } from "lib/constant";
+import { COUNT_PER_PAGE, SITEDATA, APIHOST } from "lib/constant";
 import { getTags, getPostsData } from "lib/fs";
 import Styles from "styles/[tag].module.scss";
 
@@ -64,7 +64,7 @@ const TaggedPosts: NextPage<Props> = (props) => {
     title: `タグ: #${tag}の記事`,
     sitename: SITEDATA.blog.title,
     description: encodeURI(`タグ: #${tag}を付与された記事の一覧`),
-    ogImageUrl: encodeURI(`${OGPHOST}/api/ogp?title=タグ: %23${tag}の記事`),
+    ogImageUrl: encodeURI(`${APIHOST}/api/ogp?title=タグ: %23${tag}の記事`),
     pageRelPath: `${postType}/tag/${tag}`,
     pagetype: "article",
     twcardtype: "summary_large_image",
@@ -73,7 +73,7 @@ const TaggedPosts: NextPage<Props> = (props) => {
     <div id={Styles.Wrapper}>
       <MyHead {...pageMetaData} />
       <Header posttype={postType} />
-      <PostTop
+      <PostDisplay
         top={`/${postType}/tag/${tag}`}
         postMenuTabs={[
           {

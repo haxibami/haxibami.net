@@ -1,0 +1,255 @@
+---
+slug: "xkb-jis-hhkb"
+title: "XKBでJIS配列のキーボードをUS配列 / HHKB風にする"
+date: "20230117"
+description: "私のラップトップキーボード事情"
+tags: ["linux", "tech", "life", "meta"]
+---
+
+結論からいうと、JIS 配列はちょっとした手続きで HHKB 風味にマップできる。
+
+## 背景
+
+あまり言及されないが、キーボード設定の自在さは Linux デスクトップの強みのひとつだ。Linux の表示系には（X / Wayland どちらであれ）[XKB](https://wiki.archlinux.jp/index.php/X_keyboard_extension) というキーボードユーティリティが組み込まれており、これで柔軟かつ包括的なキーボード設定ができる。一方、ほかの OS ── たとえば Windows ── では数多のツールが開発されてきたとはいえ、どれも非公式であって決定的とはいえなかった[^1]。このため、Win (Super) キーが OS 側の[謎のショートカットども](https://www.microsoft.com/ja-jp/biz/smb/column-shortcuts-using-windows-key.aspx)に支配されていて上書きできない、というようなアホらしいことが起こる。Linux ではそういうことはない。端的に：**キーの生殺与奪を握られずに済む**。
+
+[^1]: 最近は Microsoft 謹製 PowerToys の登場で風向きが変わりつつあるが
+
+このことは組み込みのキーボードとうまく付き合っていくほかないラップトップなんかでは特に有効で、今回の主題もここにある。つまり、気に入らない配列と出会ったらとにかく再マップしてやればよいのである。
+
+## 要件
+
+JIS 配列の Thinkpad（ここでオタクがニッコリ）を対象に、以下の要件を満たすよう設定した。
+
+### 1. HHKB 風キーマップ・キーバインド
+
+US 配列に準拠。
+
+- `CapsLock`→`Ctrl`
+  - 私たちは`A`の隣の特等席を`CapsLock`に渡してやれるほど寛大ではないので。
+- `Alt`、`Esc`、バッククォート
+  - `Alt`は最下列両端、`Esc`は（JIS 配列でいう）`全角 / 半角`の位置、バッククォートは最上列右端。
+- 「裏」キーバインド
+  - HHKB において修飾キー（`Fn`）押下時に利用できる矢印キー等のキーバインドのこと（名前はいま考えた）。これを通常のキーボードでエミュレートしようとすると、JIS 配列の`無変換`や`かな/カナ`といった余剰キーに修飾キーの機能を割り振ることになる。
+  - （以下では Thinkpad 搭載の `Fn` キーと区別するため、この修飾キーを `Mod` と呼称する）
+- 最下段に `Mod` と `Super`
+  - これは公式仕様によらない私のカスタム。HHKB の最下段にある左右の Meta キーをどう使うかによる。
+
+### 2. US 配列
+
+私は US 配列主義者ゆえ、JIS 配列を US 配列として強引に利用する設定も行う（特に`Enter`周辺）。
+
+### 3. 非ラテン文字の入力
+
+さらに趣味の都合上ロシア語（キリル文字）やセルビア・クロアチア語（ラテン文字拡張、キリル文字拡張）も入力するため、US 配列とこれらの言語の配列をスムーズに切り替える必要があった [^2]。~~オタクってクソめんどくさいね！~~
+
+[^2]: これを書いている途中、XKB より上位の fcitx5 のレイヤでも多言語切り替えを設定できることに気づいたが、キーボード単体で入力できる言語をインプットメソッドフレームワークの層に持ち込むのはあまりエレガントでないので（という言い訳をつけて）却下。
+
+## 解決策
+
+### 最終的な変更の一覧
+
+| key               | remap / role     |
+| ----------------- | ---------------- |
+| `CapsLock`        | `Ctrl`           |
+| `左右Ctrl`        | `Alt`            |
+| `Delete`          | バッククォート   |
+| `かな/カナ`       | `Super`          |
+| `無変換`          | `Mod`            |
+| `半角/全角`       | `Esc`            |
+| `Super` + `Space` | 言語配列切り替え |
+| `Mod` + misc      | 色々             |
+
+### ディレクトリ構成
+
+```txt title="~/.xkb"
+├── compat
+│   └── mycompat
+├── keymap
+│   └── hhkb
+├── symbols
+│   ├── mysymbol1
+│   └── mysymbol2
+└── types
+    └── mytypes
+```
+
+### 設定ファイルとその説明
+
+全体を包括する設定は`keymap/hhkb`にある。
+
+```txt title="keymap/hhkb"
+xkb_keymap {
+    xkb_keycodes  { include "evdev+aliases(qwerty)" };
+    xkb_types     { include "complete+mytypes(hhkb)" };
+    xkb_compat    { include "complete+mycompat(hhkb)" };
+    xkb_symbols   { include "pc+us+ru:2+hr:3+inet(evdev)+group(win_space_toggle)+ctrl(nocaps)+jp(hztg_escape)+ctrl(rctrl_ralt)+ctrl(swap_lalt_lctl)+mysymbol1(hhkb)+mysymbol2(mhkn)" };
+    xkb_geometry  { include "pc(pc105)" };
+};
+```
+
+今回影響するのは`xkb_types`、`xkb_compat`、`xkb_symbols`の行。上のディレクトリ構造と照らし合わせるとなんとなく対応がわかると思うが、以降のファイルの内容をこれらの行で読み込んでいる。各ファイルの詳細に移る前に、`xkb_symbols`の行で利用している、XKB に予め用意されたプリセットについて補足しておく。
+
+| 項目                                       | 備考                                                                                                 |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| `us+ru:2+hr:3`                             | 利用したい言語配列を略号で記載する。n 個目（n>=2）の言語は`+<lang>:n`のように記載するのがミソ [^3]。 |
+| `group(win_space_toggle)`                  | 上で記載した配列間を`super + space`キーで切り替える。                                                |
+| `ctrl(nocaps)`                             | `CapsLock`→`Ctrl`。                                                                                  |
+| `jp(hztg_escape)`                          | 不要な`半角/全角`キーを`Esc`にマップ。                                                               |
+| `ctrl(rctrl_ralt)`, `ctrl(swap_lalt_lctl)` | 左右それぞれの`Alt`と`Ctrl`を入れ替え                                                                |
+
+[^3]: これを発見するのにだいぶ苦労した
+
+おわかりかと思うが、実はこのプリセットの組み合わせだけで要件のうち後者二つ（US 配列、多言語配列対応）と前者の一部は実現できている。したがって以降では `Mod`キーの挙動を設定していく。
+
+#### compat
+
+まず compat。 `無変換` を`Mod5`（そういう修飾キー）に割り当てている。
+
+```txt title="compat/mycompat"
+xkb_compatibility "hhkb" {
+  interpret Muhenkan+AnyOfOrNone(all) {
+      action = SetMods(modifiers=Mod5);
+  };
+};
+```
+
+#### types
+
+次に types。ここでは`MUHENKAN`という type を定義して、`Shift`や上で定めた`Mod5`を押した時にどの Level の挙動をさせるかを指定する。
+
+```txt title="types/mytypes"
+xkb_types "hhkb" {
+  type "MUHENKAN" {
+    modifiers = Shift+Mod5;
+    map[Shift] = Level2;
+    map[Mod5] = Level3;
+    map[Shift+Mod5] = Level3;
+    level_name[Level1] = "Base";
+    level_name[Level2] = "Shift";
+    level_name[Level3] = "Muhenkan";
+  };
+};
+```
+
+#### symbols
+
+最後に symbols。二つに分けているが特に意味はない。
+
+下手な説明よりファイルを見たほうがよほどわかりやすい。Group1, 2, 3 は[先程](#設定ファイルとその説明)指定した三つの言語（`us`, `ru`, `hr`）に、`[]`の中の並びは同じく[types](#types)で定義した（あるいははじめから決まっている）各 Level にそれぞれ対応している。
+
+```txt title="symbols/mysymbol1"
+xkb_symbols "hhkb" {
+    # Hiragana-Katakana => Super
+    key <HKTG> { [ Super_R ] };
+    key <HENK> { [ Super_R ] };
+
+    # JIS => US
+    key <AE13> { [ backslash, bar ] };
+    key <DELE> { [ grave, asciitilde ] };
+    key <AC12> { [ Return ] };
+    # modifier_map Super { <HKTG>, <HENK> }
+};
+```
+
+```txt title="symbols/mysymbol2"
+xkb_symbols "mhkn" {
+  key <AD07> {
+      type[group1]= "MUHENKAN",
+      type[group2]= "MUHENKAN",
+      type[group3]= "FOUR_LEVEL_SEMIALPHABETIC",
+      symbols[Group1]= [               u,               U,           Prior ],
+      symbols[Group2]= [    Cyrillic_ghe,    Cyrillic_GHE,           Prior ],
+      symbols[Group3]= [               u,               U,       downarrow,         uparrow ]
+  };
+  key <AD08> {
+      type[group1]= "MUHENKAN",
+      type[group2]= "MUHENKAN",
+      type[group3]= "FOUR_LEVEL_SEMIALPHABETIC",
+      symbols[Group1]= [               i,               I,              Up ],
+      symbols[Group2]= [    Cyrillic_sha,    Cyrillic_SHA,              Up ],
+      symbols[Group3]= [               i,               I,      rightarrow,        idotless ]
+  };
+  key <AD09> {
+      type[group1]= "MUHENKAN",
+      type[group2]= "MUHENKAN",
+      type[group3]= "FOUR_LEVEL_ALPHABETIC",
+      symbols[Group1]= [               o,               O,            Next ],
+      symbols[Group2]= [  Cyrillic_shcha,  Cyrillic_SHCHA,            Next ],
+      symbols[Group3]= [               o,               O,          oslash,          Oslash ]
+  };
+  key <AC07> {
+      type[group1]= "MUHENKAN",
+      type[group2]= "MUHENKAN",
+      type[group3]= "FOUR_LEVEL_SEMIALPHABETIC",
+      symbols[Group1]= [               j,               J,            Left ],
+      symbols[Group2]= [      Cyrillic_o,      Cyrillic_O,            Left ],
+      symbols[Group3]= [               j,               J,       dead_hook,       dead_horn ]
+  };
+  key <AC08> {
+      type[group1]= "MUHENKAN",
+      type[group2]= "MUHENKAN",
+      type[group3]= "FOUR_LEVEL_SEMIALPHABETIC",
+      symbols[Group1]= [               k,               K,            Down ],
+      symbols[Group2]= [     Cyrillic_el,     Cyrillic_EL,            Down ],
+      symbols[Group3]= [               k,               K,         lstroke,       ampersand ]
+  };
+  key <AC09> {
+      type[group1]= "MUHENKAN",
+      type[group2]= "MUHENKAN",
+      type[group3]= "FOUR_LEVEL_ALPHABETIC",
+      symbols[Group1]= [               l,               L,           Right ],
+      symbols[Group2]= [     Cyrillic_de,     Cyrillic_DE,           Right ],
+      symbols[Group3]= [               l,               L,         lstroke,         Lstroke ]
+  };
+  key <AB07> {
+      type[group1]= "MUHENKAN",
+      type[group2]= "MUHENKAN",
+      type[group3]= "FOUR_LEVEL_SEMIALPHABETIC",
+      symbols[Group1]= [               m,               M,            Home ],
+      symbols[Group2]= [ Cyrillic_softsign, Cyrillic_SOFTSIGN,        Home ],
+      symbols[Group3]= [               m,               M,         section,       masculine ]
+  };
+  key <AB08> {
+      type[group1]= "MUHENKAN",
+      type[group2]= "MUHENKAN",
+      type[group3]= "FOUR_LEVEL",
+      symbols[Group1]= [           comma,            less,            Menu ],
+      symbols[Group2]= [     Cyrillic_be,     Cyrillic_BE,            Menu ],
+      symbols[Group3]= [           comma,       semicolon,            less,        multiply ]
+  };
+  key <AB09> {
+      type[group1]= "MUHENKAN",
+      type[group2]= "MUHENKAN",
+      type[group3]= "FOUR_LEVEL",
+      symbols[Group1]= [          period,         greater,             End ],
+      symbols[Group2]= [     Cyrillic_yu,     Cyrillic_YU,             End ],
+      symbols[Group3]= [          period,           colon,         greater,        division ]
+  };
+};
+```
+
+#### 設定の適用
+
+以上のファイル群を`~/.config/xkb/`とか`~/.xkb/`とか適当な場所に配置して、各自の環境ごとに読み込めば終了。例えば sway なら：
+
+```txt title="~/.config/sway/config"
+type:keyboard {
+  xkb_file ~/.xkb/keymap/hhkb
+}
+```
+
+## おわりに
+
+いかがでしたか？　これが HHKB に脳を破壊された哀れなオタクの黒魔術です
+
+書いたあとで気づいたが、みんな大好き[ArchWiki](https://wiki.archlinux.jp/index.php/X_keyboard_extension)にもわりと詳細な記述があるので、そちらを参照したほうが良いかもしれない。あくまでこちらは補足と実例ということで。
+
+### この設定ファイルがどのように編み出されたかに関する付記
+
+この設定をひねり出すために、XKB のドキュメントを丁寧に紐解いた……などということはなく、`xkbcomp $DISPLAY output.xkb`が吐いた設定ダンプとウンウン向き合う涙ぐましい努力があった。
+
+参考サイト：
+
+<https://did2memo.net/2015/07/20/ubuntu-xkb-muhenkan-hotkey/>
+
+<http://ojamemo.com/pc-software/key-binding-ubuntu-001/>

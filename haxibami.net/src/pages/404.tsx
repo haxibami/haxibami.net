@@ -2,7 +2,7 @@ import type { InferGetStaticPropsType, NextPage } from "next";
 import Link from "next/link";
 
 import MyHead from "components/MyHead";
-import { OGPHOST } from "lib/constant";
+import { APIHOST } from "lib/constant";
 import Styles from "styles/404.module.scss";
 
 import type { PageMetaData } from "lib/interface";
@@ -14,7 +14,7 @@ export const getStaticProps = async () => {
     title: "404 not found",
     sitename: "haxibami.net",
     description: "The URL you accessed does not exist",
-    ogImageUrl: encodeURI(`${OGPHOST}/api/ogp?title=404 not found`),
+    ogImageUrl: encodeURI(`${APIHOST}/api/ogp?title=404 not found`),
     pageRelPath: "404",
     pagetype: "article",
     twcardtype: "summary",

@@ -16,38 +16,38 @@ import remarkMath from "remark-math";
 import remarkUnwrapImages from "remark-unwrap-images";
 // import * as shiki from "shiki";
 
-import type { Options } from "rehype-pretty-code";
-
 import rehypeImageOpt from "./rehype-image-opt";
 import { remarkLinkCard, extLinkHandler } from "./remark-link-card";
 import remarkMermaid from "./remark-mermaid";
+
+import type { Options } from "rehype-pretty-code";
+
+const rpcOptions: Partial<Options> = {
+  theme: {
+    light: "poimandres",
+    // dark: "rose-pine",
+  },
+  // theme: JSON.parse(readFileSync(getThemePath("urara-color-theme"), "utf-8")),
+  onVisitLine(node) {
+    // Prevent lines from collapsing in `display: grid` mode, and
+    // allow empty lines to be copy/pasted
+    if (node.children.length === 0) {
+      node.children = [{ type: "text", value: " " }];
+    }
+  },
+  onVisitHighlightedLine(node) {
+    node.properties.className.push("highlighted");
+  },
+  onVisitHighlightedWord(node) {
+    node.properties.className = ["word"];
+  },
+};
 
 export const compileMdx = async (file: string) => {
   // Get shiki theme file
   //   const getThemePath = (themename: string) =>
   //     join(process.cwd(), "src/styles/shiki", `${themename}.json`);
   // const myShikiTheme = await shiki.loadTheme(getThemePath("urara-color-theme"));
-
-  const rpcOptions: Partial<Options> = {
-    theme: {
-      light: "poimandres",
-      // dark: "rose-pine",
-    },
-    // theme: JSON.parse(readFileSync(getThemePath("urara-color-theme"), "utf-8")),
-    onVisitLine(node) {
-      // Prevent lines from collapsing in `display: grid` mode, and
-      // allow empty lines to be copy/pasted
-      if (node.children.length === 0) {
-        node.children = [{ type: "text", value: " " }];
-      }
-    },
-    onVisitHighlightedLine(node) {
-      node.properties.className.push("highlighted");
-    },
-    onVisitHighlightedWord(node) {
-      node.properties.className = ["word"];
-    },
-  };
 
   // compile md(x)
   const mdxSource = await serialize(file, {
@@ -92,7 +92,7 @@ export const compileMdx = async (file: string) => {
           extlink: extLinkHandler,
         },
       },
-      format: "md",
+      format: "md" as const,
     },
     parseFrontmatter: true,
   });

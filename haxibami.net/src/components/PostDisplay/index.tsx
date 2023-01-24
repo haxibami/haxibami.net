@@ -7,7 +7,7 @@ import Styles from "./style.module.scss";
 import type { PostData, MenuTab, PostType } from "lib/interface";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
-interface PostTopProps {
+interface PostDisplayProps {
   top: string;
   postMenuTabs: MenuTab[];
   assign: PostData[];
@@ -17,7 +17,7 @@ interface PostTopProps {
   postType: PostType;
 }
 
-const PostTop: React.FC<PostTopProps> = (props) => {
+const PostDisplay: React.FC<PostDisplayProps> = (props) => {
   const { top, postMenuTabs, assign, id, total, perPage, postType } = props;
   return (
     <main id={Styles.Main}>
@@ -36,4 +36,4 @@ const PostTop: React.FC<PostTopProps> = (props) => {
   );
 };
 
-export default PostTop;
+export default PostDisplay;

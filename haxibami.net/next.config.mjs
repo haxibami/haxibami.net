@@ -10,10 +10,17 @@ const withBundleAnalyzer = analyze({
 
 /** @type {import('next').NextConfig} */
 let nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   experimental: {
-    scrollRestoration: true,
-    //     appDir: true,
+    serverComponentsExternalPackages: [
+      "playwright",
+      "svgo",
+      "plaiceholder",
+      "@plaiceholder/next",
+      "fetch-site-metadata",
+    ],
+    // scrollRestoration: true,
+    appDir: true,
   },
   swcMinify: true,
   sassOptions: {
@@ -22,6 +29,7 @@ let nextConfig = {
     ],
   },
   images: {
+    formats: ["image/avif", "image/webp"],
     domains: ["asciinema.org", "raw.githubusercontent.com"],
   },
 };

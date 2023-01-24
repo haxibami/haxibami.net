@@ -6,9 +6,9 @@ import type {
 
 import Footer from "components/Footer";
 import MyHead from "components/MyHead";
-import PostTop from "components/PostTop";
+import PostDisplay from "components/PostDisplay";
 import Header from "components/PostTopHeader";
-import { SITEDATA, OGPHOST, COUNT_PER_PAGE } from "lib/constant";
+import { SITEDATA, APIHOST, COUNT_PER_PAGE } from "lib/constant";
 import { getPostsData, pageIdGen, getTags } from "lib/fs";
 import Styles from "styles/posttop.module.scss";
 
@@ -24,7 +24,7 @@ const TaggedPostsGallery: NextPage<Props> = (props) => {
     title: `タグ: #${tag}の記事 - ページ${id}`,
     sitename: SITEDATA.blog.title,
     description: SITEDATA.blog.description,
-    ogImageUrl: encodeURI(`${OGPHOST}/api/ogp?title=ページ${id}`),
+    ogImageUrl: encodeURI(`${APIHOST}/api/ogp?title=ページ${id}`),
     pageRelPath: `${postType}/page/${id}`,
     pagetype: "article",
     twcardtype: "summary_large_image",
@@ -33,7 +33,7 @@ const TaggedPostsGallery: NextPage<Props> = (props) => {
     <div id={Styles.Wrapper}>
       <MyHead {...pageMetaData} />
       <Header posttype={postType} />
-      <PostTop
+      <PostDisplay
         top={`/${postType}/tag/${tag}`}
         postMenuTabs={[
           {

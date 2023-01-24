@@ -13,10 +13,10 @@ type ProvidedComponents = MDXComponents & {
   extlink?: typeof LinkCard;
 };
 
-const components = {
+const replaceComponents = {
   a: (props: MyLinkProps) => <MyLink {...props} />,
   img: (props: NextImageProps) => <NextImage {...props} />,
   extlink: (props: LinkCardProps) => <LinkCard {...props} />,
 } as ProvidedComponents;
 
-export default components;
+export default replaceComponents;

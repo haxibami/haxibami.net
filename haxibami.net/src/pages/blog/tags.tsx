@@ -4,7 +4,7 @@ import Footer from "components/Footer";
 import MyHead from "components/MyHead";
 import Header from "components/PostTopHeader";
 import TagsTop from "components/TagsTop";
-import { SITEDATA, OGPHOST, tagsMenuTabs } from "lib/constant";
+import { SITEDATA, APIHOST, tagsMenuTabs } from "lib/constant";
 import { getTags } from "lib/fs";
 import Styles from "styles/tags.module.scss";
 
@@ -28,7 +28,7 @@ const Tags: NextPage<Props> = (props) => {
     title: "タグ一覧",
     sitename: SITEDATA.blog.title,
     description: "タグ別記事",
-    ogImageUrl: encodeURI(`${OGPHOST}/api/ogp?title=タグ一覧`),
+    ogImageUrl: encodeURI(`${APIHOST}/api/ogp?title=タグ一覧`),
     pageRelPath: `${postType}/tags`,
     pagetype: "article",
     twcardtype: "summary",

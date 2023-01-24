@@ -24,7 +24,7 @@ export const getSlugs = (path: string) => {
   );
 };
 
-export const getPaths = (path: string) => {
+const getPaths = (path: string) => {
   const files = fs.readdirSync(getPostDir(path), {
     withFileTypes: true,
   });
@@ -36,6 +36,7 @@ export const getPaths = (path: string) => {
 };
 
 export const getPostsData = async (path: string) => {
+  console.log("getpostsdata fired");
   const files = getPaths(path);
   const posts = await Promise.all(
     files.map(async (file) => {

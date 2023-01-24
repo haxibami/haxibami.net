@@ -2,9 +2,9 @@ import type { NextPage, InferGetStaticPropsType } from "next";
 
 import Footer from "components/Footer";
 import MyHead from "components/MyHead";
-import PostTop from "components/PostTop";
+import PostDisplay from "components/PostDisplay";
 import Header from "components/PostTopHeader";
-import { COUNT_PER_PAGE, SITEDATA, OGPHOST, postMenuTabs } from "lib/constant";
+import { COUNT_PER_PAGE, SITEDATA, APIHOST, postMenuTabs } from "lib/constant";
 import { getPostsData } from "lib/fs";
 import Styles from "styles/posttop.module.scss";
 
@@ -38,7 +38,7 @@ const BlogTop: NextPage<Props> = (props) => {
     title: SITEDATA.blog.title,
     sitename: SITEDATA.blog.title,
     description: SITEDATA.blog.description,
-    ogImageUrl: encodeURI(`${OGPHOST}/api/ogp?title=${SITEDATA.blog.title}`),
+    ogImageUrl: encodeURI(`${APIHOST}/api/ogp?title=${SITEDATA.blog.title}`),
     pageRelPath: "blog",
     pagetype: "website",
     twcardtype: "summary",
@@ -48,7 +48,7 @@ const BlogTop: NextPage<Props> = (props) => {
     <div id={Styles.Wrapper}>
       <MyHead {...pageMetaData} />
       <Header posttype={postType} />
-      <PostTop
+      <PostDisplay
         top={`/${postType}`}
         postMenuTabs={postMenuTabs}
         assign={assign}

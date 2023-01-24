@@ -8,11 +8,11 @@ import Link from "next/link";
 
 import { MDXRemote } from "next-mdx-remote";
 
-import MdxComponent from "components/MdxComponent";
+import MdxComponent from "components/MDXComponent";
 import MyHead from "components/MyHead";
 import TagList from "components/TagList";
 import { compileMdx } from "lib/compile";
-import { SITEDATA, OGPHOST } from "lib/constant";
+import { SITEDATA, APIHOST } from "lib/constant";
 import { dateVisualizer } from "lib/front";
 import { getSlugs, getPost } from "lib/fs";
 import Styles from "styles/[slug].module.scss";
@@ -64,7 +64,7 @@ const Blog: NextPage<Props> = ({ mdxSource }) => {
     sitename: SITEDATA.blog.title,
     description: `${frontmatter?.description}`,
     ogImageUrl: encodeURI(
-      `${OGPHOST}/api/ogp?title=${frontmatter?.title}&date=${frontmatter?.date}`
+      `${APIHOST}/api/ogp?title=${frontmatter?.title}&date=${frontmatter?.date}`
     ),
     pageRelPath: `blog/posts/${frontmatter?.slug}`,
     pagetype: "article",
