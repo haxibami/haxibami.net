@@ -30,7 +30,7 @@ specifiers:
   globby: 13.1.3
   husky: 8.0.3
   lint-staged: 13.1.0
-  mdast-util-to-hast: 12.2.5
+  mdast-util-to-hast: 12.2.6
   mermaid: 9.3.0
   next: 13.1.4
   next-mdx-remote: ^4.2.1
@@ -80,7 +80,7 @@ dependencies:
   '@next/font': 13.1.4
   '@vercel/og': 0.0.27
   feed: 4.2.2
-  mdast-util-to-hast: 12.2.5
+  mdast-util-to-hast: 12.2.6
   mermaid: 9.3.0
   next: 13.1.4_3duxcpitbtplz62feflag7fwby
   next-mdx-remote: 4.2.1_biqbaboplfbrettd7655fr4n2y
@@ -3262,8 +3262,8 @@ packages:
       - supports-color
     dev: false
 
-  /mdast-util-to-hast/12.2.5:
-    resolution: {integrity: sha512-EFNhT35ZR/VZ85/EedDdCNTq0oFM+NM/+qBomVGQ0+Lcg0nhI8xIwmdCzNMlVlCJNXRprpobtKP/IUh8cfz6zQ==}
+  /mdast-util-to-hast/12.2.6:
+    resolution: {integrity: sha512-Kfo1JNUsi6r6CI7ZOJ6yt/IEKMjMK4nNjQ8C+yc8YBbIlDSp9dmj0zY90ryiu6Vy4CVGv0zi1H4ZoIaYVV8cwA==}
     dependencies:
       '@types/hast': 2.3.4
       '@types/mdast': 3.0.10
@@ -4446,7 +4446,7 @@ packages:
     dependencies:
       '@types/hast': 2.3.4
       '@types/mdast': 3.0.10
-      mdast-util-to-hast: 12.2.5
+      mdast-util-to-hast: 12.2.6
       unified: 10.1.2
     dev: false
 
