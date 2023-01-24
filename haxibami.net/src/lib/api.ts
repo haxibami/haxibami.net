@@ -1,4 +1,5 @@
 // caches locally fetched data. see: https://beta.nextjs.org/docs/data-fetching/caching#per-request-caching
+// currently this doesn't cache ¯\_(ツ)_/¯
 import { cache } from "react";
 
 import { getPost, getPostsData } from "lib/fs";

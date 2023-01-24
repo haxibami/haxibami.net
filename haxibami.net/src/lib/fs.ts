@@ -36,7 +36,6 @@ const getPaths = (path: string) => {
 };
 
 export const getPostsData = async (path: string) => {
-  console.log("getpostsdata fired");
   const files = getPaths(path);
   const posts = await Promise.all(
     files.map(async (file) => {

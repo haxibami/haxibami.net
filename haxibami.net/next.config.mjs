@@ -10,7 +10,7 @@ const withBundleAnalyzer = analyze({
 
 /** @type {import('next').NextConfig} */
 let nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   experimental: {
     serverComponentsExternalPackages: [
       "playwright",

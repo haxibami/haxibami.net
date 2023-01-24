@@ -1,10 +1,9 @@
 import fetchSiteMetadata from "fetch-site-metadata";
 import { visit } from "unist-util-visit";
 
-import type { Paragraph, Link, Literal } from "mdast";
-
 import { isParent, isLink, isParagraph } from "./mdast-util-node-is";
 
+import type { Paragraph, Link, Literal } from "mdast";
 import type { H } from "mdast-util-to-hast";
 import type { Plugin, Transformer } from "unified";
 import type { Node, Parent } from "unist";

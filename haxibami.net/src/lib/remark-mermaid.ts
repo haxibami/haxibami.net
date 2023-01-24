@@ -5,6 +5,8 @@ import { unified } from "unified";
 import { is } from "unist-util-is";
 import { visit } from "unist-util-visit";
 
+import { isParent } from "./mdast-util-node-is";
+
 import type { Code, Paragraph } from "mdast";
 import type Mermaid from "mermaid";
 import type { MermaidConfig } from "mermaid";
@@ -12,8 +14,6 @@ import type { Config as SvgoConfig } from "svgo";
 import type { Plugin, Transformer } from "unified";
 import type { Node, Parent } from "unist";
 import type { VFileCompatible } from "vfile";
-
-import { isParent } from "./mdast-util-node-is";
 
 // we want to check types for browser-executed mermaid codes, but don't want to "import" any mermaid modules in them.
 declare const mermaid: typeof Mermaid;

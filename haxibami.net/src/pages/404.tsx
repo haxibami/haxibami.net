@@ -1,34 +1,11 @@
-import type { InferGetStaticPropsType, NextPage } from "next";
+import type { NextPage } from "next";
 import Link from "next/link";
 
-import MyHead from "components/MyHead";
-import { APIHOST } from "lib/constant";
 import Styles from "styles/404.module.scss";
 
-import type { PageMetaData } from "lib/interface";
-
-type Props = InferGetStaticPropsType<typeof getStaticProps>;
-
-export const getStaticProps = async () => {
-  const pageMetaData: PageMetaData = {
-    title: "404 not found",
-    sitename: "haxibami.net",
-    description: "The URL you accessed does not exist",
-    ogImageUrl: encodeURI(`${APIHOST}/api/ogp?title=404 not found`),
-    pageRelPath: "404",
-    pagetype: "article",
-    twcardtype: "summary",
-  };
-
-  return {
-    props: { pageMetaData },
-  };
-};
-
-const NotFound: NextPage<Props> = ({ pageMetaData }) => {
+const NotFound: NextPage = () => {
   return (
     <div className={Styles.container}>
-      <MyHead {...pageMetaData} />
       <main className={Styles.main}>
         <div className={Styles.console}>
           <div className={Styles.titlebar}>
