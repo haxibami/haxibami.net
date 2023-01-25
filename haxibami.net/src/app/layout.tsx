@@ -1,21 +1,17 @@
 import React from "react";
 
-import "../styles/global.scss";
-import { config } from "@fortawesome/fontawesome-svg-core";
-import "@fortawesome/fontawesome-svg-core/styles.css";
+import "styles/global.css";
 import { Rubik } from "@next/font/google";
 import localFont from "@next/font/local";
 
 import Providers from "components/providers";
 
-const rubik = Rubik({ subsets: ["latin"] });
+const rubik = Rubik({ subsets: ["latin"], variable: "--font-rubik" });
 
 const redOctober = localFont({
   src: "./asset/RedOctober.woff2",
-  variable: "--red-october",
+  variable: "--font-redoctober",
 });
-
-config.autoAddCss = false;
 
 export default function RootLayout({
   children,
@@ -24,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body className={`${rubik.className} ${redOctober.variable}`}>
+      <body className={`${rubik.variable} ${redOctober.variable}`}>
         <Providers>{children}</Providers>
       </body>
     </html>

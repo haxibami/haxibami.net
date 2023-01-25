@@ -1,12 +1,10 @@
-import Link from "next/link";
-
 import TagList from "components/TagList";
 import { fetchPost } from "lib/api";
 import compiler from "lib/compiler";
-import { SITEDATA } from "lib/constant";
 import { dateVisualizer } from "lib/front";
 import { getSlugs } from "lib/fs";
-import Styles from "styles/[slug].module.scss";
+
+const postType = "grad_essay";
 
 export default async function ArticlePage({
   params,
@@ -16,40 +14,26 @@ export default async function ArticlePage({
   };
 }) {
   const { slug } = params;
-  const file = await fetchPost("articles/grad_essay", slug);
+  const file = await fetchPost(`articles/${postType}`, slug);
   const { content, frontmatter } = await compiler(file);
   return (
-    <div id={Styles.Wrapper}>
-      <div id={Styles.Container}>
-        <header>
-          <div className={Styles.Title}>
-            <div className={Styles.TopLink}>
-              <Link href={"/grad_essay"}>
-                <h2>{SITEDATA.grad_essay.title}</h2>
-              </Link>
-            </div>
-          </div>
-          <div>
-            <span className={Styles.Date}>
-              {dateVisualizer(frontmatter?.date)}
-            </span>
-          </div>
-          <div>
-            <TagList tags={frontmatter?.tags} postType={"grad_essay"} />
-          </div>
-          <h1 id={Styles.Title}>{frontmatter?.title}</h1>
-        </header>
-        <main>
-          <article>{content}</article>
-        </main>
-        <footer></footer>
+    <div>
+      <div className="flex flex-col gap-3">
+        <div>
+          <span className="mr-4">{dateVisualizer(frontmatter?.date)}</span>
+        </div>
+        <h1>{frontmatter?.title}</h1>
+        <div>
+          <TagList tags={frontmatter?.tags} postType={postType} />
+        </div>
       </div>
+      <article className="post">{content}</article>
     </div>
   );
 }
 
 export const generateStaticParams = async () => {
-  const slugs = getSlugs("articles/grad_essay");
+  const slugs = getSlugs(`articles/${postType}`);
   return slugs.map((slug) => {
     return {
       slug,

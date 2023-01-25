@@ -3,14 +3,14 @@ import { SITEDATA, APIHOST } from "lib/constant";
 
 import type { PageMetaData } from "lib/interface";
 
-const postType = "blog" as const;
+const postType = "blog";
 
 export default function Head({ params }: { params: { id: string } }) {
   const { id } = params;
   const pageMetaData: PageMetaData = {
-    title: `${SITEDATA.blog.title}: ページ${id}`,
-    sitename: SITEDATA.blog.title,
-    description: SITEDATA.blog.description,
+    title: `${SITEDATA[postType].title}: ページ${id}`,
+    sitename: SITEDATA[postType].title,
+    description: SITEDATA[postType].description,
     ogImageUrl: encodeURI(`${APIHOST}/api/ogp?title=ページ${id}`),
     pageRelPath: `${postType}/page/${id}`,
     pagetype: "article",

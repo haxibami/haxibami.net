@@ -5,7 +5,7 @@ import type { PageMetaData } from "lib/interface";
 export default function SharedHead(props: PageMetaData) {
   return (
     <>
-      <meta name="viewport" content="width=device-width" />
+      <meta name="viewport" content="width=device-width initial-scale=1" />
       <link
         rel="alternate"
         type="application/rss+xml"

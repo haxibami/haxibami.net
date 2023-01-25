@@ -69,9 +69,6 @@ const compiler = async (source: string) => {
           [
             remarkMermaid,
             {
-              launchOptions: {
-                args: ["--no-sandbox", "--disable-setuid-sandbox"],
-              },
               wrap: true,
               className: ["mermaid"],
             },

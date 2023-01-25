@@ -3,14 +3,14 @@ import { SITEDATA, APIHOST } from "lib/constant";
 
 import type { PageMetaData } from "lib/interface";
 
+const postType = "grad_essay";
+
 const pageMetaData: PageMetaData = {
-  title: "トップ",
-  sitename: SITEDATA.grad_essay.title,
-  description: SITEDATA.grad_essay.description,
-  ogImageUrl: encodeURI(
-    `${APIHOST}/api/ogp?title=${SITEDATA.grad_essay.title}`
-  ),
-  pageRelPath: "grad_essay",
+  title: SITEDATA[postType].title,
+  sitename: SITEDATA[postType].title,
+  description: SITEDATA[postType].description,
+  ogImageUrl: encodeURI(`${APIHOST}/api/ogp?title=${SITEDATA[postType].title}`),
+  pageRelPath: postType,
   pagetype: "website",
   twcardtype: "summary",
 };

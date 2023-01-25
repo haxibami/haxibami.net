@@ -51,8 +51,8 @@ function fetchMeta(url: string) {
       url: url,
       title: data.title ?? "(No title)",
       description: data.description ?? "",
-      og: data.image?.src,
-      icon: data.icon,
+      og: data.image?.src?.startsWith("https") ? data.image?.src : undefined,
+      icon: data.icon?.startsWith("https") ? data.icon : undefined,
     };
     return metaData;
   });

@@ -8,8 +8,8 @@ description: "トップ"
 ## Navigation
 
 - [About me](/about)
-- [blog](/blog)
-- [RSS](https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fwww.haxibami.net%2Frss%2Ffeed.xml)
+- [Blog](/blog)
+- [RSS](/rss/feed.xml)
 - [Twitter](https://twitter.com/haxibami)
 - [GitHub](https://github.com/haxibami)
 - [Keybase](https://keybase.io/haxibami)

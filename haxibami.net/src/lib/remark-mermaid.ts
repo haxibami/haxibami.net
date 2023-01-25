@@ -54,7 +54,7 @@ export interface RemarkMermaidOptions {
    * When wrapping with <div>, you can choose what classname to add.
    * @default []
    */
-  classname?: string[];
+  className?: string[];
 }
 
 function svgParse(svg: string): Node {
@@ -81,7 +81,7 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
     },
     theme: "default",
     wrap: false,
-    classname: [],
+    className: [],
   };
 
   const settings = Object.assign({}, DEFAULT_SETTINGS, options);
@@ -132,7 +132,7 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
                 children: [svgAst],
                 tagName: "div",
                 properties: {
-                  className: settings.classname,
+                  className: settings.className,
                 },
               },
             ],

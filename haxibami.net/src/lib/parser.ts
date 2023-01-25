@@ -41,7 +41,7 @@ export const mdInfo = async (md: string) => {
   const regex = "\n*";
 
   return {
-    preview: result.toString().replaceAll(regex, " ").substring(0, 150),
+    preview: result.toString().replaceAll(regex, " ").substring(0, 100),
     data: result.data.matter,
   };
 };

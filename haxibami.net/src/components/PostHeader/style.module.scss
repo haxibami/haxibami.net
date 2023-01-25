@@ -29,7 +29,7 @@
       color: var(--title);
     }
     p {
-      color: var(--subtitle);
+      color: var(--secondary);
     }
   }
 
@@ -60,7 +60,7 @@
   }
 
   p {
-    color: var(--subtitle);
+    color: var(--secondary);
     display: flex;
     gap: 20px;
   }

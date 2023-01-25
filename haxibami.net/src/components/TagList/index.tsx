@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-import Styles from "./style.module.scss";
-
 import type { PostType } from "lib/interface";
 
 interface TagListProps {
@@ -12,11 +10,16 @@ interface TagListProps {
 const TagList: React.FC<TagListProps> = (props) => {
   const { tags, postType } = props;
   return (
-    <span className={Styles.TileTags}>
+    <span className="flex flex-wrap gap-3 text-base">
       {tags
         ? tags.map((tag) => (
-            <span className={Styles.TileTag} key={tag}>
-              <Link href={`/${postType}/tag/${tag}`}>#{tag}</Link>
+            <span className="px" key={tag}>
+              <Link
+                href={`/${postType}/tag/${tag}`}
+                className="text-pink-400 decoration-2 underline-offset-2 hover:underline"
+              >
+                #{tag}
+              </Link>
             </span>
           ))
         : null}

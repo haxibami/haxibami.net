@@ -1,14 +1,9 @@
-import Footer from "components/Footer";
 import PostDisplay from "components/PostDisplay";
-import Header from "components/PostTopHeader";
 import { fetchTags, fetchTaggedPostsData } from "lib/api";
 import { COUNT_PER_PAGE } from "lib/constant";
 import { pageIdGen } from "lib/fs";
-import Styles from "styles/posttop.module.scss";
 
-import type { PostType } from "lib/interface";
-
-const postType: PostType = "grad_essay";
+const postType = "grad_essay";
 
 export default async function TaggedPosts({
   params,
@@ -21,40 +16,30 @@ export default async function TaggedPosts({
   const start = end - COUNT_PER_PAGE;
 
   const taggedPostsData = await fetchTaggedPostsData(
-    "articles/grad_essay",
+    `articles/${postType}`,
     tag
   );
   const total = taggedPostsData.length;
   const assign = taggedPostsData.slice(start, end);
   return (
-    <div id={Styles.Wrapper}>
-      <Header posttype={postType} />
-      <PostDisplay
-        top={`/${postType}/tag/${tag}`}
-        postMenuTabs={[
-          {
-            name: `#${tag}`,
-            link: `tag/${tag}`,
-            focus: true,
-          },
-        ]}
-        assign={assign}
-        id={pageId}
-        total={total}
-        perPage={COUNT_PER_PAGE}
-        postType={postType}
-      />
-      <Footer />
-    </div>
+    <PostDisplay
+      title={`# ${tag}`}
+      topPath={`/${postType}/tag/${tag}`}
+      assign={assign}
+      id={pageId}
+      total={total}
+      perPage={COUNT_PER_PAGE}
+      postType={postType}
+    />
   );
 }
 
 export const generateStaticParams = async () => {
-  const tags = await fetchTags("articles/grad_essay");
+  const tags = await fetchTags(`articles/${postType}`);
   const paths = await Promise.all(
     tags.map(async (tag) => {
       const taggedPostsData = await fetchTaggedPostsData(
-        "articles/grad_essay",
+        `articles/${postType}`,
         tag
       );
       const pages = pageIdGen(

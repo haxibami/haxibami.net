@@ -2,13 +2,13 @@ import type { ReactNode } from "react";
 
 import Link from "next/link";
 
-export interface MyLinkProps {
+export interface NextLinkProps {
   children: ReactNode;
   href?: string;
   id?: string;
 }
 
-const MyLink: React.FC<MyLinkProps> = (props) => {
+const NextLink: React.FC<NextLinkProps> = (props) => {
   const { children, href, id } = props;
   if (href === undefined) {
     return <a>{children}</a>;
@@ -40,4 +40,4 @@ const MyLink: React.FC<MyLinkProps> = (props) => {
   }
 };
 
-export default MyLink;
+export default NextLink;
