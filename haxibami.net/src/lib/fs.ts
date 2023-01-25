@@ -24,7 +24,7 @@ export const getSlugs = (path: string) => {
   );
 };
 
-export const getPaths = (path: string) => {
+const getPaths = (path: string) => {
   const files = fs.readdirSync(getPostDir(path), {
     withFileTypes: true,
   });

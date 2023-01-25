@@ -5,6 +5,8 @@ import { unified } from "unified";
 import { is } from "unist-util-is";
 import { visit } from "unist-util-visit";
 
+import { isParent } from "./mdast-util-node-is";
+
 import type { Code, Paragraph } from "mdast";
 import type Mermaid from "mermaid";
 import type { MermaidConfig } from "mermaid";
@@ -12,8 +14,6 @@ import type { Config as SvgoConfig } from "svgo";
 import type { Plugin, Transformer } from "unified";
 import type { Node, Parent } from "unist";
 import type { VFileCompatible } from "vfile";
-
-import { isParent } from "./mdast-util-node-is";
 
 // we want to check types for browser-executed mermaid codes, but don't want to "import" any mermaid modules in them.
 declare const mermaid: typeof Mermaid;
@@ -54,7 +54,7 @@ export interface RemarkMermaidOptions {
    * When wrapping with <div>, you can choose what classname to add.
    * @default []
    */
-  classname?: string[];
+  className?: string[];
 }
 
 function svgParse(svg: string): Node {
@@ -81,7 +81,7 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
     },
     theme: "default",
     wrap: false,
-    classname: [],
+    className: [],
   };
 
   const settings = Object.assign({}, DEFAULT_SETTINGS, options);
@@ -132,7 +132,7 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
                 children: [svgAst],
                 tagName: "div",
                 properties: {
-                  className: settings.classname,
+                  className: settings.className,
                 },
               },
             ],

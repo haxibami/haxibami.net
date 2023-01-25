@@ -1,0 +1,81 @@
+@use "styles/variable" as var;
+@use "styles/lib";
+
+#HeaderBox {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.Desktop {
+  @media (max-width: var.$media_border) {
+    display: none;
+  }
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var.$inner_width;
+  width: 100%;
+  margin: 3rem;
+
+  #Title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 125%;
+    h1 {
+      color: var(--title);
+    }
+    p {
+      color: var(--secondary);
+    }
+  }
+
+  #Icons {
+    display: flex;
+    gap: 20px;
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+.Mobile {
+  @media (min-width: var.$media_border) {
+    display: none;
+  }
+  width: 100vw;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 3rem 3rem 0 3rem;
+
+  h1 {
+    color: var(--title);
+  }
+
+  p {
+    color: var(--secondary);
+    display: flex;
+    gap: 20px;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+  }
+
+  li {
+    list-style: none;
+    font-size: 120%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

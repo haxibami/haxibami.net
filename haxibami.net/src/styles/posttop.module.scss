@@ -1,6 +1,0 @@
-@use "variable" as var;
-@use "lib";
-
-#Wrapper {
-  @include lib.color;
-}

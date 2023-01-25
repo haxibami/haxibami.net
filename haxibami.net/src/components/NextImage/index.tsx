@@ -3,8 +3,6 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import Styles from "./style.module.scss";
-
 export type NextImageProps = {
   src: string;
   alt?: string;
@@ -17,11 +15,11 @@ export type NextImageProps = {
 const NextImage: React.FC<NextImageProps> = (props) => {
   const { src, alt, aspectRatio, blurDataURL } = props;
   return alt !== "asciicast" ? (
-    <figure className={Styles.Figure}>
+    <figure className="my-8 flex flex-col gap-4">
       <Link href={src} scroll={false}>
-        <div className={Styles.ImgBox} style={{ aspectRatio: aspectRatio }}>
+        <div className="relative flex" style={{ aspectRatio: aspectRatio }}>
           <Image
-            className={Styles.Img}
+            className="object-contain"
             src={src}
             alt={alt || src}
             fill={true}
@@ -30,11 +28,13 @@ const NextImage: React.FC<NextImageProps> = (props) => {
           />
         </div>
       </Link>
-      <figcaption>{alt}</figcaption>
+      <figcaption className="text-center text-[color:var(--secondary)]">
+        {alt}
+      </figcaption>
     </figure>
   ) : (
-    <div className={Styles.ImgBox}>
-      <Image className={Styles.Img} src={src} alt={alt} fill={true} />
+    <div className="relative flex">
+      <Image className="object-contain" src={src} alt={alt} fill={true} />
     </div>
   );
 };

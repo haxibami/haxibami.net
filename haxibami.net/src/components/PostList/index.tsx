@@ -5,39 +5,39 @@ import Link from "next/link";
 import TagList from "components/TagList";
 import { dateVisualizer } from "lib/front";
 
-import Styles from "./style.module.scss";
-
 import type { PostData, PostType } from "lib/interface";
 
 interface PostListProps {
-  assign: PostData[]; // assigned posts to display
-  postType: PostType; // post type
+  assign: PostData[];
+  postType: PostType;
 }
 
 const PostList: React.FC<PostListProps> = (props) => {
   const { assign, postType } = props;
   return (
-    <ul className={Styles.PostList}>
+    <ul className="flex w-full grow flex-col gap-6">
       {assign.map((post) => {
         const { preview, data } = post;
         return (
           <li key={data?.slug}>
-            <span className={Styles.PostTile}>
-              <Link href={`/${postType}/posts/${data?.slug}`}>
-                <span className={Styles.TileTitle}>
-                  <h2>{data?.title}</h2>
-                </span>
-              </Link>
-              <span className={Styles.TileDate}>
-                <span>{dateVisualizer(data?.date)}</span>
-              </span>
-              <span className={Styles.TilePreview}>{preview}...</span>
-              <span className={Styles.TileTags}>
-                <span>
+            <article className="flex flex-col gap-2 overflow-hidden rounded leading-6 text-[color:var(--secondary)]">
+              <div>
+                <div>{dateVisualizer(data?.date)}</div>
+              </div>
+              <div className="text-[color:var(--title)]">
+                <Link href={`/${postType}/posts/${data?.slug}`}>
+                  <h2 className=" max-h-32 overflow-hidden text-ellipsis hover:underline hover:underline-offset-2">
+                    {data?.title}
+                  </h2>
+                </Link>
+              </div>
+              <div className="overflow-hidden text-sm">{preview}...</div>
+              <div className="flex flex-col justify-between gap-8">
+                <div>
                   <TagList tags={data?.tags ?? []} postType={postType} />
-                </span>
-              </span>
-            </span>
+                </div>
+              </div>
+            </article>
           </li>
         );
       })}

@@ -41,7 +41,18 @@ export const mdInfo = async (md: string) => {
   const regex = "\n*";
 
   return {
-    preview: result.toString().replaceAll(regex, " ").substring(0, 150),
+    preview: result.toString().replaceAll(regex, " ").substring(0, 100),
     data: result.data.matter,
   };
+};
+
+export const parseMatter = async (md: string) => {
+  const result = await unified()
+    .use(remarkParse)
+    .use(remarkStringify)
+    .use(remarkFrontmatter)
+    .use(remarkParseMatter)
+    .process(md);
+
+  return result.data.matter;
 };

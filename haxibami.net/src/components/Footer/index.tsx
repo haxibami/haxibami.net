@@ -1,29 +1,37 @@
-import { faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 
-import Styles from "./style.module.scss";
+import { GitHubIcon, TwitterIcon, RssIcon } from "components/Svg";
 
 const Footer: React.FC = () => {
   const date = new Date();
   return (
-    <footer id={Styles.Footer}>
-      <div id={Styles.FooterBox}>
-        <div id={Styles.Container}>
-          <span>©{date.getFullYear()} haxibami</span>
-          <span id={Styles.Icons}>
+    <footer className="flex w-full justify-center border-t border-[color:var(--line)] py-8 text-[color:var(--title)]">
+      <div className="w-full max-w-3xl px-4">
+        <div className="flex flex-row justify-between">
+          <span>
+            <Link href="/blog">©{date.getFullYear()} haxibami</Link>
+          </span>
+          <span className="flex gap-8">
             <a
               href={"https://twitter.com/haxibami"}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FontAwesomeIcon icon={faTwitter} size={"2x"} />
+              <TwitterIcon className="h-8 w-8 fill-[color:var(--fg)]" />
             </a>
             <a
               href={"https://github.com/haxibami"}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <FontAwesomeIcon icon={faGithub} size={"2x"} />
+              <GitHubIcon className="h-8 w-8 fill-[color:var(--fg)]" />
+            </a>
+            <a
+              href={"https://www.haxibami.net/rss/feed.xml"}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <RssIcon className="h-8 w-8 fill-[color:var(--fg)]" />
             </a>
           </span>
         </div>
