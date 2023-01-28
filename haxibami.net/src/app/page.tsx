@@ -1,8 +1,4 @@
-// import Image from "next/image";
-// import Link from "next/link";
-
 import Footer from "components/Footer";
-// import * as Svg from "components/Svg";
 import { fetchPost } from "lib/api";
 import compiler from "lib/compiler";
 

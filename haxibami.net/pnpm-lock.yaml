@@ -4,7 +4,6 @@ specifiers:
   '@next/bundle-analyzer': 13.1.5
   '@next/font': 13.1.5
   '@plaiceholder/next': 2.5.0
-  '@types/csso': 5.0.0
   '@types/hast': 2.3.4
   '@types/mdast': 3.0.10
   '@types/mdx': 2.0.3
@@ -111,7 +110,6 @@ dependencies:
 
 devDependencies:
   '@plaiceholder/next': 2.5.0_next@13.1.5+sharp@0.31.3
-  '@types/csso': 5.0.0
   '@types/hast': 2.3.4
   '@types/mdast': 3.0.10
   '@types/mdx': 2.0.3
@@ -482,16 +480,6 @@ packages:
     dependencies:
       '@types/estree': 1.0.0
     dev: false
-
-  /@types/css-tree/2.0.0:
-    resolution: {integrity: sha512-mY2sXRLBnUPMYw6mkOT+6dABeaNxAEKZz6scE9kQPNJx8fKe1fOsm8Honl7+xFYe6TKX8WNk2+7oMp2vBArJ9Q==}
-    dev: true
-
-  /@types/csso/5.0.0:
-    resolution: {integrity: sha512-EMrCTGpXRUsbFfZBzn2jcW6Sqg8kxWXkJcpvAGYSEzFqAJ2THDJSwiMeS2fPUw+0p6RQNT/n8F/skEc9hUBc0g==}
-    dependencies:
-      '@types/css-tree': 2.0.0
-    dev: true
 
   /@types/debug/4.1.7:
     resolution: {integrity: sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==}

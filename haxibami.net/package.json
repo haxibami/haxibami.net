@@ -69,7 +69,6 @@
   },
   "devDependencies": {
     "@plaiceholder/next": "2.5.0",
-    "@types/csso": "5.0.0",
     "@types/hast": "2.3.4",
     "@types/mdast": "3.0.10",
     "@types/mdx": "2.0.3",

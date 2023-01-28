@@ -16,7 +16,7 @@ const TagList: React.FC<TagListProps> = (props) => {
             <span className="px" key={tag}>
               <Link
                 href={`/${postType}/tag/${tag}`}
-                className="text-pink-400 decoration-2 underline-offset-2 hover:underline"
+                className="text-[color:var(--link)] decoration-2 underline-offset-2 hover:underline"
               >
                 #{tag}
               </Link>

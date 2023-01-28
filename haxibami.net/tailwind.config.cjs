@@ -26,7 +26,7 @@ const config = {
 
     extend: {},
   },
-  plugins: [],
+  plugins: [require("tailwindcss/nesting")],
 };
 
 module.exports = config;
