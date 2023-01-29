@@ -1,5 +1,3 @@
-import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-
 // type of post item
 
 export interface PostMeta {

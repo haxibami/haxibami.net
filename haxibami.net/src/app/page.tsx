@@ -41,13 +41,13 @@ export default async function Home() {
               after:absolute after:right-[40%] after:bottom-0 after:-z-10 after:h-0 after:w-0 after:border-x-[20px] after:border-t-[90px] after:border-solid after:border-transparent after:border-t-[#fb0500] after:content-['']
           "
             >
-              <h3 className="text-3xl leading-none">
+              <h2 className="text-3xl leading-none">
                 code,
                 <br />
                 write,
                 <br />
                 and read.
-              </h3>
+              </h2>
             </div>
           </div>
         </div>

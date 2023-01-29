@@ -5,38 +5,44 @@ jatitle: "私について"
 description: "自己紹介"
 ---
 
-## :sunglasses: Meta
+### Name
 
-| key      | val         |
-| -------- | ----------- |
-| Latin    | haxibami    |
-| 漢字     | 端食        |
-| ひらがな | はしばみ    |
-| Cyrillic | хашибами    |
-| IPA      | [haɕibamʲi] |
+| key       | val         |
+| --------- | ----------- |
+| Latin     | haxibami    |
+| 漢字      | 端食        |
+| ひらがな  | はしばみ    |
+| Кириллица | хашибами    |
+| IPA       | [haɕibamʲi] |
 
-### Country
+### Region
 
-:jp: Japan
+:tokyo_tower: Tokyo, :jp: Japan
 
-### Education
+### Org. & Dept.
 
 - Humanity & Social sciences I, College of Arts & Sciences Junior Div., the Univ. of Tokyo
   - 2 年
+- [東京大学きらら同好会](https://utkiraracircle.github.io) - **_moe explorer_**
+- [TSG](https://tsg.ne.jp) - コンピュータサークル
+- [六代目：生活の困難](https://umector.hatenablog.jp) - 戯れ集団
 
 ### Contact
 
-- [contact\<at\>haxibami.net](mailto:contact@haxibami.net)
+- [contact\<at\>haxibami.net](mailto:contact@haxibami.net) - mail
+- [@haxibami](https://twitter.com/haxibami) - Twitter
+- [@haxibami](https://github.com/haxibami) - GitHub
 
-## :sparkles: Favorites
-
-### Discipline
+## Interest
 
 - SF、幻想文学
-- 法と政治
+- 政治学、政治哲学
 - 情報科学、オープンソースプロジェクト
+- 分析哲学
 - 神経科学、心の哲学
 - 地理学、地球惑星科学
+
+## Favorite
 
 ### Book
 
@@ -46,58 +52,34 @@ description: "自己紹介"
 
 ### Music
 
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1rrcstuv7f3SoULWaWq8Rx?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-
-いま聴いてるやつ
+<https://open.spotify.com/playlist/1rrcstuv7f3SoULWaWq8Rx>
 
 ### Anime
 
 - [少女歌劇レヴュースタァライト](https://revuestarlight.com)
 - [プリンセス・プリンシパル](https://pripri-anime.jp)
 
-<https://revuestarlight.com>
+## Project
 
-<https://pripri-anime.jp>
+### Product
 
-### Software
+- [`haxibami.net`](https://github.com/haxibami/haxibami.net) - このサイト
+- [`hotate`](https://github.com/haxibami/hotate) - 縦書きエディタ
+- [`urara.vim`](https://github.com/haxibami/urara.vim) - Vim カラースキーム
 
-- [Arch Linux](https://archlinux.org)
-- [Firefox](https://mozilla.org/firefox)
-- [Neovim](https://neovim.io)
+## Navigation
 
-## :butterfly: Portfolio
-
-### Project
-
-- [hotate](https://github.com/haxibami/hotate)
-  - 縦書きエディタ
-- [urara.vim](https://github.com/haxibami/urara.vim)
-  - Vim カラースキーム
-
-<https://github.com/haxibami/hotate>
-
-<https://github.com/haxibami/urara.vim>
-
-### Involved
-
-- [六代目：生活の困難](https://umector.hatenablog.jp)
-
-<https://umector.hatenablog.jp>
-
-**_GOOD INTERNET_**
-
-## Link
+### Internal
 
 - [Top](/)
-- [Blog](/blog)
+- [Blog](/blog) - 祈り・技術・加速
 
-<https://www.haxibami.net/blog>
+### Link exchange
 
-### フォロワー・相互リンクのサイト
-
-敬称略。
+敬称略。追加・削除は連絡ください。
 
 - [人造日本人](https://mikanixonable.github.io) - みかぶる
 - [sno2wman.net](https://sno2wman.net) - sno2wman
 - [みそは入ってませんけど](https://not-miso-inside.netlify.app) - 一階堂洋
 - [ふぁぼんのホームページ](https://www.fabon.info/) - ふぁぼん
+- [fuku.day](https://fuku.day/) - Aumy
