@@ -16,6 +16,7 @@ const Footer: React.FC = () => {
               href={"https://twitter.com/haxibami"}
               target="_blank"
               rel="noopener noreferrer"
+              title="Twitter"
             >
               <TwitterIcon className="h-8 w-8 fill-[color:var(--fg)]" />
             </a>
@@ -23,6 +24,7 @@ const Footer: React.FC = () => {
               href={"https://github.com/haxibami"}
               target="_blank"
               rel="noopener noreferrer"
+              title="GitHub"
             >
               <GitHubIcon className="h-8 w-8 fill-[color:var(--fg)]" />
             </a>
@@ -30,6 +32,7 @@ const Footer: React.FC = () => {
               href={"https://www.haxibami.net/rss/feed.xml"}
               target="_blank"
               rel="noopener noreferrer"
+              title="RSS"
             >
               <RssIcon className="h-8 w-8 fill-[color:var(--fg)]" />
             </a>

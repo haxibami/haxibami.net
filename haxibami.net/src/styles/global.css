@@ -41,7 +41,7 @@
     & p,
     & li {
       & a {
-        @apply text-pink-400 underline decoration-pink-400 decoration-2 underline-offset-2;
+        @apply text-[color:var(--link)] underline decoration-[color:var(--link)] decoration-2 underline-offset-2;
       }
     }
     & p {
@@ -49,7 +49,7 @@
     }
     & table {
       display: block;
-      overflow-x: scroll;
+      overflow-x: auto;
       margin-top: 1.5rem;
       table-layout: fixed;
       border-collapse: collapse;
@@ -261,7 +261,7 @@
   --hover: #edebef;
   --line: #8a829955;
   --shadow: #1c1b2266;
-  --link: #f472b6;
+  --link: #ec4899;
   --code: #edebef;
   --nextbg: #1c1b22;
   --prevfg: #1c1b22;

@@ -1,5 +1,3 @@
-import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-
 // type of post item
 
 export interface PostMeta {
@@ -15,12 +13,6 @@ export interface PostData {
   data: PostMeta | undefined;
 }
 
-export interface DocItem {
-  slug: string;
-  title: string;
-  content: string;
-}
-
 // type of post
 export const PostType = {
   Blog: "blog",
@@ -28,11 +20,6 @@ export const PostType = {
 } as const;
 
 export type PostType = (typeof PostType)[keyof typeof PostType];
-
-// site info stored in src/share/meta.yml
-export interface SiteData {
-  siteinfo: Record<string, Record<string, string>>;
-}
 
 // page type in twitter card: article / website
 const PageType = {
@@ -58,15 +45,4 @@ export interface PageMetaData {
   pageRelPath: string;
   pagetype: PageType;
   twcardtype: TwCardType;
-}
-
-// item in blog menu tab
-export interface MenuTab {
-  name: string;
-  link: string;
-  focus: boolean;
-}
-
-export interface MarkdownRenderingResult {
-  html: MDXRemoteSerializeResult;
 }

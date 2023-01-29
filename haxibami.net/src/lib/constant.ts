@@ -1,5 +1,3 @@
-import type { MenuTab } from "./interface";
-
 export const SITEDATA = {
   blog: {
     title: "神話募集中",
@@ -22,16 +20,3 @@ export const APIHOST = {
 }[process.env.NODE_ENV];
 
 export const COUNT_PER_PAGE = 7;
-
-export const tagsMenuTabs: MenuTab[] = [
-  {
-    name: "Posts",
-    link: "",
-    focus: false,
-  },
-  {
-    name: "Tags",
-    link: "tags",
-    focus: true,
-  },
-];
