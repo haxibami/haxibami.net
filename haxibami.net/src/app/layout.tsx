@@ -1,12 +1,15 @@
 import React from "react";
 
 import "styles/global.css";
-import { Rubik } from "@next/font/google";
+import { Montserrat } from "@next/font/google";
 import localFont from "@next/font/local";
 
 import Providers from "components/providers";
 
-const rubik = Rubik({ subsets: ["latin"], variable: "--font-rubik" });
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+});
 
 const redOctober = localFont({
   src: "./asset/RedOctober.woff2",
@@ -20,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <body className={`${rubik.variable} ${redOctober.variable}`}>
+      <body className={`${montserrat.variable} ${redOctober.variable}`}>
         <Providers>{children}</Providers>
       </body>
     </html>

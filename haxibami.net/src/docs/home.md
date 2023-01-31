@@ -1,16 +1,20 @@
 ---
 slug: "home"
-title: "Home"
-jatitle: "私について"
-description: "トップ"
+title: "Top"
+jatitle: "トップ"
+description: "引用"
 ---
 
-## Navigation
+> Они говорят: им нельзя рисковать
+> <br />
+> Потому что у них есть дом
+>
+> ── Кино『Закрой за мной дверь, я ухожу』
 
-- [About me](/about)
-- [Blog](/blog)
-- [RSS](/rss/feed.xml)
-- [Twitter](https://twitter.com/haxibami)
-- [GitHub](https://github.com/haxibami)
-- [Keybase](https://keybase.io/haxibami)
-- [Spotify](https://open.spotify.com/user/a0ndq420ky5fxfey4rpqx952w)
+> ばいばい もう帰れない日に チグハグな今を繋いだ
+>
+> ── Nyarons『ハルカカナタ』
+
+> ねぇシャロン 月から脱け出す 透明な温度だけ 欲しいよ それだけ
+>
+> ── ROSSO『シャロン』

@@ -19,15 +19,9 @@ let nextConfig = {
       "@plaiceholder/next",
       "fetch-site-metadata",
     ],
-    scrollRestoration: false,
+    scrollRestoration: true,
     appDir: true,
   },
-  swcMinify: true,
-  //   sassOptions: {
-  //     includePaths: [
-  //       path.join(path.dirname(fileURLToPath(import.meta.url)), "styles"),
-  //     ],
-  //   },
   images: {
     formats: ["image/avif", "image/webp"],
     domains: ["asciinema.org", "raw.githubusercontent.com"],

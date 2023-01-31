@@ -1,10 +1,12 @@
 export const SITEDATA = {
   blog: {
     title: "神話募集中",
+    engtitle: "mythfinder",
     description: "祈り・技術・加速",
   },
   grad_essay: {
     title: "卒業文集",
+    engtitle: "essay",
     description: "記憶",
   },
 };

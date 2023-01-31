@@ -17,7 +17,11 @@ const PostDisplay: React.FC<PostDisplayProps> = (props) => {
   const { title, topPath, assign, id, total, perPage, postType } = props;
   return (
     <div className="flex w-full grow flex-col gap-8">
-      {title ? <h1>{title}</h1> : null}
+      {title ? (
+        <h1 className="before:text-[color:var(--link)] before:content-['#_']">
+          {title}
+        </h1>
+      ) : null}
       <PostList assign={assign} postType={postType} />
       <Pager
         topPath={topPath}
