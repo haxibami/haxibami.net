@@ -5,15 +5,11 @@ jatitle: "私について"
 description: "自己紹介"
 ---
 
-### Name
+## Profile
 
-| key       | val         |
-| --------- | ----------- |
-| Latin     | haxibami    |
-| 漢字      | 端食        |
-| ひらがな  | はしばみ    |
-| Кириллица | хашибами    |
-| IPA       | [haɕibamʲi] |
+haxibami / 端食 / はしばみ / [haɕibamʲi]
+
+文章とコードの読み書き。
 
 ### Region
 
@@ -29,9 +25,7 @@ description: "自己紹介"
 
 ### Contact
 
-- [contact\<at\>haxibami.net](mailto:contact@haxibami.net) - mail
-- [@haxibami](https://twitter.com/haxibami) - Twitter
-- [@haxibami](https://github.com/haxibami) - GitHub
+- [contact\<at\>haxibami.net](mailto:contact@haxibami.net)
 
 ## Interest
 
@@ -61,20 +55,20 @@ description: "自己紹介"
 
 ## Project
 
-### Product
-
 - [`haxibami.net`](https://github.com/haxibami/haxibami.net) - このサイト
 - [`hotate`](https://github.com/haxibami/hotate) - 縦書きエディタ
 - [`urara.vim`](https://github.com/haxibami/urara.vim) - Vim カラースキーム
 
 ## Navigation
 
-### Internal
-
 - [Top](/)
 - [Blog](/blog) - 祈り・技術・加速
+- [Twitter](https://twitter.com/haxibami)
+- [GitHub](https://github.com/haxibami)
+- [Keybase](https://keybase.io/haxibami)
+- [Spotify](https://open.spotify.com/user/a0ndq420ky5fxfey4rpqx952w)
 
-### Link exchange
+## Link exchange
 
 敬称略。追加・削除は連絡ください。
 

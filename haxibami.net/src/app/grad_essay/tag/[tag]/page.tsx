@@ -23,7 +23,7 @@ export default async function TaggedPosts({
   const assign = taggedPostsData.slice(start, end);
   return (
     <PostDisplay
-      title={`# ${tag}`}
+      title={tag}
       topPath={`/${postType}/tag/${tag}`}
       assign={assign}
       id={id}

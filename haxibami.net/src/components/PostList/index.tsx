@@ -17,7 +17,7 @@ const PostList: React.FC<PostListProps> = (props) => {
   return (
     <ul className="flex w-full grow flex-col gap-6">
       {assign.map((post) => {
-        const { preview, data } = post;
+        const { data } = post;
         return (
           <li key={data?.slug}>
             <article className="flex flex-col gap-2 overflow-hidden rounded leading-6 text-[color:var(--secondary)]">
@@ -31,7 +31,7 @@ const PostList: React.FC<PostListProps> = (props) => {
                   </h2>
                 </Link>
               </div>
-              <div className="overflow-hidden text-sm">{preview}...</div>
+              <div className="overflow-hidden text-sm">{data?.description}</div>
               <div className="flex flex-col justify-between gap-8">
                 <div>
                   <TagList tags={data?.tags ?? []} postType={postType} />
