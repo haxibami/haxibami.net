@@ -18,7 +18,7 @@ const LinkCard: React.FC<LinkCardProps> = (props) => {
             <span className="overflow-hidden text-ellipsis whitespace-nowrap font-bold">
               {title}
             </span>
-            <span className="min-h-[2em] overflow-hidden text-ellipsis whitespace-nowrap text-xs text-[color:var(--shadow)]">
+            <span className="min-h-[2em] overflow-hidden text-ellipsis whitespace-nowrap text-xs text-[color:var(--secondary)]">
               {description}
             </span>
             <span className="flex h-5 items-center gap-1.5 overflow-hidden text-ellipsis whitespace-nowrap text-xs">
