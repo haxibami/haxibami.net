@@ -33,6 +33,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# vscode
+.vscode
+
 # auto-generated
 public/sitemap.xml
 public/sitemap-0.xml
