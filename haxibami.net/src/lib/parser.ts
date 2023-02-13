@@ -8,7 +8,7 @@ import { unified } from "unified";
 import { matter } from "vfile-matter";
 
 import type { PostMeta } from "./interface";
-import type { VFile } from "vfile-matter";
+import type { VFile } from "vfile";
 
 /**
  * Plugin to parse YAML frontmatter and expose it at `file.data.matter`.
