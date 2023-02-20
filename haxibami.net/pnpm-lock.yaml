@@ -26,7 +26,7 @@ specifiers:
   husky: 8.0.3
   lint-staged: 13.1.1
   mdast-util-to-hast: 12.3.0
-  mermaid: 9.3.0
+  mermaid: 9.4.0
   next: 13.1.6
   next-mdx-remote: 4.3.0
   next-themes: 0.2.1
@@ -43,7 +43,7 @@ specifiers:
   rehype-autolink-headings: 6.1.1
   rehype-katex: 6.0.2
   rehype-parse: 8.0.4
-  rehype-pretty-code: 0.9.3
+  rehype-pretty-code: 0.9.4
   rehype-raw: 6.1.1
   rehype-slug: 5.1.0
   remark-frontmatter: 4.0.1
@@ -75,7 +75,7 @@ dependencies:
   '@vercel/og': 0.1.0
   feed: 4.2.2
   mdast-util-to-hast: 12.3.0
-  mermaid: 9.3.0
+  mermaid: 9.4.0
   next: 13.1.6_biqbaboplfbrettd7655fr4n2y
   next-mdx-remote: 4.3.0_biqbaboplfbrettd7655fr4n2y
   next-themes: 0.2.1_3vryta7zmbcsw4rrqf4axjqggm
@@ -86,7 +86,7 @@ dependencies:
   rehype-autolink-headings: 6.1.1
   rehype-katex: 6.0.2
   rehype-parse: 8.0.4
-  rehype-pretty-code: 0.9.3_shiki@0.14.1
+  rehype-pretty-code: 0.9.4_shiki@0.14.1
   rehype-raw: 6.1.1
   rehype-slug: 5.1.0
   remark-frontmatter: 4.0.1
@@ -1160,6 +1160,18 @@ packages:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
     dev: true
 
+  /cose-base/1.0.3:
+    resolution: {integrity: sha512-s9whTXInMSgAp/NVXVNuVxVKzGH2qck3aQlVHxDCdAEPgtMKwc4Wq6/QKhgdEdgbLSi9rBTAcPoRa6JpiG4ksg==}
+    dependencies:
+      layout-base: 1.0.2
+    dev: false
+
+  /cose-base/2.2.0:
+    resolution: {integrity: sha512-AzlgcsCbUMymkADOJtQm3wO9S3ltPfYOFD5033keQn9NJzIbtnZj+UdBJe7DYml/8TdbtHJW3j58SOnKhWY/5g==}
+    dependencies:
+      layout-base: 2.0.1
+    dev: false
+
   /create-require/1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
     dev: true
@@ -1233,11 +1245,30 @@ packages:
   /csstype/3.0.11:
     resolution: {integrity: sha512-sa6P2wJ+CAbgyy4KFssIb/JNMLxFvKF1pCYCSXS8ZMuqZnMsrxqI2E5sPyoTpxoPU/gVZMzr2zjOfg8GIZOMsw==}
 
-  /d3-array/3.1.1:
-    resolution: {integrity: sha512-33qQ+ZoZlli19IFiQx4QEpf2CBEayMRzhlisJHSCsSUbDXv6ZishqS1x7uFVClKG4Wr7rZVHvaAttoLow6GqdQ==}
-    engines: {node: '>=12'}
+  /cytoscape-cose-bilkent/4.1.0_cytoscape@3.23.0:
+    resolution: {integrity: sha512-wgQlVIUJF13Quxiv5e1gstZ08rnZj2XaLHGoFMYXz7SkNfCDOOteKBE6SYRfA9WxxI/iBc3ajfDoc6hb/MRAHQ==}
+    peerDependencies:
+      cytoscape: ^3.2.0
     dependencies:
-      internmap: 2.0.3
+      cose-base: 1.0.3
+      cytoscape: 3.23.0
+    dev: false
+
+  /cytoscape-fcose/2.2.0_cytoscape@3.23.0:
+    resolution: {integrity: sha512-ki1/VuRIHFCzxWNrsshHYPs6L7TvLu3DL+TyIGEsRcvVERmxokbf5Gdk7mFxZnTdiGtnA4cfSmjZJMviqSuZrQ==}
+    peerDependencies:
+      cytoscape: ^3.2.0
+    dependencies:
+      cose-base: 2.2.0
+      cytoscape: 3.23.0
+    dev: false
+
+  /cytoscape/3.23.0:
+    resolution: {integrity: sha512-gRZqJj/1kiAVPkrVFvz/GccxsXhF3Qwpptl32gKKypO4IlqnKBjTOu+HbXtEggSGzC5KCaHp3/F7GgENrtsFkA==}
+    engines: {node: '>=0.10'}
+    dependencies:
+      heap: 0.2.7
+      lodash: 4.17.21
     dev: false
 
   /d3-array/3.2.1:
@@ -1273,13 +1304,6 @@ packages:
   /d3-color/3.0.1:
     resolution: {integrity: sha512-6/SlHkDOBLyQSJ1j1Ghs82OIUXpKWlR0hCsw0XrLSQhuUPuCSmLQ1QPH98vpnQxMUQM2/gfAkUEWsupVpd9JGw==}
     engines: {node: '>=12'}
-    dev: false
-
-  /d3-contour/3.0.1:
-    resolution: {integrity: sha512-0Oc4D0KyhwhM7ZL0RMnfGycLN7hxHB8CMmwZ3+H26PWAG0ozNuYG5hXSDNgmP1SgJkQMrlG6cP20HoaSbvcJTQ==}
-    engines: {node: '>=12'}
-    dependencies:
-      d3-array: 3.1.1
     dev: false
 
   /d3-contour/4.0.0:
@@ -1349,7 +1373,7 @@ packages:
     resolution: {integrity: sha512-Wt23xBych5tSy9IYAM1FR2rWIBFWa52B/oF/GYe5zbdHrg08FU8+BuI6X4PvTwPDdqdAdq04fuWJpELtsaEjeA==}
     engines: {node: '>=12'}
     dependencies:
-      d3-array: 3.1.1
+      d3-array: 3.2.1
     dev: false
 
   /d3-hierarchy/3.1.1:
@@ -1396,7 +1420,7 @@ packages:
     resolution: {integrity: sha512-GZW464g1SH7ag3Y7hXjf8RoUuAFIqklOAq3MRl4OaWabTFJY9PN/E1YklhXLh+OQ3fM9yS2nOkCoS+WLZ6kvxQ==}
     engines: {node: '>=12'}
     dependencies:
-      d3-array: 3.1.1
+      d3-array: 3.2.1
       d3-format: 3.1.0
       d3-interpolate: 3.0.1
       d3-time: 3.0.0
@@ -1426,7 +1450,7 @@ packages:
     resolution: {integrity: sha512-zmV3lRnlaLI08y9IMRXSDshQb5Nj77smnfpnd2LrBa/2K281Jijactokeak14QacHs/kKq0AQ121nidNYlarbQ==}
     engines: {node: '>=12'}
     dependencies:
-      d3-array: 3.1.1
+      d3-array: 3.2.1
     dev: false
 
   /d3-timer/3.0.1:
@@ -1459,47 +1483,11 @@ packages:
       d3-transition: 3.0.1_d3-selection@3.0.0
     dev: false
 
-  /d3/7.3.0:
-    resolution: {integrity: sha512-MDRLJCMK232OJQRqGljQ/gCxtB8k3/sLKFjftMjzPB3nKVUODpdW9Rb3vcq7U8Ka5YKoZkAmp++Ur6I+6iNWIw==}
-    engines: {node: '>=12'}
-    dependencies:
-      d3-array: 3.1.1
-      d3-axis: 3.0.0
-      d3-brush: 3.0.0
-      d3-chord: 3.0.1
-      d3-color: 3.0.1
-      d3-contour: 3.0.1
-      d3-delaunay: 6.0.2
-      d3-dispatch: 3.0.1
-      d3-drag: 3.0.0
-      d3-dsv: 3.0.1
-      d3-ease: 3.0.1
-      d3-fetch: 3.0.1
-      d3-force: 3.0.0
-      d3-format: 3.1.0
-      d3-geo: 3.0.1
-      d3-hierarchy: 3.1.1
-      d3-interpolate: 3.0.1
-      d3-path: 3.0.1
-      d3-polygon: 3.0.1
-      d3-quadtree: 3.0.1
-      d3-random: 3.0.1
-      d3-scale: 4.0.2
-      d3-scale-chromatic: 3.0.0
-      d3-selection: 3.0.0
-      d3-shape: 3.1.0
-      d3-time: 3.0.0
-      d3-time-format: 4.1.0
-      d3-timer: 3.0.1
-      d3-transition: 3.0.1_d3-selection@3.0.0
-      d3-zoom: 3.0.0
-    dev: false
-
   /d3/7.7.0:
     resolution: {integrity: sha512-VEwHCMgMjD2WBsxeRGUE18RmzxT9Bn7ghDpzvTEvkLSBAKgTMydJjouZTjspgQfRHpPt/PB3EHWBa6SSyFQq4g==}
     engines: {node: '>=12'}
     dependencies:
-      d3-array: 3.1.1
+      d3-array: 3.2.1
       d3-axis: 3.0.0
       d3-brush: 3.0.0
       d3-chord: 3.0.1
@@ -1531,10 +1519,46 @@ packages:
       d3-zoom: 3.0.0
     dev: false
 
-  /dagre-d3-es/7.0.6:
-    resolution: {integrity: sha512-CaaE/nZh205ix+Up4xsnlGmpog5GGm81Upi2+/SBHxwNwrccBb3K51LzjZ1U6hgvOlAEUsVWf1xSTzCyKpJ6+Q==}
+  /d3/7.8.2:
+    resolution: {integrity: sha512-WXty7qOGSHb7HR7CfOzwN1Gw04MUOzN8qh9ZUsvwycIMb4DYMpY9xczZ6jUorGtO6bR9BPMPaueIKwiDxu9uiQ==}
+    engines: {node: '>=12'}
     dependencies:
-      d3: 7.7.0
+      d3-array: 3.2.1
+      d3-axis: 3.0.0
+      d3-brush: 3.0.0
+      d3-chord: 3.0.1
+      d3-color: 3.0.1
+      d3-contour: 4.0.0
+      d3-delaunay: 6.0.2
+      d3-dispatch: 3.0.1
+      d3-drag: 3.0.0
+      d3-dsv: 3.0.1
+      d3-ease: 3.0.1
+      d3-fetch: 3.0.1
+      d3-force: 3.0.0
+      d3-format: 3.1.0
+      d3-geo: 3.0.1
+      d3-hierarchy: 3.1.1
+      d3-interpolate: 3.0.1
+      d3-path: 3.0.1
+      d3-polygon: 3.0.1
+      d3-quadtree: 3.0.1
+      d3-random: 3.0.1
+      d3-scale: 4.0.2
+      d3-scale-chromatic: 3.0.0
+      d3-selection: 3.0.0
+      d3-shape: 3.1.0
+      d3-time: 3.0.0
+      d3-time-format: 4.1.0
+      d3-timer: 3.0.1
+      d3-transition: 3.0.1_d3-selection@3.0.0
+      d3-zoom: 3.0.0
+    dev: false
+
+  /dagre-d3-es/7.0.8:
+    resolution: {integrity: sha512-eykdoYQ4FwCJinEYS0gPL2f2w+BPbSLvnQSJ3Ye1vAoPjdkq6xIMKBv+UkICd3qZE26wBKIn3p+6n0QC7R1LyA==}
+    dependencies:
+      d3: 7.8.2
       lodash-es: 4.17.21
     dev: false
 
@@ -1741,8 +1765,8 @@ packages:
       domelementtype: 2.3.0
     dev: false
 
-  /dompurify/2.4.1:
-    resolution: {integrity: sha512-ewwFzHzrrneRjxzmK6oVz/rZn9VWspGFRDb4/rRtIsM1n36t9AKma/ye8syCpcw+XJ25kOK/hOG7t1j2I2yBqA==}
+  /dompurify/2.4.3:
+    resolution: {integrity: sha512-q6QaLcakcRjebxjg8/+NP+h0rPfatOgOzc46Fst9VAA3jF2ApfKBNKMzdP4DYTqtUMXSCd5pRS/8Po/OmoCHZQ==}
     dev: false
 
   /domutils/3.0.1:
@@ -1764,6 +1788,10 @@ packages:
   /electron-to-chromium/1.4.284:
     resolution: {integrity: sha512-M8WEXFuKXMYMVr45fo8mq0wUrrJHheiKZf6BArTKk9ZBYCKJEOU5H8cdWgDT+qCVZf7Na4lVUaZsA+h6uA9+PA==}
     dev: true
+
+  /elkjs/0.8.2:
+    resolution: {integrity: sha512-L6uRgvZTH+4OF5NE/MBbzQx/WYpru1xCBE9respNj6qznEewGUIfhzmm7horWWxbNO2M0WckQypGctR8lH79xQ==}
+    dev: false
 
   /emoji-regex/10.2.1:
     resolution: {integrity: sha512-97g6QgOk8zlDRdgq1WxwgTMgEWGVAQvB5Fdpgc1MkNy56la5SKP9GsMXKDOdqwn90/41a8yPwIGk1Y6WVbeMQA==}
@@ -2850,6 +2878,10 @@ packages:
       space-separated-tokens: 2.0.1
     dev: false
 
+  /heap/0.2.7:
+    resolution: {integrity: sha512-2bsegYkkHO+h/9MGbn6KWcE45cHZgPANo5LXF7EvWdT0yT2EguSVO1nDgU5c8+ZOPwp2vMNa7YFsJhVcDR9Sdg==}
+    dev: false
+
   /html-rewriter-wasm/0.4.1:
     resolution: {integrity: sha512-lNovG8CMCCmcVB1Q7xggMSf7tqPCijZXaH4gL6iE8BFghdQCbaY5Met9i1x2Ex8m/cZHDUtXK9H6/znKamRP8Q==}
     dev: true
@@ -3294,6 +3326,14 @@ packages:
       language-subtag-registry: 0.3.22
     dev: true
 
+  /layout-base/1.0.2:
+    resolution: {integrity: sha512-8h2oVEZNktL4BH2JCOI90iD1yXwL6iNW7KcCKT2QZgQJR2vbqDsldCTPRU9NifTCqHZci57XvQQ15YTu+sTYPg==}
+    dev: false
+
+  /layout-base/2.0.1:
+    resolution: {integrity: sha512-dp3s92+uNI1hWIpPGH3jK2kxE2lMjdXdr+DH8ynZHpd6PUlH6x6cbuXnoMmiNumznqaNO31xu9e79F0uuZ0JFg==}
+    dev: false
+
   /levn/0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
     engines: {node: '>= 0.8.0'}
@@ -3650,18 +3690,23 @@ packages:
     engines: {node: '>= 8'}
     dev: true
 
-  /mermaid/9.3.0:
-    resolution: {integrity: sha512-mGl0BM19TD/HbU/LmlaZbjBi//tojelg8P/mxD6pPZTAYaI+VawcyBdqRsoUHSc7j71PrMdJ3HBadoQNdvP5cg==}
+  /mermaid/9.4.0:
+    resolution: {integrity: sha512-4PWbOND7CNRbjHrdG3WUUGBreKAFVnMhdlPjttuUkeHbCQmAHkwzSh5dGwbrKmXGRaR4uTvfFVYzUcg++h0DkA==}
     dependencies:
       '@braintree/sanitize-url': 6.0.0
-      d3: 7.3.0
-      dagre-d3-es: 7.0.6
-      dompurify: 2.4.1
+      cytoscape: 3.23.0
+      cytoscape-cose-bilkent: 4.1.0_cytoscape@3.23.0
+      cytoscape-fcose: 2.2.0_cytoscape@3.23.0
+      d3: 7.7.0
+      dagre-d3-es: 7.0.8
+      dompurify: 2.4.3
+      elkjs: 0.8.2
       khroma: 2.0.0
       lodash-es: 4.17.21
-      moment-mini: 2.24.0
+      moment: 2.29.4
       non-layered-tidy-tree-layout: 2.0.2
       stylis: 4.1.3
+      ts-dedent: 2.2.0
       uuid: 9.0.0
     dev: false
 
@@ -4107,8 +4152,8 @@ packages:
     resolution: {integrity: sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A==}
     dev: true
 
-  /moment-mini/2.24.0:
-    resolution: {integrity: sha512-9ARkWHBs+6YJIvrIp0Ik5tyTTtP9PoV0Ssu2Ocq5y9v8+NOOpWiRshAp8c4rZVWTOe+157on/5G+zj5pwIQFEQ==}
+  /moment/2.29.4:
+    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
     dev: false
 
   /mri/1.2.0:
@@ -4908,8 +4953,8 @@ packages:
       unified: 10.1.2
     dev: false
 
-  /rehype-pretty-code/0.9.3_shiki@0.14.1:
-    resolution: {integrity: sha512-57i+ifrttqpeQxub0NZ2pRw0aiUPYeBpr234NLWfZ4BfbEaP+29+iCXB1rUMkzoPi6IBC4w4I93mUPgw36IajQ==}
+  /rehype-pretty-code/0.9.4_shiki@0.14.1:
+    resolution: {integrity: sha512-3m4aQT15n8C+UizcZL0enaahoZwCDm5K1qKQ3DGgHE7U8l/DEEEJ/hm+uDe9yyK4sxVOSfZcRIMHrpJwLQi+Rg==}
     engines: {node: ^12.16.0 || >=13.2.0}
     peerDependencies:
       shiki: '*'
@@ -5614,6 +5659,11 @@ packages:
 
   /trough/2.0.2:
     resolution: {integrity: sha512-FnHq5sTMxC0sk957wHDzRnemFnNBvt/gSY99HzK8F7UP5WAbvP70yX5bd7CjEQkN+TjdxwI7g7lJ6podqrG2/w==}
+    dev: false
+
+  /ts-dedent/2.2.0:
+    resolution: {integrity: sha512-q5W7tVM71e2xjHZTlgfTDoPF/SmqKG5hddq9SzR49CH2hayqRKJtQ4mtRlSxKaJlR/+9rEM+mnBHf7I2/BQcpQ==}
+    engines: {node: '>=6.10'}
     dev: false
 
   /ts-node/10.9.1_4bewfcp2iebiwuold25d6rgcsy:
