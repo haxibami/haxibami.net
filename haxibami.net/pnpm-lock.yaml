@@ -26,7 +26,7 @@ specifiers:
   husky: 8.0.3
   lint-staged: 13.1.2
   mdast-util-to-hast: 12.3.0
-  mermaid: 9.4.0
+  mermaid: 10.0.0
   next: 13.1.6
   next-mdx-remote: 4.3.0
   next-themes: 0.2.1
@@ -75,7 +75,7 @@ dependencies:
   '@vercel/og': 0.1.0
   feed: 4.2.2
   mdast-util-to-hast: 12.3.0
-  mermaid: 9.4.0
+  mermaid: 10.0.0
   next: 13.1.6_biqbaboplfbrettd7655fr4n2y
   next-mdx-remote: 4.3.0_biqbaboplfbrettd7655fr4n2y
   next-themes: 0.2.1_3vryta7zmbcsw4rrqf4axjqggm
@@ -1481,42 +1481,6 @@ packages:
       d3-interpolate: 3.0.1
       d3-selection: 3.0.0
       d3-transition: 3.0.1_d3-selection@3.0.0
-    dev: false
-
-  /d3/7.7.0:
-    resolution: {integrity: sha512-VEwHCMgMjD2WBsxeRGUE18RmzxT9Bn7ghDpzvTEvkLSBAKgTMydJjouZTjspgQfRHpPt/PB3EHWBa6SSyFQq4g==}
-    engines: {node: '>=12'}
-    dependencies:
-      d3-array: 3.2.1
-      d3-axis: 3.0.0
-      d3-brush: 3.0.0
-      d3-chord: 3.0.1
-      d3-color: 3.0.1
-      d3-contour: 4.0.0
-      d3-delaunay: 6.0.2
-      d3-dispatch: 3.0.1
-      d3-drag: 3.0.0
-      d3-dsv: 3.0.1
-      d3-ease: 3.0.1
-      d3-fetch: 3.0.1
-      d3-force: 3.0.0
-      d3-format: 3.1.0
-      d3-geo: 3.0.1
-      d3-hierarchy: 3.1.1
-      d3-interpolate: 3.0.1
-      d3-path: 3.0.1
-      d3-polygon: 3.0.1
-      d3-quadtree: 3.0.1
-      d3-random: 3.0.1
-      d3-scale: 4.0.2
-      d3-scale-chromatic: 3.0.0
-      d3-selection: 3.0.0
-      d3-shape: 3.1.0
-      d3-time: 3.0.0
-      d3-time-format: 4.1.0
-      d3-timer: 3.0.1
-      d3-transition: 3.0.1_d3-selection@3.0.0
-      d3-zoom: 3.0.0
     dev: false
 
   /d3/7.8.2:
@@ -3690,24 +3654,25 @@ packages:
     engines: {node: '>= 8'}
     dev: true
 
-  /mermaid/9.4.0:
-    resolution: {integrity: sha512-4PWbOND7CNRbjHrdG3WUUGBreKAFVnMhdlPjttuUkeHbCQmAHkwzSh5dGwbrKmXGRaR4uTvfFVYzUcg++h0DkA==}
+  /mermaid/10.0.0:
+    resolution: {integrity: sha512-syS1qyYCd3EPXCVSpYtefY4D9z9WZAK8hFgjeHR9PAtanybLO162Tu7o5i/nZkqRrJq0Rk8RqskQlhBPgT8eBw==}
     dependencies:
       '@braintree/sanitize-url': 6.0.0
       cytoscape: 3.23.0
       cytoscape-cose-bilkent: 4.1.0_cytoscape@3.23.0
       cytoscape-fcose: 2.2.0_cytoscape@3.23.0
-      d3: 7.7.0
+      d3: 7.8.2
       dagre-d3-es: 7.0.8
       dompurify: 2.4.3
       elkjs: 0.8.2
       khroma: 2.0.0
       lodash-es: 4.17.21
-      moment: 2.29.4
+      moment-mini: 2.29.4
       non-layered-tidy-tree-layout: 2.0.2
       stylis: 4.1.3
       ts-dedent: 2.2.0
       uuid: 9.0.0
+      web-worker: 1.2.0
     dev: false
 
   /micromark-core-commonmark/1.0.4:
@@ -4152,8 +4117,8 @@ packages:
     resolution: {integrity: sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A==}
     dev: true
 
-  /moment/2.29.4:
-    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
+  /moment-mini/2.29.4:
+    resolution: {integrity: sha512-uhXpYwHFeiTbY9KSgPPRoo1nt8OxNVdMVoTBYHfSEKeRkIkwGpO+gERmhuhBtzfaeOyTkykSrm2+noJBgqt3Hg==}
     dev: false
 
   /mri/1.2.0:
@@ -5987,6 +5952,10 @@ packages:
     resolution: {integrity: sha512-e0MO3wdXWKrLbL0DgGnUV7WHVuw9OUvL4hjgnPkIeEvESk74gAITi5G606JtZPp39cd8HA9VQzCIvA49LpPN5Q==}
     engines: {node: '>= 8'}
     dev: true
+
+  /web-worker/1.2.0:
+    resolution: {integrity: sha512-PgF341avzqyx60neE9DD+XS26MMNMoUQRz9NOZwW32nPQrF6p77f1htcnjBSEV8BGMKZ16choqUG4hyI0Hx7mA==}
+    dev: false
 
   /webidl-conversions/3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
