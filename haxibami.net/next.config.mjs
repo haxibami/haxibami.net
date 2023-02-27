@@ -1,6 +1,3 @@
-// import * as path from "path";
-// import { fileURLToPath } from "url";
-
 import analyze from "@next/bundle-analyzer";
 import { withPlaiceholder } from "@plaiceholder/next";
 

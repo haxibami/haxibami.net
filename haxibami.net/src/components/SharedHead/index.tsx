@@ -32,7 +32,7 @@ export default function SharedHead(props: PageMetaData) {
       <meta name="twitter:card" content={props.twcardtype} />
       <meta
         property="og:url"
-        content={`https://haxibami.net/${props.pageRelPath}`}
+        content={`https://www.haxibami.net/${props.pageRelPath}`}
       />
       <meta property="og:type" content={props.pagetype} />
       <meta property="og:title" content={`${props.title}`} />

@@ -1,10 +1,37 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import Footer from "components/Footer";
 import Header from "components/PostHeader";
 import { fetchPost } from "lib/api";
 import compiler from "lib/compiler";
-import { SITEDATA } from "lib/constant";
+import { SITEDATA, HOST } from "lib/constant";
+
+export const metadata: Metadata = {
+  title: "haxibami",
+  description: "haxibamiのウェブサイト",
+  openGraph: {
+    title: "haxibami",
+    description: "haxibamiのウェブサイト",
+    url: `https://${HOST}/`,
+    type: "website",
+    images: {
+      url: `https://${HOST}/icon_ange_glasses_512.webp`,
+      width: 512,
+      height: 512,
+    },
+  },
+  twitter: {
+    card: "summary",
+    title: "haxibami",
+    description: "haxibamiのウェブサイト",
+    images: `https://${HOST}/icon_ange_glasses_512.webp`,
+    site: "@haxibami",
+    siteId: "1077091437517238272",
+    creator: "@haxibami",
+    creatorId: "1077091437517238272",
+  },
+};
 
 export default async function Home() {
   const file = await fetchPost("docs", "home");
