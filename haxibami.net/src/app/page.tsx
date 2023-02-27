@@ -1,10 +1,37 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import Footer from "components/Footer";
 import Header from "components/PostHeader";
 import { fetchPost } from "lib/api";
 import compiler from "lib/compiler";
-import { SITEDATA } from "lib/constant";
+import { SITEDATA, HOST } from "lib/constant";
+
+export const metadata: Metadata = {
+  title: "haxibami",
+  description: "haxibamiのウェブサイト",
+  openGraph: {
+    title: "haxibami",
+    description: "haxibamiのウェブサイト",
+    url: `https://${HOST}/`,
+    type: "website",
+    images: {
+      url: `https://${HOST}/icon_ange_glasses_512.webp`,
+      width: 512,
+      height: 512,
+    },
+  },
+  twitter: {
+    card: "summary",
+    title: "haxibami",
+    description: "haxibamiのウェブサイト",
+    images: `https://${HOST}/icon_ange_glasses_512.webp`,
+    site: "@haxibami",
+    siteId: "1077091437517238272",
+    creator: "@haxibami",
+    creatorId: "1077091437517238272",
+  },
+};
 
 export default async function Home() {
   const file = await fetchPost("docs", "home");
@@ -12,7 +39,7 @@ export default async function Home() {
   return (
     <div className="mx-auto flex min-h-screen max-w-3xl flex-col px-4">
       <Header posttype="blog" />
-      <main className="flex grow animate-fadeup flex-col divide-y divide-[color:var(--line)] pb-6">
+      <main className="flex grow flex-col divide-y divide-[color:var(--line)] pb-6">
         <div className="flex flex-col items-center">
           <div className="mt-2 flex flex-col gap-8 pt-72 font-redoctober">
             <div
