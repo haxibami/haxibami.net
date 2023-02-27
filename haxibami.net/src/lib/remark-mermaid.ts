@@ -8,7 +8,7 @@ import { visit } from "unist-util-visit";
 import { isParent } from "./mdast-util-node-is";
 
 import type { Code, Paragraph } from "mdast";
-import type Mermaid from "mermaid";
+// import type Mermaid from "mermaid";
 import type { MermaidConfig } from "mermaid";
 import type { Config as SvgoConfig } from "svgo";
 import type { Plugin, Transformer } from "unified";
@@ -16,7 +16,7 @@ import type { Node, Parent } from "unist";
 import type { VFileCompatible } from "vfile";
 
 // we want to check types for browser-executed mermaid codes, but don't want to "import" any mermaid modules in them.
-declare const mermaid: typeof Mermaid;
+// declare const mermaid: typeof Mermaid;
 
 export const UserTheme = {
   Forest: "forest",
@@ -97,26 +97,33 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
       viewport: { width: 1000, height: 3000 },
     });
     const page = await context.newPage();
-    await page.setContent(`<!DOCTYPE html>`);
-    await page.addScriptTag({
-      url: "https://unpkg.com/mermaid@9/dist/mermaid.min.js",
-      type: "module",
-    });
-    // await page.setViewportSize({ width: 1000, height: 3000 });
-    const svgResults = await page.evaluate(
-      ({ blocks, theme }) => {
-        const config: MermaidConfig = {
-          theme: theme,
-          startOnLoad: false,
-        };
-        mermaid.mermaidAPI.initialize(config);
-        return blocks.map(([code, ,], id) => {
-          const svg = mermaid.mermaidAPI.render(`mermaid-${id}`, code.value);
-          return svg;
-        });
-      },
-      { blocks: mermaidBlocks, theme: settings.theme }
+    const config: MermaidConfig = {
+      theme: settings.theme,
+      startOnLoad: false,
+    };
+    await page.setContent(
+      `<!DOCTYPE html><html><body><div>
+      ${mermaidBlocks
+        .map(([node]) => `<pre class="mermaid">${node.value}</pre>`)
+        .join("")}
+      </div><p></p></body>
+      <script type="module">
+        import mermaid from 'https://unpkg.com/mermaid@10.0.0/dist/mermaid.esm.min.mjs';
+        mermaid.initialize(${JSON.stringify(config)});
+        await mermaid.run()
+        document.querySelector("p").remove();
+      </script>
+      </html>`
     );
+    await page.waitForSelector("p", {
+      state: "detached",
+    });
+    const svgResults = await page.evaluate(() => {
+      const pres = document.querySelectorAll(".mermaid");
+      return Array.from(pres).map(
+        (pre) => pre.querySelector("svg")?.outerHTML ?? ""
+      );
+    });
     await browser.close();
 
     mermaidBlocks.forEach(([, index, parent], i) => {

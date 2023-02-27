@@ -40,12 +40,11 @@ const LinkCard: React.FC<LinkCardProps> = (props) => {
                 : url.slice(8)}
             </span>
           </span>
-          <span className="flex max-w-[200px] shrink-[6] grow basis-44 overflow-hidden">
+          <span className="flex max-w-[200px] shrink-[6] grow basis-44">
             {og ? (
               /* eslint-disable-next-line @next/next/no-img-element */
               <img
                 src={og}
-                height={105}
                 width={200}
                 alt="og image"
                 loading="lazy"

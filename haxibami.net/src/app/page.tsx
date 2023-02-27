@@ -39,7 +39,7 @@ export default async function Home() {
   return (
     <div className="mx-auto flex min-h-screen max-w-3xl flex-col px-4">
       <Header posttype="blog" />
-      <main className="flex grow animate-fadeup flex-col divide-y divide-[color:var(--line)] pb-6">
+      <main className="flex grow flex-col divide-y divide-[color:var(--line)] pb-6">
         <div className="flex flex-col items-center">
           <div className="mt-2 flex flex-col gap-8 pt-72 font-redoctober">
             <div

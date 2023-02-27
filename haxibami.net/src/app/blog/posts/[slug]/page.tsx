@@ -7,6 +7,8 @@ import { HOST } from "lib/constant";
 import { dateVisualizer } from "lib/front";
 import { getSlugs } from "lib/fs";
 
+import "katex/dist/katex.min.css";
+
 const postType = "blog";
 
 export async function generateMetadata({

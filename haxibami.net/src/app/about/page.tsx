@@ -43,7 +43,7 @@ export default async function About() {
   return (
     <div className="mx-auto flex min-h-screen max-w-3xl flex-col justify-between px-4">
       <Header posttype="blog" />
-      <main className="flex grow animate-fadeup flex-col divide-y divide-[color:var(--line)] py-8">
+      <main className="flex grow flex-col divide-y divide-[color:var(--line)] py-8">
         <div className="my-8 flex flex-row flex-wrap justify-center gap-8">
           <div>
             <Image
