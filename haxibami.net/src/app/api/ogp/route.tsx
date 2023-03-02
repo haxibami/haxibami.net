@@ -2,11 +2,9 @@ import type { NextRequest } from "next/server";
 
 import { ImageResponse } from "@vercel/og";
 
-export const config = {
-  runtime: "edge",
-};
+export const runtime = "edge";
 
-const handler = async (req: NextRequest) => {
+export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const title = searchParams.has("title")
@@ -22,11 +20,11 @@ const handler = async (req: NextRequest) => {
     ).then((res) => res.arrayBuffer());
 
     const robotoFontData = await fetch(
-      new URL("../../assets/RobotoMono-Medium.woff", import.meta.url)
+      new URL("../../../assets/RobotoMono-Medium.woff", import.meta.url)
     ).then((res) => res.arrayBuffer());
 
     const pngIcon = new URL(
-      "../../assets/icon_ange_glasses_192.png",
+      "../../../assets/icon_ange_glasses_192.png",
       import.meta.url
     ).toString();
 
@@ -104,6 +102,4 @@ const handler = async (req: NextRequest) => {
       status: 500,
     });
   }
-};
-
-export default handler;
+}
