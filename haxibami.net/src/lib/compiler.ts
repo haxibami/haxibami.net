@@ -42,12 +42,16 @@ const rpcOptions: Partial<Options> = {
 const compiler = async (source: string) => {
   const result: Promise<{
     content: JSX.Element;
-    // see: https://github.com/hashicorp/next-mdx-remote/pull/306
-    frontmatter: Record<string, any> | undefined;
+    frontmatter: {
+      slug: string;
+      title: string;
+      date: string;
+      description: string;
+      tags: string[];
+    };
   }> = compileMDX({
     source,
     components: MDXComponent,
-    compiledSource: "",
     options: {
       mdxOptions: {
         remarkPlugins: [

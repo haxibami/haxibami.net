@@ -25,11 +25,14 @@ haxibami / 端食 / はしばみ / [haɕibamʲi]
 
 ### Contact
 
-- [contact\<at\>haxibami.net](mailto:contact@haxibami.net)
+```txt
+let myEmail = "me" + "@" + "haxibami.net"
+```
 
 ## Interest
 
 - SF、幻想文学
+- 百合
 - 政治学、政治哲学
 - 情報科学、オープンソースプロジェクト
 - 分析哲学
@@ -62,7 +65,7 @@ haxibami / 端食 / はしばみ / [haɕibamʲi]
 
 ## Navigation
 
-- [Top](/)
+- [Top](/) - avangarde
 - [Blog](/blog) - 祈り・技術・加速
 - [Twitter](https://twitter.com/haxibami)
 - [GitHub](https://github.com/haxibami)

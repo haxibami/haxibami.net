@@ -17,7 +17,10 @@ const NextImage: React.FC<NextImageProps> = (props) => {
   return alt !== "asciicast" ? (
     <figure className="my-8 flex flex-col gap-4">
       <Link href={src} scroll={false}>
-        <div className="relative flex" style={{ aspectRatio: aspectRatio }}>
+        <div
+          className="relative mx-auto flex"
+          style={{ aspectRatio: aspectRatio, maxHeight: "50vh" }}
+        >
           <Image
             className="object-contain"
             src={src}

@@ -46,7 +46,7 @@ const LinkCard: React.FC<LinkCardProps> = (props) => {
               <img
                 src={og}
                 width={200}
-                alt="og image"
+                alt=""
                 loading="lazy"
                 className="object-cover"
               />

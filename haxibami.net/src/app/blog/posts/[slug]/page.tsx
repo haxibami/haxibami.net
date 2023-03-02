@@ -69,12 +69,12 @@ export default async function ArticlePage({
       <div className="flex flex-col gap-3">
         <div>
           <span className="mr-4 text-[color:var(--secondary)]">
-            {dateVisualizer(frontmatter?.date)}
+            {dateVisualizer(frontmatter.date)}
           </span>
         </div>
-        <h1>{frontmatter?.title}</h1>
+        <h1>{frontmatter.title}</h1>
         <div>
-          <TagList tags={frontmatter?.tags} postType={postType} />
+          <TagList tags={frontmatter.tags} postType={postType} />
         </div>
       </div>
       <article className="post">{content}</article>

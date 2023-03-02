@@ -3,8 +3,10 @@ slug: "blog-renewal"
 title: "Next.jsでブログをつくった"
 date: "20220326"
 description: "自作ブログの実装について"
-tags: ["tech", "web", "nextjs"]
+tags: ["tech", "web", "nextjs", "react"]
 ---
+
+（2022/03/03 追記）Next.js 13 対応を[やった](/blog/posts/blog-next-13)
 
 ## はじめに
 
@@ -19,130 +21,43 @@ tags: ["tech", "web", "nextjs"]
 
 ### 1. 適度な距離
 
-あらゆるものが最適化されて提供される現代にあっては、遅配や誤配の確率はとても低い。大きなプラットフォームはユーザーの buzz をすすんで後押しし、かれに向けて、かれのために、とパーソナライズに躍起だ。書き手と読み手の距離は透明に、コミュニケーションは確実に。だがそうではない形式も（かつては？）あった。ひょっとしたら誰かに拾われるかもしれない、あるいはクローラにさえ拾われないかもしれない、そうした確率論的な雲のなかに自らの書いたものを打ち上げる。そして祈る。{古き良き日々}^(グッド・オールド・インターネッツ)は理想郷ではなかったにしても、あの誰かのものになる前の世界の、その歪な手触りを覚えておくための、この距離感。
+あらゆるものが最適化されて提供される現代では、遅配や誤配の確率はとても低い。大きなプラットフォームはユーザーの buzz をすすんで後押しし、かれに向けて、かれのために、とパーソナライズに躍起だ。書き手と読み手の距離は透明に、コミュニケーションは確実に。だがそうではない形式も（かつては？）あった。ひょっとしたら誰かに拾われるかもしれない、あるいは Google のクローラにさえ拾われないかもしれない、そうした確率論的な雲のなかに自らの書いたものを打ち上げる。そして祈る。{古き良き日々}^(グッド・オールド・インターネッツ)は理想郷ではなかったにしても、あの誰かのものになる前の世界の、その歪な手触りを覚えておくための、個人サイトという距離感。
 
 ### 2. メンテナンス性
 
-先人たちが示してきたとおり、この手のサイトは管理・移行が億劫になった時点で**エタる**。放置された「〇〇の部屋」、消えて還らない借りもののドメイン、むなしく刻む入室カウンターたちを眺めるたびに、せめて記事くらいは慣れたファイル形式で楽に扱いたいと思うようになった。そういうわけで Markdown（コンテンツ） + tsx（テンプレート）。この組み合わせならそう簡単には廃れないだろうし、いつか別サービス・別フレームワークに移るときにもそれほど困らない（コンテンツが独立している限り）。
-
-（2022/12/28 更新）
-
-Markdown の処理系について。以前は`remark` + `rehype`の出力を`rehype-react` でレンダリングしていたが、`rehype-react`（厳密にいえばその依存先の`parse5`）のバンドルサイズがバカにならないので、`next-mdx-remote`に乗り換えた。
-
-<https://github.com/hashicorp/next-mdx-remote>
-
-これは名前の通り、Next.js で MDX / Markdown を処理するユーティリティで、Webpack loader を使う Next.js の[公式ガイド](https://nextjs.org/docs/advanced-features/using-mdx)とは異なり、`getStaticProps`経由でデータを取得する設計になっている。また内部では`remark` / `rehype`系の API が用いられており、これらの系列のプラグインが利用できる。
-
-```ts title="lib/compile.ts"
-import { serialize } from "next-mdx-remote/serialize";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeKatex from "rehype-katex";
-import rehypePrettyCode from "rehype-pretty-code";
-import rehypeRaw from "rehype-raw";
-import rehypeSlug from "rehype-slug";
-import remarkGemoji from "remark-gemoji";
-import remarkGfm from "remark-gfm";
-import remarkJaruby from "remark-jaruby";
-import remarkMath from "remark-math";
-import remarkUnwrapImages from "remark-unwrap-images";
-
-import rehypeImageOpt from "./rehype-image-opt";
-import { remarkLinkCard, extLinkHandler } from "./remark-link-card";
-import remarkMermaid from "./remark-mermaid";
-
-import type { Options } from "rehype-pretty-code";
-
-export const compileMdx = async (file: string) => {
-  const rpcOptions: Partial<Options> = {
-    theme: {
-      dark: "rose-pine-moon",
-    },
-    onVisitLine(node) {
-      if (node.children.length === 0) {
-        node.children = [{ type: "text", value: " " }];
-      }
-    },
-    onVisitHighlightedLine(node) {
-      node.properties.className.push("highlighted");
-    },
-    onVisitHighlightedWord(node) {
-      node.properties.className = ["word"];
-    },
-  };
-
-  // compile md
-  const mdxSource = await serialize(file, {
-    mdxOptions: {
-      remarkPlugins: [
-        remarkGfm,
-        remarkGemoji,
-        remarkMath,
-        remarkJaruby,
-        remarkLinkCard,
-        remarkUnwrapImages,
-        [
-          remarkMermaid,
-          {
-            launchOptions: {
-              args: ["--no-sandbox", "--disable-setuid-sandbox"],
-            },
-            wrap: true,
-            className: ["mermaid"],
-          },
-        ],
-      ],
-      rehypePlugins: [
-        rehypeSlug,
-        [rehypeAutolinkHeadings, { behavior: "wrap" }],
-        rehypeKatex,
-        [rehypePrettyCode, rpcOptions],
-        rehypeImageOpt,
-        rehypeRaw,
-      ],
-      remarkRehypeOptions: {
-        handlers: {
-          extlink: extLinkHandler,
-        },
-      },
-      format: "md",
-      development: false,
-    },
-    parseFrontmatter: true,
-  });
-
-  return mdxSource;
-};
-```
-
-[開発背景](https://github.com/hashicorp/next-mdx-remote#background--theory)に記載があるように、バンドルサイズの削減にも注意が払われているらしく、実際に私の環境では（`rehype-react`比で）200KB ほどバンドルが小さくなった。
-
-![with rehype-react](/image/bundlesize_pre.png)
-
-![with next-mdx-remote](/image/bundlesize_post.png)
+先人たちが示してきたとおり、この手の個人サイトは管理・移行が億劫になった時点で**エタる**。放置された「〇〇の部屋」、消えて還らない借りドメイン、むなしく刻む入室カウンターたちを眺めるたびに、せめて記事くらいは移行しやすい形式で扱いたいと思うようになった。そういうわけで Markdown（コンテンツ） + tsx（テンプレート）。この組み合わせならそう簡単には廃れないだろうし、いつか別サービス・別フレームワークに移るときにもそれほど困らない。
 
 ### 3. 高速性・拡張性
 
-Next.js。
-
-個人サイトには若干過剰の感もある。ただページ遷移がやっぱり気持ちいいし、Vercel なら画像の最適化も効くし……こうしてベンダーロックインへと突き進んでゆくのでした。あと少々複雑なことをしようとしてもフレームワークの守備範囲をはみ出さないのは良い。
+Next.js。個人サイトには若干過剰の感もあるものの、ページ遷移の気持ちよさと画像の最適化が魅力的。あと少々複雑なことをしようとしてもフレームワークの守備範囲をはみ出さないのは良い。
 
 ### 4. 広告や統計の排除
 
-過剰な広告・統計に対して憎悪を抱いているため、このサイトには一切設置していない。唯一、このサイトのホスト先である Vercel が行っているアナリティクスだけは確認している。[こちらの記事](/blog/posts/nextdns-install)も参照。
+過剰な広告・統計に対して憎悪を抱いているため、このサイトには設置していない。唯一、ホスティング先である Vercel が行っているアナリティクスだけは確認している。[こちらの記事](/blog/posts/nextdns-install)も参照。
 
 ## 機能一覧と実装
 
-以下はこのブログの機能・実装のギャラリー。
+以下はこのブログの機能・実装・使用ライブラリのギャラリー
 
-### 記事メタデータ
+### Markdown の処理
 
-Markdown 内の frontmatter からデータを取得。また`strip-markdown`で本文を plain text 化し、冒頭を抽出したものを各記事のプレビューとして流している。
+（2022/12/28 更新）
+
+Markdown の処理系について。以前は `remark` + `rehype` の出力を `rehype-react` でレンダリングしていたが、`rehype-react`（厳密にいえばその依存先の `parse5`）のバンドルサイズがバカにならないため、`next-mdx-remote` に乗り換えた。
+
+<https://github.com/hashicorp/next-mdx-remote>
+
+これは他の処理系とは異なり、`getStaticProps`（`/pages`の場合）ないし`fetch` / `cache`（`/app`の場合）経由でコンテンツを取得し、コンパイルした JSX を返却する仕様になっている。また内部では`remark` / `rehype` / MDX 系の API が用いられており、これらの系列のプラグインが利用できる。
+
+（2023/03/02 更新）
+
+ちなみに：Next.js 13 の app directory（React Server Component）を使う場合、どのライブラリでも大差ないかもしれない（コンテンツが server component である限り、ページ内のクライアント JS は剥がされるため）
+
+### 記事メタデータの取得
 
 <https://github.com/remarkjs/remark-frontmatter>
 
 <https://github.com/vfile/vfile-matter>
-
-<https://github.com/remarkjs/strip-markdown>
 
 ```md
 ---
@@ -158,45 +73,38 @@ tags: ["tech", "web", "nextjs"]
 <https://github.com/remarkjs/remark-gfm>
 
 ```md
-| 表を     | 作る       |
-| -------- | ---------- |
-| たとえば | このように |
-| 要素を   | 増やす     |
+| 普通に | 表  |
+| ------ | --- |
+| 1      | 2   |
+| 3      | 4   |
 
 <https://www.haxibami.net>
 
-みたいな生のリンクも置けるし
+裸のリンクって ↑ こう書くのが Markdown のスタンダードらしい
 
-- こうやって
-  - リストが書ける。
-
-ほかにも、
+その他、
 
 - [x] TODO
-- [ ] リストや、[^1]
+- [ ] リストや、脚注 [^1]
 
-[^1]: 脚注も使える
+[^1]: 脚注など
 ```
 
-| 表を     | 作る       |
-| -------- | ---------- |
-| たとえば | このように |
-| 要素を   | 増やす     |
+| 普通に | 表  |
+| ------ | --- |
+| 1      | 2   |
+| 3      | 4   |
 
 <https://www.haxibami.net>
 
-みたいな生のリンクも置けるし
+裸のリンクって ↑ こう書くのが Markdown のスタンダードらしい
 
-- こうやって
-  - リストが書ける。
-
-ほかにも、
+その他、
 
 - [x] TODO
-- [ ] リスト
-- [ ] や、[^1]
+- [ ] リストや、脚注 [^1]
 
-[^1]: 脚注も使える
+[^1]: 脚注など
 
 ### 絵文字
 
@@ -210,27 +118,27 @@ tags: ["tech", "web", "nextjs"]
 
 <https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex>
 
-適当なところで KaTeX のスタイルシートを読み込む必要がある（忘れがち）。
+忘れがちだが、適当なところで KaTeX のスタイルシートを読み込む必要がある。
 
 ```md
-> $$
-> ( \sum_{k=1}^{n} a_k b_k )^2 \leq ( \sum_{k=1}^{n} {a_k}^2 ) ( \sum_{k=1}^{n} {b_k}^2 )
-> $$
+$$
+( \sum_{k=1}^{n} a_k b_k )^2 \leq ( \sum_{k=1}^{n} {a_k}^2 ) ( \sum_{k=1}^{n} {b_k}^2 )
+$$
 ```
 
-> $$
-> ( \sum_{k=1}^{n} a_k b_k )^2 \leq ( \sum_{k=1}^{n} {a_k}^2 ) ( \sum_{k=1}^{n} {b_k}^2 )
-> $$
+$$
+( \sum_{k=1}^{n} a_k b_k )^2 \leq ( \sum_{k=1}^{n} {a_k}^2 ) ( \sum_{k=1}^{n} {b_k}^2 )
+$$
 
 ```md
-> $e^{i\pi} + 1 = 0$ :arrow_left: インライン数式
+$e^{i\pi} + 1 = 0$ :arrow_left: インライン数式
 ```
 
 $e^{i\pi} + 1 = 0$ :arrow_left: インライン数式
 
 ### ルビ
 
-やや古い既存のパッケージ（`remark-ruby`）をフォークして、別パッケージ（`remark-jaruby`）を実装。
+古い既存のパッケージ（`remark-ruby`）をフォークして、別パッケージ（`remark-jaruby`）を実装。
 
 <https://github.com/haxibami/remark-jaruby>
 
@@ -246,115 +154,17 @@ $e^{i\pi} + 1 = 0$ :arrow_left: インライン数式
 
 <https://github.com/rehypejs/rehype-autolink-headings>
 
+```md
+:arrow_right: [はじめに](#はじめに) に飛べるよ
+```
+
 :arrow_right: [はじめに](#はじめに) に飛べるよ
 
 ### Mermaid Diagram
 
-[remark-mermaidjs](https://github.com/remcohaszing/remark-mermaidjs)をベースに remark プラグインを書いた。ビルド時にヘッドレス Chromium 上で SVG を描画させてから取り出している（わざわざ？　の感もあるが仕方ない[^2]）。サイト内に JS を設置してユーザー側で動的にレンダリングさせることもできるが、事前に変換できたほうが（SSG としては）嬉しい。
+[remark-mermaidjs](https://github.com/remcohaszing/remark-mermaidjs)をベースに remark プラグインを[書いた](https://github.com/haxibami/haxibami.net/blob/2db87a4118c63b211ec10f6f7e0ec3b093513468/haxibami.net/src/lib/remark-mermaid.ts)。通常の Mermaid のやり方ではクライアントサイドで JS が実行されるが、このプラグインを使うとビルド時にヘッドレス Chromium で[^2] あらかじめ SVG が描画され、静的にドキュメントに埋め込まれる。SSG 的でしょ？
 
-[^2]: 調べた & 試した限り、mermaid は node 上の DOM ライブラリ（JSDOM や happy-dom）では動かない
-
-```ts title="lib/remark-mermaid.ts"
-...
-
-const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
-  options
-): Transformer {
-  const DEFAULT_SETTINGS = {
-    launchOptions: {
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    },
-    theme: "default",
-    wrap: false,
-    classname: [],
-  };
-
-  const settings = Object.assign({}, DEFAULT_SETTINGS, options);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  return async (node: Node, _file: VFileCompatible) => {
-    const mermaidBlocks = getMermaidBlocks(node);
-    if (mermaidBlocks.length === 0) {
-      return;
-    }
-    const browser = await playwright.chromium.launch(settings.launchOptions);
-    const context = await browser.newContext({
-      viewport: { width: 1000, height: 3000 },
-    });
-    const page = await context.newPage();
-    await page.setContent(`<!DOCTYPE html>`);
-    await page.addScriptTag({
-      url: "https://unpkg.com/mermaid/dist/mermaid.min.js",
-      type: "module",
-    });
-    // await page.setViewportSize({ width: 1000, height: 3000 });
-    const svgResults = await page.evaluate(
-      ({ blocks, theme }) => {
-        const config: MermaidConfig = {
-          theme: theme,
-          startOnLoad: false,
-        };
-        mermaid.mermaidAPI.initialize(config);
-        return blocks.map(([code, ,], id) => {
-          const svg = mermaid.mermaidAPI.render(`mermaid-${id}`, code.value);
-          return svg;
-        });
-      },
-      { blocks: mermaidBlocks, theme: settings.theme }
-    );
-    await browser.close();
-
-    mermaidBlocks.forEach(([, index, parent], i) => {
-      const svgAst = svgParse(optSvg(svgResults[i]));
-      if (settings.wrap) {
-        parent.children[index] = {
-          type: "parent",
-          children: [],
-          data: {
-            hChildren: [
-              {
-                type: "element",
-                children: [svgAst],
-                tagName: "div",
-                properties: {
-                  className: settings.classname,
-                },
-              },
-            ],
-          },
-        } as Parent;
-      } else {
-        parent.children[index] = {
-          type: "paragraph",
-          children: [],
-          data: {
-            hChildren: [svgAst],
-          },
-        } as Paragraph;
-      }
-    });
-  };
-};
-
-function getMermaidBlocks(node: Node): MermaidBlock[] {
-  const blocks: MermaidBlock[] = [];
-
-  visit(
-    node,
-    isMermaid,
-    (node: Code, index: number, parent: Parent | undefined) => {
-      if (!isParent(parent)) {
-        return;
-      }
-      blocks.push([node, index, parent]);
-    }
-  );
-
-  return blocks;
-}
-
-...
-```
+[^2]: こんなことのためにわざわざヘッドレスブラウザを使うのもアレだが、mermaid は node 上で動く DOM ライブラリ（JSDOM や happy-dom 等）には対応していない[ようなので](https://github.com/mermaid-js/mermaid/issues/559)、やむを得ずこうした。
 
 ````md
 ```mermaid
@@ -398,11 +208,9 @@ pie
 
 ### シンタックスハイライト
 
-`rehype-pretty-code`を採用。このプラグインの内部処理には[shiki](https://shiki.matsu.io)が使われており、コード解析とスタイル適用がビルド時に済む（追加 CSS が不要）、VSCode のカラースキームが使える、などの利点がある。
+`rehype-pretty-code`。このプラグインの内部処理には[shiki](https://shiki.matsu.io)が使われており、スタイル適用がすべてビルド時に済む（追加 CSS が不要）、VSCode のカラースキームが使える、などの利点がある。
 
 <https://github.com/atomiks/rehype-pretty-code>
-
-<https://github.com/shikijs/shiki>
 
 ### リンクカード
 
@@ -412,244 +220,56 @@ pie
 
 <https://zenn.dev/januswel/articles/745787422d425b01e0c1>
 
-上の記事を参考に、unified の Transformer プラグインとして実装した。文書中に単独で貼られたリンク（`Paragraph`ノードかつ、子要素が単一の`Link`ノードであるもの）を適当な独自ノード（`<extlink>`）に置き換え、リンク先にアクセスして得たメタ情報（title、description、OG image URL）を付加している。この一式を`<MDXRemote>`の`components`オプションを使って自作コンポーネントに変換することで、好きなスタイルで画像付きリンクカードが表示できる。
+上の記事を参考に、unified の Transformer プラグインを使って[実装した](https://github.com/haxibami/haxibami.net/blob/2db87a4118c63b211ec10f6f7e0ec3b093513468/haxibami.net/src/lib/remark-link-card.ts)。おおむね、
 
-```ts title="lib/remark-link-card.ts"
-import getMetadata from "metadata-scraper";
-import { visit } from "unist-util-visit";
+1. 文書中に単独で貼られたリンクノードを検出
+2. リンク先にアクセスしてメタデータ（`title`、`description`、`og`）を取得
+3. これらの情報をノードの属性に付加し、独自の要素（ex. `<extlink>`）に置き換え
+4. 独自要素を、MDX の処理系側で自作コンポーネントに置換
 
-import { isParent, isLink, isParagraph } from "./mdast-util-node-is";
+という手順で好きなスタイルのリンクカードに変換している。
 
-import type { Paragraph, Link, Literal } from "mdast";
-import type { H } from "mdast-util-to-hast";
-import type { Plugin, Transformer } from "unified";
-import type { Node, Parent } from "unist";
-import type { VFileCompatible } from "vfile";
-
-interface ExtLink extends Literal {
-  type: "extlink";
-  meta: {
-    url: string;
-    title: string;
-    description: string;
-    og: string;
-    icon: string;
-  };
-}
-
-function isExtLink(node: unknown): node is Paragraph {
-  if (!isParagraph(node)) {
-    return false;
-  }
-
-  const { children } = node;
-
-  if (children.length != 1) {
-    return false;
-  }
-
-  const singleChild = children[0];
-  if (
-    !(
-      isLink(singleChild) &&
-      singleChild.children[0].type == "text" &&
-      singleChild.url.startsWith("http")
-    )
-  ) {
-    return false;
-  }
-
-  return true;
-}
-
-function fetchMeta(url: string) {
-  const metas = getMetadata(url).then((data) => {
-    const metaData = {
-      url: url,
-      title: data.title ?? "",
-      description: data.description ?? "",
-      og: data.image ?? "",
-      icon: data.icon ?? "",
-    };
-    return metaData;
-  });
-  return metas;
-}
-
-export const remarkLinkCard: Plugin = function extLinkTrans(): Transformer {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  return async (tree: Node, _file: VFileCompatible) => {
-    const promises: (() => Promise<void>)[] = [];
-    visit(tree, isExtLink, visitor);
-    await Promise.all(promises.map((t) => t()));
-
-    function visitor(
-      node: Paragraph,
-      index: number,
-      parent: Parent | undefined
-    ) {
-      if (!isParent(parent)) {
-        return;
-      }
-
-      if (parent.type === "listItem") {
-        return;
-      }
-
-      const child = node.children[0] as Link;
-
-      promises.push(async () => {
-        const data = await fetchMeta(child.url);
-        parent.children[index] = {
-          type: "extlink",
-          meta: data,
-        } as ExtLink;
-      });
-    }
-  };
-};
-
-export function extLinkHandler(_h: H, node: ExtLink) {
-  return {
-    type: "element" as const,
-    tagName: "extlink",
-    properties: {
-      url: node.meta.url,
-      title: node.meta.title,
-      description: node.meta.description,
-      og: node.meta.og,
-      icon: node.meta.icon,
-    },
-    children: [],
-  };
-}
-```
-
-取得したメタデータは 以下のように props 経由で受け渡しできる。型の扱いが雑だけど……ヨシ！（炎上）
+ちなみに、ノードに付加した属性は（独自のものであっても）props としてコンポーネントに渡せる。`next-mdx-remote`だと以下のようになる。
 
 ```tsx title="components/MdxComponent/index.tsx" /props/
 import LinkCard from "components/LinkCard";
-import MyLink from "components/MyLink";
 import NextImage from "components/NextImage";
+import NextLink from "components/NextLink";
 
 import type { LinkCardProps } from "components/LinkCard";
-import type { MyLinkProps } from "components/MyLink";
 import type { NextImageProps } from "components/NextImage";
+import type { NextLinkProps } from "components/NextLink";
 import type { MDXComponents } from "mdx/types";
 
 type ProvidedComponents = MDXComponents & {
-  a?: typeof MyLink;
+  a?: typeof NextLink;
   img?: typeof NextImage;
   extlink?: typeof LinkCard;
 };
 
-const components = {
-  a: (props: MyLinkProps) => <MyLink {...props} />,
+const replaceComponents = {
+  a: (props: NextLinkProps) => <NextLink {...props} />,
   img: (props: NextImageProps) => <NextImage {...props} />,
   extlink: (props: LinkCardProps) => <LinkCard {...props} />,
 } as ProvidedComponents;
 
-export default components;
+export default replaceComponents;
 ```
 
-なお、プラグイン内部で`fetch`を行っている都合上、作成したプラグイン全体が非同期となることに留意。具体的には unified で`processSync`が[使えなくなる](https://github.com/unifiedjs/unified#processorprocesssyncfile)。
+```ts title="src/lib/compiler.ts"
+const result = compileMDX({
+  source,
+  components: MDXComponent,
+});
+```
 
 ### 画像処理
 
-Markdown で挿入した画像はそのままでは通常の`<img>`タグに変換され、Next.js の画像最適化の対象にならないが、これも[リンクカード](#リンクカード)と同様の手順で`next/image`に置換することで解決できる。
-
-```tsx title="components/NextImage.tsx"
-import React from "react";
-
-import Image from "next/image";
-import Link from "next/link";
-
-import Styles from "./style.module.scss";
-
-export type NextImageProps = {
-  src: string;
-  alt?: string;
-  aspectRatio: string;
-  blurDataURL: string;
-};
-
-const NextImage: React.FC<NextImageProps> = (props) => {
-  const { src, alt, aspectRatio, blurDataURL } = props;
-  return alt !== "asciicast" ? (
-    <figure className={Styles.Figure}>
-      <Link href={src} scroll={false}>
-        <div className={Styles.ImgBox} style={{ aspectRatio: aspectRatio }}>
-          <Image
-            className={Styles.Img}
-            src={src}
-            alt={alt || src}
-            fill={true}
-            placeholder="blur"
-            blurDataURL={blurDataURL}
-          />
-        </div>
-      </Link>
-      <figcaption>{alt}</figcaption>
-    </figure>
-  ) : (
-    <div className={Styles.ImgBox}>
-      <Image className={Styles.Img} src={src} alt={alt} fill={true} />
-    </div>
-  );
-};
-
-export default NextImage;
-```
-
-```ts title="lib/rehype-image-opt.ts"
-import { getPlaiceholder } from "plaiceholder";
-import { visit } from "unist-util-visit";
-
-import type { Element } from "hast";
-import type { Node } from "unist";
-import type { VFileCompatible } from "vfile";
-
-export default function rehypeImageOpt() {
-  return async (tree: Node, _file: VFileCompatible) => {
-    const promises: (() => Promise<void>)[] = [];
-    visit(tree, "element", (node: Element) => {
-      if (
-        node.tagName === "img" &&
-        node.properties &&
-        node.properties.src &&
-        typeof node.properties.src === "string"
-      ) {
-        const src = node.properties.src;
-
-        promises.push(async () => {
-          if (node.properties) {
-            const blur = await getPlaiceholder(src);
-            node.properties.src = blur.img.src;
-            node.properties.width = blur.img.width;
-            node.properties.height = blur.img.height;
-            node.properties.aspectRatio = `${blur.img.width} / ${blur.img.height}`;
-            node.properties.blurDataURL = blur.base64;
-          }
-        });
-      }
-    });
-    await Promise.all(promises.map((t) => t()));
-  };
-}
-```
-
-上の例では変換処理に加えて、画像のサイズ取得・プレースホルダー生成を行う rehype プラグインを実装し、
-
-- 画像読み込み前のプレースホルダーの設定
-- 画像を収納する親要素のサイズ調整（画像のアスペクト比を利用）
-
-などを行っている。
+上と同じ要領で、Markdown 内の画像を`next/image`に置き換えるための remark プラグインを[書いた](https://github.com/haxibami/haxibami.net/blob/2db87a4118c63b211ec10f6f7e0ec3b093513468/haxibami.net/src/lib/rehype-image-opt.ts)。Next.js の[公式ガイド](https://nextjs.org/docs/api-reference/next/image#placeholder)を参照し、画像のサイズ取得・プレースホルダー生成も行っている。
 
 参考：
 
 <https://zenn.dev/elpnt/articles/c17727e9d254ef00ea60>
-
-<https://nextjs.org/docs/api-reference/next/image#blurdataurl>
 
 ### ダークモード
 
@@ -657,11 +277,11 @@ export default function rehypeImageOpt() {
 
 <https://github.com/pacocoursey/next-themes>
 
-### OGP 画像の生成
+### OG 画像の生成
 
 （2022/12/28 更新）
 
-ヘッドレス Chromium を使った古い実装から、Vercel 公式が提供する[新しいアプローチ](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation)（`@vercel/og`）に乗り換えた。どうやら[yoga-layout](https://yogalayout.com/)のスタイリングエンジンを WASM で動かしているらしく、かなり速い。しかも Tailwind が使える。
+ヘッドレス Chromium を使った古い実装から、Vercel 公式が提供する[新しいアプローチ](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation)（`@vercel/og`）に[乗り換えた](https://github.com/haxibami/haxibami.net/blob/2db87a4118c63b211ec10f6f7e0ec3b093513468/haxibami.net/src/pages/api/ogp.tsx)。どうやら yoga-layout のスタイリングエンジンを WASM で動かしているらしく、かなり速い。しかも Tailwind が使える。
 
 ```tsx title="pages/api/ogp.tsx"
 import type { NextRequest } from "next/server";
@@ -669,7 +289,7 @@ import type { NextRequest } from "next/server";
 import { ImageResponse } from "@vercel/og";
 
 export const config = {
-  runtime: "experimental-edge",
+  runtime: "edge",
 };
 
 const handler = async (req: NextRequest) => {
@@ -775,18 +395,18 @@ const handler = async (req: NextRequest) => {
 export default handler;
 ```
 
-ちなみにこの関数は Edge 環境で実行されるため、総容量制限は **1MB** とかなり厳しい。日本語フォントは内蔵のもの（Noto Sans JP？）で妥協するか、サブセット化したものを Web フォントとしてロードするしかない。
+ちなみにこの関数は Edge 環境で実行されるため、総容量制限は **1MB** とかなり厳しい。日本語フォントは内蔵のもの（Noto Sans JP？）で妥協するか、軽量化したものを Web フォントとしてロードするしかない。
 
 ### サイトマップ生成
 
-frontmatter に記載した記事情報に合わせてサイトマップを生成したかったので、[このへん](https://www.mk-engineer.com/posts/nextjs-before-build)を参考にしつつ自分で書いた。npm scripts を活用し、
+[このへん](https://www.mk-engineer.com/posts/nextjs-before-build)を参考にしつつ手元で[書いた](https://github.com/haxibami/haxibami.net/blob/2db87a4118c63b211ec10f6f7e0ec3b093513468/haxibami.net/hooks/scripts/sitemap.mts)。
 
 1. ビルド前に記事のインデックスをキャッシュ
-1. キャッシュに基づいて`public/sitemap.xml`と`public/robots.txt`を生成
+1. キャッシュに基づいて`sitemap.xml`と`robots.txt`を生成
 
 するようにしてある。
 
-```js title="hooks/scripts/sitemap.mts"
+```ts title="hooks/scripts/sitemap.mts"
 import fs from "fs";
 
 import { globby } from "globby";
@@ -893,11 +513,11 @@ export default genSitemap;
 
 ### フィード対応
 
-`Feed`というライブラリで形式を整え、サイトマップと同じ要領でビルド時に RSS、Atom、JSON Feed 用のファイルを吐かせている。
+`Feed`というライブラリを使って形式を整え、上と同じ要領でビルド時に RSS、Atom、JSON Feed 用のファイルを吐かせている。
 
 <https://github.com/jpmonette/feed>
 
-```js title="hooks/scripts/feed.mts"
+```ts title="hooks/scripts/feed.mts"
 import fs from "fs";
 
 import { Feed } from "feed";
@@ -969,4 +589,4 @@ export default GenFeed;
 
 ## 感想
 
-~~時間をドブに捨てた~~地道な改修の結果、はてなブログや Qiita、Zenn あたりに負けない書き心地になってきた。ちなみに肝心の記事は全然増えていない。
+はてなブログや Qiita、Zenn あたりと張り合える書き心地かもしれない。
