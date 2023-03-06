@@ -6,7 +6,7 @@ specifiers:
   '@types/hast': 2.3.4
   '@types/mdast': 3.0.10
   '@types/mdx': 2.0.3
-  '@types/node': 18.14.4
+  '@types/node': 18.14.6
   '@types/prettier': 2.7.2
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
@@ -113,7 +113,7 @@ devDependencies:
   '@types/hast': 2.3.4
   '@types/mdast': 3.0.10
   '@types/mdx': 2.0.3
-  '@types/node': 18.14.4
+  '@types/node': 18.14.6
   '@types/prettier': 2.7.2
   '@types/react': 18.0.28
   '@types/react-dom': 18.0.11
@@ -137,7 +137,7 @@ devDependencies:
   prettier-plugin-tailwindcss: 0.2.4_prettier@2.8.4
   sharp: 0.31.3
   tailwindcss: 3.2.7_aesdjsunmf4wiehhujt67my7tu
-  ts-node: 10.9.1_oboltcrkaqheaa54woelu7cdsa
+  ts-node: 10.9.1_alpjt73dvgv6kni625hu7f2l4m
   typescript: 4.9.5
 
 packages:
@@ -531,8 +531,8 @@ packages:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
     dev: false
 
-  /@types/node/18.14.4:
-    resolution: {integrity: sha512-VhCw7I7qO2X49+jaKcAUwi3rR+hbxT5VcYF493+Z5kMLI0DL568b7JI4IDJaxWFH0D/xwmGJNoXisyX+w7GH/g==}
+  /@types/node/18.14.6:
+    resolution: {integrity: sha512-93+VvleD3mXwlLI/xASjw0FzKcwzl3OdTCzm1LaRfqgS21gfFtK3zDXM5Op9TeeMsJVOaJ2VRDpT9q4Y3d0AvA==}
     dev: true
 
   /@types/parse5/6.0.3:
@@ -2431,7 +2431,7 @@ packages:
     resolution: {integrity: sha512-VdQdKtBMUAO5WDTZQMdMXKgtp+z9t8DVyRmYTQ8zKC0IlkeEsNrbq8/FSjydZzlhR5rfwkQeuMlYnrIckkFPow==}
     engines: {node: '>=16.0'}
     dependencies:
-      '@types/node': 18.14.4
+      '@types/node': 18.14.6
       entities: 4.4.0
       html-rewriter-wasm: 0.4.1
       node-fetch: 3.3.0
@@ -4719,7 +4719,7 @@ packages:
     dependencies:
       lilconfig: 2.0.6
       postcss: 8.4.21
-      ts-node: 10.9.1_oboltcrkaqheaa54woelu7cdsa
+      ts-node: 10.9.1_alpjt73dvgv6kni625hu7f2l4m
       yaml: 1.10.2
     dev: true
 
@@ -5731,7 +5731,7 @@ packages:
     engines: {node: '>=6.10'}
     dev: false
 
-  /ts-node/10.9.1_oboltcrkaqheaa54woelu7cdsa:
+  /ts-node/10.9.1_alpjt73dvgv6kni625hu7f2l4m:
     resolution: {integrity: sha512-NtVysVPkxxrwFGUUxGYhfux8k78pQB3JqYBXlLRZgdGUqTO5wU/UyHop5p70iEbGhB7q5KmiZiU0Y3KlJrScEw==}
     hasBin: true
     peerDependencies:
@@ -5750,7 +5750,7 @@ packages:
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.3
-      '@types/node': 18.14.4
+      '@types/node': 18.14.6
       acorn: 8.8.0
       acorn-walk: 8.2.0
       arg: 4.1.3
