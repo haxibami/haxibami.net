@@ -7,7 +7,7 @@ description: "自己紹介"
 
 ## Profile
 
-haxibami / 端食 / はしばみ / [haɕibamʲi]
+haxibami / 端食 / はしばみ / `[haɕibamʲi]`
 
 文章とコードの読み書き。
 
@@ -17,9 +17,10 @@ haxibami / 端食 / はしばみ / [haɕibamʲi]
 
 ### Org. & Dept.
 
-- Humanity & Social sciences I, College of Arts & Sciences Junior Div., the Univ. of Tokyo
-  - 2 年
-- [東京大学きらら同好会](https://utkiraracircle.github.io) - **_moe explorer_**
+- Interdiscip. Social Sciences Course, Social and Intl. Relations Sect., Dept. of Humanities and Social Sciences, College of Arts & Sciences Senior Div., the Univ. of Tokyo
+  - 長い
+  - 3 年
+- [東京大学きらら同好会](https://utkiraracircle.github.io) - **_moe gang_**
 - [TSG](https://tsg.ne.jp) - コンピュータサークル
 - [六代目：生活の困難](https://umector.hatenablog.jp) - 戯れ集団
 
@@ -33,20 +34,26 @@ let myEmail = "me" + "@" + "haxibami.net"
 
 - SF、幻想文学
 - 百合
-- 政治学、政治哲学
-- 情報科学、オープンソースプロジェクト
+- きらら
+- 政治哲学
+- 情報科学、オープンソースソフトウェア
 - 分析哲学
 - 神経科学、心の哲学
 - 地理学、地球惑星科学
 
+公的にせよ私的にせよ、不可能をどうやって信仰するかに興味があります。
+
 ## Favorite
 
-### Book
+### Novel
 
-- 『伝奇集』 - ホルヘ・ルイス・ボルヘス
+ボルヘス、ヴォネガット、ラファティ、テッド・チャン、などの作品一般
+
+### Manga
+
 - 『ぬるめた』 - こかむも
-- 『あなたの人生の物語』 - テッド・チャン
 - 『シメジシミュレーション』 - つくみず
+- 『夜と海』 - 郷本
 
 ### Music
 
@@ -54,19 +61,20 @@ let myEmail = "me" + "@" + "haxibami.net"
 
 ### Anime
 
-- [少女歌劇レヴュースタァライト](https://revuestarlight.com)
-- [プリンセス・プリンシパル](https://pripri-anime.jp)
+- 『少女歌劇レヴュースタァライト』
+- 『プリンセス・プリンシパル』
+- 『お兄ちゃんはおしまい！』
 
 ## Project
 
-- [`haxibami.net`](https://github.com/haxibami/haxibami.net) - このサイト
-- [`hotate`](https://github.com/haxibami/hotate) - 縦書きエディタ
-- [`urara.vim`](https://github.com/haxibami/urara.vim) - Vim カラースキーム
+- [haxibami.net](https://github.com/haxibami/haxibami.net) - このサイト
+- [hotate](https://github.com/haxibami/hotate) - 縦書きエディタ
+- [urara.vim](https://github.com/haxibami/urara.vim) - Vim カラースキーム
 
 ## Navigation
 
-- [Top](/) - avangarde
-- [Blog](/blog) - 祈り・技術・加速
+- [Top](/)
+- [Blog](/blog) - 本とか技術とか
 - [Twitter](https://twitter.com/haxibami)
 - [GitHub](https://github.com/haxibami)
 - [Keybase](https://keybase.io/haxibami)
@@ -81,3 +89,4 @@ let myEmail = "me" + "@" + "haxibami.net"
 - [みそは入ってませんけど](https://not-miso-inside.netlify.app) - 一階堂洋
 - [ふぁぼんのホームページ](https://www.fabon.info/) - ふぁぼん
 - [fuku.day](https://fuku.day/) - Aumy
+- [どな部屋](https://donabe8898.dev) - Donabe

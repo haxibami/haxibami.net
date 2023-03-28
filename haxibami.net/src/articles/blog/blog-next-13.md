@@ -42,7 +42,7 @@ let nextConfig = {
 
 `experimental.serverComponentsExternalPackages`という項目がけっこう重要。Markdown の処理に node 依存のライブラリを使用している場合、該当ライブラリをここに列挙する必要がある。
 
-<https://beta.nextjs.org/docs/api-reference/next.config.js#servercomponentsexternalpackages>
+<https://beta.nextjs.org/docs/api-reference/next-config#servercomponentsexternalpackages>
 
 あと関係ないが `next.config.js` はドシドシ ESM（`.mjs`）で書こう。
 

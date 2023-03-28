@@ -56,7 +56,7 @@
     & p,
     & li {
       & a {
-        @apply text-[color:var(--link)] underline decoration-[color:var(--link)] decoration-2 underline-offset-2;
+        @apply text-[color:var(--link)] underline decoration-[color:var(--link)] decoration-2 underline-offset-4;
       }
     }
     & p {
@@ -256,12 +256,12 @@
   --fg: #1c1b22;
   --bg: #f7f7fa;
   --title: #191724;
-  --secondary: #605f64;
+  --secondary: #49484e;
   --hover: #edebef;
   --line: #8a829955;
   --shadow: #1c1b2266;
-  --link: #ec4899;
-  --code: #edebef;
+  --link: #2c4e96;
+  --code: #e8e8e8;
   --nextbg: #1c1b22;
   --prevfg: #1c1b22;
   --codehl: #403d52;
