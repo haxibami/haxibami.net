@@ -90,6 +90,8 @@ const compiler = async (source: string) => {
           handlers: {
             extlink: extLinkHandler,
           },
+          footnoteLabel: "目次",
+          footnoteBackLabel: "戻る",
         },
         format: "md",
       },
