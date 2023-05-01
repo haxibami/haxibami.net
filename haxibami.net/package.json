@@ -35,7 +35,7 @@
     "katex": "^0.16.4",
     "mdast-util-to-hast": "12.3.0",
     "mermaid": "10.1.0",
-    "next": "13.3.2",
+    "next": "13.3.4",
     "next-mdx-remote": "4.4.1",
     "next-themes": "0.2.1",
     "playwright": "1.33.0",
