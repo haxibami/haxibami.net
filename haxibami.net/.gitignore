@@ -37,8 +37,5 @@ yarn-error.log*
 .vscode
 
 # auto-generated
-public/sitemap.xml
-public/sitemap-0.xml
 public/rss/
-public/robots.txt
 src/share/index.json

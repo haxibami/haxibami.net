@@ -20,9 +20,10 @@ const redOctober = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(`https://${HOST}`),
   creator: "haxibami",
   publisher: "haxibami",
-  authors: [{ name: "haxibami", url: "https://www.haxibami.net" }],
+  authors: [{ name: "haxibami", url: `https://${HOST}` }],
   generator: "Next.js",
   applicationName: "haxibami",
   openGraph: {
@@ -31,14 +32,14 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: {
-      url: `https://${HOST}/favicon.ico`,
+      url: `/favicon.ico`,
     },
   },
   alternates: {
     types: {
-      "application/rss+xml": `https://${HOST}/rss/feed.xml`,
-      "application/atom+xml": `https://${HOST}/rss/atom.xml`,
-      "application/json": `https://${HOST}/rss/feed.json`,
+      "application/rss+xml": `/rss/feed.xml`,
+      "application/atom+xml": `/rss/atom.xml`,
+      "application/json": `/rss/feed.json`,
     },
   },
   twitter: {

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import PostDisplay from "components/PostDisplay";
 import { fetchTags, fetchTaggedPostsData } from "lib/api";
-import { COUNT_PER_PAGE, HOST, SITEDATA } from "lib/constant";
+import { COUNT_PER_PAGE, SITEDATA } from "lib/constant";
 import { pageIdGen } from "lib/fs";
 
 const postType = "grad_essay";
@@ -19,12 +19,10 @@ export function generateMetadata({
     openGraph: {
       title: `${SITEDATA[postType].title} - #${tag}`,
       description: `タグ: #${tag} の卒業文集`,
-      url: `https://${HOST}/${postType}/tag/${tag}/page/${id}`,
+      url: `/${postType}/tag/${tag}/page/${id}`,
       type: "website",
       images: {
-        url: encodeURI(
-          `https://${HOST}/api/ogp?title=${SITEDATA[postType].title}`
-        ),
+        url: encodeURI(`/api/ogp?title=${SITEDATA[postType].title}`),
         width: 1200,
         height: 630,
       },
@@ -33,9 +31,7 @@ export function generateMetadata({
       card: "summary_large_image",
       title: `${SITEDATA[postType].title} - #${tag}`,
       description: `タグ: #${tag} の卒業文集`,
-      images: encodeURI(
-        `https://${HOST}/api/ogp?title=${SITEDATA[postType].title}`
-      ),
+      images: encodeURI(`/api/ogp?title=${SITEDATA[postType].title}`),
       site: "@haxibami",
       siteId: "1077091437517238272",
       creator: "@haxibami",

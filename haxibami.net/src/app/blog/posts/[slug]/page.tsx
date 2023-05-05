@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import TagList from "components/TagList";
 import { fetchPost, fetchPostsData } from "lib/api";
 import compiler from "lib/compiler";
-import { HOST } from "lib/constant";
 import { dateVisualizer } from "lib/front";
 import { getSlugs } from "lib/fs";
 
@@ -25,7 +24,7 @@ export async function generateMetadata({
     openGraph: {
       title: `${frontmatter?.title}`,
       description: `${frontmatter?.description}`,
-      url: `https://${HOST}/${postType}/posts/${frontmatter?.slug}`,
+      url: `/${postType}/posts/${frontmatter?.slug}`,
       type: "article",
       authors: "haxibami",
       publishedTime: frontmatter?.date,
@@ -33,7 +32,7 @@ export async function generateMetadata({
       tags: frontmatter?.tags,
       images: {
         url: encodeURI(
-          `https://${HOST}/api/ogp?title=${frontmatter?.title}&date=${frontmatter?.date}`
+          `/api/ogp?title=${frontmatter?.title}&date=${frontmatter?.date}`
         ),
         width: 1200,
         height: 630,
@@ -44,7 +43,7 @@ export async function generateMetadata({
       title: `${frontmatter?.title}`,
       description: `${frontmatter?.description}`,
       images: encodeURI(
-        `https://${HOST}/api/ogp?title=${frontmatter?.title}&date=${frontmatter?.date}`
+        `/api/ogp?title=${frontmatter?.title}&date=${frontmatter?.date}`
       ),
       site: "@haxibami",
       siteId: "1077091437517238272",
