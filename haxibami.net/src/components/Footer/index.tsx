@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { GitHubIcon, TwitterIcon, RssIcon } from "components/Svg";
+import { HOST } from "lib/constant";
 
 const Footer: React.FC = () => {
   return (
@@ -28,7 +29,7 @@ const Footer: React.FC = () => {
               <GitHubIcon className="h-8 w-8 fill-[color:var(--secondary)]" />
             </a>
             <a
-              href={"https://www.haxibami.net/rss/feed.xml"}
+              href={`${HOST}/rss/feed.xml`}
               target="_blank"
               rel="noopener noreferrer"
               title="RSS"

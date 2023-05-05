@@ -24,7 +24,7 @@ const feedGenerator = async () => {
     id: HOST,
     link: HOST,
     language: "ja",
-    image: `${HOST}/icon_ange_glasses_192.png`,
+    image: `${HOST}/folio.png`,
     favicon: `${HOST}/favicon.ico`,
     copyright: `All rights reserved ${date.getFullYear()}, ${author.name}`,
     updated: date,
@@ -46,6 +46,13 @@ const feedGenerator = async () => {
       id: url,
       link: url,
       date: new Date(dateConverter(post.data?.date)),
+      enclosure: {
+        url: encodeURI(
+          `${HOST}/api/ogp?title=${post.data?.title}&date=${post.data?.date}`
+        ),
+        length: 0,
+        type: "image/png",
+      },
     });
   });
 

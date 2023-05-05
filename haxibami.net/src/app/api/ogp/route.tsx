@@ -7,12 +7,16 @@ export const runtime = "edge";
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-    const title = searchParams.has("title")
+    const titleQ = searchParams.has("title")
       ? searchParams.get("title")?.slice(0, 80)
       : "";
-    const date = searchParams.has("date")
+    const dateQ = searchParams.has("date")
       ? `📅 ― ${searchParams.get("date")?.slice(0, 8)}`
       : "";
+
+    // sanitize title & date
+    const title = titleQ?.endsWith(".png") ? titleQ.slice(0, -4) : titleQ;
+    const date = dateQ?.endsWith(".png") ? dateQ.slice(0, -4) : dateQ;
 
     // CJK font is so large that if placed locally it easily exceeds the 1MB Edge Function limit >_<
     const notoFontData = await fetch(
@@ -23,10 +27,14 @@ export async function GET(req: NextRequest) {
       new URL("../../../assets/RobotoMono-Medium.woff", import.meta.url)
     ).then((res) => res.arrayBuffer());
 
-    const pngIcon = new URL(
-      "../../../assets/icon_ange_glasses_192.png",
-      import.meta.url
-    ).toString();
+    const iconBuffer = await fetch(
+      new URL("../../../assets/folio.png", import.meta.url)
+    ).then((res) => res.arrayBuffer());
+
+    const icon = Buffer.from(
+      String.fromCharCode(...new Uint8Array(iconBuffer)),
+      "binary"
+    ).toString("base64");
 
     return new ImageResponse(
       (
@@ -54,7 +62,7 @@ export async function GET(req: NextRequest) {
               <div tw="flex items-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={pngIcon}
+                  src={`data:image/png;base64,${icon}`}
                   alt="haxicon"
                   width={100}
                   height={100}

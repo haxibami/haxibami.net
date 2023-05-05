@@ -2,13 +2,13 @@
 slug: "blog-next-13"
 title: "ブログをNext.js 13に移行した"
 date: "20230303"
-description: "React Server Component / app directory に対応"
+description: "React Server Component / App Router に対応"
 tags: ["tech", "web", "nextjs", "react"]
 ---
 
 ## はじめに
 
-:tada: Next.js 13.2 がリリースされ、app directory (beta) での React Server Component（以下 RSC）が実用できそうな感じになってきたため、このサイトも移行した。Metadata API、Route Handler 等も同時に導入した。
+:tada: Next.js 13.2 がリリースされ、App Router (beta) & React Server Component（以下 RSC）が実用できそうな感じになってきたため、このサイトも移行した。Metadata API、Route Handler 等も同時に導入した。
 
 <https://github.com/haxibami/haxibami.net>
 

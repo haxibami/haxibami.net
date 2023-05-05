@@ -5,9 +5,8 @@ import Header from "components/PostHeader";
 import Footer from "components/Footer";
 import { fetchPost } from "lib/api";
 import compiler from "lib/compiler";
-import { HOST } from "lib/constant";
 
-import icon from "/public/icon_ange_glasses_512.webp";
+import icon from "/public/true-patched.png";
 
 export const metadata: Metadata = {
   title: "私について",
@@ -15,12 +14,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: "私について",
     description: "プロフィール",
-    url: `https://${HOST}/about`,
+    url: `/about`,
     type: "profile",
     username: "haxibami",
     // TODO: add other profile entry
     images: {
-      url: encodeURI(`https://${HOST}/api/ogp?title=私について`),
+      url: encodeURI(`/api/ogp?title=私について`),
       width: 1200,
       height: 630,
     },
@@ -29,7 +28,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "私について",
     description: "プロフィール",
-    images: encodeURI(`https://${HOST}/api/ogp?title=私について`),
+    images: encodeURI(`/api/ogp?title=私について`),
     site: "@haxibami",
     siteId: "1077091437517238272",
     creator: "@haxibami",

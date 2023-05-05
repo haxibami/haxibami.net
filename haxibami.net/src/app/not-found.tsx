@@ -1,3 +1,8 @@
 export default function NotFound() {
-  return "Couldn't find requested resource";
+  return (
+    <>
+      <h2>Not Found</h2>
+      <p>Could not find requested resource</p>
+    </>
+  );
 }

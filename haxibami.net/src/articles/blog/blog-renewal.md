@@ -51,7 +51,7 @@ Markdown の処理系について。以前は `remark` + `rehype` の出力を `
 
 （2023/03/02 更新）
 
-ちなみに：Next.js 13 の app directory（React Server Component）を使う場合、どのライブラリでも大差ないかもしれない（コンテンツが server component である限り、ページ内のクライアント JS は剥がされるため）
+ちなみに：Next.js 13 の App Router（React Server Component）を使う場合、どのライブラリでも大差ないかもしれない（コンテンツが server component である限り、ページ内のクライアント JS は剥がされるため）
 
 ### 記事メタデータの取得
 

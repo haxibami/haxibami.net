@@ -2,7 +2,7 @@ import fs from "fs";
 
 import prettier from "prettier";
 
-import { getPostsData } from "./lib/fs.js";
+import { getPostsData, getTags } from "./lib/fs.js";
 
 import type { PostData } from "./lib/interface.js";
 
@@ -36,10 +36,17 @@ const articleIndexer = async () => {
     return indexitem;
   });
 
+  const blogTags = await getTags("articles/blog");
+  const gradTags = await getTags("articles/grad_essay");
+
   const index = {
     articles: {
       blog: blogIndex,
       grad_essay: gradIndex,
+    },
+    tags: {
+      blog: blogTags,
+      grad_essay: gradTags,
     },
   };
 

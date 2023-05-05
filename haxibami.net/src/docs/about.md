@@ -26,28 +26,23 @@ haxibami / 端食 / はしばみ / `[haɕibamʲi]`
 
 ### Contact
 
-```txt
-let myEmail = "me" + "@" + "haxibami.net"
+```ts
+let myEmail = "me" + "@" + "haxibami.net";
 ```
 
 ## Interest
 
-- SF、幻想文学
-- 百合
-- きらら
+- SF、幻想文学、百合、きらら
 - 政治哲学
 - 情報科学、オープンソースソフトウェア
-- 分析哲学
-- 神経科学、心の哲学
+- 分析哲学、心の哲学
 - 地理学、地球惑星科学
-
-公的にせよ私的にせよ、不可能をどうやって信仰するかに興味があります。
 
 ## Favorite
 
 ### Novel
 
-ボルヘス、ヴォネガット、ラファティ、テッド・チャン、などの作品一般
+ボルヘス、ヴォネガット、ラファティ、テッド・チャン、などの作品
 
 ### Manga
 
@@ -76,6 +71,7 @@ let myEmail = "me" + "@" + "haxibami.net"
 - [Top](/)
 - [Blog](/blog) - 本とか技術とか
 - [Twitter](https://twitter.com/haxibami)
+- [ActivityPub](https://calc.cune.moe/@haxibami) - calckey
 - [GitHub](https://github.com/haxibami)
 - [Keybase](https://keybase.io/haxibami)
 - [Spotify](https://open.spotify.com/user/a0ndq420ky5fxfey4rpqx952w)
