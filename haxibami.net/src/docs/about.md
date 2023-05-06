@@ -75,6 +75,7 @@ let myEmail = "me" + "@" + "haxibami.net";
 - [GitHub](https://github.com/haxibami)
 - [Keybase](https://keybase.io/haxibami)
 - [Spotify](https://open.spotify.com/user/a0ndq420ky5fxfey4rpqx952w)
+- [RSS](/rss/feed.xml), [Atom](/rss/atom.xml), [JSON Feed](/rss/feed.json)
 
 ## Link exchange
 

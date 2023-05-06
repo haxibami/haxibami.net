@@ -17,7 +17,6 @@ let nextConfig = {
       "fetch-site-metadata",
     ],
     scrollRestoration: true,
-    appDir: true,
   },
   images: {
     formats: ["image/avif", "image/webp"],

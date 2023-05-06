@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     username: "haxibami",
     // TODO: add other profile entry
     images: {
-      url: encodeURI(`/api/ogp?title=私について`),
+      url: encodeURI(`/api/ogp?title=私について.png`),
       width: 1200,
       height: 630,
     },
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "私について",
     description: "プロフィール",
-    images: encodeURI(`/api/ogp?title=私について`),
+    images: encodeURI(`/api/ogp?title=私について.png`),
     site: "@haxibami",
     siteId: "1077091437517238272",
     creator: "@haxibami",

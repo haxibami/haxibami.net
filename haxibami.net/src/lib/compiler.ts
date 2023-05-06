@@ -11,8 +11,9 @@ import remarkMath from "remark-math";
 import remarkUnwrapImages from "remark-unwrap-images";
 
 import MDXComponent from "components/MDXComponent";
-import rehypeImageOpt from "lib/rehype-image-opt";
-import { remarkLinkCard, extLinkHandler } from "lib/remark-link-card";
+import remarkFootnoteTitle from "lib/remark-footnote-title";
+import remarkImageOpt from "lib/remark-image-opt";
+import { remarkLinkCard, linkCardHandler } from "lib/remark-link-card";
 import remarkMermaid from "lib/remark-mermaid";
 
 import type { Options } from "rehype-pretty-code";
@@ -61,6 +62,7 @@ const compiler = async (source: string) => {
           remarkJaruby,
           remarkLinkCard,
           remarkUnwrapImages,
+          remarkImageOpt,
           //         [
           //           remarkToc,
           //           {
@@ -70,6 +72,7 @@ const compiler = async (source: string) => {
           //             parents: ["root", "listItem"],
           //           },
           //         ],
+          remarkFootnoteTitle,
           [
             remarkMermaid,
             {
@@ -83,14 +86,13 @@ const compiler = async (source: string) => {
           [rehypeAutolinkHeadings, { behavior: "wrap" }],
           rehypeKatex,
           [rehypePrettyCode, rpcOptions],
-          rehypeImageOpt,
           rehypeRaw,
         ],
         remarkRehypeOptions: {
           handlers: {
-            extlink: extLinkHandler,
+            linkCard: linkCardHandler,
           },
-          footnoteLabel: "目次",
+          footnoteLabel: "脚注",
           footnoteBackLabel: "戻る",
         },
         format: "md",

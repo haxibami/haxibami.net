@@ -3,14 +3,13 @@ import { visit } from "unist-util-visit";
 
 import { isParent, isLink, isParagraph } from "./mdast-util-node-is";
 
-import type { Paragraph, Link, Literal } from "mdast";
+import type { Paragraph, Link, Resource } from "mdast";
 import type { H } from "mdast-util-to-hast";
 import type { Plugin, Transformer } from "unified";
 import type { Node, Parent } from "unist";
-import type { VFileCompatible } from "vfile";
 
-interface ExtLink extends Literal {
-  type: "extlink";
+interface LinkCard extends Parent, Resource {
+  type: "linkCard";
   meta: {
     url: string;
     title: string;
@@ -20,18 +19,17 @@ interface ExtLink extends Literal {
   };
 }
 
-function isExtLink(node: unknown): node is Paragraph {
+function isLinkCard(node: Node): node is LinkCard {
   if (!isParagraph(node)) {
     return false;
   }
 
-  const { children } = node;
-
-  if (children.length != 1) {
+  if (node.children.length !== 1) {
     return false;
   }
 
-  const singleChild = children[0];
+  const singleChild = node.children[0];
+
   if (
     !(
       isLink(singleChild) &&
@@ -59,11 +57,10 @@ function fetchMeta(url: string) {
   return metas;
 }
 
-export const remarkLinkCard: Plugin = function extLinkTrans(): Transformer {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  return async (tree: Node, _file: VFileCompatible) => {
+export const remarkLinkCard: Plugin = function linkCardTrans(): Transformer {
+  return async (tree: Node) => {
     const promises: (() => Promise<void>)[] = [];
-    visit(tree, isExtLink, visitor);
+    visit(tree, isLinkCard, visitor);
     await Promise.all(promises.map((t) => t()));
 
     function visitor(
@@ -84,18 +81,18 @@ export const remarkLinkCard: Plugin = function extLinkTrans(): Transformer {
       promises.push(async () => {
         const data = await fetchMeta(child.url);
         parent.children[index] = {
-          type: "extlink",
+          type: "linkCard",
           meta: data,
-        } as ExtLink;
+        } as LinkCard;
       });
     }
   };
 };
 
-export function extLinkHandler(_h: H, node: ExtLink) {
+export function linkCardHandler(_h: H, node: LinkCard) {
   return {
     type: "element" as const,
-    tagName: "extlink",
+    tagName: "linkcard",
     properties: {
       url: node.meta.url,
       title: node.meta.title,

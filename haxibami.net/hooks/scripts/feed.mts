@@ -45,10 +45,16 @@ const feedGenerator = async () => {
       description: `${post.preview}`,
       id: url,
       link: url,
+      guid: url,
       date: new Date(dateConverter(post.data?.date)),
+      category: post.data?.tags
+        ? post.data?.tags.map((tag) => ({
+            name: tag,
+          }))
+        : [],
       enclosure: {
         url: encodeURI(
-          `${HOST}/api/ogp?title=${post.data?.title}&date=${post.data?.date}`
+          `${HOST}/api/ogp?title=${post.data?.title}&date=${post.data?.date}.png`
         ),
         length: 0,
         type: "image/png",
@@ -58,7 +64,10 @@ const feedGenerator = async () => {
 
   fs.mkdirSync("public/rss", { recursive: true });
   await Promise.all([
-    fs.promises.writeFile("public/rss/feed.xml", feed.rss2()),
+    fs.promises.writeFile(
+      "public/rss/feed.xml",
+      feed.rss2().replace(/&/g, "&amp;")
+    ),
     fs.promises.writeFile("public/rss/atom.xml", feed.atom1()),
     fs.promises.writeFile("public/rss/feed.json", feed.json1()),
   ]);

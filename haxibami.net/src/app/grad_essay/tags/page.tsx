@@ -7,24 +7,24 @@ import { SITEDATA } from "lib/constant";
 const postType = "grad_essay";
 
 export const metadata: Metadata = {
-  title: `${SITEDATA[postType].title}: タグ一覧`,
+  title: `${SITEDATA[postType].title}.png: タグ一覧`,
   description: "タグ一覧",
   openGraph: {
-    title: `${SITEDATA[postType].title}: タグ一覧`,
+    title: `${SITEDATA[postType].title}.png: タグ一覧`,
     description: "タグ一覧",
     url: `/${postType}/tags`,
     type: "website",
     images: {
-      url: encodeURI(`/api/ogp?title=${SITEDATA[postType].title}`),
+      url: encodeURI(`/api/ogp?title=${SITEDATA[postType].title}.png`),
       width: 1200,
       height: 630,
     },
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITEDATA[postType].title}: タグ一覧`,
+    title: `${SITEDATA[postType].title}.png: タグ一覧`,
     description: "タグ一覧",
-    images: encodeURI(`/api/ogp?title=${SITEDATA[postType].title}`),
+    images: encodeURI(`/api/ogp?title=${SITEDATA[postType].title}.png`),
     site: "@haxibami",
     siteId: "1077091437517238272",
     creator: "@haxibami",
