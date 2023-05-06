@@ -14,7 +14,7 @@ tags: ["tech", "web", "nextjs", "react"]
 
 ## やったこと
 
-（一般的な設定については[ドキュメント](https://beta.nextjs.org/docs)等を参照）
+（一般的な設定については[ドキュメント](https://nextjs.org/docs/app)等を参照）
 
 ### next.config.js
 
@@ -42,7 +42,7 @@ let nextConfig = {
 
 `experimental.serverComponentsExternalPackages`という項目がけっこう重要。Markdown の処理に node 依存のライブラリを使用している場合、該当ライブラリをここに列挙する必要がある。
 
-<https://beta.nextjs.org/docs/api-reference/next-config#servercomponentsexternalpackages>
+<https://nextjs.org/docs/app/api-reference/next-config-js/serverComponentsExternalPackages>
 
 あと関係ないが `next.config.js` はドシドシ ESM（`.mjs`）で書こう。
 
@@ -156,7 +156,7 @@ Next.js 13.2 で API Routes を代替する Route Handler が登場したため�
 
 [^1]: 厳密には `404.js` がまだ残っているが、こちらで書かなくても処理されるのでディレクトリ自体は削除可能
 
-<https://beta.nextjs.org/docs/routing/route-handlers>
+<https://nextjs.org/docs/app/building-your-application/routing/router-handlers>
 
 ```tsx title="app/api/ogp/route.tsx"
 import type { NextRequest } from "next/server";

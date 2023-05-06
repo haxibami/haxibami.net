@@ -30,7 +30,7 @@ export async function generateMetadata({
       tags: frontmatter?.tags,
       images: {
         url: encodeURI(
-          `/api/ogp?title=${frontmatter?.title}&date=${frontmatter?.date}`
+          `/api/ogp?title=${frontmatter?.title}&date=${frontmatter?.date}.png`
         ),
         width: 1200,
         height: 630,
@@ -41,7 +41,7 @@ export async function generateMetadata({
       title: `${frontmatter?.title}`,
       description: `${frontmatter?.description}`,
       images: encodeURI(
-        `/api/ogp?title=${frontmatter?.title}&date=${frontmatter?.date}`
+        `/api/ogp?title=${frontmatter?.title}&date=${frontmatter?.date}.png`
       ),
       site: "@haxibami",
       siteId: "1077091437517238272",

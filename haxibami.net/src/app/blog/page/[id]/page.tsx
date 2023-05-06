@@ -14,7 +14,7 @@ export function generateMetadata({
 }): Metadata {
   const { id } = params;
   return {
-    title: `${SITEDATA[postType].title}: ページ${id}`,
+    title: `${SITEDATA[postType].title}.png: ページ${id}`,
     description: SITEDATA[postType].description,
     openGraph: {
       title: SITEDATA[postType].title,
@@ -22,7 +22,7 @@ export function generateMetadata({
       url: `/${postType}/page/${id}`,
       type: "website",
       images: {
-        url: encodeURI(`/api/ogp?title=${SITEDATA[postType].title}`),
+        url: encodeURI(`/api/ogp?title=${SITEDATA[postType].title}.png`),
         width: 1200,
         height: 630,
       },
@@ -31,7 +31,7 @@ export function generateMetadata({
       card: "summary_large_image",
       title: SITEDATA[postType].title,
       description: SITEDATA[postType].description,
-      images: encodeURI(`/api/ogp?title=${SITEDATA[postType].title}`),
+      images: encodeURI(`/api/ogp?title=${SITEDATA[postType].title}.png`),
       site: "@haxibami",
       siteId: "1077091437517238272",
       creator: "@haxibami",

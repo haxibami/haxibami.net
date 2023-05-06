@@ -8,15 +8,10 @@ import { visit } from "unist-util-visit";
 import { isParent } from "./mdast-util-node-is";
 
 import type { Code, Paragraph } from "mdast";
-// import type Mermaid from "mermaid";
 import type { MermaidConfig } from "mermaid";
 import type { Config as SvgoConfig } from "svgo";
 import type { Plugin, Transformer } from "unified";
 import type { Node, Parent } from "unist";
-import type { VFileCompatible } from "vfile";
-
-// we want to check types for browser-executed mermaid codes, but don't want to "import" any mermaid modules in them.
-// declare const mermaid: typeof Mermaid;
 
 export const UserTheme = {
   Forest: "forest",
@@ -86,8 +81,7 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
 
   const settings = Object.assign({}, DEFAULT_SETTINGS, options);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  return async (node: Node, _file: VFileCompatible) => {
+  return async (node: Node) => {
     const mermaidBlocks = getMermaidBlocks(node);
     if (mermaidBlocks.length === 0) {
       return;
@@ -108,7 +102,7 @@ const remarkMermaid: Plugin<[RemarkMermaidOptions?]> = function mermaidTrans(
         .join("")}
       </div><p></p></body>
       <script type="module">
-        import mermaid from 'https://unpkg.com/mermaid@10.0.0/dist/mermaid.esm.min.mjs';
+        import mermaid from 'https://unpkg.com/mermaid/dist/mermaid.esm.min.mjs';
         mermaid.initialize(${JSON.stringify(config)});
         await mermaid.run()
         document.querySelector("p").remove();

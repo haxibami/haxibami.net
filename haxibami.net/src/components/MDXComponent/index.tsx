@@ -10,13 +10,13 @@ import type { MDXComponents } from "mdx/types";
 type ProvidedComponents = MDXComponents & {
   a?: typeof NextLink;
   img?: typeof NextImage;
-  extlink?: typeof LinkCard;
+  linkcard?: typeof LinkCard;
 };
 
 const replaceComponents = {
   a: (props: NextLinkProps) => <NextLink {...props} />,
   img: (props: NextImageProps) => <NextImage {...props} />,
-  extlink: (props: LinkCardProps) => <LinkCard {...props} />,
+  linkcard: (props: LinkCardProps) => <LinkCard {...props} />,
 } as ProvidedComponents;
 
 export default replaceComponents;

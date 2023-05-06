@@ -6,8 +6,8 @@ import Link from "next/link";
 export type NextImageProps = {
   src: string;
   alt?: string;
-  // width: number;
-  // height: number;
+  width: number;
+  height: number;
   aspectRatio: string;
   blurDataURL: string;
 };
