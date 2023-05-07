@@ -61,7 +61,7 @@ export const remarkLinkCard: Plugin = function linkCardTrans(): Transformer {
   return async (tree: Node) => {
     const promises: (() => Promise<void>)[] = [];
     visit(tree, isLinkCard, visitor);
-    await Promise.all(promises.map((t) => t()));
+    await Promise.allSettled(promises.map((t) => t()));
 
     function visitor(
       node: Paragraph,

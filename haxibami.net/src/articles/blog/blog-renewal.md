@@ -6,7 +6,7 @@ description: "自作ブログの実装について"
 tags: ["tech", "web", "nextjs", "react"]
 ---
 
-（2022/03/03 追記）Next.js 13 対応を[やった](/blog/posts/blog-next-13)
+（2022/03/03 追記）Next.js 13 / App Router 対応を[やった](/blog/posts/blog-next-13)
 
 ## はじめに
 
@@ -73,36 +73,28 @@ tags: ["tech", "web", "nextjs"]
 <https://github.com/remarkjs/remark-gfm>
 
 ```md
-| 普通に | 表  |
-| ------ | --- |
-| 1      | 2   |
-| 3      | 4   |
+| just a | table |
+| ------ | ----- |
+| 1      | 2     |
+| 3      | 4     |
 
 <https://www.haxibami.net>
 
-裸のリンクって ↑ こう書くのが Markdown のスタンダードらしい
-
-その他、
-
-- [x] TODO
-- [ ] リストや、脚注 [^1]
+- [x] トゥードゥー
+- [ ] リストや、脚注[^1]
 
 [^1]: 脚注など
 ```
 
-| 普通に | 表  |
-| ------ | --- |
-| 1      | 2   |
-| 3      | 4   |
+| just a | table |
+| ------ | ----- |
+| 1      | 2     |
+| 3      | 4     |
 
 <https://www.haxibami.net>
 
-裸のリンクって ↑ こう書くのが Markdown のスタンダードらしい
-
-その他、
-
-- [x] TODO
-- [ ] リストや、脚注 [^1]
+- [x] トゥードゥー
+- [ ] リストや、脚注[^1]
 
 [^1]: 脚注など
 
@@ -118,7 +110,7 @@ tags: ["tech", "web", "nextjs"]
 
 <https://github.com/remarkjs/remark-math/tree/main/packages/rehype-katex>
 
-忘れがちだが、適当なところで KaTeX のスタイルシートを読み込む必要がある。
+適当なところで KaTeX のスタイルシートを読み込む必要がある。
 
 ```md
 $$
@@ -162,9 +154,11 @@ $e^{i\pi} + 1 = 0$ :arrow_left: インライン数式
 
 ### Mermaid Diagram
 
-[remark-mermaidjs](https://github.com/remcohaszing/remark-mermaidjs)をベースに remark プラグインを[書いた](https://github.com/haxibami/haxibami.net/blob/2db87a4118c63b211ec10f6f7e0ec3b093513468/haxibami.net/src/lib/remark-mermaid.ts)。通常の Mermaid のやり方ではクライアントサイドで JS が実行されるが、このプラグインを使うとビルド時にヘッドレス Chromium で[^2] あらかじめ SVG が描画され、静的にドキュメントに埋め込まれる。SSG 的でしょ？
+（2023/05/07 更新）
 
-[^2]: こんなことのためにわざわざヘッドレスブラウザを使うのもアレだが、mermaid は node 上で動く DOM ライブラリ（JSDOM や happy-dom 等）には対応していない[ようなので](https://github.com/mermaid-js/mermaid/issues/559)、やむを得ずこうした。
+[rehype-mermaidjs](https://github.com/remcohaszing/rehype-mermaidjs)を使った。通常の Mermaid の実装ではクライアント側で JS が実行されるが、このプラグインを使うとビルド時にヘッドレス Chromium で[^2] あらかじめ SVG が描画され、静的にドキュメントに埋め込まれる。so SSG-ish！
+
+[^2]: こんなことのためにわざわざヘッドレスブラウザを使うのもアレだが、mermaid は node 上で動く DOM ライブラリ（JSDOM や happy-dom 等）には対応していない[ようなので](https://github.com/mermaid-js/mermaid/issues/559)、やむを得ずこうなっている。
 
 ````md
 ```mermaid
@@ -177,6 +171,20 @@ Note right of John: Rational thoughts!
 John-->>Alice: Great!
 John->>Bob: How about you?
 Bob-->>John: Jolly good!
+```
+
+```mermaid
+stateDiagram-v2
+    state fork_state <<fork>>
+      [*] --> fork_state
+      fork_state --> State2
+      fork_state --> State3
+
+      state join_state <<join>>
+      State2 --> join_state
+      State3 --> join_state
+      join_state --> State4
+      State4 --> [*]
 ```
 
 ```mermaid
@@ -200,6 +208,20 @@ Bob-->>John: Jolly good!
 ```
 
 ```mermaid
+stateDiagram-v2
+    state fork_state <<fork>>
+      [*] --> fork_state
+      fork_state --> State2
+      fork_state --> State3
+
+      state join_state <<join>>
+      State2 --> join_state
+      State3 --> join_state
+      join_state --> State4
+      State4 --> [*]
+```
+
+```mermaid
 pie
 "Dogs" : 386
 "Cats" : 85
@@ -208,30 +230,30 @@ pie
 
 ### シンタックスハイライト
 
-`rehype-pretty-code`。このプラグインの内部処理には[shiki](https://shiki.matsu.io)が使われており、スタイル適用がすべてビルド時に済む（追加 CSS が不要）、VSCode のカラースキームが使える、などの利点がある。
+`rehype-pretty-code`を利用した。このプラグインの内部では[shiki](https://shiki.matsu.io)が使われているため、スタイル適用がすべてビルド時に行われる（= **追加 CSS が不要**）、**VSCode のカラースキームが使える**、などの利点がある。
 
 <https://github.com/atomiks/rehype-pretty-code>
 
 ### リンクカード
 
-:arrow_down: このもこっとしたカード
+:arrow_down: こういうもこっとしたカード。
 
 <https://zenn.dev/tomi/articles/2021-03-22-blog-card>
 
 <https://zenn.dev/januswel/articles/745787422d425b01e0c1>
 
-上の記事を参考に、unified の Transformer プラグインを使って[実装した](https://github.com/haxibami/haxibami.net/blob/2db87a4118c63b211ec10f6f7e0ec3b093513468/haxibami.net/src/lib/remark-link-card.ts)。おおむね、
+上の記事を参考に、unified の Transformer プラグインを自作して[実装した](https://github.com/haxibami/haxibami.net/blob/2db87a4118c63b211ec10f6f7e0ec3b093513468/haxibami.net/src/lib/remark-link-card.ts)。おおむね、
 
 1. 文書中に単独で貼られたリンクノードを検出
-2. リンク先にアクセスしてメタデータ（`title`、`description`、`og`）を取得
-3. これらの情報をノードの属性に付加し、独自の要素（ex. `<extlink>`）に置き換え
+2. リンク先にアクセスしてメタデータ（`title`、`description`、`og image`）を取得
+3. これらの情報をノードの属性に付加し、独自の要素（ex. `<linkcard>`）に置き換え
 4. 独自要素を、MDX の処理系側で自作コンポーネントに置換
 
-という手順で好きなスタイルのリンクカードに変換している。
+する処理を行っている。
 
-ちなみに、ノードに付加した属性は（独自のものであっても）props としてコンポーネントに渡せる。`next-mdx-remote`だと以下のようになる。
+ちなみに、ノードに付加した属性は（独自のものであっても）props として変換先のコンポーネントに渡せる。`next-mdx-remote`だと以下のようになる。
 
-```tsx title="components/MdxComponent/index.tsx" /props/
+```tsx title="src/components/MDXComponent/index.tsx" /props/
 import LinkCard from "components/LinkCard";
 import NextImage from "components/NextImage";
 import NextLink from "components/NextLink";
@@ -242,9 +264,9 @@ import type { NextLinkProps } from "components/NextLink";
 import type { MDXComponents } from "mdx/types";
 
 type ProvidedComponents = MDXComponents & {
-  a?: typeof NextLink;
-  img?: typeof NextImage;
-  extlink?: typeof LinkCard;
+  a: typeof NextLink;
+  img: typeof NextImage;
+  extlink: typeof LinkCard;
 };
 
 const replaceComponents = {
@@ -257,6 +279,8 @@ export default replaceComponents;
 ```
 
 ```ts title="src/lib/compiler.ts"
+import MDXComponent from "components/MDXComponent";
+
 const result = compileMDX({
   source,
   components: MDXComponent,
@@ -265,11 +289,41 @@ const result = compileMDX({
 
 ### 画像処理
 
-上と同じ要領で、Markdown 内の画像を`next/image`に置き換えるための remark プラグインを[書いた](https://github.com/haxibami/haxibami.net/blob/2db87a4118c63b211ec10f6f7e0ec3b093513468/haxibami.net/src/lib/rehype-image-opt.ts)。Next.js の[公式ガイド](https://nextjs.org/docs/api-reference/next/image#placeholder)を参照し、画像のサイズ取得・プレースホルダー生成も行っている。
+Markdown 内の画像を`next/image`に置き換える remark プラグインを書いた。置換に加え、画像のサイズ取得・プレースホルダー生成（参考：[公式ドキュメント](https://nextjs.org/docs/api-reference/next/image#placeholder)）も行っている。
 
-参考：
+```ts title="src/lib/remark-image-opt.ts"
+import { getPlaiceholder } from "plaiceholder";
+import { visit } from "unist-util-visit";
 
-<https://zenn.dev/elpnt/articles/c17727e9d254ef00ea60>
+import type { Image } from "mdast";
+import type { Plugin, Transformer } from "unified";
+import type { Node } from "unist";
+
+const rehypeImageOpt: Plugin<[void]> = function imageOpt(): Transformer {
+  return async (tree: Node) => {
+    const promises: (() => Promise<void>)[] = [];
+    visit(tree, "image", (node: Image) => {
+      const src = node.url;
+
+      promises.push(async () => {
+        const blur = await getPlaiceholder(src);
+        node.data = {
+          hProperties: {
+            src: blur.img.src,
+            width: blur.img.width,
+            height: blur.img.height,
+            aspectRatio: `${blur.img.width} / ${blur.img.height}`,
+            blurDataURL: blur.base64,
+          },
+        };
+      });
+    });
+    await Promise.allSettled(promises.map((t) => t()));
+  };
+};
+
+export default rehypeImageOpt;
+```
 
 ### ダークモード
 
@@ -279,237 +333,15 @@ const result = compileMDX({
 
 ### OG 画像の生成
 
-（2022/12/28 更新）
+（2022/05/07 更新）
 
-ヘッドレス Chromium を使った古い実装から、Vercel 公式が提供する[新しいアプローチ](https://vercel.com/docs/concepts/functions/edge-functions/og-image-generation)（`@vercel/og`）に[乗り換えた](https://github.com/haxibami/haxibami.net/blob/2db87a4118c63b211ec10f6f7e0ec3b093513468/haxibami.net/src/pages/api/ogp.tsx)。どうやら yoga-layout のスタイリングエンジンを WASM で動かしているらしく、かなり速い。しかも Tailwind が使える。
-
-```tsx title="pages/api/ogp.tsx"
-import type { NextRequest } from "next/server";
-
-import { ImageResponse } from "@vercel/og";
-
-export const config = {
-  runtime: "edge",
-};
-
-const handler = async (req: NextRequest) => {
-  try {
-    const { searchParams } = new URL(req.url);
-    const title = searchParams.has("title")
-      ? searchParams.get("title")?.slice(0, 80)
-      : "";
-    const date = searchParams.has("date")
-      ? `📅 ― ${searchParams.get("date")?.slice(0, 8)}`
-      : "";
-
-    // CJK font is so large that if placed locally it easily exceeds the 1MB Edge Function limit >_<
-    const notoFontData = await fetch(
-      "https://rawcdn.githack.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff"
-    ).then((res) => res.arrayBuffer());
-
-    const robotoFontData = await fetch(
-      new URL("../../assets/RobotoMono-Medium.woff", import.meta.url)
-    ).then((res) => res.arrayBuffer());
-
-    const pngIcon = new URL(
-      "../../assets/icon_ange_glasses_192.png",
-      import.meta.url
-    ).toString();
-
-    return new ImageResponse(
-      (
-        <div
-          style={{
-            height: "100%",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "30px",
-            fontFamily: "Noto Sans CJK JP",
-            backgroundColor: "#171726",
-            color: "#f2f0e6",
-          }}
-        >
-          <div tw="flex flex-col p-12 w-full h-full border-solid border-4 border-white rounded-xl">
-            <div tw="flex flex-1 max-w-full items-center max-h-full">
-              <h1 tw="text-6xl leading-tight max-w-full">
-                <p tw="w-full justify-center">{title}</p>
-              </h1>
-            </div>
-            <div tw="flex flex-row justify-between items-center w-full">
-              <div tw="flex items-center">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={pngIcon}
-                  alt="haxicon"
-                  width={100}
-                  height={100}
-                  tw="rounded-full mr-5"
-                />
-                <h2 tw="text-4xl mr-5">
-                  <p
-                    style={{
-                      fontFamily: "Roboto Mono",
-                    }}
-                  >
-                    haxibami.net
-                  </p>
-                </h2>
-              </div>
-              <div tw="flex">
-                <h2 tw="text-4xl">
-                  <p>{date}</p>
-                </h2>
-              </div>
-            </div>
-          </div>
-        </div>
-      ),
-      {
-        fonts: [
-          {
-            name: "Noto Sans CJK JP",
-            data: notoFontData,
-            weight: 700,
-            style: "normal",
-          },
-          {
-            name: "Roboto Mono",
-            data: robotoFontData,
-            weight: 500,
-            style: "normal",
-          },
-        ],
-      }
-    );
-  } catch (e) {
-    console.log(`${e}`);
-    return new Response(`Failed to generate the image`, {
-      status: 500,
-    });
-  }
-};
-
-export default handler;
-```
-
-ちなみにこの関数は Edge 環境で実行されるため、総容量制限は **1MB** とかなり厳しい。日本語フォントは内蔵のもの（Noto Sans JP？）で妥協するか、軽量化したものを Web フォントとしてロードするしかない。
+[別記事](/blog/posts/blog-next-13#route-handler-による-og-画像生成)を参照。
 
 ### サイトマップ生成
 
-[このへん](https://www.mk-engineer.com/posts/nextjs-before-build)を参考にしつつ手元で[書いた](https://github.com/haxibami/haxibami.net/blob/2db87a4118c63b211ec10f6f7e0ec3b093513468/haxibami.net/hooks/scripts/sitemap.mts)。
+（2023/05/07 更新）
 
-1. ビルド前に記事のインデックスをキャッシュ
-1. キャッシュに基づいて`sitemap.xml`と`robots.txt`を生成
-
-するようにしてある。
-
-```ts title="hooks/scripts/sitemap.mts"
-import fs from "fs";
-
-import { globby } from "globby";
-import prettier from "prettier";
-
-import { dateConverter } from "./lib/build.js";
-import { HOST } from "./lib/constant.js";
-
-import type { PostData } from "./lib/interface.js";
-
-// variables
-const XMLFILE = "sitemap.xml";
-
-// Article index file
-const postIndexFile = fs.readFileSync("src/share/index.json", "utf-8");
-const postIndex = JSON.parse(postIndexFile);
-
-// format xml
-const formatXml = (sitemap: string) =>
-  prettier.format(sitemap, { parser: "html" });
-
-// generate sitemap & robots.txt
-const sitemapGenerator = async () => {
-  const solidPaths = await globby(["src/pages/*.tsx", "src/pages/blog/*.tsx"], {
-    ignore: [
-      "src/pages/_*.tsx",
-      "src/pages/404.tsx",
-      "src/pages/grad_essay.tsx",
-    ],
-  });
-
-  const solidPageInfos = solidPaths.map((filePath) => {
-    const solidPageInfo = {
-      relpath: filePath
-        .replace("src/pages/", "")
-        .replace(".tsx", "")
-        .replace("index", ""),
-      lastmod: new Date().toISOString(),
-    };
-    return solidPageInfo;
-  });
-
-  const blogposts = postIndex.articles.blog;
-
-  const blogInfos = blogposts.map((post: PostData) => {
-    const blogInfo = {
-      relpath: `blog/posts/${post.data?.slug}`,
-      lastmod: dateConverter(post.data?.date),
-    };
-    return blogInfo;
-  });
-
-  const sitemapInfos = solidPageInfos.concat(blogInfos);
-
-  const pagesSitemap = `
-
-  ${sitemapInfos
-    .map((info) => {
-      return `
-        <url>
-          <loc>https://${HOST}/${info.relpath}</loc>
-          <lastmod>${info.lastmod}</lastmod>
-        </url>
-      `;
-    })
-    .join("")}
-  `;
-
-  const generatedSitemap = `
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset
-  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
->
-  ${pagesSitemap}
-</urlset>
-  `;
-
-  const robots = `# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://www.haxibami.net
-
-# Sitemaps
-Sitemap: https://www.haxibami.net/sitemap.xml
-`;
-
-  fs.writeFileSync(`public/${XMLFILE}`, formatXml(generatedSitemap));
-  fs.writeFileSync("public/robots.txt", robots);
-};
-
-const genSitemap = () => {
-  return new Promise<void>((resolve) => {
-    sitemapGenerator();
-    resolve();
-  });
-};
-
-export default genSitemap;
-```
+[別記事](/blog/posts/blog-next-13#metadata-api)を参照。
 
 ### フィード対応
 
@@ -544,7 +376,7 @@ const feedGenerator = async () => {
     id: HOST,
     link: HOST,
     language: "ja",
-    image: `${HOST}/icon_ange_glasses_192.png`,
+    image: `${HOST}/folio.png`,
     favicon: `${HOST}/favicon.ico`,
     copyright: `All rights reserved ${date.getFullYear()}, ${author.name}`,
     updated: date,
@@ -565,13 +397,29 @@ const feedGenerator = async () => {
       description: `${post.preview}`,
       id: url,
       link: url,
+      guid: url,
       date: new Date(dateConverter(post.data?.date)),
+      category: post.data?.tags
+        ? post.data?.tags.map((tag) => ({
+            name: tag,
+          }))
+        : [],
+      enclosure: {
+        url: encodeURI(
+          `${HOST}/api/ogp?title=${post.data?.title}&date=${post.data?.date}.png`
+        ),
+        length: 0,
+        type: "image/png",
+      },
     });
   });
 
   fs.mkdirSync("public/rss", { recursive: true });
   await Promise.all([
-    fs.promises.writeFile("public/rss/feed.xml", feed.rss2()),
+    fs.promises.writeFile(
+      "public/rss/feed.xml",
+      feed.rss2().replace(/&/g, "&amp;")
+    ),
     fs.promises.writeFile("public/rss/atom.xml", feed.atom1()),
     fs.promises.writeFile("public/rss/feed.json", feed.json1()),
   ]);
@@ -589,4 +437,4 @@ export default GenFeed;
 
 ## 感想
 
-はてなブログや Qiita、Zenn あたりと張り合える書き心地かもしれない。
+最高！はてなブログや Qiita、Zenn あたりと張り合える書き心地かもしれない。

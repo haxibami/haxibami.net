@@ -8,9 +8,9 @@ import type { NextLinkProps } from "components/NextLink";
 import type { MDXComponents } from "mdx/types";
 
 type ProvidedComponents = MDXComponents & {
-  a?: typeof NextLink;
-  img?: typeof NextImage;
-  linkcard?: typeof LinkCard;
+  a: typeof NextLink;
+  img: typeof NextImage;
+  linkcard: typeof LinkCard;
 };
 
 const replaceComponents = {
