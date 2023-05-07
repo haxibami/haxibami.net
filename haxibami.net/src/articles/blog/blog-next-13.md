@@ -152,7 +152,7 @@ export default compiler;
 
 ### Route Handler による OG 画像生成
 
-Next.js 13.2 で API Routes を代替する Route Handler が登場したため、ついに[OG 画像生成](/blog/posts/blog-renewal#og-画像の生成)で使っていた `pages` ディレクトリを完全に廃止[^1] できるようになった。
+Next.js 13.2 で API Routes を代替する Route Handler が登場したため、ついに[OG 画像生成](/blog/posts/blog-renewal#og-画像の生成)で使っていた `pages` ディレクトリを完全に廃止[^1]できるようになった。
 
 [^1]: 厳密には `404.js` がまだ残っているが、こちらで書かなくても処理されるのでディレクトリ自体は削除可能
 
@@ -168,12 +168,16 @@ export const runtime = "edge";
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-    const title = searchParams.has("title")
+    const titleQ = searchParams.has("title")
       ? searchParams.get("title")?.slice(0, 80)
       : "";
-    const date = searchParams.has("date")
+    const dateQ = searchParams.has("date")
       ? `📅 ― ${searchParams.get("date")?.slice(0, 8)}`
       : "";
+
+    // sanitize title & date
+    const title = titleQ?.endsWith(".png") ? titleQ.slice(0, -4) : titleQ;
+    const date = dateQ?.endsWith(".png") ? dateQ.slice(0, -4) : dateQ;
 
     // CJK font is so large that if placed locally it easily exceeds the 1MB Edge Function limit >_<
     const notoFontData = await fetch(
@@ -184,10 +188,14 @@ export async function GET(req: NextRequest) {
       new URL("../../../assets/RobotoMono-Medium.woff", import.meta.url)
     ).then((res) => res.arrayBuffer());
 
-    const pngIcon = new URL(
-      "../../../assets/icon_ange_glasses_192.png",
-      import.meta.url
-    ).toString();
+    const iconBuffer = await fetch(
+      new URL("../../../assets/folio.png", import.meta.url)
+    ).then((res) => res.arrayBuffer());
+
+    const icon = Buffer.from(
+      String.fromCharCode(...new Uint8Array(iconBuffer)),
+      "binary"
+    ).toString("base64");
 
     return new ImageResponse(
       (
@@ -215,7 +223,7 @@ export async function GET(req: NextRequest) {
               <div tw="flex items-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={pngIcon}
+                  src={`data:image/png;base64,${icon}`}
                   alt="haxicon"
                   width={100}
                   height={100}
@@ -268,40 +276,121 @@ export async function GET(req: NextRequest) {
 
 ### Metadata API
 
-同じく Next.js 13.2 で登場。ドキュメント通りにやるだけ
+同じく Next.js 13.2 で登場。ドキュメント通りにやるだけ。
 
-```tsx title="app/page.tsx"
-import type { Metadata } from "next";
+サイトマップは、ビルド前にキャッシュしておいた記事のインデックスに基づいて生成するようにしてある。
 
-export const metadata: Metadata = {
-  title: "haxibami",
-  description: "haxibamiのウェブサイト",
-  openGraph: {
-    title: "haxibami",
-    description: "haxibamiのウェブサイト",
-    url: `https://www.haxibami.net/`,
-    type: "website",
-    images: {
-      url: `https://www.haxibami.net/icon_ange_glasses_512.webp`,
-      width: 512,
-      height: 512,
+```ts title="hooks/scripts/indexer.mts"
+import fs from "fs";
+
+import prettier from "prettier";
+
+import { getPostsData, getTags } from "./lib/fs.js";
+
+import type { PostData } from "./lib/interface.js";
+
+const articleIndexer = async () => {
+  const blogs = await getPostsData("articles/blog");
+  const blogIndex = blogs.map((item) => {
+    const indexitem: PostData = {
+      preview: item.preview,
+      data: {
+        slug: `${item.data?.slug}`,
+        title: `${item.data?.title}`,
+        date: item.data?.date,
+        description: `${item.data?.description}`,
+        tags: item.data?.tags,
+      },
+    };
+    return indexitem;
+  });
+
+  const blogTags = await getTags("articles/blog");
+
+  const index = {
+    articles: {
+      blog: blogIndex,
     },
-  },
-  twitter: {
-    card: "summary",
-    title: "haxibami",
-    description: "haxibamiのウェブサイト",
-    images: `https://www.haxibami.net/icon_ange_glasses_512.webp`,
-    site: "@haxibami",
-    siteId: "1077091437517238272",
-    creator: "@haxibami",
-    creatorId: "1077091437517238272",
-  },
+    tags: {
+      blog: blogTags,
+    },
+  };
+
+  const formatted = (json: string) => prettier.format(json, { parser: "json" });
+
+  fs.writeFileSync("src/share/index.json", formatted(JSON.stringify(index)));
 };
+```
+
+```ts title="src/app/sitemap.ts"
+import type { MetadataRoute } from "next";
+
+import { globby } from "globby";
+
+import { dateConverter } from "lib/build";
+import { HOST } from "lib/constant";
+// Article index file
+import postIndex from "share/index.json";
+
+import type { PostData } from "lib/interface";
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const constPaths = await globby(["src/app/**/page.tsx", "src/app/page.tsx"], {
+    ignore: ["src/app/api/*.tsx", "src/app/grad_essay/**", "src/app/**/[*/**"],
+  });
+
+  const constPageEntries = constPaths.map((filePath) => {
+    const constPageEntry = {
+      relpath: filePath.replace("src/app/", "").replace("page.tsx", ""),
+      lastmod: "",
+    };
+    return constPageEntry;
+  });
+
+  const blogposts = postIndex.articles.blog;
+
+  const blogTags = postIndex.tags.blog;
+
+  const blogEntries = blogposts.map((post: PostData) => {
+    const blogEntry = {
+      relpath: `blog/posts/${post.data?.slug}`,
+      lastmod: dateConverter(post.data?.date),
+    };
+    return blogEntry;
+  });
+
+  const blogTagEntries = blogTags.map((tag: string) => {
+    const blogTagEntry = {
+      relpath: `blog/tag/${tag}`,
+      lastmod: "",
+    };
+    return blogTagEntry;
+  });
+
+  const sitemapEntries = constPageEntries.concat(blogEntries, blogTagEntries);
+  return sitemapEntries.map((entry) =>
+    entry.lastmod !== ""
+      ? {
+          url: `https://${HOST}/${entry.relpath}`,
+          lastModified: entry.lastmod,
+        }
+      : {
+          url: `https://${HOST}/${entry.relpath}`,
+        }
+  );
+}
 ```
 
 ## 所感
 
-完全な静的サイトゆえ、実のところそれほど変化はない。バンドルサイズは多少小さくなった。
+完全な静的サイトゆえ、実のところそれほど変化はない。バンドルサイズは多少小さくなったかも。
 
 ![ビルド結果](/image/bundlesize_next13.png)
+
+ちなみに Lighthouse はこんな感じ：
+
+![トップ](/image/lighthouse_0.png)
+
+![プロフィール](/image/lighthouse_1.png)
+
+![この記事](/image/lighthouse_2.png)

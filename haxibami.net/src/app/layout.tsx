@@ -6,8 +6,9 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import localFont from "next/font/local";
 
-import Providers from "components/providers";
 import { HOST } from "lib/constant";
+
+import Providers from "./providers";
 
 const montserrat = Montserrat({
   subsets: ["latin"],

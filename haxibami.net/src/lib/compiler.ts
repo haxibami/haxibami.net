@@ -1,6 +1,7 @@
 import { compileMDX } from "next-mdx-remote/rsc";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeKatex from "rehype-katex";
+import rehypeMermaid from "rehype-mermaidjs";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeRaw from "rehype-raw";
 import rehypeSlug from "rehype-slug";
@@ -14,15 +15,12 @@ import MDXComponent from "components/MDXComponent";
 import remarkFootnoteTitle from "lib/remark-footnote-title";
 import remarkImageOpt from "lib/remark-image-opt";
 import { remarkLinkCard, linkCardHandler } from "lib/remark-link-card";
-import remarkMermaid from "lib/remark-mermaid";
+// import remarkMermaid from "lib/remark-mermaid";
 
 import type { Options } from "rehype-pretty-code";
 
 const rpcOptions: Partial<Options> = {
-  theme: {
-    light: "poimandres",
-    // dark: "rose-pine",
-  },
+  theme: "poimandres",
   keepBackground: true,
   // theme: JSON.parse(readFileSync(getThemePath("urara-color-theme"), "utf-8")),
   onVisitLine(node) {
@@ -73,17 +71,26 @@ const compiler = async (source: string) => {
           //           },
           //         ],
           remarkFootnoteTitle,
-          [
-            remarkMermaid,
-            {
-              wrap: true,
-              className: ["mermaid"],
-            },
-          ],
+          //           [
+          //             remarkMermaid,
+          //             {
+          //               wrap: true,
+          //               className: ["mermaid"],
+          //             },
+          //           ],
         ],
         rehypePlugins: [
           rehypeSlug,
           [rehypeAutolinkHeadings, { behavior: "wrap" }],
+          [
+            rehypeMermaid,
+            {
+              strategy: "inline-svg",
+              mermaidConfig: {
+                fontFamily: "sans-serif, monospace",
+              },
+            },
+          ],
           rehypeKatex,
           [rehypePrettyCode, rpcOptions],
           rehypeRaw,

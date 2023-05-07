@@ -10,8 +10,8 @@ let nextConfig = {
   reactStrictMode: true,
   experimental: {
     serverComponentsExternalPackages: [
-      "playwright",
-      "svgo",
+      "rehype-mermaidjs",
+      // "playwright-core",
       "plaiceholder",
       "@plaiceholder/next",
       "fetch-site-metadata",

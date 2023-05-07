@@ -24,7 +24,7 @@ const rehypeImageOpt: Plugin<[void]> = function imageOpt(): Transformer {
         };
       });
     });
-    await Promise.all(promises.map((t) => t()));
+    await Promise.allSettled(promises.map((t) => t()));
   };
 };
 

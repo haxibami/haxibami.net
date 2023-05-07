@@ -54,7 +54,7 @@ export async function GET(req: NextRequest) {
         >
           <div tw="flex flex-col p-12 w-full h-full border-solid border-4 border-white rounded-xl">
             <div tw="flex flex-1 max-w-full items-center max-h-full">
-              <h1 tw="text-6xl leading-tight max-w-full">
+              <h1 tw="text-6xl leading-snug max-w-full">
                 <p tw="w-full justify-center">{title}</p>
               </h1>
             </div>

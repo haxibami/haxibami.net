@@ -148,7 +148,7 @@
       }
       & div {
         & + pre {
-          @apply pt-12 pb-3 leading-6;
+          @apply pb-3 pt-12 leading-6;
         }
       }
 
@@ -160,11 +160,13 @@
     & div[data-rehype-pretty-code-title] {
       position: absolute;
       top: 0;
+      font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco,
+        Consolas, monospace;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
       padding: 0.375rem 0.75rem;
-      font-size: 0.8em;
+      font-size: 0.85em;
       width: 100%;
       color: var(--codetitlefg);
       background: var(--codetitlebg);
@@ -190,10 +192,11 @@
     & .math-display {
       overflow: scroll;
     }
-    & .mermaid {
-      margin-top: 1.5rem;
+    & svg[id^="mermaid-"] {
       background: var(--mermaidbg);
       border-radius: 0.375rem;
+      margin: 1.5rem auto 0 auto;
+      line-height: 1;
     }
     & blockquote {
       & p {
@@ -237,6 +240,9 @@
       & a {
         text-decoration: none;
       }
+    }
+    & [id^="user-content-fnref-"] {
+      margin: 0 0.25em;
     }
     & iframe {
       margin: 0.5rem 0;
