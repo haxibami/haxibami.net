@@ -65,7 +65,7 @@
     "vfile-matter": "4.0.1"
   },
   "devDependencies": {
-    "@plaiceholder/next": "2.5.0",
+    "@plaiceholder/next": "3.0.0",
     "@types/mdast": "3.0.11",
     "@types/mdx": "2.0.5",
     "@types/node": "20.1.0",
@@ -84,7 +84,7 @@
     "globby": "13.1.4",
     "husky": "8.0.3",
     "lint-staged": "13.2.2",
-    "plaiceholder": "2.5.0",
+    "plaiceholder": "3.0.0",
     "postcss": "8.4.24",
     "postcss-import": "15.1.0",
     "postcss-nesting": "11.2.2",
