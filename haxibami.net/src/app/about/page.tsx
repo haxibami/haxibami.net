@@ -52,7 +52,7 @@ export default async function About() {
               src={icon}
               alt="icon"
               placeholder="blur"
-              loading="eager"
+              priority={true}
             />
           </div>
           <span className="flex items-center justify-center">

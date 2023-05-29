@@ -1,5 +1,5 @@
 import analyze from "@next/bundle-analyzer";
-import { withPlaiceholder } from "@plaiceholder/next";
+import withPlaiceholder from "@plaiceholder/next";
 
 const withBundleAnalyzer = analyze({
   enabled: process.env.ANALYZE === "true",
