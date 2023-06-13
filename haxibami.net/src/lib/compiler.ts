@@ -31,7 +31,7 @@ const rpcOptions: Partial<Options> = {
     }
   },
   onVisitHighlightedLine(node) {
-    node.properties.className.push("highlighted");
+    node.properties.className?.push("highlighted");
   },
   onVisitHighlightedWord(node) {
     node.properties.className = ["word"];
