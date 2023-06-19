@@ -102,8 +102,8 @@ dependencies:
     specifier: 4.1.2
     version: 4.1.2
   vfile:
-    specifier: 5.3.7
-    version: 5.3.7
+    specifier: 6.0.0
+    version: 6.0.0
   vfile-matter:
     specifier: 4.0.1
     version: 4.0.1
@@ -5963,15 +5963,15 @@ packages:
       yaml: 2.1.3
     dev: false
 
-  /vfile-message@3.1.3:
-    resolution: {integrity: sha512-0yaU+rj2gKAyEk12ffdSbBfjnnj+b1zqTBv3OQCTn8yEB02bsPizwdBPrLJjHnK+cU9EMMcUnNv938XcZIkmdA==}
+  /vfile-message@3.1.4:
+    resolution: {integrity: sha512-fa0Z6P8HUrQN4BZaX05SIVXic+7kE3b05PWAtPuYP9QLHsLKYR7/AlLW3NtOrpXRLeawpDLMsVkmk5DG0NXgWw==}
     dependencies:
       '@types/unist': 2.0.6
       unist-util-stringify-position: 3.0.3
     dev: false
 
-  /vfile-message@3.1.4:
-    resolution: {integrity: sha512-fa0Z6P8HUrQN4BZaX05SIVXic+7kE3b05PWAtPuYP9QLHsLKYR7/AlLW3NtOrpXRLeawpDLMsVkmk5DG0NXgWw==}
+  /vfile-message@4.0.1:
+    resolution: {integrity: sha512-Z1WqUoIK6T6LLoyO64ncUapmjlA84JqKRQFjcG0kZnnyysfq2rMyg5NvKhkQ16GH9FRCRT+Rk4G0aMxgKYS16g==}
     dependencies:
       '@types/unist': 2.0.6
       unist-util-stringify-position: 3.0.3
@@ -5983,7 +5983,15 @@ packages:
       '@types/unist': 2.0.6
       is-buffer: 2.0.5
       unist-util-stringify-position: 3.0.3
-      vfile-message: 3.1.3
+      vfile-message: 3.1.4
+    dev: false
+
+  /vfile@6.0.0:
+    resolution: {integrity: sha512-wx7bOMmEl8bY5WPaXTGsK8YxPLoFiUiDg+m+lBACA1QGcagj3sUyxkX0F+W/Nmn4MHH7G4sXBekpYWRxQE2eHg==}
+    dependencies:
+      '@types/unist': 2.0.6
+      unist-util-stringify-position: 3.0.3
+      vfile-message: 4.0.1
     dev: false
 
   /vscode-oniguruma@1.7.0:
