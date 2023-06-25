@@ -8,14 +8,15 @@ import { unified } from "unified";
 import { matter } from "vfile-matter";
 
 import type { PostMeta } from "./interface.js";
+import type { Plugin } from "unified";
 import type { VFile } from "vfile";
 
 /**
  * Plugin to parse YAML frontmatter and expose it at `file.data.matter`.
  *
- * @type {import('unified').Plugin<Array<void>>}
+ * @type {import('unified').Plugin<[void, VFile], void, void>}
  */
-export default function remarkParseMatter() {
+export default function remarkParseMatter(): Plugin<[void, VFile], void, void> {
   return function (_: void, file: VFile) {
     matter(file);
   };
@@ -40,6 +41,6 @@ export const mdInfo = async (md: string) => {
 
   return {
     preview: result.toString().replaceAll("\n", "").substring(0, 300),
-    data: result.data.matter,
+    data: result.data.matter as PostMeta,
   };
 };
