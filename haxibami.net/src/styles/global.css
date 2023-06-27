@@ -119,12 +119,12 @@
       margin-top: 1.5rem;
       position: relative;
       & code {
-        & .line {
+        & [data-line] {
           border-left: 3px solid transparent;
           padding: 0 1.25rem;
         }
 
-        & > .line::before {
+        & > [data-line]::before {
           counter-increment: line;
           content: counter(line);
 
@@ -136,11 +136,11 @@
           color: var(--codelinenum);
         }
 
-        & .line.highlighted {
+        & [data-line][data-highlighted-line] {
           border-left-color: var(--link);
           background: var(--codehl);
         }
-        & .word {
+        & [data-highlighted-chars] {
           background: var(--codefind);
           padding: 0.25rem;
           border-radius: 0.25rem;

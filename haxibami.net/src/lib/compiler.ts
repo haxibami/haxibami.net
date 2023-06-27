@@ -15,27 +15,12 @@ import MDXComponent from "components/MDXComponent";
 import remarkFootnoteTitle from "lib/remark-footnote-title";
 import remarkImageOpt from "lib/remark-image-opt";
 import { remarkLinkCard, linkCardHandler } from "lib/remark-link-card";
-// import remarkMermaid from "lib/remark-mermaid";
 
 import type { Options } from "rehype-pretty-code";
 
 const rpcOptions: Partial<Options> = {
   theme: "poimandres",
-  keepBackground: true,
-  // theme: JSON.parse(readFileSync(getThemePath("urara-color-theme"), "utf-8")),
-  onVisitLine(node) {
-    // Prevent lines from collapsing in `display: grid` mode, and
-    // allow empty lines to be copy/pasted
-    if (node.children.length === 0) {
-      node.children = [{ type: "text", value: " " }];
-    }
-  },
-  onVisitHighlightedLine(node) {
-    node.properties.className?.push("highlighted");
-  },
-  onVisitHighlightedWord(node) {
-    node.properties.className = ["word"];
-  },
+  grid: true,
 };
 
 const compiler = async (source: string) => {
@@ -71,13 +56,6 @@ const compiler = async (source: string) => {
           //           },
           //         ],
           remarkFootnoteTitle,
-          //           [
-          //             remarkMermaid,
-          //             {
-          //               wrap: true,
-          //               className: ["mermaid"],
-          //             },
-          //           ],
         ],
         rehypePlugins: [
           rehypeSlug,
