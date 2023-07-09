@@ -3,7 +3,7 @@ import { visit } from "unist-util-visit";
 
 import { isParent, isLink, isParagraph } from "./mdast-util-node-is";
 
-import type { Paragraph, Link, Resource } from "mdast";
+import type { Link, Resource } from "mdast";
 import type { H } from "mdast-util-to-hast";
 import type { Plugin, Transformer } from "unified";
 import type { Node, Parent } from "unist";
@@ -64,10 +64,14 @@ export const remarkLinkCard: Plugin = function linkCardTrans(): Transformer {
     await Promise.allSettled(promises.map((t) => t()));
 
     function visitor(
-      node: Paragraph,
-      index: number,
+      node: Node,
+      index: number | undefined,
       parent: Parent | undefined
     ) {
+      if (!isParagraph(node)) {
+        return;
+      }
+
       if (!isParent(parent)) {
         return;
       }
@@ -80,7 +84,7 @@ export const remarkLinkCard: Plugin = function linkCardTrans(): Transformer {
 
       promises.push(async () => {
         const data = await fetchMeta(child.url);
-        parent.children[index] = {
+        parent.children[index ?? 0] = {
           type: "linkCard",
           meta: data,
         } as LinkCard;

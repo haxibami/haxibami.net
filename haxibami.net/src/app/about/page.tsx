@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 
-import Header from "components/PostHeader";
 import Footer from "components/Footer";
+import Header from "components/PostHeader";
 import { fetchPost } from "lib/api";
 import compiler from "lib/compiler";
 
-import icon from "/public/true-patched.png";
+import icon from "../../../public/true-patched.png";
 
 export const metadata: Metadata = {
   title: "私について",
