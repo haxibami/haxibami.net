@@ -49,6 +49,7 @@ let myEmail = "me" + "@" + "haxibami.net";
 - 『ぬるめた』 - こかむも
 - 『シメジシミュレーション』 - つくみず
 - 『夜と海』 - 郷本
+- 『児玉まりあ文学集成』 - 三島芳治
 
 ### Music
 
@@ -71,7 +72,8 @@ let myEmail = "me" + "@" + "haxibami.net";
 - [Top](/)
 - [Blog](/blog) - 本とか技術とか
 - [Twitter](https://twitter.com/haxibami)
-- [ActivityPub](https://calc.cune.moe/@haxibami) - calckey
+- [Fediverse](https://calc.cune.moe/@haxibami) - Calckey
+- [Bluesky](https://bsky.app/profile/haxibami.net)
 - [GitHub](https://github.com/haxibami)
 - [Keybase](https://keybase.io/haxibami)
 - [Spotify](https://open.spotify.com/user/a0ndq420ky5fxfey4rpqx952w)
@@ -87,3 +89,4 @@ let myEmail = "me" + "@" + "haxibami.net";
 - [ふぁぼんのホームページ](https://www.fabon.info/) - ふぁぼん
 - [fuku.day](https://fuku.day/) - Aumy
 - [どな部屋](https://donabe8898.dev) - Donabe
+- [yude のページ](https://yude.jp) - yude

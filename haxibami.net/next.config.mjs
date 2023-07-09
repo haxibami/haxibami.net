@@ -11,7 +11,6 @@ let nextConfig = {
   experimental: {
     serverComponentsExternalPackages: [
       "rehype-mermaidjs",
-      // "playwright-core",
       "plaiceholder",
       "@plaiceholder/next",
       "fetch-site-metadata",

@@ -18,7 +18,7 @@ const remarkFootnoteTitle: Plugin = function addFootnoteTitle(): Transformer {
     const footnotes = {} as Record<string, string>;
     visit(tree, "footnoteDefinition", (n: FootnoteDefinition) => {
       let content = "";
-      visit(n, isTextOrInlineCode, (t) => {
+      visit(n, isTextOrInlineCode, (t: Text | InlineCode) => {
         content += t.value;
       });
       footnotes[n.identifier] = content;
