@@ -72,4 +72,4 @@ jobs:
           URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
           echo "DEPLOY_URL=$URL" >> $GITHUB_OUTPUT
       - name: Alias domain
-        run: vercel alias set ${{ steps.deploy.outputs.DEPLOY_URL }} staging.haxibami.net
+        run: vercel alias set ${{ steps.deploy.outputs.DEPLOY_URL }} staging.haxibami.net --token=${{ secrets.VERCEL_TOKEN }})
