@@ -50,9 +50,13 @@ const articleIndexer = async () => {
     },
   };
 
-  const formatted = (json: string) => prettier.format(json, { parser: "json" });
+  const formatted = async (json: string) =>
+    await prettier.format(json, { parser: "json" });
 
-  fs.writeFileSync("src/share/index.json", formatted(JSON.stringify(index)));
+  fs.writeFileSync(
+    "src/share/index.json",
+    await formatted(JSON.stringify(index)),
+  );
 };
 
 const exp = () => {

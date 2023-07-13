@@ -20,7 +20,7 @@ export const getSlugs = (path: string) => {
   return files.flatMap((file) =>
     file.isFile() && file.name.endsWith(".md")
       ? file.name.replace(/.md/g, "")
-      : []
+      : [],
   );
 };
 
@@ -31,7 +31,7 @@ const getPaths = (path: string) => {
   return files.flatMap((file) =>
     file.isFile() && file.name.endsWith(".md")
       ? join(getPostDir(path), file.name)
-      : []
+      : [],
   );
 };
 
@@ -42,7 +42,7 @@ export const getPostsData = async (path: string) => {
       const content = fs.readFileSync(file, "utf-8");
       const res: PostData = await mdInfo(content);
       return res;
-    })
+    }),
   );
   return posts.sort((a, b) => {
     const dateA = Number(a.data?.date);
@@ -54,7 +54,9 @@ export const getPostsData = async (path: string) => {
 
 export const getTags = async (path: string) => {
   const taglists = Array.from(
-    new Set((await getPostsData(path)).flatMap((post) => post.data?.tags ?? []))
+    new Set(
+      (await getPostsData(path)).flatMap((post) => post.data?.tags ?? []),
+    ),
   ).sort();
   return taglists;
 };
