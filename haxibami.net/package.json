@@ -10,7 +10,7 @@
   "packageManager": "pnpm@8.6.7",
   "scripts": {
     "dev": "next dev",
-    "prebuild": "pnpm ts-check && pnpm lint && pnpm format && ts-node --esm hooks/before-build.mts",
+    "prebuild": "pnpm lint && pnpm format && ts-node --esm hooks/before-build.mts && pnpm ts-check",
     "build": "next build",
     "start": "next start",
     "pw-install": "playwright install chromium",
