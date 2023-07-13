@@ -51,6 +51,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         }
       : {
           url: `https://${HOST}/${entry.relpath}`,
-        }
+        },
   );
 }

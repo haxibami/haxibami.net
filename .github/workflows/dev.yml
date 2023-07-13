@@ -6,25 +6,27 @@ on:
       - dev
 
 env:
-  node-version: 18
-  pnpm-version: latest
-  workdir: ./haxibami.net
+  NODE_VERSION: 18
+  PNPM_VERSION: latest
+  WORKDIR: ./haxibami.net
+  VERCEL_ORG_ID: ${{ secrets.ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.PROJECT_ID }}
 
 jobs:
-  check:
+  alpha-preview:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ${{ env.workdir }}
+        working-directory: ${{ env.WORKDIR }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.node-version }}
+          node-version: ${{ env.NODE_VERSION }}
       - name: Install pnpm
         uses: pnpm/action-setup@v2.2.4
         with:
-          version: ${{ env.pnpm-version }}
+          version: ${{ env.PNPM_VERSION }}
           run_install: false
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -58,68 +60,16 @@ jobs:
       - name: Install playwright (with cache)
         run: pnpm playwright install-deps chromium
         if: steps.playwright-cache.outputs.cache-hit == 'true'
-      - name: TypeScript compiler check
-        run: pnpm run prebuild && pnpm run ts-check
-      - name: Next.js linter
-        run: pnpm run lint
-      - name: Code formatter
-        run: pnpm run format
-
-  preview:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ env.workdir }}
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.node-version }}
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.4
-        with:
-          version: ${{ env.pnpm-version }}
-          run_install: false
-      - name: Get pnpm store directory
-        id: pnpm-cache
+      - name: Install Vercel CLI
+        run: pnpm install -g vercel@latest
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        id: deploy
         run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - name: pnpm modules & next build cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-            ${{ github.workspace }}/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
-      - name: playwright binary cache
-        id: playwright-cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-playwright-
-      - name: Install node dependencies
-        run: pnpm install
-        env:
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
-      - name: Install playwright (without cache)
-        run: pnpm playwright install chromium
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-      - name: Install playwright (with cache)
-        run: pnpm playwright install-deps chromium
-        if: steps.playwright-cache.outputs.cache-hit == 'true'
-      - name: Test build
-        run: pnpm run build
-      - name: Preview deployment
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
-          github-token: ${{ secrets.GITHUB_TOKEN }} # Optional
-          vercel-org-id: ${{ secrets.ORG_ID }} # Required
-          vercel-project-id: ${{ secrets.PROJECT_ID }} # Required
-          alias-domains: | # Optional
-            staging.haxibami.net
+          URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
+          echo "DEPLOY_URL=$URL" >> $GITHUB_OUTPUT
+      - name: Alias domain
+        run: vercel alias set ${{ steps.deploy.outputs.DEPLOY_URL }} staging.haxibami.net --token=${{ secrets.VERCEL_TOKEN }}

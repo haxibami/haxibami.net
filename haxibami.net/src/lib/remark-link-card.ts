@@ -66,7 +66,7 @@ export const remarkLinkCard: Plugin = function linkCardTrans(): Transformer {
     function visitor(
       node: Node,
       index: number | undefined,
-      parent: Parent | undefined
+      parent: Parent | undefined,
     ) {
       if (!isParagraph(node)) {
         return;
