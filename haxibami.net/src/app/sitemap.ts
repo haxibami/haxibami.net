@@ -4,7 +4,6 @@ import { globby } from "globby";
 
 import { dateConverter } from "lib/build";
 import { HOST } from "lib/constant";
-// Article index file
 import postIndex from "share/index.json";
 
 import type { PostData } from "lib/interface";

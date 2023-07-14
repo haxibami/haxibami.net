@@ -14,10 +14,10 @@ export function generateMetadata({
 }): Metadata {
   const { tag, id } = params;
   return {
-    title: `${SITEDATA[postType].title}.png - #${tag}`,
+    title: `${SITEDATA[postType].title} - #${tag}`,
     description: `タグ: #${tag} の卒業文集`,
     openGraph: {
-      title: `${SITEDATA[postType].title}.png - #${tag}`,
+      title: `${SITEDATA[postType].title} - #${tag}`,
       description: `タグ: #${tag} の卒業文集`,
       url: `/${postType}/tag/${tag}/page/${id}`,
       type: "website",
@@ -29,7 +29,7 @@ export function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${SITEDATA[postType].title}.png - #${tag}`,
+      title: `${SITEDATA[postType].title} - #${tag}`,
       description: `タグ: #${tag} の卒業文集`,
       images: encodeURI(`/api/ogp?title=${SITEDATA[postType].title}.png`),
       site: "@haxibami",
@@ -52,7 +52,7 @@ export default async function TaggedPosts({
 
   const taggedPostsData = await fetchTaggedPostsData(
     `articles/${postType}`,
-    tag
+    tag,
   );
   const total = taggedPostsData.length;
   const assign = taggedPostsData.slice(start, end);
@@ -75,16 +75,16 @@ export const generateStaticParams = async () => {
     tags.map(async (tag) => {
       const taggedPostsData = await fetchTaggedPostsData(
         `articles/${postType}`,
-        tag
+        tag,
       );
       const pages = pageIdGen(
-        Math.ceil(taggedPostsData.length / COUNT_PER_PAGE)
+        Math.ceil(taggedPostsData.length / COUNT_PER_PAGE),
       );
       return pages.map((id) => ({
         tag,
         id: `${id}`,
       }));
-    })
+    }),
   );
   return paths.flat();
 };

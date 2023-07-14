@@ -6,7 +6,7 @@ description: "urara.vimという穏やかなVimテーマを作った話"
 tags: ["tech", "vim"]
 ---
 
-![Preview](https://raw.githubusercontent.com/haxibami/urara.vim/master/preview.png)
+![Preview](https://raw.githubusercontent.com/haxibami/urara.vim/main/preview.png)
 
 Repo はここ :point_down:
 

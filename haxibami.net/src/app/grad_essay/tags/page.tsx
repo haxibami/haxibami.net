@@ -7,10 +7,10 @@ import { SITEDATA } from "lib/constant";
 const postType = "grad_essay";
 
 export const metadata: Metadata = {
-  title: `${SITEDATA[postType].title}.png: タグ一覧`,
+  title: `${SITEDATA[postType].title} - タグ一覧`,
   description: "タグ一覧",
   openGraph: {
-    title: `${SITEDATA[postType].title}.png: タグ一覧`,
+    title: `${SITEDATA[postType].title} - タグ一覧`,
     description: "タグ一覧",
     url: `/${postType}/tags`,
     type: "website",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITEDATA[postType].title}.png: タグ一覧`,
+    title: `${SITEDATA[postType].title} - タグ一覧`,
     description: "タグ一覧",
     images: encodeURI(`/api/ogp?title=${SITEDATA[postType].title}.png`),
     site: "@haxibami",

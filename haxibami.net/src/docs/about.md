@@ -30,6 +30,12 @@ haxibami / 端食 / はしばみ / `[haɕibamʲi]`
 let myEmail = "me" + "@" + "haxibami.net";
 ```
 
+### Lang. (Natural)
+
+1. jpn.
+1. eng.
+1. rus., hrv., srp., lat. (learning!)
+
 ## Interest
 
 - SF、幻想文学、百合、きらら
@@ -72,7 +78,7 @@ let myEmail = "me" + "@" + "haxibami.net";
 - [Top](/)
 - [Blog](/blog) - 本とか技術とか
 - [Twitter](https://twitter.com/haxibami)
-- [Fediverse](https://calc.cune.moe/@haxibami) - Calckey
+- [Fediverse](https://calc.cune.moe/@haxibami) - Calckey (calc.cune.moe)
 - [Bluesky](https://bsky.app/profile/haxibami.net)
 - [GitHub](https://github.com/haxibami)
 - [Keybase](https://keybase.io/haxibami)

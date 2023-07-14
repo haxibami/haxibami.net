@@ -1,4 +1,4 @@
-name: preview deployment
+name: Alpha Deployment
 
 on:
   push:
@@ -6,33 +6,33 @@ on:
       - dev
 
 env:
-  NODE_VERSION: 18
-  PNPM_VERSION: latest
-  WORKDIR: ./haxibami.net
+  PNPM_HOME: ~/.local/share/pnpm
+  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
   VERCEL_ORG_ID: ${{ secrets.ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.PROJECT_ID }}
 
 jobs:
-  alpha-preview:
+  alpha-deploy:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ${{ env.WORKDIR }}
+        working-directory: ./haxibami.net
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.NODE_VERSION }}
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-          run_install: false
-      - name: Get pnpm store directory
+          node-version: 18
+      - name: Setup pnpm with corepack
+        run: |
+          corepack enable pnpm
+          corepack prepare pnpm@latest --activate
+          SHELL="$(which bash)" pnpm setup
+          echo "${{ env.PNPM_HOME }}" >> $GITHUB_PATH
+      - name: Get pnpm store path
         id: pnpm-cache
         run: |
           echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - name: Pnpm modules & next build cache
+      - name: Setup pnpm store & build artifact cache
         uses: actions/cache@v3
         with:
           path: |
@@ -41,7 +41,7 @@ jobs:
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
-      - name: Playwright binary cache
+      - name: Setup playwright binary cache
         id: playwright-cache
         uses: actions/cache@v3
         with:
@@ -51,17 +51,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-playwright-
       - name: Install node dependencies
-        run: pnpm install
-        env:
-          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+        run: pnpm i --frozen-lockfile
       - name: Install playwright (without cache)
-        run: pnpm playwright install chromium
+        run: pnpm playwright install --with-deps chromium
         if: steps.playwright-cache.outputs.cache-hit != 'true'
       - name: Install playwright (with cache)
         run: pnpm playwright install-deps chromium
         if: steps.playwright-cache.outputs.cache-hit == 'true'
       - name: Install Vercel CLI
-        run: pnpm install -g vercel@latest
+        run: pnpm add -g vercel@latest
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
       - name: Build Project Artifacts
