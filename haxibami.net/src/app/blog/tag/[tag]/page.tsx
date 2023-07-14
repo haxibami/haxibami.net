@@ -13,10 +13,10 @@ export function generateMetadata({
 }): Metadata {
   const { tag } = params;
   return {
-    title: `${SITEDATA[postType].title}.png - #${tag}`,
+    title: `${SITEDATA[postType].title} - #${tag}`,
     description: `タグ: #${tag} の記事`,
     openGraph: {
-      title: `${SITEDATA[postType].title}.png - #${tag}`,
+      title: `${SITEDATA[postType].title} - #${tag}`,
       description: `タグ: #${tag} の記事`,
       url: `/${postType}/tag/${tag}`,
       type: "website",
@@ -28,7 +28,7 @@ export function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${SITEDATA[postType].title}.png - #${tag}`,
+      title: `${SITEDATA[postType].title} - #${tag}`,
       description: `タグ: #${tag} の記事`,
       images: encodeURI(`/api/ogp?title=${SITEDATA[postType].title}.png`),
       site: "@haxibami",
@@ -51,7 +51,7 @@ export default async function TaggedPosts({
 
   const taggedPostsData = await fetchTaggedPostsData(
     `articles/${postType}`,
-    tag
+    tag,
   );
 
   const total = taggedPostsData.length;

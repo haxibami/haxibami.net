@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
-// import Link from "next/link";
 
 import Footer from "components/Footer";
 import Header from "components/PostHeader";
-// import { fetchPost } from "lib/api";
-// import compiler from "lib/compiler";
-// import { SITEDATA, HOST } from "lib/constant";
 
 export const metadata: Metadata = {
   title: "haxibami",
@@ -34,8 +30,6 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
-  // const file = await fetchPost("docs", "home");
-  // const { content } = await compiler(file);
   return (
     <div className="mx-auto flex min-h-screen max-w-3xl flex-col px-4">
       <Header posttype="blog" />
@@ -74,34 +68,15 @@ export default async function Home() {
           "
             >
               <h2 className="text-3xl leading-none">
-                write,
+                litterae,
                 <br />
-                develop &
+                machinae
                 <br />
-                hallucinate.
+                et magiae.
               </h2>
             </div>
           </div>
         </div>
-        {/*<div>
-          <article className="post">{content}</article>
-        </div>
-        <div className="grid grid-cols-1 gap-4 pt-8 text-sm sm:grid-cols-2">
-          <Link
-            href="/about"
-            className="flex flex-col gap-4 border border-[color:var(--line)] p-6 shadow"
-          >
-            <h2 className="text-2xl">About</h2>
-            <p>Profile, Contact, etc...</p>
-          </Link>
-          <Link
-            href="/blog"
-            className="flex flex-col gap-4 border border-[color:var(--line)] p-6 shadow"
-          >
-            <h2 className="text-2xl">Blog</h2>
-            <p>{SITEDATA.blog.description}</p>
-          </Link>
-        </div>*/}
       </main>
       <Footer />
     </div>

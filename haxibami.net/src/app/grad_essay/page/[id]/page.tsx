@@ -14,7 +14,7 @@ export function generateMetadata({
 }): Metadata {
   const { id } = params;
   return {
-    title: `${SITEDATA[postType].title}.png: ページ${id}`,
+    title: `${SITEDATA[postType].title} - ページ${id}`,
     description: SITEDATA[postType].description,
     openGraph: {
       title: SITEDATA[postType].title,
