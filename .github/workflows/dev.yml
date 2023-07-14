@@ -6,6 +6,7 @@ on:
       - dev
 
 env:
+  PNPM_HOME: ~/.local/share/pnpm
   PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
   VERCEL_ORG_ID: ${{ secrets.ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.PROJECT_ID }}
