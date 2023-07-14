@@ -25,6 +25,8 @@ jobs:
         run: |
           corepack enable pnpm
           corepack prepare pnpm@latest --activate
+          SHELL="$(which bash)" pnpm setup
+          source ~/.bashrc
       - name: Get pnpm store path
         id: pnpm-cache
         run: |
