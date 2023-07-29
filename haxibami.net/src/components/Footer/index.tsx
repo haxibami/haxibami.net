@@ -1,6 +1,11 @@
 import Link from "next/link";
 
-import { GitHubIcon, TwitterIcon, RssIcon } from "components/Svg";
+import {
+  FediverseIcon,
+  GitHubIcon,
+  TwitterIcon,
+  RssIcon,
+} from "components/Svg";
 
 const Footer: React.FC = () => {
   return (
@@ -10,30 +15,22 @@ const Footer: React.FC = () => {
           <span>
             <Link href="/">©haxibami</Link>
           </span>
-          <span className="flex gap-8">
-            <a
-              href={"https://twitter.com/haxibami"}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Twitter"
-            >
-              <TwitterIcon className="h-8 w-8 fill-[color:var(--secondary)]" />
+          <span className="flex gap-4">
+            <a href={"https://twitter.com/haxibami"} rel="me" title="Twitter">
+              <TwitterIcon className="h-6 w-6 fill-[color:var(--secondary)]" />
             </a>
             <a
-              href={"https://github.com/haxibami"}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="GitHub"
+              href={"https://calc.cune.moe/@haxibami"}
+              rel="me"
+              title="Fediverse"
             >
-              <GitHubIcon className="h-8 w-8 fill-[color:var(--secondary)]" />
+              <FediverseIcon className="h-6 w-6 fill-[color:var(--secondary)]" />
             </a>
-            <a
-              href={`/rss/feed.xml`}
-              target="_blank"
-              rel="noopener noreferrer"
-              title="RSS"
-            >
-              <RssIcon className="h-8 w-8 fill-[color:var(--secondary)]" />
+            <a href={"https://github.com/haxibami"} rel="me" title="GitHub">
+              <GitHubIcon className="h-6 w-6 fill-[color:var(--secondary)]" />
+            </a>
+            <a href={`/rss/feed.xml`} title="RSS">
+              <RssIcon className="h-6 w-6 fill-[color:var(--secondary)]" />
             </a>
           </span>
         </div>

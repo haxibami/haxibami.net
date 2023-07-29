@@ -32,10 +32,8 @@ const NextLink: React.FC<NextLinkProps> = (props) => {
         {children}
       </a>
     ) : (
-      // external (new tab)
-      <a href={href} target="_blank" rel="noopener noreferrer">
-        {children}
-      </a>
+      // external
+      <a href={href}>{children}</a>
     );
   }
 };

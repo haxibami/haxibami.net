@@ -15,7 +15,11 @@ const rehypeImageOpt: Plugin<[void]> = function imageOpt(): Transformer {
       const src = node.url;
 
       const getImage = async (src: string) => {
-        const buffer = await fs.readFile(path.join("./public", src));
+        const buffer = !src.startsWith("http")
+          ? await fs.readFile(path.join("./public", src))
+          : await fetch(src).then(async (res) =>
+              Buffer.from(await res.arrayBuffer()),
+            );
 
         const {
           metadata: { height, width },

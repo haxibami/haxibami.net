@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     url: `/`,
     type: "website",
     images: {
-      url: `/folio.png`,
+      url: `/kripcat.jpg`,
       width: 512,
       height: 512,
     },
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     card: "summary",
     title: "haxibami",
     description: "haxibamiのウェブサイト",
-    images: `/folio.png`,
+    images: `/kripcat.jpg`,
     site: "@haxibami",
     siteId: "1077091437517238272",
     creator: "@haxibami",

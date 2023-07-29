@@ -376,7 +376,7 @@ const feedGenerator = async () => {
     id: HOST,
     link: HOST,
     language: "ja",
-    image: `${HOST}/folio.png`,
+    image: `${HOST}/kripcat.jpg`,
     favicon: `${HOST}/favicon.ico`,
     copyright: `All rights reserved ${date.getFullYear()}, ${author.name}`,
     updated: date,
@@ -406,7 +406,7 @@ const feedGenerator = async () => {
         : [],
       enclosure: {
         url: encodeURI(
-          `${HOST}/api/ogp?title=${post.data?.title}&date=${post.data?.date}.png`
+          `${HOST}/api/ogp?title=${post.data?.title}&date=${post.data?.date}.png`,
         ),
         length: 0,
         type: "image/png",
@@ -418,7 +418,7 @@ const feedGenerator = async () => {
   await Promise.all([
     fs.promises.writeFile(
       "public/rss/feed.xml",
-      feed.rss2().replace(/&/g, "&amp;")
+      feed.rss2().replace(/&/g, "&amp;"),
     ),
     fs.promises.writeFile("public/rss/atom.xml", feed.atom1()),
     fs.promises.writeFile("public/rss/feed.json", feed.json1()),

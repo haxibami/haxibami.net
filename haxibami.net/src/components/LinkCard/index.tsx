@@ -12,7 +12,7 @@ const LinkCard: React.FC<LinkCardProps> = (props) => {
   const { url, title, description, og, icon } = props;
   return (
     <div className="my-4 h-[105px] max-w-xl transition hover:bg-[color:var(--hover)]">
-      <a href={url} target="_blank" rel="noopener noreferrer">
+      <a href={url}>
         <span className="my-4 flex h-full w-full overflow-hidden rounded-md border-2 border-solid border-[color:var(--line)]">
           <span className="flex shrink grow-[4] basis-44 flex-col overflow-hidden p-4">
             <span className="overflow-hidden text-ellipsis whitespace-nowrap font-bold">

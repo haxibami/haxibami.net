@@ -20,20 +20,20 @@ export async function GET(req: NextRequest) {
 
     // CJK font is so large that if placed locally it easily exceeds the 1MB Edge Function limit >_<
     const notoFontData = await fetch(
-      "https://rawcdn.githack.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff"
+      "https://rawcdn.githack.com/haxibami/Noto-Sans-CJK-JP/master/fonts/NotoSansCJKjp-Bold.woff",
     ).then((res) => res.arrayBuffer());
 
     const robotoFontData = await fetch(
-      new URL("../../../assets/RobotoMono-Medium.woff", import.meta.url)
+      new URL("../../../assets/RobotoMono-Medium.woff", import.meta.url),
     ).then((res) => res.arrayBuffer());
 
     const iconBuffer = await fetch(
-      new URL("../../../assets/folio.png", import.meta.url)
+      new URL("../../../assets/kripcat.jpg", import.meta.url),
     ).then((res) => res.arrayBuffer());
 
     const icon = Buffer.from(
       String.fromCharCode(...new Uint8Array(iconBuffer)),
-      "binary"
+      "binary",
     ).toString("base64");
 
     return new ImageResponse(
@@ -102,7 +102,7 @@ export async function GET(req: NextRequest) {
             style: "normal",
           },
         ],
-      }
+      },
     );
   } catch (e) {
     console.log(`${e}`);
