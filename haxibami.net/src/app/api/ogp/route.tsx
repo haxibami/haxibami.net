@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
     ).then((res) => res.arrayBuffer());
 
     const iconBuffer = await fetch(
-      new URL("../../../assets/kripcat.jpg", import.meta.url),
+      new URL("../../../assets/kripcat_720.jpg", import.meta.url),
     ).then((res) => res.arrayBuffer());
 
     const icon = Buffer.from(
