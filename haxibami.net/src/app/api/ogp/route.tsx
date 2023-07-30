@@ -24,17 +24,19 @@ export async function GET(req: NextRequest) {
     ).then((res) => res.arrayBuffer());
 
     const robotoFontData = await fetch(
-      new URL("../../../assets/RobotoMono-Medium.woff", import.meta.url),
+      new URL("../../assets/RobotoMono-Medium.woff", import.meta.url),
     ).then((res) => res.arrayBuffer());
 
     const iconBuffer = await fetch(
-      new URL("../../../assets/kripcat_720.jpg", import.meta.url),
+      new URL("../../assets/kripcat_720.jpg", import.meta.url),
     ).then((res) => res.arrayBuffer());
 
-    const icon = Buffer.from(
-      String.fromCharCode(...new Uint8Array(iconBuffer)),
-      "binary",
-    ).toString("base64");
+    const icon = btoa(
+      new Uint8Array(iconBuffer).reduce(
+        (data, byte) => data + String.fromCharCode(byte),
+        "",
+      ),
+    );
 
     return new ImageResponse(
       (
@@ -62,7 +64,7 @@ export async function GET(req: NextRequest) {
               <div tw="flex items-center">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={`data:image/png;base64,${icon}`}
+                  src={`data:image/jpeg;base64,${icon}`}
                   alt="haxicon"
                   width={100}
                   height={100}

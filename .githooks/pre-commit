@@ -1,0 +1,4 @@
+#!/usr/bin/sh
+
+cd haxibami.net || exit 1
+pnpm lint && pnpm format

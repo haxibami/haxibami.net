@@ -10,23 +10,18 @@
   "packageManager": "pnpm@8.6.10",
   "scripts": {
     "dev": "next dev",
-    "prebuild": "pnpm lint && pnpm format && ts-node --esm hooks/before-build.mts && pnpm ts-check",
+    "prebuild": "pnpm lint-check && pnpm format-check && ts-node --esm hooks/before-build.mts && pnpm ts-check",
     "build": "next build",
     "start": "next start",
     "pw-install": "playwright install chromium",
     "ts-check": "tsc --noEmit",
-    "lint": "next lint",
-    "format": "prettier --check '**/*.{ts, mts, js, tsx, json}'",
+    "lint": "next lint --fix",
+    "lint-check": "next lint",
+    "format": "prettier --write '**/*.{ts, mts, js, tsx, json}'",
+    "format-check": "prettier --check '**/*.{ts, mts, js, tsx, json}'",
     "analyze": "ANALYZE=true next build",
     "blog": "./article.sh",
-    "prepare": "cd .. && husky install haxibami.net/.husky",
-    "lint-staged": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js, ts, jsx, tsx, json}": [
-      "prettier --write",
-      "next lint --fix"
-    ]
+    "prepare": "git config --local core.hooksPath .githooks"
   },
   "dependencies": {
     "@vercel/og": "0.5.9",
@@ -85,8 +80,6 @@
     "eslint-plugin-import": "2.27.5",
     "fetch-site-metadata": "0.1.3",
     "globby": "13.2.2",
-    "husky": "8.0.3",
-    "lint-staged": "13.2.3",
     "plaiceholder": "3.0.0",
     "postcss": "8.4.27",
     "postcss-import": "15.1.0",

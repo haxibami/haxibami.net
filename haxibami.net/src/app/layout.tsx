@@ -16,7 +16,7 @@ const montserrat = Montserrat({
 });
 
 const redOctober = localFont({
-  src: "./asset/RedOctober.woff2",
+  src: "./assets/RedOctober.woff2",
   variable: "--font-redoctober",
 });
 
