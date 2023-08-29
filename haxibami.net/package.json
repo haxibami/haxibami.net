@@ -7,10 +7,10 @@
   "engines": {
     "node": ">=16.0.0"
   },
-  "packageManager": "pnpm@8.6.12",
+  "packageManager": "pnpm@8.7.0",
   "scripts": {
     "dev": "next dev",
-    "prebuild": "pnpm lint-check && pnpm format-check && ts-node --esm hooks/before-build.mts && pnpm ts-check",
+    "prebuild": "pnpm lint-check && pnpm format-check && node --loader ts-node/esm hooks/before-build.mts && pnpm ts-check",
     "build": "next build",
     "start": "next start",
     "pw-install": "playwright install chromium",
