@@ -41,7 +41,7 @@
     "rehype-parse": "8.0.5",
     "rehype-pretty-code": "0.10.1",
     "rehype-raw": "6.1.1",
-    "rehype-slug": "5.1.0",
+    "rehype-slug": "6.0.0",
     "remark-frontmatter": "4.0.1",
     "remark-gemoji": "7.0.1",
     "remark-gfm": "3.0.1",
