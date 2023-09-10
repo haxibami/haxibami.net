@@ -45,8 +45,8 @@ dependencies:
     specifier: 6.0.3
     version: 6.0.3
   rehype-mermaidjs:
-    specifier: 1.0.1
-    version: 1.0.1
+    specifier: 2.0.0
+    version: 2.0.0
   rehype-parse:
     specifier: 9.0.0
     version: 9.0.0
@@ -2539,9 +2539,9 @@ packages:
     resolution: {integrity: sha512-dhIVGoKCQVewFi+vz3Vt567E4ejMppS1haBRL6TEmeLeJVB1i/FJIIg/e6s1Bwn0g5qtYojHEKvyGA+OZuyifw==}
     dependencies:
       '@types/unist': 2.0.6
-      comma-separated-tokens: 2.0.2
-      property-information: 6.0.1
-      space-separated-tokens: 2.0.1
+      comma-separated-tokens: 2.0.3
+      property-information: 6.2.0
+      space-separated-tokens: 2.0.2
       style-to-object: 0.3.0
       unist-util-is: 5.2.1
       web-namespaces: 2.0.0
@@ -2554,6 +2554,14 @@ packages:
       web-namespaces: 2.0.0
     dev: false
 
+  /hast-util-from-dom@5.0.0:
+    resolution: {integrity: sha512-d6235voAp/XR3Hh5uy7aGLbM3S4KamdW0WEgOaU1YoewnuYw4HXb5eRtv9g65m/RFGEfUY1Mw4UqCc5Y8L4Stg==}
+    dependencies:
+      '@types/hast': 3.0.0
+      hastscript: 8.0.0
+      web-namespaces: 2.0.0
+    dev: false
+
   /hast-util-from-html-isomorphic@1.0.0:
     resolution: {integrity: sha512-Yu480AKeOEN/+l5LA674a+7BmIvtDj24GvOt7MtQWuhzUwlaaRWdEPXAh3Qm5vhuthpAipFb2vTetKXWOjmTvw==}
     dependencies:
@@ -2561,6 +2569,15 @@ packages:
       hast-util-from-dom: 4.2.0
       hast-util-from-html: 1.0.1
       unist-util-remove-position: 4.0.2
+    dev: false
+
+  /hast-util-from-html-isomorphic@2.0.0:
+    resolution: {integrity: sha512-zJfpXq44yff2hmE0XmwEOzdWin5xwH+QIhMLOScpX91e/NSGPsAzNCvLQDIEPyO2TXi+lBmU6hjLIhV8MwP2kw==}
+    dependencies:
+      '@types/hast': 3.0.0
+      hast-util-from-dom: 5.0.0
+      hast-util-from-html: 2.0.1
+      unist-util-remove-position: 5.0.0
     dev: false
 
   /hast-util-from-html@1.0.1:
@@ -2630,6 +2647,12 @@ packages:
     dependencies:
       '@types/hast': 2.3.4
       '@types/unist': 2.0.6
+    dev: false
+
+  /hast-util-is-element@3.0.0:
+    resolution: {integrity: sha512-Val9mnv2IWpLbNPqc/pUem+a7Ipj2aHacCwgNfTiK0vJKl0LF+4Ba4+v1oPHFpf3bLYmreq0/l3Gud9S5OH42g==}
+    dependencies:
+      '@types/hast': 3.0.0
     dev: false
 
   /hast-util-parse-selector@3.1.0:
@@ -2707,6 +2730,15 @@ packages:
       unist-util-find-after: 4.0.0
     dev: false
 
+  /hast-util-to-text@4.0.0:
+    resolution: {integrity: sha512-EWiE1FSArNBPUo1cKWtzqgnuRQwEeQbQtnFJRYV1hb1BWDgrAlBU0ExptvZMM/KSA82cDpm2sFGf3Dmc5Mza3w==}
+    dependencies:
+      '@types/hast': 3.0.0
+      '@types/unist': 3.0.0
+      hast-util-is-element: 3.0.0
+      unist-util-find-after: 5.0.0
+    dev: false
+
   /hast-util-whitespace@2.0.0:
     resolution: {integrity: sha512-Pkw+xBHuV6xFeJprJe2BBEoDV+AvQySaz3pPDRUs5PNZEMQjpXJJueqrpcHIXxnWTcAGi/UOCgVShlkY6kLoqg==}
     dev: false
@@ -2722,7 +2754,7 @@ packages:
       comma-separated-tokens: 2.0.2
       hast-util-parse-selector: 3.1.0
       property-information: 6.0.1
-      space-separated-tokens: 2.0.1
+      space-separated-tokens: 2.0.2
     dev: false
 
   /hastscript@8.0.0:
@@ -4670,18 +4702,18 @@ packages:
       unist-util-visit: 4.1.2
     dev: false
 
-  /rehype-mermaidjs@1.0.1:
-    resolution: {integrity: sha512-bXuvGxzljFS1KQphX8FKELLxLtHrHi0tI7G9s0a9IpydLF7miYH9/HDXr0RAgWtUxuERSUKtpD5zSur22aCvOA==}
+  /rehype-mermaidjs@2.0.0:
+    resolution: {integrity: sha512-QY8uiV31GZd/devc/3vzGOrTkNI5vktEXvRmArqw1oBSeFe1EWnfXXH/5J83Had8kG6Z/2xiLWvL/pJ/rgIr9g==}
     dependencies:
-      '@types/hast': 2.3.4
-      hast-util-from-html-isomorphic: 1.0.0
-      hast-util-to-text: 3.1.1
+      '@types/hast': 3.0.0
+      hast-util-from-html-isomorphic: 2.0.0
+      hast-util-to-text: 4.0.0
       mermaid-isomorphic: 2.1.0
       mini-svg-data-uri: 1.4.4
       space-separated-tokens: 2.0.2
-      unified: 10.1.2
-      unist-util-visit-parents: 5.1.3
-      vfile: 5.3.7
+      unified: 11.0.2
+      unist-util-visit-parents: 6.0.1
+      vfile: 6.0.1
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -5057,10 +5089,6 @@ packages:
   /source-map@0.7.4:
     resolution: {integrity: sha512-l3BikUxvPOcn5E74dZiq5BGsTb5yEwhaTSzccU6t4sDOH8NWJCstKO5QT2CvtFoK6F0saL7p9xHAqHOlCPJygA==}
     engines: {node: '>= 8'}
-    dev: false
-
-  /space-separated-tokens@2.0.1:
-    resolution: {integrity: sha512-ekwEbFp5aqSPKaqeY1PGrlGQxPNaq+Cnx4+bE2D8sciBQrHpbwoBbawqTN2+6jPs9IdWxxiUcN0K2pkczD3zmw==}
     dev: false
 
   /space-separated-tokens@2.0.2:
@@ -5502,6 +5530,13 @@ packages:
       unist-util-is: 5.2.1
     dev: false
 
+  /unist-util-find-after@5.0.0:
+    resolution: {integrity: sha512-amQa0Ep2m6hE2g72AugUItjbuM8X8cGQnFoHk0pGfrFeT9GZhzN5SW8nRsiGKK7Aif4CrACPENkA6P/Lw6fHGQ==}
+    dependencies:
+      '@types/unist': 3.0.0
+      unist-util-is: 6.0.0
+    dev: false
+
   /unist-util-generated@2.0.0:
     resolution: {integrity: sha512-TiWE6DVtVe7Ye2QxOVW9kqybs6cZexNwTwSMVgkfjEReqy/xwGpAXb99OxktoWwmL+Z+Epb0Dn8/GNDYP1wnUw==}
     dev: false
@@ -5535,6 +5570,13 @@ packages:
     dependencies:
       '@types/unist': 2.0.6
       unist-util-visit: 4.1.2
+    dev: false
+
+  /unist-util-remove-position@5.0.0:
+    resolution: {integrity: sha512-Hp5Kh3wLxv0PHj9m2yZhhLt58KzPtEYKQQ4yxfYFEO7EvHwzyDYnduhHnY1mDxoqr7VUwVuHXk9RXKIiYS1N8Q==}
+    dependencies:
+      '@types/unist': 3.0.0
+      unist-util-visit: 5.0.0
     dev: false
 
   /unist-util-stringify-position@3.0.3:
