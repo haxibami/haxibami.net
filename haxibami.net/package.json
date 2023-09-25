@@ -55,7 +55,7 @@
     "sharp": "0.32.6",
     "shiki": "0.14.4",
     "strip-markdown": "5.0.1",
-    "unified": "10.1.2",
+    "unified": "11.0.3",
     "unist-util-is": "6.0.0",
     "unist-util-visit": "5.0.0",
     "vfile": "6.0.1",
