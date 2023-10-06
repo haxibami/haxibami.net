@@ -6,6 +6,9 @@ on:
     branches:
       - main
 
+env:
+  PNPM_HOME: ~/.local/share/pnpm
+
 jobs:
   test-deploy:
     runs-on: ubuntu-latest
@@ -20,8 +23,6 @@ jobs:
           corepack prepare pnpm@latest --activate
           SHELL="$(which bash)" pnpm setup
           echo "$(pnpm bin --global)" >> $GITHUB_PATH
-        env:
-          PNPM_HOME: ~/.local/share/pnpm
       - name: Get pnpm store path
         id: pnpm-cache
         run: |
