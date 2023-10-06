@@ -23,7 +23,7 @@ jobs:
           SHELL="$(which bash)" pnpm setup
           echo "${{ env.PNPM_HOME }}" >> $GITHUB_PATH
         env:
-          PNPM_HOME: ${{ env.PNPM_HOME }}
+          PNPM_HOME: ~/.local/share/pnpm
       - name: Get pnpm store path
         id: pnpm-cache
         run: |
