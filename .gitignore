@@ -1,2 +1,5 @@
-# project-wide .gitignore file
-# node-related files are listed in haxibami.net/.gitignore
+/node_modules
+
+/.astro
+
+/dist

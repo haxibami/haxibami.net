@@ -1,0 +1,74 @@
+---
+import type { Page, PaginateFunction } from "astro";
+import { getEntry, getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+import Posts from "@/components/Posts.astro";
+import Layout from "@/layouts/Layout.astro";
+import { COUNT_PER_PAGE } from "@/lib/constant";
+
+export interface Props {
+  page: Page<CollectionEntry<"blog">>;
+}
+
+export async function getStaticPaths({
+  paginate,
+}: {
+  paginate: PaginateFunction;
+}) {
+  const allPosts = await getCollection("blog");
+  const categories = [
+    ...new Set(allPosts.flatMap((post) => post.data.tags ?? [])),
+  ];
+  const paginates = categories.flatMap((category) => {
+    const posts = allPosts
+      .filter((post) => post.data.tags?.includes(category))
+      .sort(
+        (a, b) =>
+          (a.data.lastmod ?? a.data.date).getTime() -
+          (b.data.lastmod ?? b.data.date).getTime(),
+      )
+      .reverse();
+    return paginate(posts, {
+      pageSize: COUNT_PER_PAGE,
+      params: { category },
+    });
+  });
+  return paginates;
+}
+
+const meta = await getEntry("data", "meta");
+
+const { page } = Astro.props;
+const params = Astro.params;
+---
+
+<Layout
+  title=`${meta.data.blog.title} - #${params.category}`
+  description={meta.data.blog.description}
+  path={page.url.current}
+  og={{ enabled: true }}
+>
+  <main>
+    <h1>
+      {params.category}
+    </h1>
+    <Posts page={page} />
+  </main>
+</Layout>
+
+<style>
+  main {
+    display: flex;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 2rem;
+  }
+
+  h1:before {
+    content: "# ";
+    color: var(--link);
+  }
+</style>

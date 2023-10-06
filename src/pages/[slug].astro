@@ -1,0 +1,108 @@
+---
+import "katex/dist/katex.min.css";
+
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+import icon from "@/assets/kripcat.jpg";
+import Article from "@/components/Article.astro";
+import AstroImage from "@/components/AstroImage.astro";
+import Link from "@/components/Link.astro";
+import Layout from "@/layouts/Layout.astro";
+
+export interface Props {
+  post: CollectionEntry<"page">;
+}
+
+export async function getStaticPaths() {
+  const posts = await getCollection("page");
+
+  return posts.map((post) => {
+    const slug = post.slug;
+    return {
+      params: {
+        slug,
+      },
+      props: {
+        post,
+      },
+    };
+  });
+}
+
+const { Content } = await Astro.props.post.render();
+
+const { post } = Astro.props;
+
+export const components = {
+  a: Link,
+  img: AstroImage,
+};
+
+const site = Astro.site ?? "";
+---
+
+<Layout
+  title={post.data.title}
+  description={post.data.description}
+  path={`/${post.slug}`}
+  og={{
+    enabled: true,
+    width: 1200,
+    height: 630,
+    image: new URL(`/api/og/article/${post.collection}/${post.slug}.png`, site),
+    type: "article",
+  }}
+>
+  <main class="post-main">
+    <header>
+      <div>
+        <Image src={icon} alt="icon" width={150} height={150} class="icon" />
+      </div>
+      <span class="title">
+        <h1>haxibami</h1>
+      </span>
+    </header>
+    <Article>
+      <Content components={components} />
+    </Article>
+  </main>
+</Layout>
+
+<style is:global>
+  /* should also be applied to <article>, which is generated from Markdown */
+  .post-main > :not([hidden]) ~ :not([hidden]) {
+    border-top: 1px solid var(--line);
+  }
+</style>
+
+<style>
+  main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 2rem 0;
+    gap: 2rem;
+  }
+
+  header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .icon {
+    border-radius: 9999px;
+    object-fit: cover;
+  }
+
+  .title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+</style>

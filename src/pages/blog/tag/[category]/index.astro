@@ -1,0 +1,31 @@
+---
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection("blog");
+  const categories = [
+    ...new Set(allPosts.flatMap((post) => post.data.tags ?? [])),
+  ];
+  return categories.map((category) => ({ params: { category } }));
+}
+
+const { category } = Astro.params;
+---
+
+<!doctype html>
+<title>{`Redirecting to: /blog/categories/${category}`}</title>
+<meta http-equiv="refresh" content={`0;url=/blog/categories/${category}`} />
+<meta name="robots" content="noindex" />
+<link rel="canonical" href={`/blog/categories/${category}`} />
+<body>
+  <a href={`/blog/categories/${category}`}>
+    Redirecting from
+    <code>
+      {`/blog/tag/${category}`}
+    </code>
+     to
+    <code>
+      {`/blog/categories/${category}`}
+    </code>
+  </a>
+</body>
