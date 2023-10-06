@@ -38,8 +38,9 @@ jobs:
         run: pnpm i --frozen-lockfile
       - name: Install Wrangler CLI
         run: |
-          echo "${{ env.PNPM_HOME }}" >> $GITHUB_PATH
           pnpm add -g wrangler
+          ls ${{ env.PNPM_HOME }}
+          echo $PATH
           wrangler --help
       - name: Check types and code styles
         run: pnpm run lint && pnpm run format-check
@@ -47,7 +48,6 @@ jobs:
         run: pnpm run build
       - name: Deploy project artifacts to Cloudflare Pages
         run: |
-          echo "${{ env.PNPM_HOME }}" >> $GITHUB_PATH
           wrangler pages deploy ./dist --project-name=mythfinder --branch alpha
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
