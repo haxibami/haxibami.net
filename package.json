@@ -15,7 +15,7 @@
     "sync": "astro sync",
     "build": "astro build",
     "preview": "astro preview",
-    "lint": "tsc --noEmit && astro check",
+    "lint": "tsc --noEmit && astro sync && astro check",
     "format": "prettier --write '**/*.{ts,js,tsx,json,astro}'",
     "format-check": "prettier --check '**/*.{ts,js,tsx,json,astro}'",
     "astro": "astro"
