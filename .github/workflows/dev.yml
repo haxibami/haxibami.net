@@ -6,7 +6,7 @@ on:
       - dev
 
 env:
-  PNPM_HOME: ~/.local/share/pnpm
+  PNPM_HOME: /home/runner/.local/share/pnpm
 
 jobs:
   alpha-deploy:
@@ -21,7 +21,6 @@ jobs:
           corepack enable pnpm
           corepack prepare pnpm@latest --activate
           SHELL="$(which bash)" pnpm setup --force
-          echo "PATH=${{ env.PNPM_HOME }}:$PATH" >> $GITHUB_ENV
       - name: Get pnpm store path
         id: pnpm-cache
         run: |
@@ -37,13 +36,18 @@ jobs:
       - name: Install node dependencies
         run: pnpm i --frozen-lockfile
       - name: Install Wrangler CLI
-        run: pnpm add -g wrangler
+        run: |
+          echo "${{ env.PNPM_HOME }}" >> $GITHUB_PATH
+          pnpm add -g wrangler
+          wrangler --help
       - name: Check types and code styles
         run: pnpm run lint && pnpm run format-check
       - name: Build project artifacts
         run: pnpm run build
       - name: Deploy project artifacts to Cloudflare Pages
-        run: wrangler pages deploy ./dist --project-name=mythfinder --branch alpha
+        run: |
+          echo "${{ env.PNPM_HOME }}" >> $GITHUB_PATH
+          wrangler pages deploy ./dist --project-name=mythfinder --branch alpha
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
