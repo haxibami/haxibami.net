@@ -19,6 +19,7 @@ jobs:
           corepack enable pnpm
           corepack prepare pnpm@latest --activate
           SHELL="$(which bash)" pnpm setup
+          source ~/.bashrc
           echo "$(pnpm bin --global)" >> $GITHUB_PATH
       - name: Get pnpm store path
         id: pnpm-cache
