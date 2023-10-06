@@ -5,6 +5,9 @@ on:
     branches:
       - dev
 
+env:
+  PNPM_HOME: ~/.local/share/pnpm
+
 jobs:
   alpha-deploy:
     runs-on: ubuntu-latest
