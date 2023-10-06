@@ -38,9 +38,9 @@ jobs:
         run: pnpm i --frozen-lockfile
       - name: Install Wrangler CLI
         run: |
-          echo $PNPM_HOME
-          echo "$(pnpm bin --global)"
           pnpm add -g wrangler
+          ls $PNPM_HOME
+          ls "$(pnpm bin --global)"
       - name: Check types and code styles
         run: pnpm run lint && pnpm run format-check
       - name: Build project artifacts
