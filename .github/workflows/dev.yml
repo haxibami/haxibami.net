@@ -6,7 +6,7 @@ on:
       - dev
 
 env:
-  PNPM_HOME: /home/runner/.local/share/pnpm
+  PNPM_HOME: ~/.local/share/pnpm
 
 jobs:
   alpha-deploy:
