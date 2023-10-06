@@ -21,7 +21,7 @@ jobs:
           SHELL="$(which bash)" pnpm setup
           source ~/.bashrc
           echo "$PNPM_HOME" >> $GITHUB_PATH
-          pnpm add -g wrangler
+          echo "PNPM_HOME=$PNPM_HOME" >> $GITHUB_ENV
       - name: Get pnpm store path
         id: pnpm-cache
         run: |
