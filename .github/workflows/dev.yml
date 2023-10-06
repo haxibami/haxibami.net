@@ -5,9 +5,6 @@ on:
     branches:
       - dev
 
-env:
-  PNPM_HOME: ~/.local/share/pnpm
-
 jobs:
   alpha-deploy:
     runs-on: ubuntu-latest
@@ -22,8 +19,7 @@ jobs:
           corepack prepare pnpm@latest --activate
           SHELL="$(which bash)" pnpm setup
           source ~/.bashrc
-          echo "$(pnpm bin --global)" >> $GITHUB_PATH
-          pnpm add -g wrangler
+          echo "$PNPM_HOME" >> $GITHUB_PATH
       - name: Get pnpm store path
         id: pnpm-cache
         run: |
@@ -38,6 +34,8 @@ jobs:
             ${{ runner.os }}-astro-
       - name: Install node dependencies
         run: pnpm i --frozen-lockfile
+      - name: Install Wrangler CLI
+        run: pnpm add -g wrangler
       - name: Check types and code styles
         run: pnpm run lint && pnpm run format-check
       - name: Build project artifacts
