@@ -16,41 +16,32 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: ".node-version"
+      - name: Configure pnpm path
+        run: echo "${{ env.PNPM_HOME }}" >> $GITHUB_PATH
       - name: Setup pnpm with corepack
         run: |
           corepack enable pnpm
           corepack prepare pnpm@latest --activate
           SHELL="$(which bash)" pnpm setup --force
-          echo $(pnpm bin --global)
-          echo "${{ env.PNPM_HOME }}" >> $GITHUB_PATH
       - name: Get pnpm store path
         id: pnpm-cache
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
       - name: Setup pnpm store & build artifact cache
         uses: actions/cache@v3
         with:
-          path: |
-            ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           key: ${{ runner.os }}-astro-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-astro-
+          restore-keys: ${{ runner.os }}-astro-
       - name: Install node dependencies
         run: pnpm i --frozen-lockfile
       - name: Install Wrangler CLI
-        run: |
-          pnpm add -g wrangler
-          echo $PATH
-          echo $(pnpm bin --global)
-          ls ${{ env.PNPM_HOME }}
-          wrangler --help
+        run: pnpm add -g wrangler
       - name: Check types and code styles
         run: pnpm run lint && pnpm run format-check
       - name: Build project artifacts
         run: pnpm run build
       - name: Deploy project artifacts to Cloudflare Pages
-        run: |
-          wrangler pages deploy ./dist --project-name=mythfinder --branch alpha
+        run: wrangler pages deploy ./dist --project-name=mythfinder --branch alpha
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}

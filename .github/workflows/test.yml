@@ -6,6 +6,9 @@ on:
     branches:
       - main
 
+env:
+  PNPM_HOME: /home/runner/.local/share/pnpm
+
 jobs:
   test-deploy:
     runs-on: ubuntu-latest
@@ -14,26 +17,22 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version-file: ".node-version"
+      - name: Configure pnpm path
+        run: echo "${{ env.PNPM_HOME }}" >> $GITHUB_PATH
       - name: Setup pnpm with corepack
         run: |
           corepack enable pnpm
           corepack prepare pnpm@latest --activate
-          SHELL="$(which bash)" pnpm setup
-          source ~/.bashrc
-          echo "$PNPM_HOME" >> $GITHUB_PATH
-          echo "PNPM_HOME=$PNPM_HOME" >> $GITHUB_ENV
+          SHELL="$(which bash)" pnpm setup --force
       - name: Get pnpm store path
         id: pnpm-cache
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
       - name: Setup pnpm store & build artifact cache
         uses: actions/cache@v3
         with:
-          path: |
-            ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           key: ${{ runner.os }}-astro-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-astro-
+          restore-keys: ${{ runner.os }}-astro-
       - name: Install node dependencies
         run: pnpm i --frozen-lockfile
       - name: Install Wrangler CLI
