@@ -21,7 +21,7 @@ jobs:
           corepack enable pnpm
           corepack prepare pnpm@latest --activate
           SHELL="$(which bash)" pnpm setup --force
-          echo "${{ env.PNPM_HOME }}" >> $GITHUB_PATH
+          echo "PATH=${{ env.PNPM_HOME }}:$PATH" >> $GITHUB_ENV
       - name: Get pnpm store path
         id: pnpm-cache
         run: |
@@ -37,10 +37,7 @@ jobs:
       - name: Install node dependencies
         run: pnpm i --frozen-lockfile
       - name: Install Wrangler CLI
-        run: |
-          pnpm add -g wrangler
-          ls $PNPM_HOME
-          ls "$(pnpm bin --global)"
+        run: pnpm add -g wrangler
       - name: Check types and code styles
         run: pnpm run lint && pnpm run format-check
       - name: Build project artifacts
