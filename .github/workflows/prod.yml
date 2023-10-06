@@ -23,6 +23,7 @@ jobs:
           SHELL="$(which bash)" pnpm setup
           source ~/.bashrc
           echo "${{ env.PNPM_HOME }}" >> $GITHUB_PATH
+          pnpm add -g wrangler
       - name: Get pnpm store path
         id: pnpm-cache
         run: |
@@ -37,8 +38,6 @@ jobs:
             ${{ runner.os }}-astro-
       - name: Install node dependencies
         run: pnpm i --frozen-lockfile
-      - name: Install Wrangler CLI
-        run: pnpm add -g wrangler
       - name: Build project artifacts
         run: pnpm run build
       - name: Deploy project artifacts to Cloudflare Pages
