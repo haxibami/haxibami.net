@@ -1,0 +1,218 @@
+---
+import { getEntry } from "astro:content";
+
+import Layout from "@/layouts/Layout.astro";
+import "@/styles/red-october.css";
+
+const meta = await getEntry("data", "meta");
+---
+
+<Layout
+  title={meta.data.top.title}
+  description={meta.data.top.description}
+  path="/"
+  og={{
+    enabled: true,
+  }}
+>
+  <main>
+    <div class="avangard-container">
+      <div class="avangard">
+        <div class="name">
+          <div class="core">
+            <h2 class="question">who?:</h2>
+            <h1 class="answer">HAXIBAMI</h1>
+          </div>
+        </div>
+        <div class="squares"></div>
+        <div class="arrows vertical">
+          <h2 class="description">
+            {"litterae"}
+            <br />
+            {"machinae"}
+            <br />
+            {"et magiae."}
+          </h2>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 1.5rem;
+  }
+  main > :not([hidden]) ~ :not([hidden]) {
+    border-top: 1px solid var(--line);
+  }
+
+  .avangard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .avangard {
+    display: flex;
+    padding-top: 18rem;
+    margin-top: 0.5rem;
+    flex-direction: column;
+    gap: 2rem;
+    font-family: "Red October", sans-serif;
+  }
+
+  .name {
+    display: flex;
+    position: relative;
+    align-items: flex-start;
+    transform: rotate(-35deg);
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: calc(100% + 15px);
+      right: 0;
+      z-index: -10;
+      height: 200%;
+      width: 50px;
+      background-color: var(--avangard1);
+      transform: translate3d(0, 0, 0);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: calc(100% + 15px);
+      right: 60px;
+      z-index: -10;
+      height: 150%;
+      width: 50px;
+      background-color: var(--avangard2);
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .core {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: calc(100% + 20px);
+      right: 60%;
+      z-index: -10;
+      height: 0;
+      width: 0;
+      border: 25px solid transparent;
+      border-right: 60px solid var(--avangard1);
+      transform: translate3d(0, 0, 0) rotate(40deg);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: calc(100% + 47px);
+      right: 73%;
+      z-index: -10;
+      height: 20px;
+      width: 20px;
+      border-radius: 9999px;
+      background-color: var(--fg);
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .question {
+    font-size: 2.25rem;
+    line-height: 1;
+  }
+
+  .answer {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  .squares {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: relative;
+    transform: rotate(-35deg);
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: calc(100% + 15px);
+      top: 1rem;
+      right: 4rem;
+      z-index: -10;
+      height: 2rem;
+      width: 2rem;
+      background-color: var(--fg);
+      transform: translate3d(0, 0, 0);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 3rem;
+      top: 2rem;
+      z-index: -10;
+      height: 2rem;
+      width: 2rem;
+      background-color: var(--fg);
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .arrows {
+    display: flex;
+    position: relative;
+    margin-right: 4rem;
+    flex-direction: column;
+    overflow: hidden;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(-35deg);
+
+    &::before {
+      content: "";
+      position: absolute;
+      right: 40%;
+      top: 0;
+      z-index: -10;
+      height: 0;
+      width: 0;
+      border-top: 90px solid var(--avangard3);
+      border-right: 20px solid transparent;
+      border-left: 20px solid transparent;
+      transform: translate3d(0, 0, 0);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: 40%;
+      bottom: 0;
+      z-index: -10;
+      height: 0;
+      width: 0;
+      border-top: 90px solid var(--avangard1);
+      border-right: 20px solid transparent;
+      border-left: 20px solid transparent;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .description {
+    font-size: 1.875rem;
+    line-height: 1;
+  }
+</style>

@@ -1,0 +1,80 @@
+---
+import "tailwindcss/lib/css/preflight.css";
+import "@fontsource-variable/montserrat";
+import "@/styles/global.css";
+
+import { ViewTransitions } from "astro:transitions";
+
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+
+export interface Props {
+  title: string;
+  description?: string;
+  path: string;
+  og: {
+    enabled: boolean;
+    image?: URL;
+    width?: number;
+    height?: number;
+    type?: "article" | "website";
+  };
+}
+
+const { title, description, path, og } = Astro.props;
+
+const site = Astro.site ?? "";
+---
+
+<html lang="ja" transition:animate="none">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="application-name" content={title} />
+    <link rel="author" href={site} />
+    <meta name="author" content="haxibami" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="creator" content="haxibami" />
+    <meta name="publisher" content="haxibami" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      href={new URL("/rss.xml", site).toString()}
+    />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={new URL(path, site).toString()} />
+    <meta property="og:site_name" content={title} />
+    <meta name="twitter:site" content="@haxibami" />
+    <meta name="twitter:creator" content="@haxibami" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {
+      og.enabled && (
+        <>
+          <meta
+            property="og:image"
+            content={og.image ?? new URL("/kripcat_720.jpg", site).toString()}
+          />
+          <meta property="og:image:width" content={`${og.width ?? 720}`} />
+          <meta property="og:image:height" content={`${og.height ?? 720}`} />
+          <meta property="og:type" content={og.type ?? "website"} />
+          <meta
+            name="twitter:card"
+            content={og.type === "article" ? "summary_large_image" : "summary"}
+          />
+        </>
+      )
+    }
+    <ViewTransitions />
+  </head>
+  <body>
+    <Header />
+    <slot />
+    <Footer />
+  </body>
+</html>
