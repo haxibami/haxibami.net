@@ -1,0 +1,49 @@
+---
+import type { CollectionKey } from "astro:content";
+
+export interface Props {
+  tags: string[] | undefined;
+  collectionKey: CollectionKey;
+}
+
+const { tags, collectionKey } = Astro.props;
+---
+
+{
+  tags && (
+    <ul>
+      {tags.map((tag) => (
+        <li>
+          <a href={`/${collectionKey}/categories/${tag}`} class="tag-link">
+            #{tag}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+<style>
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-family:
+      ui-monospace,
+      SFMono-Regular,
+      SF Mono,
+      Menlo,
+      Monaco,
+      Consolas,
+      monospace;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+  }
+
+  .tag-link {
+    color: var(--link);
+    &:hover {
+      text-decoration: underline solid 2px;
+    }
+  }
+</style>

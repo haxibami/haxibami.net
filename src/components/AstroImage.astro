@@ -1,0 +1,61 @@
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+
+import { getPublicImg } from "@/lib/api";
+
+export type Props = {
+  src: string;
+  alt?: string;
+  // blurDataURL: string;
+};
+
+const { src, alt } = Astro.props;
+
+const img = (await getPublicImg(src)) as ImageMetadata;
+---
+
+{
+  alt !== "asciicast" ? (
+    <figure class="figure">
+      <a href={img.src}>
+        <div class="figure-image-container">
+          <Image class="figure-image" src={img} alt={alt} />
+        </div>
+      </a>
+      <figcaption class="figure-caption">{alt}</figcaption>
+    </figure>
+  ) : (
+    <div class="figure-image-container">
+      <Image class="figure-image" src={img} alt={alt} />
+    </div>
+  )
+}
+
+<style>
+  .figure {
+    display: flex;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .figure-caption {
+    text-align: center;
+    color: var(--secondary);
+  }
+
+  .figure-image-container {
+    display: flex;
+    margin: 0 auto;
+    max-height: 50vh;
+    @media (max-width: 640px) {
+      max-height: 100vw;
+    }
+  }
+
+  .figure-image {
+    object-fit: contain;
+  }
+</style>

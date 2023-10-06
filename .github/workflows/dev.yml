@@ -7,21 +7,15 @@ on:
 
 env:
   PNPM_HOME: ~/.local/share/pnpm
-  PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
-  VERCEL_ORG_ID: ${{ secrets.ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.PROJECT_ID }}
 
 jobs:
   alpha-deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./haxibami.net
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version-file: ".node-version"
       - name: Setup pnpm with corepack
         run: |
           corepack enable pnpm
@@ -37,37 +31,19 @@ jobs:
         with:
           path: |
             ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-            ${{ github.workspace }}/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          key: ${{ runner.os }}-astro-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
-      - name: Setup playwright binary cache
-        id: playwright-cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-playwright-
+            ${{ runner.os }}-astro-
       - name: Install node dependencies
         run: pnpm i --frozen-lockfile
-      - name: Install playwright (without cache)
-        run: pnpm playwright install --with-deps chromium
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-      - name: Install playwright (with cache)
-        run: pnpm playwright install-deps chromium
-        if: steps.playwright-cache.outputs.cache-hit == 'true'
-      - name: Install Vercel CLI
-        run: pnpm add -g vercel@latest
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Build Project Artifacts
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Deploy Project Artifacts to Vercel
-        id: deploy
-        run: |
-          URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
-          echo "DEPLOY_URL=$URL" >> $GITHUB_OUTPUT
-      - name: Alias domain
-        run: vercel alias set ${{ steps.deploy.outputs.DEPLOY_URL }} staging.haxibami.net --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Check types
+        run: pnpm run test
+      - name: Install Wrangler CLI
+        run: pnpm add -g wrangler
+      - name: Build project artifacts
+        run: pnpm run build
+      - name: Deploy project artifacts to Cloudflare Pages
+        run: wrangler pages deploy ./dist --project-name=mythfinder --branch alpha
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}

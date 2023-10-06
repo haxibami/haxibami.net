@@ -6,13 +6,19 @@
   "ignoreDeps": [],
   "packageRules": [
     {
-      "groupName": "devDependencies",
+      "groupName": "DevDependencies",
       "matchDepTypes": ["devDependencies"],
       "automerge": true
     },
     {
-      "groupName": "dependencies (minor update)",
+      "groupName": "Dependencies (minor update)",
       "matchDepTypes": ["dependencies"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    },
+    {
+      "groupName": "Package manager (pnpm)",
+      "matchPackagePatterns": ["^pnpm$"],
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "automerge": true
     }

@@ -1,0 +1,99 @@
+---
+import type { Page } from "astro";
+import type { CollectionEntry } from "astro:content";
+
+import Pager from "@/components/Pager.astro";
+import Tags from "@/components/Tags.astro";
+
+export interface Props {
+  page: Page<CollectionEntry<"blog">>;
+}
+
+const { page } = Astro.props;
+---
+
+<ul>
+  {
+    page.data.map((post) => {
+      const { slug, data, collection } = post;
+      return (
+        <li>
+          <article>
+            <div>
+              <time datetime={data.date.toISOString()}>
+                {new Intl.DateTimeFormat("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                }).format(post.data.date)}
+              </time>
+              {data.lastmod && (
+                <time datetime={data.lastmod.toISOString()}>
+                  {` — ${new Intl.DateTimeFormat("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  }).format(post.data.lastmod)} Updated`}
+                </time>
+              )}
+            </div>
+            <div>
+              <a href={`/${collection}/posts/${slug}`}>
+                <h2>{data.title}</h2>
+              </a>
+            </div>
+            <div class="description">{data?.description}</div>
+            <div class="tags-container">
+              <Tags tags={data.tags} collectionKey={collection} />
+            </div>
+          </article>
+        </li>
+      );
+    })
+  }
+</ul>
+<Pager page={page} />
+
+<style>
+  ul {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  article {
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-radius: 0.25rem;
+    line-height: 1.5rem;
+    color: var(--secondary);
+  }
+
+  h2 {
+    overflow: hidden;
+    max-height: 8rem;
+    text-overflow: ellipsis;
+    color: var(--title);
+
+    &:hover {
+      text-decoration: underline solid 2px;
+    }
+  }
+
+  .description {
+    overflow: hidden;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .tags-container {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: space-between;
+  }
+</style>
