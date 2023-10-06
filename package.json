@@ -16,8 +16,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "lint": "astro check && tsc --noEmit",
-    "format": "prettier --write '**/*.{ts,js,tsx,json,astro}'",
-    "format-check": "prettier --check '**/*.{ts,js,tsx,json,astro}'",
+    "format": "prettier --write './src/**/*.{ts,js,tsx,json,astro}'",
+    "format-check": "prettier --check './src/**/*.{ts,js,tsx,json,astro}'",
     "astro": "astro"
   },
   "author": "haxibami",
