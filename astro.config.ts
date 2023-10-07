@@ -29,6 +29,9 @@ export default defineConfig({
     }),
     sitemap(),
   ],
+  build: {
+    format: "file",
+  },
   vite: {
     build: {
       cssMinify: "lightningcss",
