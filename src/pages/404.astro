@@ -1,0 +1,33 @@
+---
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout
+  title="404 Not Found"
+  description="The page you are looking for does not exist."
+  path="/404"
+  og={{
+    enabled: false,
+  }}
+>
+  <main>
+    <h1>404 Not Found</h1>
+    <p>The page you are looking for does not exist.</p>
+    <p>
+      <a href="/">Go back to <span>Top</span>.</a>
+    </p>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: 0 auto;
+  }
+  span {
+    color: var(--link);
+    font-weight: bold;
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+  }
+</style>

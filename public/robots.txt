@@ -1,0 +1,8 @@
+User-Agent: Google-Extended
+Disallow: /
+
+User-Agent: *
+Allow: /
+
+Host: https://www.haxibami.net
+Sitemap: https://www.haxibami.net/sitemap.xml

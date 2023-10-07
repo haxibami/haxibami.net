@@ -21,7 +21,6 @@ import remarkLinkcard from "./src/lib/remark-link-card";
 export default defineConfig({
   redirects: {
     "/blog/tags": "/blog",
-    "/rss/feed.xml": "/rss.xml",
   },
   integrations: [
     mdx(),
@@ -32,7 +31,6 @@ export default defineConfig({
   ],
   vite: {
     build: {
-      minify: true,
       cssMinify: "lightningcss",
     },
     css: {
