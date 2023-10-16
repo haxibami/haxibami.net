@@ -23,15 +23,15 @@
   "author": "haxibami",
   "license": "MIT",
   "dependencies": {
-    "@astrojs/check": "0.2.0",
-    "@astrojs/mdx": "1.1.1",
+    "@astrojs/check": "0.2.1",
+    "@astrojs/mdx": "1.1.2",
     "@astrojs/rss": "3.0.0",
     "@astrojs/sitemap": "3.0.1",
     "@astrojs/solid-js": "3.0.2",
     "@fontsource-variable/montserrat": "5.0.14",
     "@fontsource/roboto-mono": "5.0.13",
-    "astro": "3.2.3",
-    "solid-js": "1.7.12"
+    "astro": "3.3.0",
+    "solid-js": "1.8.1"
   },
   "devDependencies": {
     "@resvg/resvg-js": "2.4.1",
