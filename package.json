@@ -26,12 +26,12 @@
     "@astrojs/check": "0.2.1",
     "@astrojs/mdx": "1.1.2",
     "@astrojs/rss": "3.0.0",
-    "@astrojs/sitemap": "3.0.1",
+    "@astrojs/sitemap": "3.0.2",
     "@astrojs/solid-js": "3.0.2",
-    "@fontsource-variable/montserrat": "5.0.14",
-    "@fontsource/roboto-mono": "5.0.13",
-    "astro": "3.3.0",
-    "solid-js": "1.8.1"
+    "@fontsource-variable/montserrat": "5.0.16",
+    "@fontsource/roboto-mono": "5.0.15",
+    "astro": "3.3.2",
+    "solid-js": "1.8.3"
   },
   "devDependencies": {
     "@resvg/resvg-js": "2.5.0",
