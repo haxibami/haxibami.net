@@ -23,7 +23,7 @@
   "author": "haxibami",
   "license": "MIT",
   "dependencies": {
-    "@astrojs/check": "0.2.1",
+    "@astrojs/check": "0.3.0",
     "@astrojs/mdx": "1.1.3",
     "@astrojs/rss": "3.0.0",
     "@astrojs/sitemap": "3.0.2",
