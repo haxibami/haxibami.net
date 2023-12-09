@@ -93,7 +93,10 @@ export default defineConfig({
       [
         rehypePrettyCode,
         {
-          theme: "poimandres",
+          theme: {
+            light: "poimandres",
+            dark: "rose-pine",
+          },
           grid: true,
         },
       ],

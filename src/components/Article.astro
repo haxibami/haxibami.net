@@ -87,16 +87,30 @@
       }
     }
 
-    & div[data-rehype-pretty-code-fragment] {
+    pre[data-theme*=" "],
+    pre[data-theme*=" "] span {
+      color: var(--shiki-light);
+      background-color: var(--shiki-light-bg);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      pre[data-theme*=" "],
+      pre[data-theme*=" "] span {
+        color: var(--shiki-dark);
+        background-color: var(--shiki-dark-bg);
+      }
+    }
+
+    & figure[data-rehype-pretty-code-figure] {
       margin-top: 1.5rem;
       position: relative;
       & code {
-        & [data-line] {
+        & span[data-line] {
           border-left: 4px solid transparent;
           padding: 0 1.25rem;
         }
 
-        & > [data-line]::before {
+        & > span[data-line]::before {
           counter-increment: line;
           content: counter(line);
 
@@ -111,30 +125,37 @@
         & [data-line][data-highlighted-line] {
           border-left-color: var(--codehlsign);
           background: var(--codehl);
+          span {
+            background: unset;
+          }
         }
-        & [data-highlighted-chars] {
+        & mark[data-highlighted-chars] {
           background: var(--codefind);
           padding: 0.25rem;
           border-radius: 0.25rem;
+        }
+
+        & mark[data-highlighted-chars] span {
+          background: unset;
         }
       }
       & pre {
         line-height: 1.5rem;
       }
-      & div {
+      & figcaption[data-rehype-pretty-code-title] {
         & + pre {
           padding-bottom: 0.75rem;
           padding-top: 3rem;
         }
       }
 
-      & pre:not(div + pre) {
+      & pre:not(figcaption[data-rehype-pretty-code-title] + pre) {
         padding-top: 0.75rem;
         padding-bottom: 0.75rem;
       }
     }
 
-    & div[data-rehype-pretty-code-title] {
+    & figcaption[data-rehype-pretty-code-title] {
       position: absolute;
       top: 0;
       font-family:
@@ -157,21 +178,6 @@
       z-index: 1;
     }
 
-    /*   @media (prefers-color-scheme: dark) {
-     div[data-theme="light"],
-     pre[data-theme="light"],
-     code[data-theme="light"] {
-       display: none;
-     }
-   }
-
-   @media (prefers-color-scheme: light), (prefers-color-scheme: no-preference) {
-     div[data-theme="dark"],
-     pre[data-theme="dark"],
-     code[data-theme="dark"] {
-       display: none;
-     }
-   } */
     & .math-display {
       overflow: scroll;
     }
