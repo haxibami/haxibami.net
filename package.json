@@ -28,8 +28,8 @@
     "@astrojs/rss": "3.0.0",
     "@astrojs/sitemap": "3.0.3",
     "@astrojs/solid-js": "3.0.2",
-    "@fontsource-variable/montserrat": "5.0.16",
-    "@fontsource/roboto-mono": "5.0.15",
+    "@fontsource-variable/montserrat": "5.0.17",
+    "@fontsource/roboto-mono": "5.0.16",
     "astro": "3.6.4",
     "solid-js": "1.8.7"
   },

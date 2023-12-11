@@ -21,11 +21,11 @@ dependencies:
     specifier: 3.0.2
     version: 3.0.2(solid-js@1.8.7)(vite@4.4.11)
   '@fontsource-variable/montserrat':
+    specifier: 5.0.17
+    version: 5.0.17
+  '@fontsource/roboto-mono':
     specifier: 5.0.16
     version: 5.0.16
-  '@fontsource/roboto-mono':
-    specifier: 5.0.15
-    version: 5.0.15
   astro:
     specifier: 3.6.4
     version: 3.6.4(@types/node@20.10.3)(lightningcss@1.22.1)(typescript@5.3.2)
@@ -1119,12 +1119,12 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@fontsource-variable/montserrat@5.0.16:
-    resolution: {integrity: sha512-KwPT4ccZE1MY9fnlKBOWCTCz/siApJCHnS9nFhTBzo8eybFYLWQ0kaiZJXz6K0lpKAkBCO4fIkCaL8SSnLiKhg==}
+  /@fontsource-variable/montserrat@5.0.17:
+    resolution: {integrity: sha512-kRPFY+sLUPE4fGTkuHu6phebYTwizsbGVIvqYa2vysRLPKUxwoiy1lb9Z4Qul8qoVspXnl0b9zA5LSn0scD9vA==}
     dev: false
 
-  /@fontsource/roboto-mono@5.0.15:
-    resolution: {integrity: sha512-2YeXokbjzPUFicaw3L2dH8xnfVPxDF1gjYRtpZpdQr4DDOtRcJBJ6ys5fVc9o+kAmG5yp8UXHwDbjHrxigSM0g==}
+  /@fontsource/roboto-mono@5.0.16:
+    resolution: {integrity: sha512-unZYfjXts55DQyODz0I9DzbSrS5DRKPNq9crJpNJe/Vy818bLnijprcJv3fvqwdDqTT0dRm2Fhk09QEIdtAc+Q==}
     dev: false
 
   /@humanwhocodes/config-array@0.11.13:
