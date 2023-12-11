@@ -40,7 +40,6 @@ export default defineConfig({
       transformer: "lightningcss",
       lightningcss: {
         drafts: {
-          nesting: true,
           customMedia: true,
         },
       },
