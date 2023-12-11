@@ -30,7 +30,7 @@
     "@astrojs/solid-js": "3.0.2",
     "@fontsource-variable/montserrat": "5.0.17",
     "@fontsource/roboto-mono": "5.0.16",
-    "astro": "3.6.4",
+    "astro": "4.0.4",
     "solid-js": "1.8.7"
   },
   "devDependencies": {
