@@ -1,7 +1,6 @@
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import solid from "@astrojs/solid-js";
-import type { RemarkPlugins, RehypePlugins } from "astro";
 import { defineConfig } from "astro/config";
 
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
@@ -71,7 +70,7 @@ export default defineConfig({
       //           },
       //         ],
       remarkFootnoteTitle,
-    ] as RemarkPlugins, // TODO: remove type assertion when all plugins are updated to use unified 11
+    ],
     remarkRehype: {
       footnoteLabel: "脚注",
       footnoteBackLabel: "戻る",
@@ -99,8 +98,7 @@ export default defineConfig({
           grid: true,
         },
       ],
-    ] as RehypePlugins, // TODO: remove type assertion when all plugins are updated to use unified 11
+    ],
   },
-  // scopedStyleStrategy: "class",
   site: "https://www.haxibami.net",
 });

@@ -2,8 +2,8 @@ import { visit } from "unist-util-visit";
 
 import { isParent, isBareLink } from "./mdast-util-node-is";
 
-import type { LinkData } from "mdast";
-import type { Transformer } from "unified";
+import type { LinkData, Root } from "mdast";
+import type { Plugin } from "unified";
 import type { Parent } from "unist";
 
 interface LinkcardData extends LinkData {
@@ -12,7 +12,7 @@ interface LinkcardData extends LinkData {
   };
 }
 
-export const remarkLinkcard = function linkcardTrans(): Transformer {
+const remarkLinkcard: Plugin<void[], Root> = () => {
   return (tree) => {
     visit(tree, isBareLink, (node, _index, parent: Parent | undefined) => {
       if (!isParent(parent)) {

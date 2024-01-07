@@ -1,5 +1,3 @@
-/** @jsxImportSource solid-js */
-
 import type { JSX } from "solid-js";
 
 export const ExclamationIcon = (props: JSX.SvgSVGAttributes<SVGSVGElement>) => {
