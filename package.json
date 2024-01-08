@@ -30,8 +30,8 @@
     "@astrojs/solid-js": "3.0.3",
     "@fontsource-variable/montserrat": "5.0.17",
     "@fontsource/roboto-mono": "5.0.16",
-    "astro": "4.0.8",
-    "solid-js": "1.8.7"
+    "astro": "4.1.1",
+    "solid-js": "1.8.8"
   },
   "devDependencies": {
     "@resvg/resvg-js": "2.6.0",
