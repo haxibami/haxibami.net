@@ -37,7 +37,7 @@
     "@resvg/resvg-js": "2.6.0",
     "@types/hast": "3.0.3",
     "@types/mdast": "4.0.3",
-    "@types/node": "20.10.6",
+    "@types/node": "20.10.7",
     "@types/react": "18.2.47",
     "@types/unist": "3.0.2",
     "@typescript-eslint/eslint-plugin": "6.18.0",
