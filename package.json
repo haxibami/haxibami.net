@@ -27,7 +27,7 @@
     "@astrojs/mdx": "2.0.3",
     "@astrojs/rss": "4.0.1",
     "@astrojs/sitemap": "3.0.4",
-    "@astrojs/solid-js": "3.0.3",
+    "@astrojs/solid-js": "4.0.1",
     "@fontsource-variable/montserrat": "5.0.17",
     "@fontsource/roboto-mono": "5.0.16",
     "astro": "4.1.1",
