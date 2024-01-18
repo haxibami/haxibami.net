@@ -8,7 +8,7 @@ export async function GET(context: APIContext) {
     .sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
     .reverse();
   return rss({
-    title: meta.data.blog.title,
+    title: meta.data.top.title,
     description: meta.data.blog.description,
     site: context.site ?? "",
     items: posts.map((post) => {

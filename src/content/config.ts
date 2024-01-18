@@ -29,11 +29,10 @@ const metaCollection = defineCollection({
   schema: z.object({
     top: z.object({
       title: z.string(),
+      enTitle: z.string(),
       description: z.string(),
     }),
     blog: z.object({
-      title: z.string(),
-      enTitle: z.string(),
       description: z.string(),
     }),
   }),
