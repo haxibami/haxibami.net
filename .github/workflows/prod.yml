@@ -34,6 +34,10 @@ jobs:
           restore-keys: ${{ runner.os }}-astro-
       - name: Install node dependencies
         run: pnpm i --frozen-lockfile
+      - name: Install Chrome binary
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
       - name: Install Wrangler CLI
         run: pnpm add -g wrangler
       - name: Build project artifacts

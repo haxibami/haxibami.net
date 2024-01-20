@@ -5,16 +5,15 @@ import { defineConfig } from "astro/config";
 
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeKatex from "rehype-katex";
-// import rehypeMermaid from "rehype-mermaidjs";
+import rehypeMermaid from "rehype-mermaid";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import remarkRuby from "remark-denden-ruby";
 import remarkGemoji from "remark-gemoji";
 import remarkMath from "remark-math";
-import remarkUnwrapImages from "remark-unwrap-images";
 
+import rehypeMarkImageParent from "./src/lib/rehype-mark-image-parent";
 import remarkFootnoteTitle from "./src/lib/remark-footnote-title";
-// import remarkImageOpt from "./src/lib/remark-image-opt";
 import remarkLinkcard from "./src/lib/remark-link-card";
 
 export default defineConfig({
@@ -57,8 +56,6 @@ export default defineConfig({
       remarkGemoji,
       remarkMath,
       remarkRuby,
-      remarkUnwrapImages,
-      // remarkImageOpt,
       remarkLinkcard,
       //         [
       //           remarkToc,
@@ -78,16 +75,20 @@ export default defineConfig({
     rehypePlugins: [
       rehypeSlug,
       [rehypeAutolinkHeadings, { behavior: "wrap" }],
-      //       [
-      //         rehypeMermaid,
-      //         {
-      //           strategy: "inline-svg",
-      //           mermaidConfig: {
-      //             fontFamily: "sans-serif, monospace",
-      //           },
-      //         },
-      //       ],
+      [
+        rehypeMermaid,
+        {
+          strategy: "inline-svg",
+          mermaidConfig: {
+            fontFamily: "sans-serif, monospace",
+          },
+          launchOptions: {
+            channel: "chrome",
+          },
+        },
+      ],
       rehypeKatex,
+      rehypeMarkImageParent,
       [
         rehypePrettyCode,
         {
