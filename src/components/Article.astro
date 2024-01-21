@@ -2,7 +2,7 @@
 
 ---
 
-<article class="post">
+<article class="post" data-pagefind-body>
   <slot />
 </article>
 
@@ -208,29 +208,14 @@
     & h2 {
       margin-top: 2.5rem;
       margin-bottom: 1.25rem;
-      &:before {
-        content: "#";
-        color: var(--link);
-        margin-right: 0.5rem;
-      }
     }
     & h3 {
       margin-top: 2rem;
       margin-bottom: 1rem;
-      &:before {
-        content: "#";
-        color: var(--link);
-        margin-right: 0.5rem;
-      }
     }
     & h4 {
       margin-top: 1.5rem;
       margin-bottom: 0.75rem;
-      &:before {
-        content: "#";
-        color: var(--link);
-        margin-right: 0.5rem;
-      }
     }
     & h5 {
       margin-top: 1rem;
@@ -240,6 +225,29 @@
       margin-top: 0.5rem;
       margin-bottom: 0.25rem;
     }
+
+    & h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      &:before {
+        content: "#";
+        color: var(--link);
+        margin-right: 0.5rem;
+      }
+      .link-icon {
+        display: none;
+      }
+      &:hover {
+        .link-icon {
+          display: inline-block;
+          margin-left: 0.5rem;
+          color: var(--link);
+        }
+      }
+    }
+
     & .footnotes {
       margin-top: 1.5rem;
       border-top: 1px var(--line) solid;

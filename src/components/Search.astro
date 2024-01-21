@@ -1,0 +1,97 @@
+---
+
+---
+
+<div id="modal" class="hidden">
+  <div id="search-container">
+    <div id="search"></div>
+  </div>
+</div>
+<button id="modal-button" title="Search with Ctrl + K"> 🔍</button>
+
+<style>
+  #modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 2rem;
+    width: 100%;
+    height: 100%;
+    z-index: 50;
+    background-color: hsla(223, 13%, 10%, 0.66);
+    backdrop-filter: blur(0.25rem);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+    --pagefind-ui-background: var(--bg);
+    --pagefind-ui-border: var(--line);
+    --pagefind-ui-text: var(--fg);
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-font: inherit;
+  }
+
+  #modal.hidden {
+    display: none;
+  }
+
+  #search-container {
+    background-color: color-mix(in srgb, var(--bg) 97%, var(--fg) 3%);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    max-width: 40rem;
+    margin: 0 auto;
+    overflow-y: auto;
+    max-height: 100%;
+  }
+</style>
+
+<script>
+  // @ts-expect-error - PagefindUI doesn't have types yet
+  import { PagefindUI } from "@pagefind/default-ui";
+
+  function initPageFind() {
+    new PagefindUI({
+      element: "#search",
+      showImages: false,
+      autofocus: false,
+    });
+
+    const modalButton = document.querySelector("#modal-button");
+    const modal = document.querySelector("#modal");
+    const input = document.querySelector(
+      ".pagefind-ui__search-input",
+    ) as HTMLInputElement | null;
+
+    if (modalButton && modal && input) {
+      listen(modalButton, modal, input);
+    }
+
+    function listen(
+      modalButton: Element,
+      modal: Element,
+      input: HTMLInputElement,
+    ) {
+      modalButton.addEventListener("click", () => {
+        modal.classList.toggle("hidden");
+        input.focus();
+      });
+
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          modal.classList.toggle("hidden");
+        }
+      });
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          modal.classList.add("hidden");
+        }
+        if (e.key === "k" && e.ctrlKey) {
+          e.preventDefault();
+          modal.classList.toggle("hidden");
+          input.focus();
+        }
+      });
+    }
+  }
+
+  document.addEventListener("astro:page-load", initPageFind);
+</script>

@@ -1,6 +1,9 @@
 ---
 import { getEntry } from "astro:content";
 
+import Search from "@/components/Search.astro";
+import "@pagefind/default-ui/css/ui.css";
+
 const meta = await getEntry("data", "meta");
 ---
 
@@ -9,6 +12,9 @@ const meta = await getEntry("data", "meta");
     <a href="/">{meta.data.top.enTitle}</a>
   </h2>
   <ul>
+    <li>
+      <Search />
+    </li>
     <li>
       <a href={`/blog`}>Blog</a>
     </li>

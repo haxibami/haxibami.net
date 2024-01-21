@@ -3,6 +3,7 @@ import sitemap from "@astrojs/sitemap";
 import solid from "@astrojs/solid-js";
 import { defineConfig } from "astro/config";
 
+import { h } from "hastscript";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeKatex from "rehype-katex";
 import rehypeMermaid from "rehype-mermaid";
@@ -13,6 +14,7 @@ import remarkGemoji from "remark-gemoji";
 import remarkMath from "remark-math";
 
 import rehypeMarkImageParent from "./src/lib/rehype-mark-image-parent";
+import rehypePagefind from "./src/lib/rehype-pagefind";
 import remarkFootnoteTitle from "./src/lib/remark-footnote-title";
 import remarkLinkcard from "./src/lib/remark-link-card";
 
@@ -74,7 +76,10 @@ export default defineConfig({
     },
     rehypePlugins: [
       rehypeSlug,
-      [rehypeAutolinkHeadings, { behavior: "wrap" }],
+      [
+        rehypeAutolinkHeadings,
+        { behavior: "append", content: h("span.link-icon", "🔗") },
+      ],
       [
         rehypeMermaid,
         {
@@ -99,6 +104,7 @@ export default defineConfig({
           grid: true,
         },
       ],
+      rehypePagefind,
     ],
   },
   site: "https://www.haxibami.net",
