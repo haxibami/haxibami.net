@@ -49,7 +49,7 @@
     "eslint-plugin-astro": "0.31.3",
     "eslint-plugin-import": "2.29.1",
     "fetch-site-metadata": "0.2.0",
-    "hastscript": "8.0.0",
+    "hastscript": "9.0.0",
     "katex": "0.16.9",
     "lightningcss": "1.23.0",
     "mdast-util-mdx-jsx": "3.0.0",
