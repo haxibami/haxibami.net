@@ -7,7 +7,7 @@ import "@pagefind/default-ui/css/ui.css";
 const meta = await getEntry("data", "meta");
 ---
 
-<header>
+<header data-pagefind-ignore>
   <h2>
     <a href="/">{meta.data.top.enTitle}</a>
   </h2>
@@ -35,19 +35,14 @@ const meta = await getEntry("data", "meta");
   }
 
   h2 {
-    display: flex;
-    flex-direction: column;
-    font-size: 1.25rem;
-    line-height: 1.75rem;
+    font-size: 1.25em;
     color: var(--title);
   }
 
   ul {
     display: flex;
-    flex-direction: row;
-    gap: 1.25rem;
+    gap: 1rem;
     align-items: center;
-    font-size: 1.125rem;
-    line-height: 1.75rem;
+    font-size: 1.125em;
   }
 </style>

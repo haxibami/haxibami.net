@@ -13,19 +13,23 @@ const { category } = Astro.params;
 ---
 
 <!doctype html>
-<title>{`Redirecting to: /blog/categories/${category}`}</title>
-<meta http-equiv="refresh" content={`0;url=/blog/categories/${category}`} />
-<meta name="robots" content="noindex" />
-<link rel="canonical" href={`/blog/categories/${category}`} />
-<body>
-  <a href={`/blog/categories/${category}`}>
-    Redirecting from
-    <code>
-      {`/blog/tag/${category}`}
-    </code>
-    to
-    <code>
-      {`/blog/categories/${category}`}
-    </code>
-  </a>
-</body>
+<html lang="ja">
+  <head>
+    <title>{`Redirecting to: /blog/categories/${category}`}</title>
+    <meta http-equiv="refresh" content={`0;url=/blog/categories/${category}`} />
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={`/blog/categories/${category}`} />
+  </head>
+  <body>
+    <a href={`/blog/categories/${category}`}>
+      Redirecting from
+      <code>
+        {`/blog/tag/${category}`}
+      </code>
+      to
+      <code>
+        {`/blog/categories/${category}`}
+      </code>
+    </a>
+  </body>
+</html>

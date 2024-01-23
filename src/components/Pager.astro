@@ -8,71 +8,64 @@ import {
 } from "@/components/Svg";
 
 export interface Props {
-  page: Page<CollectionEntry<"blog">>;
+  page?: Page<CollectionEntry<"blog">>;
+  topPath?: string;
 }
 
-const { page } = Astro.props;
+const { page, topPath } = Astro.props;
 ---
 
-<nav>
-  <span class="button-container">
-    {
-      page.url.prev && (
-        <a href={page.url.prev} class="pager-link">
-          <span class="pager-button prev-color">
-            <ChevronCircleLeftIcon class="nav-icon" />
-            Prev
+<nav class:list={!page ? "border" : ""} data-pagefind-ignore>
+  {
+    page?.url.prev || topPath ? (
+      <a href={page?.url.prev || topPath}>
+        <span class="pager-button prev-color">
+          <ChevronCircleLeftIcon class="nav-icon" />
+          {!topPath ? "Prev" : "Top"}
+        </span>
+      </a>
+    ) : (
+      <span class="pager-button" />
+    )
+  }
+  {
+    page && (
+      <>
+        <div class="current-page">
+          <span>
+            {page.currentPage} / {Math.ceil(page.total / page.size)}
           </span>
-        </a>
-      )
-    }
-  </span>
-  <span class="current-page">
-    <div>
-      {page.currentPage} / {Math.ceil(page.total / page.size)}
-    </div>
-  </span>
-  <span class="button-container">
-    {
-      page.url.next && (
-        <a href={page.url.next} class="pager-link">
-          <div class="pager-button next-color">
-            Next
-            <ChevronCircleRightIcon class="nav-icon" />
-          </div>
-        </a>
-      )
-    }
-  </span>
+        </div>
+
+        {page.url.next ? (
+          <a href={page.url.next}>
+            <span class="pager-button next-color">
+              Next
+              <ChevronCircleRightIcon class="nav-icon" />
+            </span>
+          </a>
+        ) : (
+          <span class="pager-button" />
+        )}
+      </>
+    )
+  }
 </nav>
 
 <style>
   nav {
     display: flex;
-    flex-direction: row;
-    gap: 2rem;
+    padding-top: 2rem;
     justify-content: space-between;
-    width: 100%;
     font-size: 1.25rem;
-    line-height: 1.75rem;
-  }
-
-  .button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 6rem;
-    height: 2rem;
-  }
-
-  .pager-link {
-    width: 100%;
-    height: 100%;
+    &.border {
+      border-top: 1px solid var(--line);
+    }
   }
 
   .pager-button {
-    width: 100%;
-    height: 100%;
+    width: 6rem;
+    height: 2rem;
     display: flex;
     justify-content: space-evenly;
     align-items: center;

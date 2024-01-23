@@ -12,55 +12,54 @@ export interface Props {
 const { page } = Astro.props;
 ---
 
-<ul>
-  {
-    page.data.map((post) => {
-      const { slug, data, collection } = post;
-      return (
-        <li>
-          <article>
-            <div>
-              <time datetime={data.date.toISOString()}>
-                {new Intl.DateTimeFormat("en-US", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                }).format(post.data.date)}
-              </time>
-              {data.lastmod && (
-                <time datetime={data.lastmod.toISOString()}>
-                  {` — ${new Intl.DateTimeFormat("en-US", {
+<>
+  <ul>
+    {
+      page.data.map((post) => {
+        const { slug, data, collection } = post;
+        return (
+          <li>
+            <article>
+              <span class="date">
+                <time datetime={data.date.toISOString()}>
+                  {new Intl.DateTimeFormat("en-US", {
                     year: "numeric",
                     month: "short",
                     day: "numeric",
-                  }).format(post.data.lastmod)} Updated`}
+                  }).format(post.data.date)}
                 </time>
-              )}
-            </div>
-            <div>
+                {data.lastmod && (
+                  <time datetime={data.lastmod.toISOString()}>
+                    {` — ${new Intl.DateTimeFormat("en-US", {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    }).format(post.data.lastmod)} Updated`}
+                  </time>
+                )}
+              </span>
               <a href={`/${collection}/posts/${slug}`}>
                 <h2>{data.title}</h2>
               </a>
-            </div>
-            <div class="description">{data?.description}</div>
-            <div class="tags-container">
-              <Tags tags={data.tags} collectionKey={collection} />
-            </div>
-          </article>
-        </li>
-      );
-    })
-  }
-</ul>
-<Pager page={page} />
+              <span class="description">{data?.description}</span>
+              <span class="tags-container">
+                <Tags tags={data.tags} collectionKey={collection} />
+              </span>
+            </article>
+          </li>
+        );
+      })
+    }
+  </ul>
+  <Pager page={page} />
+</>
 
 <style>
   ul {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    gap: 1.5rem;
-    width: 100%;
+    gap: 2rem;
   }
 
   article {
@@ -69,15 +68,21 @@ const { page } = Astro.props;
     flex-direction: column;
     gap: 0.5rem;
     border-radius: 0.25rem;
-    line-height: 1.5rem;
     color: var(--secondary);
   }
 
+  .date {
+    line-height: 1.25em;
+  }
+
   h2 {
-    overflow: hidden;
-    max-height: 8rem;
-    text-overflow: ellipsis;
     color: var(--title);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    max-height: 6em; /* fallback */
 
     &:hover {
       text-decoration: underline solid 2px;
@@ -85,15 +90,7 @@ const { page } = Astro.props;
   }
 
   .description {
-    overflow: hidden;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-  }
-
-  .tags-container {
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-    justify-content: space-between;
+    font-size: 0.9em;
+    line-height: 1.25em;
   }
 </style>

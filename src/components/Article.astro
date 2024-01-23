@@ -2,14 +2,16 @@
 
 ---
 
-<article class="post" data-pagefind-body>
+<article id="post">
   <slot />
 </article>
 
 <style is:global>
-  .post {
+  #post {
     overflow-wrap: break-word;
     word-wrap: break-word;
+    border-top: 1px solid var(--line);
+
     & p,
     & li {
       & a {
@@ -19,9 +21,11 @@
         text-underline-offset: 4px;
       }
     }
-    & p {
+
+    & p:not(blockquote > p) {
       margin: 1.5rem 0 0 0;
     }
+
     & table {
       display: block;
       overflow-x: auto;
@@ -33,26 +37,15 @@
       & th,
       & td {
         border: 1px solid var(--line);
-        transition-property: border;
-        transition-duration: 0.2s;
-        transition-timing-function: ease;
         padding: 0.25rem 0.5rem;
       }
 
       & th {
         background: var(--hover);
-        transition-property: background;
-        transition-duration: 0.2s;
-        transition-timing-function: ease;
       }
     }
-    & :not(pre) > code {
-      background: var(--code);
-      transition-property: background;
-      transition-duration: 0.2s;
-      transition-timing-function: ease;
-      padding: 0.1rem 0.2rem;
-      border-radius: 0.2rem;
+
+    & code {
       font-family:
         ui-monospace,
         SFMono-Regular,
@@ -63,135 +56,6 @@
         monospace;
     }
 
-    & pre {
-      margin: 0 0 1.5rem 0;
-      border-radius: 0.375rem;
-      overflow-x: auto;
-      font-size: 0.9em;
-      & code {
-        font-size: inherit;
-        line-height: inherit;
-        font-weight: inherit;
-        font-family: inherit;
-        color: inherit;
-        display: grid;
-        counter-reset: line;
-        font-family:
-          ui-monospace,
-          SFMono-Regular,
-          SF Mono,
-          Menlo,
-          Monaco,
-          Consolas,
-          monospace;
-      }
-    }
-
-    pre[data-theme*=" "],
-    pre[data-theme*=" "] span {
-      color: var(--shiki-light);
-      background-color: var(--shiki-light-bg);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      pre[data-theme*=" "],
-      pre[data-theme*=" "] span {
-        color: var(--shiki-dark);
-        background-color: var(--shiki-dark-bg);
-      }
-    }
-
-    & figure[data-rehype-pretty-code-figure] {
-      margin-top: 1.5rem;
-      position: relative;
-      & code {
-        & span[data-line] {
-          border-left: 4px solid transparent;
-          padding: 0 1.25rem;
-        }
-
-        & > span[data-line]::before {
-          counter-increment: line;
-          content: counter(line);
-
-          /* Other styling */
-          display: inline-block;
-          width: 1rem;
-          margin-right: 1.25rem;
-          text-align: right;
-          color: var(--codelinenum);
-        }
-
-        & [data-line][data-highlighted-line] {
-          border-left-color: var(--codehlsign);
-          background: var(--codehl);
-          span {
-            background: unset;
-          }
-        }
-        & mark[data-highlighted-chars] {
-          background: var(--codefind);
-          padding: 0.25rem;
-          border-radius: 0.25rem;
-        }
-
-        & mark[data-highlighted-chars] span {
-          background: unset;
-        }
-      }
-      & pre {
-        line-height: 1.5rem;
-      }
-      & figcaption[data-rehype-pretty-code-title] {
-        & + pre {
-          padding-bottom: 0.75rem;
-          padding-top: 3rem;
-        }
-      }
-
-      & pre:not(figcaption[data-rehype-pretty-code-title] + pre) {
-        padding-top: 0.75rem;
-        padding-bottom: 0.75rem;
-      }
-    }
-
-    & figcaption[data-rehype-pretty-code-title] {
-      position: absolute;
-      top: 0;
-      font-family:
-        ui-monospace,
-        SFMono-Regular,
-        SF Mono,
-        Menlo,
-        Monaco,
-        Consolas,
-        monospace;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      padding: 0.375rem 0.75rem;
-      font-size: 0.85em;
-      width: 100%;
-      color: var(--codetitlefg);
-      background: var(--codetitlebg);
-      border-radius: 0.375rem 0.375rem 0 0;
-      z-index: 1;
-    }
-
-    & .math-display {
-      overflow: scroll;
-    }
-    & svg[id^="mermaid-"] {
-      background: var(--mermaidbg);
-      border-radius: 0.375rem;
-      margin: 1.5rem auto 0 auto;
-      line-height: 1;
-    }
-    & blockquote {
-      & p {
-        margin: 0;
-      }
-    }
     & ul {
       list-style-type: disc;
     }
@@ -205,11 +69,8 @@
     & h1 {
       margin-top: 3rem;
     }
-    & h2 {
-      margin-top: 2.5rem;
-      margin-bottom: 1.25rem;
-    }
-    & h3 {
+    & h2,
+    h3 {
       margin-top: 2rem;
       margin-bottom: 1rem;
     }
@@ -236,16 +97,136 @@
         color: var(--link);
         margin-right: 0.5rem;
       }
-      .link-icon {
-        display: none;
-      }
       &:hover {
-        .link-icon {
-          display: inline-block;
-          margin-left: 0.5rem;
-          color: var(--link);
+        .heading-link-icon {
+          &:after {
+            vertical-align: 0.05em;
+            content: "🔗";
+            font-size: 0.8em;
+            margin-left: 0.5rem;
+          }
         }
       }
+    }
+
+    & code:not(figure[data-rehype-pretty-code-figure] code) {
+      background: var(--code);
+      transition-property: background;
+      transition-duration: 0.2s;
+      transition-timing-function: ease;
+      padding: 0.1rem 0.2rem;
+      margin: 0 0.2rem;
+      border-radius: 0.2rem;
+    }
+
+    & figure[data-rehype-pretty-code-figure] {
+      margin: 1.5rem 0 1rem 0;
+      position: relative;
+      font-size: 0.9em;
+
+      & code {
+        counter-reset: line;
+        line-height: 1.5rem;
+
+        & span[data-line] {
+          border-left: 4px solid transparent;
+          padding: 0 0.75rem;
+        }
+
+        & > span[data-line]::before {
+          counter-increment: line;
+          content: counter(line);
+          display: inline-block;
+          width: 1rem;
+          margin-right: 1.25rem;
+          text-align: right;
+          color: var(--codelinenum);
+        }
+
+        & [data-line][data-highlighted-line] {
+          border-left-color: var(--codehlsign);
+          background: var(--codehl);
+          & span {
+            background: unset;
+          }
+        }
+
+        & mark[data-highlighted-chars] {
+          background: var(--codefind);
+          padding: 0.25rem;
+          border-radius: 0.25rem;
+        }
+
+        & mark[data-highlighted-chars] span {
+          background: unset;
+        }
+      }
+
+      /* Background & Layout */
+      & pre {
+        border-radius: 0.375rem;
+        overflow-x: auto;
+      }
+
+      pre[data-theme*=" "],
+      pre[data-theme*=" "] span {
+        color: var(--shiki-light);
+        background-color: var(--shiki-light-bg);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        pre[data-theme*=" "],
+        pre[data-theme*=" "] span {
+          color: var(--shiki-dark);
+          background-color: var(--shiki-dark-bg);
+        }
+      }
+
+      & figcaption[data-rehype-pretty-code-title] {
+        & + pre {
+          padding-bottom: 0.75rem;
+          padding-top: 3rem;
+        }
+      }
+
+      & pre:not(figcaption[data-rehype-pretty-code-title] + pre) {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+      }
+
+      /* Code title */
+      & figcaption[data-rehype-pretty-code-title] {
+        position: absolute;
+        top: 0;
+        font-family:
+          ui-monospace,
+          SFMono-Regular,
+          SF Mono,
+          Menlo,
+          Monaco,
+          Consolas,
+          monospace;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        padding: 0.375rem 0.75rem;
+        width: 100%;
+        color: var(--codetitlefg);
+        background: var(--codetitlebg);
+        border-radius: 0.375rem 0.375rem 0 0;
+      }
+    }
+
+    & .katex-display {
+      overflow-x: scroll;
+      overflow-y: hidden;
+    }
+
+    & svg[id^="mermaid-"] {
+      background: var(--mermaidbg);
+      border-radius: 0.375rem;
+      margin: 1.5rem auto 0 auto;
+      line-height: 1;
     }
 
     & .footnotes {
@@ -254,15 +235,12 @@
       & li {
         list-style-position: unset;
       }
-      & a {
+      & .data-footnote-backref {
         text-decoration: none;
       }
     }
     & [id^="user-content-fnref-"] {
       margin: 0 0.25em;
-    }
-    & iframe {
-      margin: 0.5rem 0;
     }
   }
 </style>

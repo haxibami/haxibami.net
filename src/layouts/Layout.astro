@@ -12,6 +12,7 @@ export interface Props {
   title: string;
   description?: string;
   path: string;
+  pagefind: boolean;
   og: {
     enabled: boolean;
     image?: URL;
@@ -21,12 +22,16 @@ export interface Props {
   };
 }
 
-const { title, description, path, og } = Astro.props;
+const { title, description, path, pagefind, og } = Astro.props;
 
 const site = Astro.site ?? "";
 ---
 
-<html lang="ja" transition:animate="none">
+<html
+  lang="ja"
+  transition:animate="none"
+  {...pagefind && { "data-pagefind-body": "" }}
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width initial-scale=1" />
@@ -59,6 +64,7 @@ const site = Astro.site ?? "";
           <meta
             property="og:image"
             content={og.image ?? new URL("/kripcat_720.jpg", site).toString()}
+            {...(pagefind && { "data-pagefind-meta": "image[content]" })}
           />
           <meta property="og:image:width" content={`${og.width ?? 720}`} />
           <meta property="og:image:height" content={`${og.height ?? 720}`} />

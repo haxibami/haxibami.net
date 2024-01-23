@@ -35,6 +35,7 @@ const { page } = Astro.props;
   title={meta.data.top.title}
   description={meta.data.blog.description}
   path={page.url.current}
+  pagefind={false}
   og={{ enabled: true }}
 >
   <main>

@@ -7,35 +7,32 @@ import {
 } from "@/components/Svg";
 ---
 
-<footer>
-  <div class="container">
-    <span>
-      <a href="/">©haxibami</a>
-    </span>
-    <span class="icons">
-      <a href={"https://twitter.com/haxibami"} rel="me" title="Twitter">
-        <TwitterIcon class="icon" />
-      </a>
-      <a href={"https://calc.cune.moe/@haxibami"} rel="me" title="Fediverse">
-        <FediverseIcon class="icon" />
-      </a>
-      <a href={"https://github.com/haxibami"} rel="me" title="GitHub">
-        <GitHubIcon class="icon" />
-      </a>
-      <a href={`/rss.xml`} title="RSS">
-        <RssIcon class="icon" />
-      </a>
-    </span>
-  </div>
+<footer data-pagefind-ignore>
+  <span>
+    <a href="/">©haxibami</a>
+  </span>
+  <span class="icons">
+    <a href={"https://twitter.com/haxibami"} rel="me" title="Twitter">
+      <TwitterIcon class="icon" />
+    </a>
+    <a href={"https://calc.cune.moe/@haxibami"} rel="me" title="Fediverse">
+      <FediverseIcon class="icon" />
+    </a>
+    <a href={"https://github.com/haxibami"} rel="me" title="GitHub">
+      <GitHubIcon class="icon" />
+    </a>
+    <a href={`/rss.xml`} title="RSS">
+      <RssIcon class="icon" />
+    </a>
+  </span>
 </footer>
 
 <style>
   footer {
     display: flex;
-    width: 100%;
-    justify-content: center;
+    justify-content: space-between;
     border-top: 1px solid var(--line);
-    padding: 2rem 0;
+    padding: 2rem 1rem;
     color: var(--secondary);
   }
 
@@ -48,15 +45,5 @@ import {
     width: 1.5rem;
     height: 1.5rem;
     fill: var(--secondary);
-  }
-
-  .container {
-    display: flex;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 48rem;
   }
 </style>

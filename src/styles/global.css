@@ -68,47 +68,35 @@ body {
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 700;
   line-height: 1.5;
+}
+
+h1 {
+  font-size: 1.875rem;
 }
 
 h2 {
   font-size: 1.625rem;
-  line-height: 1.75rem;
-  font-weight: 700;
-  line-height: 1.5;
 }
 
 h3 {
   font-size: 1.25rem;
-  line-height: 1.75rem;
-  font-weight: 700;
-  line-height: 1.5;
 }
 
 h4 {
-  margin-top: 1.5rem;
   font-size: 1.125rem;
-  line-height: 1.75rem;
-  font-weight: 700;
-  line-height: 1.5;
 }
 
-h5 {
-  font-size: 1rem;
-  line-height: 1.5rem;
-  font-weight: 700;
-  line-height: 1.5;
-}
-
+h5,
 h6 {
   font-size: 1rem;
-  line-height: 1.5rem;
-  font-weight: 700;
-  line-height: 1.5;
 }
 
 blockquote {

@@ -1,135 +1,121 @@
 ---
-import { ArticleIcon, LinkIcon } from "../components/Svg";
-import { getCard } from "../lib/api";
+import { ArticleIcon, LinkIcon } from "@/components/Svg";
+import { getLinkcard } from "@/lib/api";
 
 interface Props {
   href: string;
 }
 
-const { href } = Astro.props;
+const props = Astro.props;
 
-const { description, image, title } = await getCard(href);
+const { description, image, title } = await getLinkcard(props.href);
 ---
 
-<div class="container">
-  <a href={href}>
-    <div class="card">
-      <div class="info">
-        <div class="title">
-          {title}
-        </div>
-        <div class="description">
-          {description}
-        </div>
-        <div class="hostname">
-          <LinkIcon class="link-icon" />
-          {new URL(href).hostname}
-        </div>
-      </div>
-      <div class="image-container">
-        {
-          image?.src ? (
-            <img
-              src={image.src}
-              width={200}
-              height="100%"
-              alt=""
-              class="image"
-              decoding="async"
-            />
-          ) : (
-            <span class="placeholder">
-              <ArticleIcon class="placeholder-icon" />
-            </span>
-          )
-        }
-      </div>
+<div>
+  <a {...props} class="card">
+    <div class="card-info">
+      <span class="title">
+        {title}
+      </span>
+      <span class="description">
+        {description}
+      </span>
+      <span class="hostname">
+        <LinkIcon class="link-icon" />
+        <span>{new URL(props.href).hostname}</span>
+      </span>
+    </div>
+    <div class="card-image">
+      {
+        image?.src ? (
+          <img
+            src={image.src}
+            width={200}
+            height="100%"
+            alt=""
+            class="image"
+            decoding="async"
+            loading="lazy"
+          />
+        ) : (
+          <span class="placeholder">
+            <ArticleIcon class="placeholder-icon" />
+          </span>
+        )
+      }
     </div>
   </a>
 </div>
 
 <style>
-  .container {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    max-width: 36rem;
-    transition-property: background-color, border-color, color, fill, stroke,
-      opacity, box-shadow, transform;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 300ms;
-    height: 105px;
-    &:hover {
-      background-color: var(--hover);
-    }
-  }
   .card {
     display: flex;
     overflow: hidden;
     margin-top: 1rem;
     margin-bottom: 1rem;
     border-radius: 0.375rem;
-    border-width: 2px;
-    border-style: solid;
-    width: 100%;
-    height: 100%;
-    border-color: var(--line);
+    border: 2px solid var(--line);
+    max-width: 36rem;
+    height: 105px;
+    &:hover {
+      background-color: var(--hover);
+    }
   }
 
-  .info {
+  .card-info {
     display: flex;
     overflow: hidden;
     padding: 1rem;
-    flex-basis: 11rem;
+    flex-basis: 12rem;
     flex-direction: column;
-    flex-grow: 4;
-    shrink: 1;
+    flex-grow: 1;
+    flex-shrink: 1;
+    white-space: nowrap;
+    > * {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   .title {
-    overflow: hidden;
-    font-weight: 700;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-weight: bold;
   }
 
   .description {
-    overflow: hidden;
-    font-size: 0.75rem;
-    line-height: 1rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-size: 0.8em;
+    line-height: 1em;
+    flex-grow: 1;
     color: var(--secondary);
-    min-height: 2em;
   }
 
   .hostname {
     display: flex;
-    overflow: hidden;
-    gap: 0.375rem;
     align-items: center;
-    height: 1.25rem;
-    font-size: 0.75rem;
-    line-height: 1rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    gap: 0.375rem;
+    font-size: 0.8em;
+    line-height: 1em;
   }
 
   .link-icon {
     height: 1rem;
     width: 1rem;
-    fill: var(--fg);
+    fill: var(--secondary);
   }
 
-  .image-container {
+  .card-image {
     display: flex;
-    flex-basis: 11rem;
+    flex-basis: 6rem;
     max-width: 200px;
-    flex-shrink: 6;
     flex-grow: 1;
-  }
+    flex-shrink: 6;
 
-  .image {
-    object-fit: cover;
+    @media (max-width: 300px) {
+      display: none;
+    }
+
+    & :global(img) {
+      object-fit: cover;
+    }
   }
 
   .placeholder {

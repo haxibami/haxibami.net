@@ -5,27 +5,12 @@ import sharp from "sharp";
 
 import type { Metadata } from "fetch-site-metadata";
 
-// async function loadSharp() {
-//   // eslint-disable-next-line @typescript-eslint/consistent-type-imports
-//   let sharpImport: typeof import("sharp");
-//   try {
-//     sharpImport = (await import("sharp")).default;
-//   } catch (e) {
-//     console.error("Failed to load sharp", e);
-//   }
-//
-//   // @ts-expect-error TS2454
-//   return sharpImport;
-// }
-//
-// export const sharp = await loadSharp();
+const siteMetadataCache = new Map<string, Metadata>();
 
-const cache = new Map<string, Metadata>();
+const siteImgCache = new Map<string, string | undefined>();
 
-const imgCache = new Map<string, string | undefined>();
-
-const getCardinfo = async (href: string) => {
-  const cached = cache.get(href);
+const getSiteMetadata = async (href: string) => {
+  const cached = siteMetadataCache.get(href);
   if (cached) {
     return cached;
   } else {
@@ -43,12 +28,12 @@ const getCardinfo = async (href: string) => {
 };
 
 // return base64
-const getImg = async (
+const getSiteImg = async (
   src: string,
   useOptimize: boolean,
-  transform?: { width: number; height: number },
+  transform?: { width: number; height?: number },
 ) => {
-  const cached = imgCache.get(src);
+  const cached = siteImgCache.get(src);
   if (cached) {
     return cached;
   } else {
@@ -63,7 +48,7 @@ const getImg = async (
         .toBuffer();
     }
     const base64 = img ? Buffer.from(img).toString("base64") : undefined;
-    imgCache.set(src, base64);
+    siteImgCache.set(src, base64);
     return base64;
   }
 };
@@ -71,10 +56,10 @@ const getImg = async (
 /**
  * @param href - url of the link
  * */
-export const getCard = async (href: string) => {
-  const { description, image, title } = await getCardinfo(href);
+export const getLinkcard = async (href: string) => {
+  const { description, image, title } = await getSiteMetadata(href);
   const ogImg = image?.src
-    ? await getImg(image.src, true, { width: 400, height: 210 })
+    ? await getSiteImg(image.src, true, { width: 400 })
     : undefined;
   const ogData = ogImg ? `data:;base64,${ogImg}` : undefined;
   return {

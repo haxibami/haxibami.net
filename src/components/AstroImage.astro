@@ -45,8 +45,8 @@ const props = Astro.props;
     @media (max-width: 640px) {
       max-height: 100vw;
     }
-  }
-  .figure-image-container :global(img) {
-    object-fit: contain;
+    & :global(img) {
+      object-fit: contain;
+    }
   }
 </style>

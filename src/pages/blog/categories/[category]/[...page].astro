@@ -47,6 +47,7 @@ const params = Astro.params;
   title=`${meta.data.top.title} - #${params.category}`
   description={meta.data.blog.description}
   path={page.url.current}
+  pagefind={false}
   og={{ enabled: true }}
 >
   <main>

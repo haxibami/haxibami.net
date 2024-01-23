@@ -31,7 +31,7 @@ const remarkLinkcard: Plugin<void[], Root> = () => {
 
       const data: LinkcardData = {
         hProperties: {
-          dataLinkcard: "true",
+          dataLinkcard: true,
         },
       };
 

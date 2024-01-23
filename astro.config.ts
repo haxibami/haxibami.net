@@ -19,9 +19,6 @@ import remarkFootnoteTitle from "./src/lib/remark-footnote-title";
 import remarkLinkcard from "./src/lib/remark-link-card";
 
 export default defineConfig({
-  redirects: {
-    "/blog/tags": "/blog",
-  },
   integrations: [
     mdx(),
     solid({
@@ -78,7 +75,10 @@ export default defineConfig({
       rehypeSlug,
       [
         rehypeAutolinkHeadings,
-        { behavior: "append", content: h("span.link-icon", "🔗") },
+        {
+          behavior: "append",
+          content: h("span.heading-link-icon", { title: "リンク" }),
+        },
       ],
       [
         rehypeMermaid,
@@ -108,4 +108,7 @@ export default defineConfig({
     ],
   },
   site: "https://www.haxibami.net",
+  experimental: {
+    contentCollectionCache: true,
+  },
 });
