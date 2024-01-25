@@ -15,7 +15,7 @@ const { tags, collectionKey } = Astro.props;
       {tags.map((tag) => (
         <li>
           <a href={`/${collectionKey}/categories/${tag}`} class="tag-link">
-            #{tag}
+            {tag}
           </a>
         </li>
       ))}
@@ -44,6 +44,9 @@ const { tags, collectionKey } = Astro.props;
     color: var(--link);
     &:hover {
       text-decoration: underline solid 2px;
+    }
+    &:before {
+      content: "#";
     }
   }
 </style>

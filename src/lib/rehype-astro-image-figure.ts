@@ -22,12 +22,10 @@ const rehypeMarkImageParent: Plugin<void[], Root> = () => {
       }
 
       parent.tagName = "figure";
+
       parent.properties = {
         ...parent.properties,
         "data-image-parent": true,
-        "data-image-alt": node.attributes
-          .find((attr) => isMdxJsxAttribute(attr) && attr.name === "alt")
-          ?.value?.toString(),
       };
     });
   };

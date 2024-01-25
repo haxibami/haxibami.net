@@ -1,0 +1,123 @@
+import fs from "fs";
+import path from "path";
+
+import sharp from "sharp";
+import { visit } from "unist-util-visit";
+
+import type { Root, Image, Parent } from "mdast";
+import type { FormatEnum } from "sharp";
+import type { Plugin } from "unified";
+
+interface RemarkAstroImageOptOptions {
+  /**
+   * The directory where the images are stored, relative to `src` directory.
+   * @default "./assets/image"
+   * */
+  imgDir: string;
+  /**
+   * The size of the placeholder image.
+   * @default 8
+   * */
+  size: number;
+  /**
+   * The format of the placeholder image.
+   * @default "webp"
+   * */
+  format: keyof FormatEnum;
+  /**
+   * The widths of the placeholder image.
+   * @default: [240, 540, 720] (+ original width)
+   * */
+  widths: number[];
+  /**
+   * The sizes of the placeholder image.
+   * See {@link https://developer.mozilla.org/docs/Web/HTML/Element/img#sizes}
+   * @default: "(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px" (, original width)
+   * */
+  sizes: string;
+}
+
+const remarkAstroImageOpt: Plugin<[RemarkAstroImageOptOptions?], Root> = (
+  {
+    imgDir = "./assets/image",
+    size = 8,
+    format = "webp",
+    widths = [240, 540, 720],
+    sizes = "(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px",
+  } = {} as RemarkAstroImageOptOptions,
+) => {
+  return async (tree) => {
+    const imgAndParentPairs: { node: Image; parent: Parent }[] = [];
+
+    visit(tree, "image", (node, index, parent) => {
+      if (
+        !parent ||
+        parent.type !== "paragraph" ||
+        index !== 0 ||
+        node.url.startsWith("http")
+      ) {
+        return;
+      }
+      imgAndParentPairs.push({ node, parent });
+    });
+
+    await Promise.allSettled(
+      imgAndParentPairs.map(async ({ node, parent }) => {
+        const basename = path.basename(node.url);
+        const buffer = fs.readFileSync(
+          path.join(process.cwd(), "./src", imgDir, basename),
+        );
+
+        const { width, aspectRatio } = await sharp(buffer)
+          .metadata()
+          .then((data) => {
+            if (!data.width || !data.height) {
+              throw new Error(`Failed to get image metadata: ${node.url}`);
+            } else {
+              return {
+                width: data.width,
+                height: data.height,
+                aspectRatio: `${data.width} / ${data.height}`,
+              };
+            }
+          });
+
+        // thanks to plaiceholder
+        const base64 = await sharp(buffer)
+          .resize(size, size, { fit: "inside" })
+          .toFormat(format)
+          .modulate({
+            brightness: 1,
+            saturation: 1.2,
+          })
+          .normalise()
+          .toBuffer()
+          .then((data) => `data:image/webp;base64,${data.toString("base64")}`);
+
+        // data attributes for <img> (automatically passed to <Image> component)
+        node.data = {
+          ...node.data,
+          hProperties: {
+            ...node.data?.hProperties,
+            widths: [...widths, width],
+            sizes: `${sizes}, ${width}px`,
+          },
+        };
+
+        // data attributes for the image parent <p>, which will later be transformed to <figure>
+        // in rehype-astro-image-figure
+        parent.data = {
+          ...parent.data,
+          hProperties: {
+            ...parent.data?.hProperties,
+            "data-image-alt": node.alt,
+            "data-image-aspect-ratio": aspectRatio,
+            "data-image-blur-url": `url("${base64}")`,
+          },
+        };
+      }),
+    );
+  };
+};
+
+export default remarkAstroImageOpt;

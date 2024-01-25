@@ -1,21 +1,27 @@
 ---
 export type Props = {
-  // src: string;
   "data-image-parent"?: boolean;
   "data-image-alt"?: string;
-  // blurDataURL: string;
+  "data-image-aspect-ratio"?: string;
+  "data-image-blur-url"?: string;
 };
 
-const props = Astro.props;
+const {
+  "data-image-parent": isImgParent,
+  "data-image-alt": alt,
+  "data-image-aspect-ratio": aspectRatio,
+  "data-image-blur-url": blurURL,
+  ...props
+} = Astro.props;
 ---
 
 {
-  props["data-image-parent"] ? (
+  isImgParent ? (
     <figure {...props} class="figure">
       <div class="figure-image-container">
         <slot />
       </div>
-      <figcaption class="figure-caption">{props["data-image-alt"]}</figcaption>
+      <figcaption class="figure-caption">{alt}</figcaption>
     </figure>
   ) : (
     <figure {...props}>
@@ -24,7 +30,7 @@ const props = Astro.props;
   )
 }
 
-<style>
+<style define:vars={{ aspectRatio, blurURL }}>
   .figure {
     display: flex;
     margin-top: 2rem;
@@ -33,20 +39,34 @@ const props = Astro.props;
     gap: 1rem;
   }
 
+  .placeholder {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    inset: 0;
+    filter: blur(40px);
+    transform: scale(1.5);
+    transition: opacity 0.3s ease-in-out;
+    opacity: 1;
+  }
+
   .figure-caption {
     text-align: center;
     color: var(--secondary);
   }
 
   .figure-image-container {
-    display: flex;
     margin: 0 auto;
     max-height: 50vh;
-    @media (max-width: 640px) {
-      max-height: 100vw;
-    }
+    aspect-ratio: var(--aspectRatio);
+
     & :global(img) {
       object-fit: contain;
+      color: transparent;
+      background-image: var(--blurURL);
+      background-size: cover;
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
     }
   }
 </style>

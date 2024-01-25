@@ -13,8 +13,9 @@ import remarkRuby from "remark-denden-ruby";
 import remarkGemoji from "remark-gemoji";
 import remarkMath from "remark-math";
 
-import rehypeMarkImageParent from "./src/lib/rehype-mark-image-parent";
+import rehypeAstroImageFigure from "./src/lib/rehype-astro-image-figure";
 import rehypePagefind from "./src/lib/rehype-pagefind";
+import remarkAstroImageOpt from "./src/lib/remark-astro-image-opt";
 import remarkFootnoteTitle from "./src/lib/remark-footnote-title";
 import remarkLinkcard from "./src/lib/remark-link-card";
 
@@ -66,6 +67,7 @@ export default defineConfig({
       //           },
       //         ],
       remarkFootnoteTitle,
+      remarkAstroImageOpt,
     ],
     remarkRehype: {
       footnoteLabel: "脚注",
@@ -85,7 +87,7 @@ export default defineConfig({
         {
           strategy: "inline-svg",
           mermaidConfig: {
-            fontFamily: "sans-serif, monospace",
+            fontFamily: "monospace",
           },
           launchOptions: {
             channel: "chrome",
@@ -93,7 +95,7 @@ export default defineConfig({
         },
       ],
       rehypeKatex,
-      rehypeMarkImageParent,
+      rehypeAstroImageFigure,
       [
         rehypePrettyCode,
         {
@@ -108,7 +110,4 @@ export default defineConfig({
     ],
   },
   site: "https://www.haxibami.net",
-  experimental: {
-    contentCollectionCache: true,
-  },
 });

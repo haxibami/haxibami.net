@@ -24,6 +24,7 @@
     --pagefind-ui-background: var(--bg);
     --pagefind-ui-border: var(--line);
     --pagefind-ui-text: var(--fg);
+    --pagefind-ui-primary: var(--fg);
     --pagefind-ui-border-width: 1px;
     --pagefind-ui-font: inherit;
   }
@@ -50,7 +51,15 @@
   function initPageFind() {
     new PagefindUI({
       element: "#search",
-      showImages: true,
+      showSubResults: true,
+      // @ts-expect-error - PagefindUI doesn't have types yet
+      processResult: function (result) {
+        const ogImgPath = new URL(result.meta.image);
+        const host = "www.haxibami.net";
+        if (ogImgPath.host === host) {
+          result.meta.image = ogImgPath.pathname;
+        }
+      },
     });
 
     const modalButton = document.querySelector("#modal-button");
