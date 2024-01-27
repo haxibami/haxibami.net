@@ -1,5 +1,5 @@
 ---
-
+import "katex/dist/katex.min.css";
 ---
 
 <article id="post">
@@ -20,6 +20,7 @@
         text-decoration-line: underline;
         text-decoration-thickness: 2px;
         text-underline-offset: 4px;
+        margin: 0 0.2em;
       }
     }
 
@@ -112,9 +113,6 @@
 
     & code:not(figure[data-rehype-pretty-code-figure] code) {
       background: var(--code);
-      transition-property: background;
-      transition-duration: 0.2s;
-      transition-timing-function: ease;
       padding: 0.1rem 0.2rem;
       margin: 0 0.2rem;
       border-radius: 0.2rem;
@@ -123,11 +121,10 @@
     & figure[data-rehype-pretty-code-figure] {
       margin: 1.5rem 0 1rem 0;
       position: relative;
-      font-size: 0.9em;
+      font-size: 0.85rem;
 
       & code {
         counter-reset: line;
-        line-height: 1.5rem;
 
         & span[data-line] {
           border-left: 4px solid transparent;
@@ -239,9 +236,6 @@
       & .data-footnote-backref {
         text-decoration: none;
       }
-    }
-    & [id^="user-content-fnref-"] {
-      margin: 0 0.25em;
     }
   }
 </style>

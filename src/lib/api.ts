@@ -9,12 +9,12 @@ const siteMetadataCache = new Map<string, Metadata>();
 
 const siteImgCache = new Map<string, string | undefined>();
 
-const getSiteMetadata = async (href: string) => {
-  const cached = siteMetadataCache.get(href);
+const getSiteMetadata = async (url: string) => {
+  const cached = siteMetadataCache.get(url);
   if (cached) {
     return cached;
   } else {
-    const { description, image, title } = await fetchSiteMetadata(href, {
+    const { description, image, title } = await fetchSiteMetadata(url, {
       suppressAdditionalRequest: true,
     }).catch(() => ({
       description: "Page not found",
@@ -44,7 +44,7 @@ const getSiteImg = async (
     if (img && useOptimize) {
       img = await sharp(img)
         .resize(transform?.width, transform?.height)
-        .webp()
+        .toFormat("webp")
         .toBuffer();
     }
     const base64 = img ? Buffer.from(img).toString("base64") : undefined;
@@ -61,7 +61,7 @@ export const getLinkcard = async (href: string) => {
   const ogImg = image?.src
     ? await getSiteImg(image.src, true, { width: 400 })
     : undefined;
-  const ogData = ogImg ? `data:;base64,${ogImg}` : undefined;
+  const ogData = ogImg ? `data:image/webp;base64,${ogImg}` : undefined;
   return {
     description,
     image: {

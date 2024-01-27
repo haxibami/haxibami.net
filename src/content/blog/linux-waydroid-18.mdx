@@ -7,7 +7,7 @@ tags: ["tech", "linux", "android"]
 emoji: "🐎"
 ---
 
-**（2023/01/04 更新）Waydroid 公式のイメージが LineageOS 18 / Android 11 系に更新されたため、以下の内容のうち[1. イメージ作成](#1-イメージ作成)については不要となった。**
+**（2023/01/04 更新）Waydroid公式のイメージがLineageOS 18 / Android 11系に更新されたため、以下の内容のうち[1. イメージ作成](#1-イメージ作成)については不要となった。**
 
 ## できること
 
@@ -15,18 +15,16 @@ emoji: "🐎"
 
 ## 背景
 
-知られている通り、Android カーネルはほぼ Linux そのものである。これを逆手に取り、Linux カーネルで Android を動かそうと試みた賢い人々がおり、結果として以下のような形に結実した。
-
-https://waydro.id/
+知られている通り、AndroidカーネルはほぼLinuxそのものである。これを逆手に取り、LinuxカーネルでAndroidを動かそうと試みた賢い人々がおり、結果として以下のような形に結実した。
 
 https://github.com/waydroid/waydroid/
 
-これまでも単なる Android エミュレータなら無数にあったが、Waydroid はエミュレーションという手法を慎重に避ける。代わりに`lxc`で立てたコンテナ内で Android を動かすアプローチを取っており、これに伴って以下のメリットがある。
+これまでも単なるAndroidエミュレータなら無数にあったが、Waydroidはエミュレーションという手法を慎重に避ける。代わりに`lxc`で立てたコンテナ内でAndroidを動かすアプローチを取っており、これに伴って以下のメリットがある。
 
 - ネイティブハードウェアの活用による省リソース化
 - ホストシステム（Linux）とのシームレスな統合
 
-さて、単に Waydroid を動作させるだけなら[公式の手順](https://docs.waydro.id/)を参照すればよいが、ここでは公式イメージ（Lineage 17 / Android 10）ではなく開発版イメージ（Lineage 18 / Android 11）をビルド・導入する手順を書く。なぜならウマ娘の動作には Android 11 のイメージが必要だから（後述）。
+さて、単にWaydroidを動作させるだけなら[公式の手順](https://docs.waydro.id/)を踏めばよいが、ここでは公式イメージ（LineageOS 17 / Android 10）ではなく開発版イメージ（LineageOS 18 / Android 11）を導入する手順を書く。なぜならウマ娘の動作にはAndroid 11のイメージが必要だから（後述）。
 
 ## 手順
 
@@ -41,24 +39,24 @@ https://github.com/waydroid/waydroid/
 | Kernel   | 5.19.6-zen1-1-zen    |
 | Waydroid | v1.3.0               |
 
-通常の AOSP のビルド環境、および Waydroid 本体（イメージを除く）の導入は済んでいるものとする。
+通常のAOSPのビルド環境、およびWaydroid本体（イメージを除く）の導入は済んでいるものとする。
 
 ### 要求環境
 
-- **250GB 以上の空き容量**
+- **250GB以上の空き容量**
 - 根気
-- Linux 環境
-- Wayland 環境
+- Linux環境
+- Wayland環境
 - それなりの速度のネットワーク
-- （できれば）コア数の多い CPU
+- （できれば）コア数の多いCPU
 
 ### 1. イメージ作成
 
-親切なことにビルド手順についても[公式ドキュメント](https://docs.waydro.id/development/compile-waydroid-lineage-os-based-images)が整備されているが、2022 年 9 月時点では LineageOS 17 / Android 10 向けとなっているため、該当部分を修正している。
+親切なことにビルド手順についても[公式ドキュメント](https://docs.waydro.id/development/compile-waydroid-lineage-os-based-images)が整備されているが、2022年9月時点ではLineageOS 17 / Android 10向けとなっているため、該当部分を修正している。
 
 #### 依存パッケージのインストール
 
-通常の Android（AOSP）のビルド環境に加えて、`meson`, `simg2img`等が必要になる。
+通常のAndroid（AOSP）のビルド環境に加えて、`meson`, `simg2img`等が必要になる。
 
 ```sh
 # Arch Linux
@@ -89,7 +87,7 @@ repo sync -c --no-tags -j$(nproc)
 
 #### ビルド設定
 
-`lunch` の引数は使っている CPU アーキテクチャに合わせる。
+`lunch`の引数は使っている CPU アーキテクチャに合わせる。
 
 ```sh
 . ./build/envsetup.sh
@@ -123,7 +121,7 @@ simg2img out/target/product/waydroid_x86_64/vendor.img /your/target/path/vendor.
 ApiLevel = 30
 ```
 
-新しいバージョンでは Android 内部の変数を[読んでくれる](https://github.com/waydroid/waydroid/blob/a6747e250f10b55153035efd1cd15dda089e077b/tools/helpers/protocol.py)ようなので不要かもしれない。
+新しいバージョンではAndroid内部の変数を[読んでくれる](https://github.com/waydroid/waydroid/blob/a6747e250f10b55153035efd1cd15dda089e077b/tools/helpers/protocol.py)ようなので不要かもしれない。
 
 #### 初期化
 
@@ -134,31 +132,31 @@ sudo systemctl start waydroid-container.service
 sudo waydroid init
 ```
 
-### 2. GAPPS / ARM 対応
+### 2. GAPPS / ARM対応
 
 どちらかというと以下が本題である。
 
-ここまでの作業で x86_64 のAndroidイメージが起動できるようになったが、まだプレイストアは使えない。さらに、ウマ娘はじめたいていの娯楽アプリは ARM 向けにしか作られていないため、このままでは動作しない。そこで [OpenGAPPS](https://opengapps.org/) と libhoudini を導入する。ざっくりいうと：
+ここまでの作業でx86_64のAndroidイメージが起動できるようになったが、まだプレイストアは使えない。さらに、ウマ娘はじめたいていの娯楽アプリはARM向けにしか作られていないため、このままでは動作しない。そこで[OpenGAPPS](https://opengapps.org/)とlibhoudiniを導入する。ざっくりいうと：
 
 - OpenGAPPS
-  - カスタム ROM で Play Store を使えるようにするプロジェクト
+  - カスタムROMでPlay Storeを使えるようにするプロジェクト
 - libhoudini
-  - x64-ARM 間の翻訳レイヤ
-  - Android 11 以上にしか対応していない。わざわざイメージをビルドしたのはこれが理由
+  - x64-ARM間の翻訳レイヤ
+  - Android 11以上にしか対応していない。わざわざイメージをビルドしたのはこれが理由
 
 導入にあたっては以下のスクリプトが助けになる。
 
 https://github.com/casualsnek/waydroid_script
 
-ここからは**流入者のリテラシーを保障する**ため踏み込んだ説明は避けるが、README を参考に
+ここからは踏み込んだ説明は避けるが、READMEを参考に
 
-1. OpenGAPPS を導入
-2. libhoudini を導入
-3. Android ID を取得し、[Google のページ](https://www.google.com/android/uncertified/?pli=1)で登録
+1. OpenGAPPSを導入
+2. libhoudiniを導入
+3. Android IDを取得し、[Google のページ](https://www.google.com/android/uncertified/?pli=1)で登録
 
-する手続きで、Play Store と ARM 向けアプリが動作するようになる。うまくいった結果が[冒頭](#できること)の画像である。
+する手続きで、Play StoreとARM向けアプリが動作するようになる。うまくいった結果が[冒頭](#できること)の画像である。
 
-なお、冒頭の画像のうち、ターミナルの右半分は GPU の使用状況、画面最上部のバーの桃色部分は CPU 使用率をそれぞれ示している。CPU 使用率はごく低く、GPU もハードウェアアクセラレーションが効いているのが確認できる。
+なお、冒頭の画像のうち、ターミナルの右半分はGPUの使用状況、画面最上部のバーの桃色部分はCPU使用率をそれぞれ示している。CPU使用率はごく低く、GPUもハードウェアアクセラレーションが効いているのが確認できる。
 
 ## 結論
 
@@ -166,12 +164,12 @@ https://github.com/casualsnek/waydroid_script
 
 ## 補遺
 
-ここまで書くと万能のようだが、動かないアプリも一定数ある。たとえば Clash Royale、プリコネ RD などは手元で動作しなかった。
+ここまで書くと万能のようだが、動かないアプリも一定数ある。たとえばClash Royale、プリコネ RDなどは手元で動作しなかった。
 
 原因として考えられること：
 
 - 地域設定
   - 一応日本には設定した
-- root 化検知に引っかかっている
-  - Waydroid は root 化された LineageOS と同等であるため、root 化検知が働いている可能性がある
-  - Magisk系のモジュールを使えば回避できるかもしれないが、Waydroidではいろいろと制約があり（Zygisk が使えない、など）試していない
+- root化検知に引っかかっている
+  - Waydroidはroot化されたLineageOSと同等であるため、root化検知が働いている可能性がある
+  - Magisk系のモジュールを使えば回避できるかもしれないが、Waydroidではいろいろと制約があり（Zygiskが使えない、など）試していない

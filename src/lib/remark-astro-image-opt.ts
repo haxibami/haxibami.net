@@ -5,7 +5,6 @@ import sharp from "sharp";
 import { visit } from "unist-util-visit";
 
 import type { Root, Image, Parent } from "mdast";
-import type { FormatEnum } from "sharp";
 import type { Plugin } from "unified";
 
 interface RemarkAstroImageOptOptions {
@@ -23,7 +22,7 @@ interface RemarkAstroImageOptOptions {
    * The format of the placeholder image.
    * @default "webp"
    * */
-  format: keyof FormatEnum;
+  blurFormat: keyof sharp.FormatEnum;
   /**
    * The widths of the placeholder image.
    * @default: [240, 540, 720] (+ original width)
@@ -32,7 +31,7 @@ interface RemarkAstroImageOptOptions {
   /**
    * The sizes of the placeholder image.
    * See {@link https://developer.mozilla.org/docs/Web/HTML/Element/img#sizes}
-   * @default: "(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px" (, original width)
+   * @default: "(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px" (+, original width)
    * */
   sizes: string;
 }
@@ -41,7 +40,7 @@ const remarkAstroImageOpt: Plugin<[RemarkAstroImageOptOptions?], Root> = (
   {
     imgDir = "./assets/image",
     size = 8,
-    format = "webp",
+    blurFormat = "webp",
     widths = [240, 540, 720],
     sizes = "(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px",
   } = {} as RemarkAstroImageOptOptions,
@@ -61,14 +60,14 @@ const remarkAstroImageOpt: Plugin<[RemarkAstroImageOptOptions?], Root> = (
       imgAndParentPairs.push({ node, parent });
     });
 
-    await Promise.allSettled(
+    await Promise.all(
       imgAndParentPairs.map(async ({ node, parent }) => {
         const basename = path.basename(node.url);
         const buffer = fs.readFileSync(
           path.join(process.cwd(), "./src", imgDir, basename),
         );
 
-        const { width, aspectRatio } = await sharp(buffer)
+        const metadataPromise = sharp(buffer)
           .metadata()
           .then((data) => {
             if (!data.width || !data.height) {
@@ -83,16 +82,25 @@ const remarkAstroImageOpt: Plugin<[RemarkAstroImageOptOptions?], Root> = (
           });
 
         // thanks to plaiceholder
-        const base64 = await sharp(buffer)
+        const base64Promise = sharp(buffer)
           .resize(size, size, { fit: "inside" })
-          .toFormat(format)
+          .toFormat(blurFormat)
           .modulate({
             brightness: 1,
             saturation: 1.2,
           })
           .normalise()
           .toBuffer()
-          .then((data) => `data:image/webp;base64,${data.toString("base64")}`);
+          .then(
+            (data) =>
+              `data:image/${blurFormat};base64,${data.toString("base64")}`,
+          );
+
+        // wait for both promises to resolve
+        const [{ width, aspectRatio }, base64] = await Promise.all([
+          metadataPromise,
+          base64Promise,
+        ]);
 
         // data attributes for <img> (automatically passed to <Image> component)
         node.data = {
@@ -110,9 +118,10 @@ const remarkAstroImageOpt: Plugin<[RemarkAstroImageOptOptions?], Root> = (
           ...parent.data,
           hProperties: {
             ...parent.data?.hProperties,
-            "data-image-alt": node.alt,
-            "data-image-aspect-ratio": aspectRatio,
-            "data-image-blur-url": `url("${base64}")`,
+            dataImageParent: true,
+            dataImageAlt: node.alt,
+            dataImageAspectRatio: aspectRatio,
+            dataImageBlurUrl: `url("${base64}")`,
           },
         };
       }),

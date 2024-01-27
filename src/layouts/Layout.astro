@@ -3,8 +3,6 @@ import "tailwindcss/lib/css/preflight.css";
 import "@fontsource-variable/montserrat";
 import "@/styles/global.css";
 
-import { ViewTransitions } from "astro:transitions";
-
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 
@@ -27,11 +25,7 @@ const { title, description, path, pagefind, og } = Astro.props;
 const site = Astro.site ?? "";
 ---
 
-<html
-  lang="ja"
-  transition:animate="none"
-  {...pagefind && { "data-pagefind-body": "" }}
->
+<html lang="ja" {...pagefind && { "data-pagefind-body": "" }}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width initial-scale=1" />
@@ -78,7 +72,6 @@ const site = Astro.site ?? "";
         </>
       )
     }
-    <ViewTransitions />
   </head>
   <body>
     <Header />

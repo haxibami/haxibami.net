@@ -6,9 +6,7 @@ tags: ["tech", "linux"]
 emoji: "🐧"
 ---
 
-知っている。きみたちはナードだから、知り合いに Linux の良さを説いてはドン引きされていることだろう。「オタクくん、Linux なんか使ってるの？　笑笑」。だが安心してほしい ── ここに載っているのは Linux 便利ツール、それも普段遣いに適したユーティリティ群だ。インストールを済ませたら、デベロッパーに一礼し、祝杯をあげ、Windows / MacOS ユーザが指をくわえて眺めるさまを楽しむとしよう。
-
-取り上げる内容は概ね以下のリストにあたる。随時更新する。
+取り上げる内容は概ね以下のリストにあたる（GitHubにリポジトリがあるもののみ）。随時更新する。
 
 https://github.com/stars/haxibami/lists/linux-tools
 
@@ -16,9 +14,7 @@ https://github.com/stars/haxibami/lists/linux-tools
 
 ### booster
 
-https://github.com/anatol/booster
-
-Go 製の高速な initramfs ジェネレータ。yaml で設定を書く。
+Go製の高速なinitramfsジェネレータ。YAMLで設定を書く。
 
 ```yaml title="/etc/booster.yaml"
 modules_force_load: amdgpu
@@ -26,25 +22,21 @@ modules_force_load: amdgpu
 
 ### bottom
 
-https://github.com/ClementTsang/bottom
-
-Rust 製のプロセス監視ツール。Bashtop や GoTop よりシンプルだが、必要十分。
+Rust製のプロセス監視ツール。BashtopやGoTopよりシンプルだが、必要十分。
 
 ![「topの逆で、bottom」というネーミング](../../assets/image/btm-ps.png)
 
 ### howdy / fprintd
 
-https://github.com/boltgolt/howdy
-
 https://gitlab.freedesktop.org/libfprint/fprintd
 
-Linux でも Windows Hello。IR カメラか指紋リーダーさえ付いていれば、howdy / fprintd をセットアップすることでログイン時や sudo 実行時に生体認証が使える。
+LinuxでもWindows Hello（みたいなことができる）。赤外線カメラか指紋リーダーさえ付いていれば、howdy / fprintdをセットアップすることで、ログイン時や`sudo`実行時に生体認証が使える。
 
 #### 注意点
 
-howdy / fprintd による認証はパスワードを完全に代替するもの**ではない**。したがって、ログイン時にこれらを利用すると、パスワードによって暗号化されたキーリングは解錠されない（[参照](https://github.com/boltgolt/howdy/issues/39)）。これを避けたい場合、生体認証は sudo 用のみ設定することをおすすめする。
+howdy / fprintdによる認証はパスワードを完全に代替するもの**ではない**。したがって、ログイン時にこれらを利用すると、パスワードによって暗号化されたキーリングは[解錠されない](https://github.com/boltgolt/howdy/issues/39)。これを避けたい場合、生体認証は`sudo`用のみ設定することをおすすめする。
 
-さらにリモートログインのことも考慮すると、sudo 時に一旦通常通りパスワードを訊ねて、入力が空文字列であった場合のみ生体認証へ移行するのが望ましい。この設定が以下。
+さらにリモートログインのことも考慮すると、`sudo`時に一旦通常通りパスワードを訊ねて、入力が空文字列であった場合のみ生体認証へ移行するのが望ましい。このための設定は以下のようになる：
 
 ```txt title="/etc/pam.d/sudo"
 #%PAM-1.0
@@ -61,9 +53,7 @@ session     include         system-auth
 
 ### lightdm-webkit2-theme-reactive
 
-https://github.com/gitneeraj/lightdm-webkit2-theme-reactive
-
-モダンな LightDM 用テーマ。[^1]
+モダンなLightDM用テーマ。[^1]
 
 [^1]: 壁紙は[Pixiv - Ravioli](https://www.pixiv.net/artworks/89596288)より。[CC BY 4.0 ライセンス](https://creativecommons.org/licenses/by/4.0)
 
@@ -71,9 +61,7 @@ https://github.com/gitneeraj/lightdm-webkit2-theme-reactive
 
 ### ddccontrol
 
-https://github.com/ddccontrol/ddccontrol
-
-外部モニタの輝度・RGB 比を操作できるツール。下みたいな力技ができたりする。
+外部モニタの輝度・RGB比を操作できるツール。下みたいな力技ができたりする。
 
 ```txt title="~/.config/sway/config"
 # brightness controls (requires non-root access to i2c devices)
@@ -83,25 +71,19 @@ bindsym $mod+F6 exec ddccontrol -f -r 0x10 -W +5 dev:/dev/i2c-1 | grep Brightnes
 
 ### Weylus
 
-https://github.com/H-M-H/Weylus
-
 ブラウザ経由で手書き描画を受け付ける面白いディスプレイサーバー（？）。筆圧も感知するようなので、タブレットが余っている人はおもちゃにできる。
 
 ## ファイル
 
 ### onedriver
 
-https://github.com/jstaf/onedriver
-
-Go 製の OneDrive クライアント。
+Go製のOneDriveクライアント。
 
 ### google-drive-ocamlfuse
 
-https://github.com/astrada/google-drive-ocamlfuse
+OCaml製のGoogle Driveクライアント。これがなければLinuxラップトップで大学生活を営むのは難しかったかもしれない。
 
-OCaml 製の Google Drive クライアント。これがなければ Linux ラップトップで大学生活を営むのは難しかったかもしれない。
-
-小さなファイルの同期にややボトルネックがあるが、体感では Windows 版公式クライアントに劣らないパフォーマンスが出る。
+小さなファイルの同期にややボトルネックがあるが、それほど困らない。
 
 ![クラウドストレージたち](../../assets/image/gdrive-ocamlfuse.png)
 
@@ -109,9 +91,7 @@ OCaml 製の Google Drive クライアント。これがなければ Linux ラ�
 
 ### yt-dlp
 
-https://github.com/yt-dlp/yt-dlp
-
-みんな大好き youtube-dl……の改良版。ブラウザの Cookie を利用した認証等が追加されている。
+みんな大好き`youtube-dl`の改良版。ブラウザのCookieを利用した認証等が追加されている。
 
 ```sh
 yt-dlp https://example.com/user/movie/view --cookies-from-browser chrome
@@ -119,9 +99,7 @@ yt-dlp https://example.com/user/movie/view --cookies-from-browser chrome
 
 ### playerctl
 
-https://github.com/altdesktop/playerctl
-
-音声・映像の再生をコマンドラインから制御するツール。ターミナルから操作するだけでも便利だが、キーバインドを設定すると真価を発揮する。たとえば Sway の場合：
+音声・映像の再生をコマンドラインから制御するツール。ターミナルから操作するだけでも便利だが、キーバインドを設定すると真価を発揮する。たとえばSwayの場合：
 
 ```txt title="~/.config/sway/config"
 bindsym $mod+comma exec playerctl previous
@@ -133,25 +111,21 @@ bindsym $mod+shift+slash exec playerctl --player playerctld position +10
 
 この使用感に慣れてしまうと、もう二度とウィンドウを切り替えてマウスで再生ボタンを押す気にはならない。
 
-そのほかの機能は以下の記事を参照。
-
-https://zenn.dev/fabon/articles/9c8d2d3a6b3fb1
-
 ### PipeWire
 
 https://pipewire.org/
 
 > PipeWire is a project that aims to greatly improve handling of audio and video under Linux.
 
-PipeWire は`pipewire-pulse`、`pipewire-alsa`、`pipewire-jack`で PulseAudio、ALSA、Jack をそれぞれ代替するほか、Wayland 環境では画面共有・録画（WebRTC、OBS）にも使用される[^2]。
+PipeWireは`pipewire-pulse`、`pipewire-alsa`、`pipewire-jack`によってPulseAudio、ALSA、Jackをそれぞれ代替するほか、Wayland環境では画面共有・画面録画（WebRTC、OBS）にも使用される[^2]。
 
-[^2]: Tips: 現状、GNOME 以外の Wayland 環境ではちょっと工夫しないと Zoom アプリでの画面共有が行えないが、この PipeWire とブラウザ版 Zoom を利用することで制限を回避できる。ブラウザ版 Zoom の利用には[この拡張機能](https://addons.mozilla.org/ja/firefox/addon/zoom-redirector/)が有用。
+[^2]: Tips: 現状、GNOME以外のWayland環境ではちょっと工夫しないとZoomアプリでの画面共有が行えないが、このPipeWireとブラウザ版Zoom を利用することで制限を回避できる。ブラウザ版Zoomの利用には[この拡張機能](https://addons.mozilla.org/ja/firefox/addon/zoom-redirector/)が有用。
 
 ### WirePlumber
 
 https://gitlab.freedesktop.org/pipewire/wireplumber
 
-Lua で設定を書ける PipeWire のセッションマネージャ。たとえばデバイスの表示名を変えるには：
+Luaで設定を書けるPipeWireのセッションマネージャ。たとえばデバイスの表示名を変えるには：
 
 ```lua title="~/.config/wireplumber/main.lua.d/51-headset-in-rename.lua"
 rule = {
@@ -170,13 +144,11 @@ table.insert(alsa_monitor.rules, rule)
 
 ### EasyEffects
 
-https://github.com/wwmm/easyeffects
-
 PipeWire 向けのサウンドエフェクトツール。イコライザーとかいろいろ。
 
 ![イコライザー](../../assets/image/easyeffects.png)
 
-systemd を使う場合、以下のように自動で起動できる。
+systemdを使う場合、以下のように自動で起動できる。
 
 ```txt title="~/.config/systemd/user/easyeffects.service"
 [Unit]
@@ -195,13 +167,9 @@ WantedBy=graphical-session.target
 
 ### AutoEq
 
-https://github.com/jaakkopasanen/AutoEq
-
-様々なヘッドホン・イヤホンの特性を測定し、機器ごとにもっともニュートラルな出力を与えるイコライザー設定を生成するプロジェクト。もっぱらリポジトリ内の`results`以下に蓄積された計測結果を利用するのが便利だ。前述の EasyEffects に`.txt`ファイルを読み込ませることで使える。
+様々なヘッドホン・イヤホンの特性を測定し、機器ごとにもっともニュートラルな出力ができるイコライザー設定を生成するプロジェクト。もっぱらリポジトリ内の`results`以下に蓄積された計測結果を利用するのが便利だ。前述のEasyEffectsに`.txt`ファイルを読み込ませることで使える。
 
 ### noise-suppression-for-voice
-
-https://github.com/werman/noise-suppression-for-voice
 
 マイク用のノイズ抑制プラグイン。タイプ音・呼吸音などを除去してくれる。
 
@@ -240,7 +208,7 @@ context.modules = [
 
 ### wpctl
 
-WirePlumber の操作系。現在の音量等の情報を取り出せる。
+WirePlumberの操作ツール。現在の音量等の情報を取り出せる。
 
 ```sh
 > wpctl get-volume @DEFAULT_SINK@
@@ -250,29 +218,21 @@ Volume: 0.50
 
 ## 入力関連
 
-### mozc-ut-neologd
+### fcitx5-mozc-ut
 
-https://aur.archlinux.org/packages/fcitx5-mozc-ext-neologd
-
-mozc の辞書強化版。パッケージ名からはわかりにくいが、中身は 2 代目の UT 辞書になっている。地名・人名・キャラクター・ネットスラングにめっぽう強く、Windows 版 Google 日本語入力の水準に近い。
+mozcの辞書強化版。地名・人名・キャラクター・ネットスラングに比較的強く、Windows版Google日本語入力の水準に近い。
 
 ### rofimoji
 
-https://github.com/fdw/rofimoji
-
-rofi / wofi 等のランチャーを利用する絵文字パレット。あらゆる入力欄で Twitter / Discord 相当の絵文字が使えるようになる。
+rofi / wofi等のランチャーを利用する絵文字パレット。
 
 ### apple-emoji-linux
 
-https://github.com/samuelngs/apple-emoji-linux
-
-Apple スタイルの絵文字を Linux で使えるようにするパッケージ。
+Appleスタイルの絵文字をLinuxで使えるようにするパッケージ。
 
 ### libinput-gestures
 
-https://github.com/bulletmark/libinput-gestures
-
-`libinput`を拡張し、タッチパッドの三・四本指スワイプに任意のコマンドを割り当てられるようにするツール。ブラウザバックとか、ワークスペースの切り替えとか。主にノート PC で便利。
+`libinput`を拡張し、タッチパッドの三・四本指スワイプに任意のコマンドを割り当てられるようにするツール。ブラウザバックとか、ワークスペースの切り替えとか。主にノートPCで便利。
 
 ```txt title="~/.config/libinput-gestures.conf"
 gesture: swipe right 3 ~/.config/libinput-gestures/gestures backward
@@ -301,8 +261,6 @@ esac
 ## その他
 
 ### meteo-qt
-
-https://github.com/dglent/meteo-qt
 
 システムトレイに常駐し、天気予報を通知するアプリ。
 

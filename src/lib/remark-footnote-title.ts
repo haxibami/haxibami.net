@@ -27,7 +27,13 @@ const remarkFootnoteTitle: Plugin<void[], Root> = () => {
       if (!footnotes[n.identifier]) {
         return;
       }
-      n.data = { hProperties: { title: footnotes[n.identifier] } };
+      n.data = {
+        ...n.data,
+        hProperties: {
+          ...n.data?.hProperties,
+          title: footnotes[n.identifier],
+        },
+      };
     });
   };
 };

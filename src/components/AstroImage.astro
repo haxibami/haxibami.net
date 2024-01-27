@@ -1,18 +1,19 @@
 ---
 export type Props = {
-  "data-image-parent"?: boolean;
+  "data-image-parent"?: "";
   "data-image-alt"?: string;
   "data-image-aspect-ratio"?: string;
   "data-image-blur-url"?: string;
 };
 
 const {
-  "data-image-parent": isImgParent,
   "data-image-alt": alt,
   "data-image-aspect-ratio": aspectRatio,
   "data-image-blur-url": blurURL,
   ...props
 } = Astro.props;
+
+const isImgParent = Object.hasOwn(props, "data-image-parent");
 ---
 
 {

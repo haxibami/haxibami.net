@@ -1,6 +1,4 @@
 ---
-import "katex/dist/katex.min.css";
-
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
@@ -40,8 +38,6 @@ export const components = {
   a: AstroLink,
   img: AstroImage,
 };
-
-const site = Astro.site ?? "";
 ---
 
 <Layout
@@ -51,10 +47,6 @@ const site = Astro.site ?? "";
   pagefind={true}
   og={{
     enabled: true,
-    width: 1200,
-    height: 630,
-    image: new URL(`/api/og/article/${post.collection}/${post.slug}.png`, site),
-    type: "article",
   }}
 >
   <main class="post-main">

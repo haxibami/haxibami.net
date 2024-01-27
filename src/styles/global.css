@@ -56,7 +56,7 @@ body {
   -webkit-text-size-adjust: 100%;
   background: var(--bg);
   color: var(--fg);
-  line-height: 1.75rem;
+  line-height: 1.75;
 
   margin: 0 auto;
   display: flex;

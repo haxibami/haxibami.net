@@ -2,15 +2,9 @@ import { visit } from "unist-util-visit";
 
 import { isParent, isBareLink } from "./mdast-util-node-is";
 
-import type { LinkData, Root } from "mdast";
+import type { Root } from "mdast";
 import type { Plugin } from "unified";
 import type { Parent } from "unist";
-
-interface LinkcardData extends LinkData {
-  hProperties: {
-    dataLinkcard: string | boolean;
-  };
-}
 
 const remarkLinkcard: Plugin<void[], Root> = () => {
   return (tree) => {
@@ -29,15 +23,12 @@ const remarkLinkcard: Plugin<void[], Root> = () => {
         return;
       }
 
-      const data: LinkcardData = {
-        hProperties: {
-          dataLinkcard: true,
-        },
-      };
-
       child.data = {
         ...child.data,
-        ...data,
+        hProperties: {
+          ...child.data?.hProperties,
+          dataLinkcard: true,
+        },
       };
     });
   };

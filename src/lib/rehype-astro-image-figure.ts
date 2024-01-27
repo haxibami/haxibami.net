@@ -1,9 +1,6 @@
 import { visit } from "unist-util-visit";
 
-import {
-  isMdxJsxFlowElementHast,
-  isMdxJsxAttribute,
-} from "./hast-util-node-is";
+import { isMdxJsxFlowElementHast } from "./hast-util-node-is";
 
 import type { Root } from "hast";
 import type { Plugin } from "unified";
@@ -22,11 +19,6 @@ const rehypeMarkImageParent: Plugin<void[], Root> = () => {
       }
 
       parent.tagName = "figure";
-
-      parent.properties = {
-        ...parent.properties,
-        "data-image-parent": true,
-      };
     });
   };
 };

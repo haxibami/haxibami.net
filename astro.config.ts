@@ -3,6 +3,7 @@ import sitemap from "@astrojs/sitemap";
 import solid from "@astrojs/solid-js";
 import { defineConfig } from "astro/config";
 
+import purgecss from "astro-purgecss";
 import { h } from "hastscript";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeKatex from "rehype-katex";
@@ -26,9 +27,15 @@ export default defineConfig({
       exclude: ["**/OgImage/**"],
     }),
     sitemap(),
+    purgecss({
+      fontFace: true,
+    }),
   ],
   build: {
     format: "file",
+  },
+  prefetch: {
+    defaultStrategy: "viewport",
   },
   vite: {
     build: {
@@ -79,7 +86,9 @@ export default defineConfig({
         rehypeAutolinkHeadings,
         {
           behavior: "append",
-          content: h("span.heading-link-icon", { title: "リンク" }),
+          content: h("span.heading-link-icon", {
+            title: "リンク",
+          }),
         },
       ],
       [
