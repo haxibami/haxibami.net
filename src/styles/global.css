@@ -20,6 +20,8 @@
   --avangard1: #fb0500dd;
   --avangard2: #305157ee;
   --avangard3: #949587;
+  --font-mono: "ui-monospace", "SFMono-Regular", "SF Mono", "Menlo", "Monaco",
+    "Consolas", "monospace";
 }
 
 @media (prefers-color-scheme: dark) {
@@ -29,22 +31,12 @@
     --title: #f7f7fa;
     --secondary: #a4a3a6;
     --hover: #323138;
-    --line: #8a829955;
     --shadow: #d2ced966;
     --link: #f472b6;
     --code: #49484e;
     --nextbg: #abbf86;
     --prevfg: #abbf86;
-    --codehl: #403d52;
     --codehlsign: #f472b6;
-    --codefind: #add7ff40;
-    --codelinenum: #767c9d50;
-    --codetitlebg: #303340;
-    --codetitlefg: #a6accd;
-    --mermaidbg: #edebef;
-    --avangard1: #fb0500dd;
-    --avangard2: #446267;
-    --avangard3: #949587;
   }
 }
 
@@ -57,7 +49,6 @@ body {
   background: var(--bg);
   color: var(--fg);
   line-height: 1.75;
-
   margin: 0 auto;
   display: flex;
   padding-left: 1rem;

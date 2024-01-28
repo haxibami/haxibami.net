@@ -39,6 +39,18 @@ export const components = {
 };
 
 const site = Astro.site ?? "";
+
+const dateString = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+}).format(post.data.date);
+
+const lastmodString = new Intl.DateTimeFormat("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+}).format(post.data.lastmod);
 ---
 
 <Layout
@@ -67,14 +79,11 @@ const site = Astro.site ?? "";
         <div>
           <div class="published-container">Published</div>
           <div>
-            <time datetime={post.data.date.toISOString()}>
-              {
-                new Intl.DateTimeFormat("en-US", {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                }).format(post.data.date)
-              }
+            <time
+              datetime={post.data.date.toISOString()}
+              data-pagefind-meta={`published:${dateString}`}
+            >
+              {dateString}
             </time>
           </div>
         </div>
@@ -83,12 +92,11 @@ const site = Astro.site ?? "";
             <div>
               <div class="lastmod-container">Last Modified</div>
               <div>
-                <time datetime={post.data.lastmod.toISOString()}>
-                  {new Intl.DateTimeFormat("en-US", {
-                    year: "numeric",
-                    month: "short",
-                    day: "numeric",
-                  }).format(post.data.lastmod)}
+                <time
+                  datetime={post.data.lastmod.toISOString()}
+                  data-pagefind-meta={`updated:${lastmodString}`}
+                >
+                  {lastmodString}
                 </time>
               </div>
             </div>

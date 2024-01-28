@@ -7,7 +7,15 @@
     <div id="search"></div>
   </div>
 </div>
-<button id="modal-button" title="Search with Ctrl + K"> 🔍</button>
+<button id="modal-button" title="Ctrl + K で検索">
+  <div id="modal-button-desktop">
+    <span><kbd>Ctrl</kbd>+<kbd>K</kbd></span>
+    <span> 🔍 </span>
+  </div>
+  <div id="modal-button-mobile">
+    <span> 🔍 </span>
+  </div>
+</button>
 
 <style>
   #modal {
@@ -26,11 +34,43 @@
     --pagefind-ui-text: var(--fg);
     --pagefind-ui-primary: var(--fg);
     --pagefind-ui-border-width: 1px;
-    --pagefind-ui-font: inherit;
+    --pagefind-ui-font: initial;
+    --pagefind-ui-tag: color-mix(in srgb, var(--code) 95%, var(--fg) 5%);
   }
 
   #modal.hidden {
     display: none;
+  }
+
+  #modal-button-desktop {
+    display: flex;
+    gap: 0.5rem;
+    background-color: color-mix(in srgb, var(--bg) 95%, var(--fg) 5%);
+    color: var(--secondary);
+    border-radius: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    & kbd {
+      font-size: 0.9em;
+      background: var(--bg);
+      border: 1px solid var(--line);
+      padding: 0.1rem 0.2rem;
+      margin: 0 0.2rem;
+      border-radius: 0.2rem;
+    }
+  }
+
+  #modal-button-mobile {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    #modal-button-desktop {
+      display: none;
+    }
+
+    #modal-button-mobile {
+      display: block;
+    }
   }
 
   #search-container {

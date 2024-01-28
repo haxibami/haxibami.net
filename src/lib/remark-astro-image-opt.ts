@@ -50,8 +50,7 @@ const remarkAstroImageOpt: Plugin<[RemarkAstroImageOptOptions?], Root> = (
 
     visit(tree, "image", (node, index, parent) => {
       if (
-        !parent ||
-        parent.type !== "paragraph" ||
+        parent?.type !== "paragraph" ||
         index !== 0 ||
         node.url.startsWith("http")
       ) {
@@ -96,7 +95,6 @@ const remarkAstroImageOpt: Plugin<[RemarkAstroImageOptOptions?], Root> = (
               `data:image/${blurFormat};base64,${data.toString("base64")}`,
           );
 
-        // wait for both promises to resolve
         const [{ width, aspectRatio }, base64] = await Promise.all([
           metadataPromise,
           base64Promise,
@@ -112,7 +110,7 @@ const remarkAstroImageOpt: Plugin<[RemarkAstroImageOptOptions?], Root> = (
           },
         };
 
-        // data attributes for the image parent <p>, which will later be transformed to <figure>
+        // data attributes added to image's parent <p>, which will later be transformed to <figure>
         // in rehype-astro-image-figure
         parent.data = {
           ...parent.data,
