@@ -3,8 +3,8 @@
 
 import { readFileSync } from "fs";
 
-import { Resvg } from "@resvg/resvg-js";
 import satori from "satori";
+import sharp from "sharp";
 
 const ogImage = async (text: string, date?: Date, emoji?: string) => {
   const notoFontData = readFileSync("./src/assets/NotoSansCJKjp-Bold.woff");
@@ -199,23 +199,32 @@ const ogImage = async (text: string, date?: Date, emoji?: string) => {
       ],
       loadAdditionalAsset: async (code: string, segment: string) => {
         if (code === "emoji") {
-          return `data:image/svg+xml;base64,${btoa(
-            await fetch(
-              "https://rawcdn.githack.com/googlefonts/noto-emoji/main/svg/emoji_u" +
-                segment.codePointAt(0)?.toString(16) +
-                ".svg",
-              {
-                cache: "force-cache",
-              },
-            ).then((res) => res.text()),
-          )}`;
+          const emojiSvg = await fetch(
+            "https://rawcdn.githack.com/googlefonts/noto-emoji/main/svg/emoji_u" +
+              segment.codePointAt(0)?.toString(16) +
+              ".svg",
+            {
+              cache: "force-cache",
+            },
+          ).then((res) => res.text());
+          // convert svg to png since sharp doesn't support svg in svg
+          return `data:image/png;base64,${await sharp(Buffer.from(emojiSvg), {
+            density: 300,
+          })
+            .toFormat("png")
+            .toBuffer()
+            .then((buf) => buf.toString("base64"))}`;
         }
         return "";
       },
     },
   );
-  const resvg = new Resvg(svg);
-  return resvg.render().asPng();
+  const imgBuffer = await sharp(Buffer.from(svg))
+    .toFormat("png", {
+      quality: 75,
+    })
+    .toBuffer();
+  return imgBuffer;
 };
 
 export default ogImage;

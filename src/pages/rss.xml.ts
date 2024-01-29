@@ -7,9 +7,9 @@ export async function GET(context: APIContext) {
   const posts = (await getCollection("blog"))
     .sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
     .reverse();
-  return rss({
+  return await rss({
     title: meta.data.top.title,
-    description: meta.data.blog.description,
+    description: meta.data.top.description,
     site: context.site ?? "",
     items: posts.map((post) => {
       return {
@@ -25,5 +25,12 @@ export async function GET(context: APIContext) {
         },
       };
     }),
+    xmlns: {
+      atom: "http://www.w3.org/2005/Atom",
+    },
+    customData: [
+      "<language>ja-jp</language>",
+      `<atom:link href="${new URL("/rss.xml", context.site)}" rel="self" type="application/rss+xml" />`,
+    ].join(""),
   });
 }

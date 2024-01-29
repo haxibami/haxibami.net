@@ -20,6 +20,8 @@ import remarkAstroImageOpt from "./src/lib/remark-astro-image-opt";
 import remarkFootnoteTitle from "./src/lib/remark-footnote-title";
 import remarkLinkcard from "./src/lib/remark-link-card";
 
+import type { Element } from "hast";
+
 export default defineConfig({
   integrations: [
     mdx(),
@@ -48,12 +50,6 @@ export default defineConfig({
           customMedia: true,
         },
       },
-    },
-    ssr: {
-      external: ["@resvg/resvg-js"],
-    },
-    optimizeDeps: {
-      exclude: ["@resvg/resvg-js"],
     },
   },
   markdown: {
@@ -86,6 +82,11 @@ export default defineConfig({
         rehypeAutolinkHeadings,
         {
           behavior: "append",
+          properties(node: Element) {
+            return {
+              "aria-labelledby": node.properties.id,
+            };
+          },
           content: h("span.heading-link-icon", {
             title: "リンク",
           }),
@@ -113,6 +114,7 @@ export default defineConfig({
             dark: "rose-pine",
           },
           grid: true,
+          defaultLang: "plaintext",
         },
       ],
       rehypePagefind,
