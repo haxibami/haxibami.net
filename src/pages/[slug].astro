@@ -52,7 +52,16 @@ export const components = {
   <main class="post-main">
     <header>
       <div>
-        <Image src={icon} alt="icon" width={150} height={150} class="icon" />
+        <Image
+          src={icon}
+          alt="icon"
+          width={150}
+          height={150}
+          class="icon"
+          loading="eager"
+          format="avif"
+          quality={40}
+        />
       </div>
       <span class="title">
         <h1>haxibami</h1>

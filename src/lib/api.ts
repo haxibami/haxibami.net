@@ -44,7 +44,9 @@ const getSiteImg = async (
     if (img && useOptimize) {
       img = await sharp(img)
         .resize(transform?.width, transform?.height)
-        .toFormat("webp")
+        .toFormat("avif", {
+          quality: 30,
+        })
         .toBuffer();
     }
     const base64 = img ? Buffer.from(img).toString("base64") : undefined;
@@ -61,7 +63,7 @@ export const getLinkcard = async (href: string) => {
   const ogImg = image?.src
     ? await getSiteImg(image.src, true, { width: 400 })
     : undefined;
-  const ogData = ogImg ? `data:image/webp;base64,${ogImg}` : undefined;
+  const ogData = ogImg ? `data:image/avif;base64,${ogImg}` : undefined;
   return {
     description,
     image: {

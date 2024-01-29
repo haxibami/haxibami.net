@@ -83,7 +83,7 @@ const remarkAstroImageOpt: Plugin<[RemarkAstroImageOptOptions?], Root> = (
         // thanks to plaiceholder
         const base64Promise = sharp(buffer)
           .resize(size, size, { fit: "inside" })
-          .toFormat(blurFormat)
+          .toFormat(blurFormat, { quality: 60 })
           .modulate({
             brightness: 1,
             saturation: 1.2,
@@ -107,6 +107,7 @@ const remarkAstroImageOpt: Plugin<[RemarkAstroImageOptOptions?], Root> = (
             ...node.data?.hProperties,
             widths: [...widths, width],
             sizes: `${sizes}, ${width}px`,
+            format: "avif",
           },
         };
 
