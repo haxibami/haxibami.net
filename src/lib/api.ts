@@ -52,6 +52,9 @@ const getSiteImg = async (src: string) => {
     return cached;
   } else {
     const img = await fetch(src).then((res) => res.arrayBuffer());
+    if (!img) {
+      return undefined;
+    }
     const imgFile = `/.cache/embed/${srcHash}.avif`;
     const imgPath = path.join(process.cwd(), `./public${imgFile}`);
     await sharp(Buffer.from(img))

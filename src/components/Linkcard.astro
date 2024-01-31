@@ -1,6 +1,4 @@
 ---
-import { Image } from "astro:assets";
-
 import { ArticleIcon, LinkIcon } from "@/components/Svg";
 import { getLinkcard } from "@/lib/api";
 
@@ -30,13 +28,7 @@ const { title, description, image } = await getLinkcard(props.href);
     <div class="card-image">
       {
         image.src ? (
-          <Image
-            src={image.src}
-            alt={title}
-            width={400}
-            height={400}
-            class="image"
-          />
+          <img src={image.src} alt={title} width={400} class="image" />
         ) : (
           <span class="placeholder">
             <ArticleIcon class="placeholder-icon" />
@@ -117,6 +109,7 @@ const { title, description, image } = await getLinkcard(props.href);
 
     & :global(img) {
       object-fit: cover;
+      height: 100%;
     }
   }
 
