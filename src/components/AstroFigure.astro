@@ -1,0 +1,30 @@
+---
+import AstroImage from "./AstroImage.astro";
+import AstroCode from "./AstroCode.astro";
+
+export type Props = {
+  "data-image-parent"?: "";
+  "data-rehype-pretty-code-figure"?: "";
+};
+
+const props = Astro.props;
+
+const isImgParent = Object.hasOwn(props, "data-image-parent");
+const isCodeFigure = Object.hasOwn(props, "data-rehype-pretty-code-figure");
+---
+
+{
+  isImgParent ? (
+    <AstroImage {...props}>
+      <slot />
+    </AstroImage>
+  ) : isCodeFigure ? (
+    <AstroCode {...props}>
+      <slot />
+    </AstroCode>
+  ) : (
+    <figure {...props}>
+      <slot />
+    </figure>
+  )
+}

@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
 import Article from "@/components/Article.astro";
-import AstroImage from "@/components/AstroImage.astro";
+import AstroFigure from "@/components/AstroFigure.astro";
 import AstroLink from "@/components/AstroLink.astro";
 import Pager from "@/components/Pager.astro";
 import Tags from "@/components/Tags.astro";
@@ -35,7 +35,7 @@ const { post } = Astro.props;
 
 export const components = {
   a: AstroLink,
-  figure: AstroImage,
+  figure: AstroFigure,
 };
 
 const site = Astro.site ?? "";

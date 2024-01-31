@@ -3,3 +3,5 @@
 /.astro
 
 /dist
+
+/public/.cache

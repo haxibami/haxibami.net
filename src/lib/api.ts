@@ -1,16 +1,32 @@
-import { basename } from "path";
+import crypto from "crypto";
+import fs from "fs";
+import path from "path";
+
+import type { ImageMetadata } from "astro";
 
 import fetchSiteMetadata from "fetch-site-metadata";
 import sharp from "sharp";
 
 import type { Metadata } from "fetch-site-metadata";
 
-const siteMetadataCache = new Map<string, Metadata>();
+const siteMetadataMap = new Map<string, Metadata>();
+fs.mkdirSync(path.join(process.cwd(), "./public/.cache/embed"), {
+  recursive: true,
+});
 
-const siteImgCache = new Map<string, string | undefined>();
+const siteImgCache = fs
+  .readdirSync(path.join(process.cwd(), "./public/.cache/embed"))
+  .filter((img) => img.endsWith(".avif"));
+
+const siteImgMap = new Map<string, string | undefined>(
+  siteImgCache.map((img) => [
+    path.basename(img, ".avif"),
+    `/.cache/embed/${img}`,
+  ]),
+);
 
 const getSiteMetadata = async (url: string) => {
-  const cached = siteMetadataCache.get(url);
+  const cached = siteMetadataMap.get(url);
   if (cached) {
     return cached;
   } else {
@@ -27,31 +43,29 @@ const getSiteMetadata = async (url: string) => {
   }
 };
 
-// return base64
-const getSiteImg = async (
-  src: string,
-  useOptimize: boolean,
-  transform?: { width: number; height?: number },
-) => {
-  const cached = siteImgCache.get(src);
+// fetch image, resize to 400px, convert to avif, save to /public/.cache/embed,
+// copy to /dist/.cache/embed, and return /.cache/embed/<hash>.<ext>
+const getSiteImg = async (src: string) => {
+  const srcHash = crypto.createHash("sha256").update(src).digest("hex");
+  const cached = siteImgMap.get(srcHash);
   if (cached) {
     return cached;
   } else {
-    let img: Buffer | ArrayBuffer | undefined;
-    img = await fetch(src).then((res) =>
-      res.ok ? res.arrayBuffer() : undefined,
-    );
-    if (img && useOptimize) {
-      img = await sharp(img)
-        .resize(transform?.width, transform?.height)
-        .toFormat("avif", {
-          quality: 30,
-        })
-        .toBuffer();
-    }
-    const base64 = img ? Buffer.from(img).toString("base64") : undefined;
-    siteImgCache.set(src, base64);
-    return base64;
+    const img = await fetch(src).then((res) => res.arrayBuffer());
+    const imgFile = `/.cache/embed/${srcHash}.avif`;
+    const imgPath = path.join(process.cwd(), `./public${imgFile}`);
+    await sharp(Buffer.from(img))
+      .resize(400)
+      .toFormat("avif", {
+        quality: 30,
+      })
+      .toFile(imgPath);
+    fs.mkdirSync(path.join(process.cwd(), "./dist/.cache/embed"), {
+      recursive: true,
+    });
+    fs.copyFileSync(imgPath, path.join(process.cwd(), `./dist${imgFile}`));
+    siteImgMap.set(srcHash, imgFile);
+    return imgFile;
   }
 };
 
@@ -60,14 +74,11 @@ const getSiteImg = async (
  * */
 export const getLinkcard = async (href: string) => {
   const { description, image, title } = await getSiteMetadata(href);
-  const ogImg = image?.src
-    ? await getSiteImg(image.src, true, { width: 400 })
-    : undefined;
-  const ogData = ogImg ? `data:image/avif;base64,${ogImg}` : undefined;
+  const ogImg = image?.src ? await getSiteImg(image.src) : undefined;
   return {
     description,
     image: {
-      src: ogData,
+      src: ogImg,
     },
     title,
   };
@@ -93,7 +104,7 @@ const importPublicImgs = async () => {
     );
     const imgs = new Map<string, ImageMetadata>(
       Object.entries(imageImports).map(([key, value]) => [
-        basename(key),
+        path.basename(key),
         value.default,
       ]),
     );
@@ -107,7 +118,7 @@ const importPublicImgs = async () => {
  * @returns ImageMetadata
  * */
 export const getPublicImg = async (src: string) => {
-  const name = basename(src);
+  const name = path.basename(src);
   const imgs = await importPublicImgs();
   return imgs.get(name);
 };

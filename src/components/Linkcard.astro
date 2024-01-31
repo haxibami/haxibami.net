@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+
 import { ArticleIcon, LinkIcon } from "@/components/Svg";
 import { getLinkcard } from "@/lib/api";
 
@@ -8,7 +10,7 @@ interface Props {
 
 const props = Astro.props;
 
-const { description, image, title } = await getLinkcard(props.href);
+const { title, description, image } = await getLinkcard(props.href);
 ---
 
 <div>
@@ -27,15 +29,13 @@ const { description, image, title } = await getLinkcard(props.href);
     </div>
     <div class="card-image">
       {
-        image?.src ? (
-          <img
+        image.src ? (
+          <Image
             src={image.src}
-            width={200}
-            height="100%"
-            alt=""
+            alt={title}
+            width={400}
+            height={400}
             class="image"
-            decoding="async"
-            loading="lazy"
           />
         ) : (
           <span class="placeholder">

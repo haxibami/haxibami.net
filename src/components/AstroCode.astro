@@ -1,0 +1,99 @@
+---
+const props = Astro.props;
+---
+
+<figure {...props}>
+  <slot />
+</figure>
+
+<style>
+  figure {
+    margin: 1.5rem 0 1rem 0;
+    position: relative;
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
+
+    /* Background & Layout */
+    :global(pre) {
+      border-radius: 0.375rem;
+      overflow-x: auto;
+    }
+
+    :global(code) {
+      counter-reset: line;
+      display: grid;
+
+      :global([data-line]) {
+        border-left: 4px solid transparent;
+        padding: 0 0.75rem;
+      }
+
+      > :global([data-line]::before) {
+        counter-increment: line;
+        content: counter(line);
+        display: inline-block;
+        width: 1rem;
+        margin-right: 1.25rem;
+        text-align: right;
+        color: var(--codelinenum);
+      }
+
+      :global([data-highlighted-line]) {
+        border-left-color: var(--codehlsign);
+        background: var(--codehl);
+        :global(span) {
+          background: unset;
+        }
+      }
+
+      :global([data-highlighted-chars]) {
+        background: var(--codefind);
+        padding: 0.25rem;
+        border-radius: 0.25rem;
+        :global(span) {
+          background: unset;
+        }
+      }
+    }
+
+    :global([data-rehype-pretty-code-title]) {
+      & + :global(pre) {
+        padding-bottom: 0.75rem;
+        padding-top: 3rem;
+      }
+    }
+
+    :global(pre:not([data-rehype-pretty-code-title] + pre)) {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+    }
+
+    /* Code title */
+    :global([data-rehype-pretty-code-title]) {
+      position: absolute;
+      top: 0;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      padding: 0.375rem 0.75rem;
+      width: 100%;
+      color: var(--codetitlefg);
+      background: var(--codetitlebg);
+      border-radius: 0.375rem 0.375rem 0 0;
+    }
+  }
+
+  :global(pre[data-theme*=" "]),
+  :global(pre[data-theme*=" "] span) {
+    color: var(--shiki-light);
+    background: var(--shiki-light-bg);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(pre[data-theme*=" "]),
+    :global(pre[data-theme*=" "] span) {
+      color: var(--shiki-dark);
+      background: var(--shiki-dark-bg);
+    }
+  }
+</style>

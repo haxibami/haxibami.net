@@ -1,6 +1,5 @@
 ---
 export type Props = {
-  "data-image-parent"?: "";
   "data-image-alt"?: string;
   "data-image-aspect-ratio"?: string;
   "data-image-blur-url"?: string;
@@ -12,24 +11,14 @@ const {
   "data-image-blur-url": blurURL,
   ...props
 } = Astro.props;
-
-const isImgParent = Object.hasOwn(props, "data-image-parent");
 ---
 
-{
-  isImgParent ? (
-    <figure {...props} class="figure">
-      <div class="figure-image-container">
-        <slot />
-      </div>
-      <figcaption class="figure-caption">{alt}</figcaption>
-    </figure>
-  ) : (
-    <figure {...props}>
-      <slot />
-    </figure>
-  )
-}
+<figure {...props} class="figure">
+  <div class="figure-image-container">
+    <slot />
+  </div>
+  <figcaption class="figure-caption">{alt}</figcaption>
+</figure>
 
 <style define:vars={{ aspectRatio, blurURL }}>
   .figure {

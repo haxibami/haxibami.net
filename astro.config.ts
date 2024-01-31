@@ -38,6 +38,7 @@ export default defineConfig({
   },
   prefetch: {
     defaultStrategy: "viewport",
+    prefetchAll: true,
   },
   vite: {
     build: {
@@ -95,7 +96,11 @@ export default defineConfig({
       [
         rehypeMermaid,
         {
-          strategy: "inline-svg",
+          strategy: "img-svg",
+          dark: {
+            theme: "dark",
+            fontFamily: "monospace",
+          },
           mermaidConfig: {
             fontFamily: "monospace",
           },
@@ -113,7 +118,7 @@ export default defineConfig({
             light: "poimandres",
             dark: "rose-pine",
           },
-          grid: true,
+          grid: false,
           defaultLang: "plaintext",
         },
       ],
