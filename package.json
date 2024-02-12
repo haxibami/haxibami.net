@@ -25,17 +25,17 @@
   "author": "haxibami",
   "license": "MIT",
   "dependencies": {
-    "@astrojs/check": "0.4.1",
+    "@astrojs/check": "0.5.2",
     "@astrojs/mdx": "2.1.1",
-    "@astrojs/rss": "4.0.4",
+    "@astrojs/rss": "4.0.5",
     "@astrojs/sitemap": "3.0.5",
     "@astrojs/solid-js": "4.0.1",
     "@fontsource-variable/montserrat": "5.0.17",
     "@fontsource/roboto-mono": "5.0.16",
-    "astro": "4.3.2",
+    "astro": "4.3.5",
     "astro-purgecss": "4.1.0",
     "purgecss": "5.0.0",
-    "solid-js": "1.8.12"
+    "solid-js": "1.8.14"
   },
   "devDependencies": {
     "@pagefind/default-ui": "1.0.4",
