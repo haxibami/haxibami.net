@@ -10,7 +10,7 @@ dependencies:
     version: 0.5.6(prettier-plugin-astro@0.13.0)(prettier@3.2.5)(typescript@5.4.2)
   '@astrojs/mdx':
     specifier: 2.1.1
-    version: 2.1.1(astro@4.4.11)
+    version: 2.1.1(astro@4.4.15)
   '@astrojs/rss':
     specifier: 4.0.5
     version: 4.0.5
@@ -27,11 +27,11 @@ dependencies:
     specifier: 5.0.17
     version: 5.0.17
   astro:
-    specifier: 4.4.11
-    version: 4.4.11(@types/node@20.11.25)(lightningcss@1.24.0)(typescript@5.4.2)
+    specifier: 4.4.15
+    version: 4.4.15(@types/node@20.11.25)(lightningcss@1.24.0)(typescript@5.4.2)
   astro-purgecss:
     specifier: 4.1.0
-    version: 4.1.0(astro@4.4.11)(purgecss@5.0.0)
+    version: 4.1.0(astro@4.4.15)(purgecss@5.0.0)
   purgecss:
     specifier: 5.0.0
     version: 5.0.0
@@ -268,7 +268,7 @@ packages:
       - supports-color
     dev: false
 
-  /@astrojs/mdx@2.1.1(astro@4.4.11):
+  /@astrojs/mdx@2.1.1(astro@4.4.15):
     resolution: {integrity: sha512-AgGFdE7HOGmoFooGvMSatkA9FiSKwyVW7ImHot/bXJ6uAbFfu6iG2ht18Cf1pT22Hda/6iSCGWusFvBv0/EnKQ==}
     engines: {node: '>=18.14.1'}
     peerDependencies:
@@ -277,7 +277,7 @@ packages:
       '@astrojs/markdown-remark': 4.2.1
       '@mdx-js/mdx': 3.0.0
       acorn: 8.11.3
-      astro: 4.4.11(@types/node@20.11.25)(lightningcss@1.24.0)(typescript@5.4.2)
+      astro: 4.4.15(@types/node@20.11.25)(lightningcss@1.24.0)(typescript@5.4.2)
       es-module-lexer: 1.4.1
       estree-util-visit: 2.0.0
       github-slugger: 2.0.0
@@ -2002,18 +2002,18 @@ packages:
       - supports-color
     dev: true
 
-  /astro-purgecss@4.1.0(astro@4.4.11)(purgecss@5.0.0):
+  /astro-purgecss@4.1.0(astro@4.4.15)(purgecss@5.0.0):
     resolution: {integrity: sha512-CVxAXVuKYJZS2lbFEJJ9lKCnUx0FSd9+5muZTLdhXBWHiNpx1PKmR9WNJykP4ArCdpDPjkWSudyYUqMDAAA43w==}
     peerDependencies:
       astro: ^4.0.0
       purgecss: ^5.0.0
     dependencies:
-      astro: 4.4.11(@types/node@20.11.25)(lightningcss@1.24.0)(typescript@5.4.2)
+      astro: 4.4.15(@types/node@20.11.25)(lightningcss@1.24.0)(typescript@5.4.2)
       purgecss: 5.0.0
     dev: false
 
-  /astro@4.4.11(@types/node@20.11.25)(lightningcss@1.24.0)(typescript@5.4.2):
-    resolution: {integrity: sha512-mJ1k67xzAJO1vTTpATe76uSWhOgiEj3Id7narE6X2rMMOBjR8vJM+9Cmv/Wbpot6uMwFo780skUowlMptK96fQ==}
+  /astro@4.4.15(@types/node@20.11.25)(lightningcss@1.24.0)(typescript@5.4.2):
+    resolution: {integrity: sha512-RTiAnlO8hDp6GqMVvaeJxyuCJhHNEho09lHshMNQBqgRabYPOJGW0HZZrbLRGNOqN9I14ivhZIunYGgAaGQpWw==}
     engines: {node: '>=18.14.1', npm: '>=6.14.0'}
     hasBin: true
     dependencies:
