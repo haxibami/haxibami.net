@@ -1,25 +1,46 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base", ":timezone(Asia/Tokyo)"],
-  "schedule": ["after 9am on monday", "before 12am on monday"],
+  "extends": [
+    "config:base",
+    ":timezone(Asia/Tokyo)"
+  ],
+  "schedule": [
+    "before 4am on the first day of the month"
+  ],
   "dependencyDashboard": true,
   "ignoreDeps": [],
   "packageRules": [
     {
       "groupName": "DevDependencies",
-      "matchDepTypes": ["devDependencies"],
+      "matchDepTypes": [
+        "devDependencies"
+      ],
       "automerge": true
     },
     {
       "groupName": "Dependencies (minor update)",
-      "matchDepTypes": ["dependencies"],
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "matchDepTypes": [
+        "dependencies"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
       "automerge": true
     },
     {
       "groupName": "Package manager (pnpm)",
-      "matchPackagePatterns": ["^pnpm$"],
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "matchPackagePatterns": [
+        "^pnpm$"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
       "automerge": true
     }
   ]
