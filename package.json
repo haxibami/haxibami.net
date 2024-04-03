@@ -34,7 +34,7 @@
     "@fontsource/roboto-mono": "5.0.17",
     "astro": "4.5.12",
     "astro-purgecss": "4.1.0",
-    "purgecss": "5.0.0",
+    "purgecss": "6.0.0",
     "solid-js": "1.8.16"
   },
   "devDependencies": {
