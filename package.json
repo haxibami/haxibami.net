@@ -5,9 +5,8 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=18.14.1"
+    "bun": "^1.0.0"
   },
-  "packageManager": "pnpm@9.0.6",
   "description": "haxibami's website",
   "scripts": {
     "dev": "astro dev",
