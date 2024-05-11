@@ -18,7 +18,7 @@ jobs:
         with:
           path: |
             ~/.bun/install/cache
-            '**/node_modules/.astro'
+            node_modules
           key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
           restore-keys: ${{ runner.os }}-bun-
       - name: Install bun dependencies
