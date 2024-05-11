@@ -29,19 +29,6 @@
         "digest"
       ],
       "automerge": true
-    },
-    {
-      "groupName": "Package manager (pnpm)",
-      "matchPackagePatterns": [
-        "^pnpm$"
-      ],
-      "matchUpdateTypes": [
-        "minor",
-        "patch",
-        "pin",
-        "digest"
-      ],
-      "automerge": true
     }
   ]
 }
