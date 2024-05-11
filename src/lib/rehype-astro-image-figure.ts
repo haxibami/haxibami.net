@@ -3,7 +3,7 @@ import { visit } from "unist-util-visit";
 import type { Root } from "hast";
 import type { Plugin } from "unified";
 
-const rehypeMarkImageParent: Plugin<void[], Root> = () => {
+const rehypeMarkImageParent: Plugin<[], Root> = () => {
   return (tree) => {
     visit(tree, "element", (node) => {
       if (!Object.hasOwn(node.properties, "dataImageParent")) {

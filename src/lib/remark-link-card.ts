@@ -1,12 +1,12 @@
 import { visit } from "unist-util-visit";
 
-import { isParent, isBareLink } from "./mdast-util-node-is";
+import { isBareLink, isParent } from "./mdast-util-node-is";
 
 import type { Root } from "mdast";
 import type { Plugin } from "unified";
 import type { Parent } from "unist";
 
-const remarkLinkcard: Plugin<void[], Root> = () => {
+const remarkLinkcard: Plugin<[], Root> = () => {
   return (tree) => {
     visit(tree, isBareLink, (node, _index, parent: Parent | undefined) => {
       if (!isParent(parent)) {

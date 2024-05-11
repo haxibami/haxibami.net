@@ -1,7 +1,7 @@
 /** @jsxImportSource react */
 /** @jsxRuntime automatic */
 
-import { readFileSync } from "fs";
+import { readFileSync } from "node:fs";
 
 import satori from "satori";
 import sharp from "sharp";
@@ -200,9 +200,9 @@ const ogImage = async (text: string, date?: Date, emoji?: string) => {
       loadAdditionalAsset: async (code: string, segment: string) => {
         if (code === "emoji") {
           const emojiSvg = await fetch(
-            "https://rawcdn.githack.com/googlefonts/noto-emoji/main/svg/emoji_u" +
-              segment.codePointAt(0)?.toString(16) +
-              ".svg",
+            `https://rawcdn.githack.com/googlefonts/noto-emoji/main/svg/emoji_u${segment
+              .codePointAt(0)
+              ?.toString(16)}.svg`,
             {
               cache: "force-cache",
             },

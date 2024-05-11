@@ -1,7 +1,7 @@
 import type {
   MdxJsxAttribute,
-  MdxJsxFlowElementHast,
   MdxJsxFlowElement,
+  MdxJsxFlowElementHast,
 } from "mdast-util-mdx-jsx";
 
 function isObject(node: unknown): node is { [key: string]: unknown } {

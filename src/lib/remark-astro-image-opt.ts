@@ -1,10 +1,10 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 import sharp from "sharp";
 import { visit } from "unist-util-visit";
 
-import type { Root, Image, Parent } from "mdast";
+import type { Image, Parent, Root } from "mdast";
 import type { Plugin } from "unified";
 
 interface RemarkAstroImageOptOptions {
@@ -71,13 +71,12 @@ const remarkAstroImageOpt: Plugin<[RemarkAstroImageOptOptions?], Root> = (
           .then((data) => {
             if (!data.width || !data.height) {
               throw new Error(`Failed to get image metadata: ${node.url}`);
-            } else {
-              return {
-                width: data.width,
-                height: data.height,
-                aspectRatio: `${data.width} / ${data.height}`,
-              };
             }
+            return {
+              width: data.width,
+              height: data.height,
+              aspectRatio: `${data.width} / ${data.height}`,
+            };
           });
 
         // thanks to plaiceholder

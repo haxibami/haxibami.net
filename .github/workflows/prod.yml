@@ -22,11 +22,9 @@ jobs:
           key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
           restore-keys: ${{ runner.os }}-bun-
       - name: Install bun dependencies
-        run: bun i
+        run: bun i --no-save
       - name: Install Chrome binary
-        uses: browser-actions/setup-chrome@v1
-        with:
-          chrome-version: stable
+        run: bunx --bun playwright install chrome
       - name: Build project artifacts
         run: bun --bun run build
       - name: Deploy project artifacts to Cloudflare Pages

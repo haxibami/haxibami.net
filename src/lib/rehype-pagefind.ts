@@ -1,6 +1,6 @@
 import { visit } from "unist-util-visit";
 
-import type { Root, Element } from "hast";
+import type { Element, Root } from "hast";
 import type { Plugin } from "unified";
 
 function shouldNotIndexed(node: Element) {
@@ -13,7 +13,7 @@ function shouldNotIndexed(node: Element) {
   );
 }
 
-const rehypePagefind: Plugin<void[], Root> = () => {
+const rehypePagefind: Plugin<[], Root> = () => {
   return (tree) => {
     visit(tree, "element", (node) => {
       if (shouldNotIndexed(node)) {

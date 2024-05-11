@@ -1,11 +1,11 @@
 import type {
-  Paragraph,
-  Text,
-  Link,
   FootnoteDefinition,
   FootnoteReference,
+  Link,
+  Paragraph,
+  Text,
 } from "mdast";
-import type { Node, Parent, Literal } from "unist";
+import type { Literal, Node, Parent } from "unist";
 
 function isObject(target: unknown): target is { [key: string]: unknown } {
   return typeof target === "object" && target !== null;

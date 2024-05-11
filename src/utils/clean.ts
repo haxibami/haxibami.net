@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 const publicCacheDir = path.join(process.cwd(), "./public/.cache");
 const destCacheDir = path.join(process.cwd(), "./dist/.cache");

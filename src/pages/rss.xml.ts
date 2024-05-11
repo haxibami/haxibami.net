@@ -1,6 +1,6 @@
+import { getCollection, getEntry } from "astro:content";
 import rss from "@astrojs/rss";
 import type { APIContext } from "astro";
-import { getEntry, getCollection } from "astro:content";
 
 export async function GET(context: APIContext) {
   const meta = await getEntry("data", "meta");
@@ -30,7 +30,10 @@ export async function GET(context: APIContext) {
     },
     customData: [
       "<language>ja-jp</language>",
-      `<atom:link href="${new URL("/rss.xml", context.site)}" rel="self" type="application/rss+xml" />`,
+      `<atom:link href="${new URL(
+        "/rss.xml",
+        context.site,
+      )}" rel="self" type="application/rss+xml" />`,
     ].join(""),
   });
 }

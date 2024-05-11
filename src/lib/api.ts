@@ -1,6 +1,6 @@
-import crypto from "crypto";
-import fs from "fs";
-import path from "path";
+import crypto from "node:crypto";
+import fs from "node:fs";
+import path from "node:path";
 
 import type { ImageMetadata } from "astro";
 
@@ -29,18 +29,17 @@ const getSiteMetadata = async (url: string) => {
   const cached = siteMetadataMap.get(url);
   if (cached) {
     return cached;
-  } else {
-    const { description, image, title } = await fetchSiteMetadata(url, {
-      suppressAdditionalRequest: true,
-    }).catch(() => ({
-      description: "Page not found",
-      image: {
-        src: undefined,
-      },
-      title: "Not Found",
-    }));
-    return { description, image, title };
   }
+  const { description, image, title } = await fetchSiteMetadata(url, {
+    suppressAdditionalRequest: true,
+  }).catch(() => ({
+    description: "Page not found",
+    image: {
+      src: undefined,
+    },
+    title: "Not Found",
+  }));
+  return { description, image, title };
 };
 
 // fetch image, resize to 400px, convert to avif, save to /public/.cache/embed,
@@ -50,26 +49,25 @@ const getSiteImg = async (src: string) => {
   const cached = siteImgMap.get(srcHash);
   if (cached) {
     return cached;
-  } else {
-    const img = await fetch(src).then((res) => res.arrayBuffer());
-    if (!img) {
-      return undefined;
-    }
-    const imgFile = `/.cache/embed/${srcHash}.avif`;
-    const imgPath = path.join(process.cwd(), `./public${imgFile}`);
-    await sharp(Buffer.from(img))
-      .resize(400)
-      .toFormat("avif", {
-        quality: 30,
-      })
-      .toFile(imgPath);
-    fs.mkdirSync(path.join(process.cwd(), "./dist/.cache/embed"), {
-      recursive: true,
-    });
-    fs.copyFileSync(imgPath, path.join(process.cwd(), `./dist${imgFile}`));
-    siteImgMap.set(srcHash, imgFile);
-    return imgFile;
   }
+  const img = await fetch(src).then((res) => res.arrayBuffer());
+  if (!img) {
+    return undefined;
+  }
+  const imgFile = `/.cache/embed/${srcHash}.avif`;
+  const imgPath = path.join(process.cwd(), `./public${imgFile}`);
+  await sharp(Buffer.from(img))
+    .resize(400)
+    .toFormat("avif", {
+      quality: 30,
+    })
+    .toFile(imgPath);
+  fs.mkdirSync(path.join(process.cwd(), "./dist/.cache/embed"), {
+    recursive: true,
+  });
+  fs.copyFileSync(imgPath, path.join(process.cwd(), `./dist${imgFile}`));
+  siteImgMap.set(srcHash, imgFile);
+  return imgFile;
 };
 
 /**
@@ -98,22 +96,21 @@ let publicImgsCache = new Map<string, ImageMetadata>();
 const importPublicImgs = async () => {
   if (publicImgsCache.size > 0) {
     return publicImgsCache;
-  } else {
-    const imageImports: ImageImportResults = import.meta.glob(
-      "../assets/image/*",
-      {
-        eager: true,
-      },
-    );
-    const imgs = new Map<string, ImageMetadata>(
-      Object.entries(imageImports).map(([key, value]) => [
-        path.basename(key),
-        value.default,
-      ]),
-    );
-    publicImgsCache = imgs;
-    return imgs;
   }
+  const imageImports: ImageImportResults = import.meta.glob(
+    "../assets/image/*",
+    {
+      eager: true,
+    },
+  );
+  const imgs = new Map<string, ImageMetadata>(
+    Object.entries(imageImports).map(([key, value]) => [
+      path.basename(key),
+      value.default,
+    ]),
+  );
+  publicImgsCache = imgs;
+  return imgs;
 };
 
 /**
