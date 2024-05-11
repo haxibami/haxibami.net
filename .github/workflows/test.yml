@@ -6,47 +6,34 @@ on:
     branches:
       - main
 
-env:
-  PNPM_HOME: /home/runner/.local/share/pnpm
-
 jobs:
   test-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: oven-sh/setup-bun@v1
         with:
-          node-version-file: ".node-version"
-      - name: Configure pnpm path
-        run: echo "${{ env.PNPM_HOME }}" >> $GITHUB_PATH
-      - name: Setup pnpm with corepack
-        run: |
-          corepack enable pnpm
-          corepack prepare pnpm@latest --activate
-          SHELL="$(which bash)" pnpm setup --force
-      - name: Get pnpm store path
-        id: pnpm-cache
-        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-      - name: Setup pnpm store & build artifact cache
+          bun-version: latest
+      - name: Setup bun store & build artifact cache
         uses: actions/cache@v4
         with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-astro-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: ${{ runner.os }}-astro-
-      - name: Install node dependencies
-        run: pnpm i --frozen-lockfile
+          path: |
+            ~/.bun/install/cache
+            '**/node_modules/.astro'
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lockb') }}
+          restore-keys: ${{ runner.os }}-bun-
+      - name: Install bun dependencies
+        run: bun i
       - name: Install Chrome binary
         uses: browser-actions/setup-chrome@v1
         with:
           chrome-version: stable
-      - name: Install Wrangler CLI
-        run: pnpm add -g wrangler
       - name: Check types and code styles
-        run: pnpm run lint && pnpm run format-check
+        run: bun --bun run lint && bun --bun run format-check
       - name: Build project artifacts
-        run: pnpm run build
+        run: bun --bun run build
       - name: Deploy project artifacts to Cloudflare Pages
-        run: wrangler pages deploy ./dist --project-name=mythfinder --branch test
+        run: bunx --bun wrangler pages deploy ./dist --project-name=mythfinder --branch test
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
