@@ -23,8 +23,15 @@ jobs:
           restore-keys: ${{ runner.os }}-bun-
       - name: Install bun dependencies
         run: bun i --no-save
-      - name: Install Chrome binary
-        run: bunx --bun playwright install chrome
+      - name: Install Chrome and add to PATH
+        run: |
+          TMP_DEB=$(mktemp -d /tmp/deb-XXXXXX)
+          TMP_BIN=$(mktemp -d /tmp/bin-XXXXXX)
+          cd "$TMP_DEB"
+          curl -O https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          ar x google-chrome-stable_current_amd64.deb
+          tar -xf data.tar.xz -C "$TMP_BIN" --strip-components=4 ./opt/google
+          echo "$TMP_BIN" >> "$GITHUB_PATH"
       - name: Build project artifacts
         run: bun --bun run build
       - name: Deploy project artifacts to Cloudflare Pages
