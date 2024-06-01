@@ -26,7 +26,7 @@ const remarkLinkcard: Plugin<[], Root> = () => {
       child.data = {
         ...child.data,
         hProperties: {
-          ...child.data?.hProperties,
+          // ...child.data?.hProperties,
           dataLinkcard: true,
         },
       };

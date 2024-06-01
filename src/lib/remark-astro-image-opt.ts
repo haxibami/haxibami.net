@@ -103,7 +103,6 @@ const remarkAstroImageOpt: Plugin<[RemarkAstroImageOptOptions?], Root> = (
         node.data = {
           ...node.data,
           hProperties: {
-            ...node.data?.hProperties,
             widths: [...widths, width],
             sizes: `${sizes}, ${width}px`,
             format: "avif",
@@ -115,7 +114,6 @@ const remarkAstroImageOpt: Plugin<[RemarkAstroImageOptOptions?], Root> = (
         parent.data = {
           ...parent.data,
           hProperties: {
-            ...parent.data?.hProperties,
             dataImageParent: true,
             dataImageAlt: node.alt,
             dataImageAspectRatio: aspectRatio,
