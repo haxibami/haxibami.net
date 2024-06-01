@@ -30,7 +30,7 @@ const remarkFootnoteTitle: Plugin<[], Root> = () => {
       n.data = {
         ...n.data,
         hProperties: {
-          ...n.data?.hProperties,
+          // ...n.data?.hProperties,
           title: footnotes[n.identifier],
         },
       };
