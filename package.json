@@ -37,11 +37,11 @@
     "solid-js": "1.8.17"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.7.3",
+    "@biomejs/biome": "1.8.3",
     "@pagefind/default-ui": "1.1.0",
     "@types/hast": "3.0.4",
     "@types/mdast": "4.0.4",
-    "@types/node": "20.13.0",
+    "@types/node": "20.14.9",
     "@types/react": "18.3.3",
     "@types/unist": "3.0.2",
     "fetch-site-metadata": "0.2.0",
@@ -49,7 +49,7 @@
     "katex": "0.16.10",
     "lightningcss": "1.25.1",
     "mdast-util-mdx-jsx": "3.1.2",
-    "mdast-util-to-hast": "13.1.0",
+    "mdast-util-to-hast": "13.2.0",
     "mermaid": "10.9.1",
     "pagefind": "1.1.0",
     "react": "18.3.1",
@@ -64,10 +64,10 @@
     "remark-slug": "7.0.1",
     "satori": "0.10.13",
     "sharp": "0.33.4",
-    "shiki": "1.6.1",
-    "tailwindcss": "3.4.3",
-    "typescript": "5.4.5",
-    "unified": "11.0.4",
+    "shiki": "1.10.0",
+    "tailwindcss": "3.4.4",
+    "typescript": "5.5.2",
+    "unified": "11.0.5",
     "unist-util-visit": "5.0.0"
   },
   "trustedDependencies": ["@biomejs/biome", "@fortawesome/fontawesome-free", "esbuild", "sharp"]
