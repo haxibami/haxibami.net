@@ -20,6 +20,7 @@ import remarkAstroImageOpt from "./src/lib/remark-astro-image-opt";
 import remarkFootnoteTitle from "./src/lib/remark-footnote-title";
 import remarkLinkcard from "./src/lib/remark-link-card";
 
+import type { RehypePlugins } from "astro";
 import type { Element } from "hast";
 
 export default defineConfig({
@@ -123,7 +124,7 @@ export default defineConfig({
         },
       ],
       rehypePagefind,
-    ],
+    ] as RehypePlugins,
   },
   site: "https://www.haxibami.net",
 });
