@@ -31,7 +31,7 @@
     "@astrojs/solid-js": "4.4.0",
     "@fontsource-variable/montserrat": "5.0.19",
     "@fontsource/roboto-mono": "5.0.18",
-    "astro": "4.11.3",
+    "astro": "4.11.4",
     "astro-purgecss": "4.1.1",
     "purgecss": "6.0.0",
     "solid-js": "1.8.18"
