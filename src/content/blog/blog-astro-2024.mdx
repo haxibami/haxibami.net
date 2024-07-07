@@ -1,0 +1,43 @@
+---
+title: "Astro製サイトのランタイムをBunに移行した"
+date: 2024-07-08
+description: "そのほか画像最適化・リンクカードなど"
+tags: ["tech", "web", "astro", "bun"]
+emoji: "🍅"
+---
+
+ごきげんよう。そしてお久しぶり。このサイトの技術構成に関して、[前回の記事](/blog/posts/blog-astro-renewal)から以下三点の更新があったので紹介する。
+
+- [Bunの採用](#bunの採用)
+- [画像処理の簡素化・レスポンシブ対応](#画像処理の簡素化レスポンシブ対応)
+- [リンクカード内の画像の取り扱い変更](#リンクカード内の画像の取り扱い変更)
+
+## Bunの採用
+
+Node\.js / pnpmに代わり、ランタイム / パッケージマネージャに[Bun](https://bun.sh/)を採用した。速い（らしい）。エンジンがV8じゃない（[JavaScriptCore](https://developer.apple.com/documentation/javascriptcore)）。TypeScriptを直接（追加パッケージなしで）実行できる。いいことばかり。
+
+https://github.com/haxibami/haxibami.net/pull/373
+
+移行にあたってつまづいた点はZennの[スクラップ](https://zenn.dev/haxibami/scraps/56aadb5ac92b20)にまとめた。必要なだいたいの処理は完全にBunのランタイムで（`--bun`オプション付きで）実行できるが、WranglerでCloudflareにデプロイする処理だけはうまくいかなかった。いつか直るといいね。
+
+## 画像処理の簡素化・レスポンシブ対応
+
+[以前の実装](/blog/posts/blog-astro-renewal#画像処理のワークフロー-)では`<Image />`コンポーネントを使い、なにやらガタガタと自前で画像を`import`する処理を書いたが、[Astro 4.2の変更](https://astro.build/blog/astro-420/#customizable-image-optimization-in-markdown)に伴って不要になった。より簡単に、remarkプラグインで画像ノードにいくつかのパラメータ（=`<Image />`のオプション）を渡しておけば、その通りに画像を最適化してくれる。これに関連して以下の二つのプラグインを書いた。両者あわせて、パラメータの受け渡しに加え、画像読み込み待ちのプレースホルダーの取得なども行っている。
+
+- [remark-astro-image-opt](https://github.com/haxibami/haxibami.net/blob/93767e7c8b01a1cdf85cc1a39d7639ef490cdc1d/src/lib/remark-astro-image-opt.ts)
+    - 画像の幅と高さを取得、[レスポンシブ画像](https://developer.mozilla.org/ja/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)用に`widths`, `sizes`などのパラメータを渡す
+        - これが`<Image />`のオプション
+    - プレースホルダー（`base64`）を生成、パラメータとして埋め込む
+        - こちらはあとで[独自の画像コンポーネント](https://github.com/haxibami/haxibami.net/blob/93767e7c8b01a1cdf85cc1a39d7639ef490cdc1d/src/components/AstroImage.astro)に置き換える際に利用
+- [rehype-astro-image-figure](https://github.com/haxibami/haxibami.net/blob/93767e7c8b01a1cdf85cc1a39d7639ef490cdc1d/src/lib/rehype-astro-image-figure.ts)
+    - `<p>`を`<figure>`に変更（これだけはremarkではできない）
+
+ちなみに「独自の画像コンポーネントに置き換え」とあるが、以前の実装で行っていた`<img>`から`<Image />`への置き換えとは**異なる**。あくまで画像の親要素（Markdownの文法上、独立した画像は必ず`<p>`要素を親に持つ）に着目し、ざっくり言えば`<p><slot /></p>`を`<figure><slot /></figure>`に置き換える処理を行っている。[^1] [^2]
+
+[^1]: まさにここで`<slot />`を使うのが今回のミソともいえる。このおかげで、Astroが内部で`<img>`から`<Image />`に置き換えている部分には一切手を触れずに済む。
+
+[^2]: 厳密には、`rehype-astro-image-figure` で `<p>`を`<figure>` に変更したうえで、その`<figure><slot /></figure>`を`<AstroImage><slot /></AstroImage>`に置き換えている。
+
+## リンクカード内の画像の取り扱い変更
+
+[以前の実装](/blog/posts/blog-astro-renewal#1-リンクカード内の画像)では、リンクカード内のOG画像はすべて`base64`形式で埋め込まれていたが、この方法にはドキュメント本体のサイズが肥大化するという問題があった（完全に見落としていた）。代わって、画像が要求される度に`public/.cache/embed`以下にキャッシュを作る方針に変更した。おそらくはもっとよい方法もあるのだろうが……

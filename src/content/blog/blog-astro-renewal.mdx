@@ -1,10 +1,13 @@
 ---
 title: "A is for Astronaut"
 date: 2023-10-06
+lastmod: 2024-07-07
 description: "Astroでサイトを書き直した"
 tags: ["tech", "web", "astro"]
 emoji: "🚀"
 ---
+
+（2024/07/07 追記）いくつかの実装を[更新](/blog/posts/blog-astro-2024)した
 
 ## 概要
 
@@ -23,6 +26,8 @@ emoji: "🚀"
 答え：たとえ静的生成されたサイトであっても、すべてのリソースがビルド時に解決されるわけではない。[Google Fonts](https://fonts.google.com/)用のスタイルシートや、外部の画像への参照、`<iframe>`による外部コンテンツの呼び出し……こうしたリソースの解決はしばしばクライアント側に委ねられ、（よほどひどい場合）上のような事態をもたらす。逆にいえば、もし静的サイトをさらにチューニングするのなら、このあたりには改善の余地がある。単純な話だ。とにかく、可能な限りのものをビルド時に**凍結**して、バンドルに含めてしまえばよい。ここで重要な真理をひとつ——たいていの場合、なにごとも決定済みであるほうが喜ばしい。
 
 #### 1. リンクカード内の画像
+
+（2024/07/07 追記）最新の実装は[こちら](/blog/posts/blog-astro-2024#リンクカード内の画像の取り扱い変更)を参照
 
 [以前の実装](/blog/posts/blog-renewal)以来、Markdown内の単独のリンクはリンクカード（:point_down: こういうの）に変換され、リンク先のOpen Graph（以下、OG）画像などが表示されるようになっていた。
 
@@ -45,6 +50,8 @@ https://docs.astro.build/ja/guides/endpoints/
 WebフォントをNPMパッケージから`import`することで、サイトと一緒くたにバンドルし、同じサーバから配信できる、という[便利なツール](https://fontsource.org/)がある。せっかくなので[バリアブルフォント](https://developer.mozilla.org/ja/docs/Web/CSS/CSS_fonts/Variable_fonts_guide)を使ってみた。軽量で便利なのではやく普及してほしい。
 
 ### 画像処理のワークフロー :factory:
+
+（2024/07/07 追記）最新の実装は[こちら](/blog/posts/blog-astro-2024#画像処理の簡素化レスポンシブ対応)を参照
 
 Astro v3では、Markdown / MDX内の画像を最適化する[いくつかの方法](https://docs.astro.build/ja/guides/images/)が公式に提供されている。しかしながら、それらはみな
 

@@ -2,8 +2,6 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 
-import type { ImageMetadata } from "astro";
-
 import fetchSiteMetadata from "fetch-site-metadata";
 import sharp from "sharp";
 
@@ -83,42 +81,4 @@ export const getLinkcard = async (href: string) => {
     },
     title,
   };
-};
-
-interface ImageImportResults {
-  [key: string]: {
-    default: ImageMetadata;
-  };
-}
-
-let publicImgsCache = new Map<string, ImageMetadata>();
-
-const importPublicImgs = async () => {
-  if (publicImgsCache.size > 0) {
-    return publicImgsCache;
-  }
-  const imageImports: ImageImportResults = import.meta.glob(
-    "../assets/image/*",
-    {
-      eager: true,
-    },
-  );
-  const imgs = new Map<string, ImageMetadata>(
-    Object.entries(imageImports).map(([key, value]) => [
-      path.basename(key),
-      value.default,
-    ]),
-  );
-  publicImgsCache = imgs;
-  return imgs;
-};
-
-/**
- * @param src - image path, absolute to "/src/assets/"
- * @returns ImageMetadata
- * */
-export const getPublicImg = async (src: string) => {
-  const name = path.basename(src);
-  const imgs = await importPublicImgs();
-  return imgs.get(name);
 };
