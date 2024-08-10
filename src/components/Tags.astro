@@ -13,7 +13,7 @@ const { tags, collectionKey } = Astro.props;
   tags && (
     <ul>
       {tags.map((tag) => (
-        <li>
+      <li data-pagefind-filter="tag">
           <a href={`/${collectionKey}/categories/${tag}`} class="tag-link">
             {tag}
           </a>

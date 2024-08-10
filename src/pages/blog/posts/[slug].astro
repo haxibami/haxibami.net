@@ -72,16 +72,17 @@ const lastmodString = new Intl.DateTimeFormat("en-US", {
         <span class="emoji">{post.data.emoji}</span>
       </div>
       <h1>{post.data.title}</h1>
-      <div class="tags-container">
+      <div class="tags-container" data-pagefind-ignore data-pagefind-meta={`tags:${post.data.tags?.join(", ")}`}>
         <Tags tags={post.data.tags} collectionKey={post.collection} />
       </div>
-      <div class="post-info">
+      <div class="post-info" data-pagefind-ignore>
         <div>
           <div class="published-container">Published</div>
           <div>
             <time
               datetime={post.data.date.toISOString()}
               data-pagefind-meta={`published:${dateString}`}
+              data-pagefind-filter="published"
             >
               {dateString}
             </time>
@@ -95,6 +96,7 @@ const lastmodString = new Intl.DateTimeFormat("en-US", {
                 <time
                   datetime={post.data.lastmod.toISOString()}
                   data-pagefind-meta={`updated:${lastmodString}`}
+                  data-pagefind-filter="updated"
                 >
                   {lastmodString}
                 </time>

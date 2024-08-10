@@ -77,7 +77,7 @@ import "@pagefind/default-ui/css/ui.css";
     background-color: color-mix(in srgb, var(--bg) 97%, var(--fg) 3%);
     padding: 1.5rem;
     border-radius: 0.5rem;
-    max-width: 40rem;
+    max-width: 60rem;
     margin: 0 auto;
     overflow-y: auto;
     max-height: 100%;
@@ -91,6 +91,7 @@ import "@pagefind/default-ui/css/ui.css";
   function initPageFind() {
     new PagefindUI({
       element: "#search",
+      showEmptyFilters: false,
       translations: {
         clear_search: "クリア",
         zero_results: "[SEARCH_TERM] に一致する結果は見つかりませんでした",
