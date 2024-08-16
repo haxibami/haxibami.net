@@ -3,8 +3,6 @@ import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
 import Article from "@/components/Article.astro";
-import AstroFigure from "@/components/AstroFigure.astro";
-import AstroLink from "@/components/AstroLink.astro";
 import Pager from "@/components/Pager.astro";
 import Tags from "@/components/Tags.astro";
 import Layout from "@/layouts/Layout.astro";
@@ -29,14 +27,7 @@ export async function getStaticPaths() {
   });
 }
 
-const { Content } = await Astro.props.post.render();
-
 const { post } = Astro.props;
-
-export const components = {
-  a: AstroLink,
-  figure: AstroFigure,
-};
 
 const site = Astro.site ?? "";
 
@@ -72,7 +63,11 @@ const lastmodString = new Intl.DateTimeFormat("en-US", {
         <span class="emoji">{post.data.emoji}</span>
       </div>
       <h1>{post.data.title}</h1>
-      <div class="tags-container" data-pagefind-ignore data-pagefind-meta={`tags:${post.data.tags?.join(", ")}`}>
+      <div
+        class="tags-container"
+        data-pagefind-ignore
+        data-pagefind-meta={`tags:${post.data.tags?.join(", ")}`}
+      >
         <Tags tags={post.data.tags} collectionKey={post.collection} />
       </div>
       <div class="post-info" data-pagefind-ignore>
@@ -106,9 +101,7 @@ const lastmodString = new Intl.DateTimeFormat("en-US", {
         }
       </div>
     </header>
-    <Article>
-      <Content components={components} />
-    </Article>
+    <Article post={post} />
     <Pager topPath={`/${post.collection}`} />
   </main>
 </Layout>

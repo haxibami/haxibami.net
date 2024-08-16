@@ -1,49 +1,29 @@
 /** @jsxImportSource react */
 /** @jsxRuntime automatic */
 
-import { readFileSync } from "node:fs";
-
 import satori from "satori";
 import sharp from "sharp";
 
 const ogImage = async (text: string, date?: Date, emoji?: string) => {
-  const notoFontData = readFileSync("./src/assets/NotoSansCJKjp-Bold.woff");
+  const [
+    notoFontData,
+    robotoFontData,
+    sfProFontData,
+    sfProDisplayFontData,
+    iconBuffer,
+  ] = await Promise.all([
+    Bun.file("./src/assets/NotoSansCJKjp-Bold.woff").arrayBuffer(),
 
-  const robotoFontData = readFileSync(
-    "./node_modules/@fontsource/roboto-mono/files/roboto-mono-latin-500-normal.woff",
-  );
+    Bun.file(
+      "./node_modules/@fontsource/roboto-mono/files/roboto-mono-latin-500-normal.woff",
+    ).arrayBuffer(),
 
-  //   const sfProFontData = await fetch(
-  //     "https://www.apple.com/wss/fonts/SF-Pro-JP/v1/SFProJP_semibold.woff",
-  //     {
-  //       headers: {
-  //         "User-Agent":
-  //           "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/118.0",
-  //         Referer: "https://www.apple.com/wss/fonts",
-  //       },
-  //       cache: "force-cache",
-  //     },
-  //   ).then((res) => res.arrayBuffer());
+    Bun.file("./src/assets/SFProJP_semibold.woff").arrayBuffer(),
 
-  const sfProFontData = readFileSync("./src/assets/SFProJP_semibold.woff");
+    Bun.file("./src/assets/sf-pro-display_semibold.woff").arrayBuffer(),
 
-  //   const sfProDisplayFontData = await fetch(
-  //     "https://www.apple.com/wss/fonts/SF-Pro-Display/v3/sf-pro-display_semibold.woff",
-  //     {
-  //       headers: {
-  //         "User-Agent":
-  //           "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/118.0",
-  //         Referer: "https://www.apple.com/wss/fonts",
-  //       },
-  //       cache: "force-cache",
-  //     },
-  //   ).then((res) => res.arrayBuffer());
-
-  const sfProDisplayFontData = readFileSync(
-    "./src/assets/sf-pro-display_semibold.woff",
-  );
-
-  const iconBuffer = readFileSync("./src/assets/kripcat_720.jpg");
+    Bun.file("./src/assets/kripcat_720.jpg").arrayBuffer(),
+  ]);
 
   const icon = btoa(
     new Uint8Array(iconBuffer).reduce(

@@ -1,5 +1,5 @@
 ---
-import Linkcard from "@/components/Linkcard.astro";
+import Link from "@/components/Link.astro";
 
 interface Props {
   href: string;
@@ -11,7 +11,7 @@ const props = Astro.props;
 
 {
   Object.hasOwn(props, "data-linkcard") ? (
-    <Linkcard {...props} />
+    <Link {...props} />
   ) : (
     <a {...props}>
       <slot />

@@ -13,11 +13,11 @@ import rehypeSlug from "rehype-slug";
 import remarkRuby from "remark-denden-ruby";
 import remarkGemoji from "remark-gemoji";
 import remarkMath from "remark-math";
+import remarkUnwrapImages from "remark-unwrap-images";
 
-import rehypeAstroImageFigure from "./src/lib/rehype-astro-image-figure";
 import rehypePagefind from "./src/lib/rehype-pagefind";
-import remarkAstroImageOpt from "./src/lib/remark-astro-image-opt";
 import remarkFootnoteTitle from "./src/lib/remark-footnote-title";
+import remarkImagePlaceholder from "./src/lib/remark-image-placeholder";
 import remarkLinkcard from "./src/lib/remark-link-card";
 
 import type { RehypePlugins } from "astro";
@@ -61,6 +61,7 @@ export default defineConfig({
       remarkGemoji,
       remarkMath,
       remarkRuby,
+      remarkUnwrapImages,
       remarkLinkcard,
       //         [
       //           remarkToc,
@@ -72,7 +73,7 @@ export default defineConfig({
       //           },
       //         ],
       remarkFootnoteTitle,
-      remarkAstroImageOpt,
+      remarkImagePlaceholder,
     ],
     remarkRehype: {
       footnoteLabel: "脚注",
@@ -111,7 +112,6 @@ export default defineConfig({
         },
       ],
       rehypeKatex,
-      rehypeAstroImageFigure,
       [
         rehypePrettyCode,
         {

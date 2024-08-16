@@ -1,0 +1,54 @@
+---
+import { Picture } from "astro:assets";
+
+export type Props = {
+  src: ImageMetadata;
+  alt: string;
+  placeholder: string;
+};
+
+const { src, alt, placeholder, ...props } = Astro.props;
+---
+
+<figure>
+  <Picture
+    class="image"
+    src={src}
+    alt={alt}
+    widths={[240, 540, 720, src.width]}
+    formats={["avif"]}
+    pictureAttributes={{
+      style: {
+        aspectRatio: `${src.width} / ${src.height}`,
+        margin: "0 auto",
+        maxHeight: "50vh",
+      },
+    }}
+    {...props}
+  />
+  <figcaption class="caption">{alt}</figcaption>
+</figure>
+
+<style define:vars={{ blurURL: `url(${placeholder})` }}>
+  figure {
+    display: flex;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .caption {
+    text-align: center;
+    color: var(--secondary);
+  }
+
+  .image {
+    object-fit: contain;
+    color: transparent;
+    background-image: var(--blurURL);
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+  }
+</style>

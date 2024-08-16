@@ -1,0 +1,23 @@
+---
+import Code from "@/components/Code.astro";
+
+export type Props = {
+  "data-rehype-pretty-code-figure"?: "";
+};
+
+const props = Astro.props;
+
+const isCodeFigure = Object.hasOwn(props, "data-rehype-pretty-code-figure");
+---
+
+{
+  isCodeFigure ? (
+    <Code {...props}>
+      <slot />
+    </Code>
+  ) : (
+    <figure {...props}>
+      <slot />
+    </figure>
+  )
+}

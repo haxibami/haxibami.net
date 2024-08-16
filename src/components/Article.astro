@@ -1,9 +1,28 @@
 ---
 import "katex/dist/katex.min.css";
+import FigureHandler from "@/components/FigureHandler.astro";
+import ImageHandler from "@/components/ImageHandler.astro";
+import LinkHandler from "@/components/LinkHandler.astro";
+
+import type { CollectionEntry } from "astro:content";
+
+export interface Props {
+  post: CollectionEntry<"page" | "blog">;
+}
+
+const { post } = Astro.props;
+
+const { Content } = await post.render();
+
+export const components = {
+  a: LinkHandler,
+  figure: FigureHandler,
+  img: ImageHandler,
+};
 ---
 
 <article id="post">
-  <slot />
+  <Content components={components} />
 </article>
 
 <style is:global>
@@ -69,15 +88,34 @@ import "katex/dist/katex.min.css";
       margin-top: 2rem;
       margin-bottom: 1rem;
     }
+    & h2 {
+      &::before {
+        content: "##";
+      }
+    }
+    & h3 {
+      &::before {
+        content: "###";
+      }
+    }
     & h4 {
+      &::before {
+        content: "####";
+      }
       margin-top: 1.5rem;
       margin-bottom: 0.75rem;
     }
     & h5 {
+      &::before {
+        content: "#####";
+      }
       margin-top: 1rem;
       margin-bottom: 0.5rem;
     }
     & h6 {
+      &::before {
+        content: "######";
+      }
       margin-top: 0.5rem;
       margin-bottom: 0.25rem;
     }
@@ -88,7 +126,6 @@ import "katex/dist/katex.min.css";
     h5,
     h6 {
       &:before {
-        content: "#";
         color: var(--link);
         margin-right: 0.5rem;
       }

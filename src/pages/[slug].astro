@@ -5,8 +5,6 @@ import type { CollectionEntry } from "astro:content";
 
 import icon from "@/assets/kripcat.jpg";
 import Article from "@/components/Article.astro";
-import AstroFigure from "@/components/AstroFigure.astro";
-import AstroLink from "@/components/AstroLink.astro";
 import Pager from "@/components/Pager.astro";
 import Layout from "@/layouts/Layout.astro";
 
@@ -30,14 +28,7 @@ export async function getStaticPaths() {
   });
 }
 
-const { Content } = await Astro.props.post.render();
-
 const { post } = Astro.props;
-
-export const components = {
-  a: AstroLink,
-  figure: AstroFigure,
-};
 ---
 
 <Layout
@@ -67,9 +58,7 @@ export const components = {
         <h1>haxibami</h1>
       </span>
     </header>
-    <Article>
-      <Content components={components} />
-    </Article>
+    <Article post={post} />
     <Pager topPath="/" />
   </main>
 </Layout>

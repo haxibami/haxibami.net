@@ -1,0 +1,19 @@
+---
+import Image from "@/components/Image.astro";
+
+interface Props {
+  src: ImageMetadata | string;
+  alt: string;
+  placeholder: string;
+}
+
+const { src, ...props } = Astro.props;
+---
+
+{
+  typeof src === "string" ? (
+    <img {src} {...props} />
+  ) : (
+    <Image {src} {...props} />
+  )
+}

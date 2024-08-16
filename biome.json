@@ -8,7 +8,13 @@
     "rules": {
       "recommended": true
     },
-    "ignore": ["./src/components/Svg/*"]
+    "ignore": [
+      "node_modules/**",
+      "public/**",
+      "dist/**",
+      ".astro/**",
+      "./src/components/Svg/*"
+    ]
   },
   "formatter": {
     "indentStyle": "space",
