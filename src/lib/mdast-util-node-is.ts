@@ -42,14 +42,14 @@ export function isLink(node: unknown): node is Link {
   return isNode(node) && node.type === "link";
 }
 
-export function isBareLink(node: unknown): node is Paragraph & {
-  children: [Link & { children: [Text] }];
+export function isBareExternalLink(node: unknown): node is Link & {
+  children: [Text];
 } {
   return (
-    isParagraph(node) &&
-    node.children.length === 1 &&
-    isLink(node.children[0]) &&
-    isText(node.children[0].children[0])
+    isLink(node) &&
+    isText(node.children[0]) &&
+    node.children[0].value === node.url &&
+    node.url.startsWith("http")
   );
 }
 

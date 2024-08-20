@@ -1,35 +1,32 @@
-import { visit } from "unist-util-visit";
+import { SKIP, visit } from "unist-util-visit";
 
-import { isBareLink, isParent } from "./mdast-util-node-is";
+import { isBareExternalLink } from "./mdast-util-node-is";
 
 import type { Root } from "mdast";
 import type { Plugin } from "unified";
-import type { Parent } from "unist";
 
 const remarkLinkcard: Plugin<[], Root> = () => {
   return (tree) => {
-    visit(tree, isBareLink, (node, _index, parent: Parent | undefined) => {
-      if (!isParent(parent)) {
+    visit(tree, "paragraph", (node, index, parent) => {
+      if (
+        !parent ||
+        typeof index !== "number" ||
+        node.children.length !== 1 ||
+        !isBareExternalLink(node.children[0])
+      ) {
         return;
       }
 
-      if (parent.type === "listItem") {
-        return;
-      }
-
-      const child = node.children[0];
-
-      if (!child.url.startsWith("http")) {
-        return;
-      }
-
-      child.data = {
-        ...child.data,
+      node.children[0].data = {
+        ...node.children[0].data,
         hProperties: {
-          // ...child.data?.hProperties,
+          // ...node.children[0].data.hProperties,
           dataLinkcard: true,
         },
       };
+
+      parent.children.splice(index, 1, node.children[0]);
+      return [SKIP, index];
     });
   };
 };

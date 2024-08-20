@@ -22,7 +22,7 @@ export interface Props {
 
 const { title, description, path, pagefind, og } = Astro.props;
 
-const site = Astro.site ?? "";
+const site = import.meta.env.PROD ? Astro.site : Astro.url.origin;
 ---
 
 <html lang="ja" {...pagefind && { "data-pagefind-body": "" }}>

@@ -201,7 +201,7 @@ const ogImage = async (text: string, date?: Date, emoji?: string) => {
   );
   const imgBuffer = await sharp(Buffer.from(svg))
     .toFormat("png", {
-      quality: 75,
+      quality: 20,
     })
     .toBuffer();
   return imgBuffer;

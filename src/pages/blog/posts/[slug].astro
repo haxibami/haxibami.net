@@ -29,7 +29,7 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 
-const site = Astro.site ?? "";
+const site = import.meta.env.PROD ? Astro.site : Astro.url.origin;
 
 const dateString = new Intl.DateTimeFormat("en-US", {
   year: "numeric",

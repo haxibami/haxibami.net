@@ -5,8 +5,11 @@ import fetchSiteMetadata from "fetch-site-metadata";
 import sharp from "sharp";
 
 import type { Metadata } from "fetch-site-metadata";
+import type { FormatEnum } from "sharp";
 
 const embedPath = "/.cache/embed";
+const format: keyof FormatEnum = "avif";
+
 const publicDir = path.join(process.cwd(), "public", embedPath);
 const distDir = path.join(process.cwd(), "dist", embedPath);
 const metadataCache = new Map<string, Metadata>();
@@ -15,7 +18,7 @@ await mkdir(publicDir, {
   recursive: true,
 });
 
-const glob = new Bun.Glob("*.avif");
+const glob = new Bun.Glob(`*.${format}`);
 const imageList = await Array.fromAsync(glob.scan(publicDir));
 
 const imageCache = new Map<string, string | undefined>(
@@ -43,12 +46,14 @@ async function getImage(src: string | undefined) {
   if (!src) {
     return undefined;
   }
-  const fileName = `${Bun.hash(src)}.avif`;
+  const fileName = `${Bun.hash(src)}.${format}`;
   const cachedImage = imageCache.get(fileName);
   if (cachedImage) {
     return cachedImage;
   }
-  const image = await fetch(src).then((res) => res.arrayBuffer());
+  const image = await fetch(src, {
+    cache: "force-cache",
+  }).then((res) => res.arrayBuffer());
   if (!image) {
     return undefined;
   }
@@ -56,8 +61,8 @@ async function getImage(src: string | undefined) {
   const publicPath = path.join(publicDir, `${fileName}`);
   await sharp(Buffer.from(image))
     .resize(400)
-    .toFormat("avif", {
-      quality: 30,
+    .toFormat(format, {
+      quality: 25,
     })
     .toFile(publicPath);
   await mkdir(distDir, {
