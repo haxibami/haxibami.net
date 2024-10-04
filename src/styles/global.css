@@ -40,10 +40,11 @@
 }
 
 body {
-  font-family: "Montserrat Variable", "Helvetica Neue", "Helvetica",
-    "Apple Color Emoji", "Segoe UI Emoji", "NotoColorEmoji", "Noto Color Emoji",
+  font-family:
+    "Montserrat Variable", "Helvetica Neue", "Helvetica",
+    "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
     "Segoe UI Symbol", "Android Emoji", "EmojiSymbols", "-apple-system",
-    "BlinkMacSystemFont", "Segoe UI", "Roboto", "Noto Sans", "sans-serif";
+    "BlinkMacSystemFont", "Segoe UI", "Roboto", "Noto Sans", sans-serif;
   -webkit-text-size-adjust: 100%;
   background: var(--bg);
   color: var(--fg);

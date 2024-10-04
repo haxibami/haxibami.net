@@ -10,7 +10,7 @@ export async function GET(context: APIContext) {
   return await rss({
     title: meta.data.top.title,
     description: meta.data.top.description,
-    site: context.site ?? "",
+    site: context.url.origin,
     items: posts.map((post) => {
       return {
         title: post.data.title,
@@ -30,10 +30,7 @@ export async function GET(context: APIContext) {
     },
     customData: [
       "<language>ja-jp</language>",
-      `<atom:link href="${new URL(
-        "/rss.xml",
-        context.site,
-      )}" rel="self" type="application/rss+xml" />`,
+      `<atom:link href="${context.url}" rel="self" type="application/rss+xml" />`,
     ].join(""),
   });
 }

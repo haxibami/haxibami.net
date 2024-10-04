@@ -19,7 +19,7 @@ export const GET: APIRoute = async ({ params }) => {
       const isPost = article.collection === "blog";
       const img = await ogImage(
         article.data.title,
-        isPost ? article.data.lastmod ?? article.data.date : undefined,
+        isPost ? (article.data.lastmod ?? article.data.date) : undefined,
         article.data.emoji ?? undefined,
       );
       res = new Response(img);
