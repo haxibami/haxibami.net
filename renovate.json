@@ -3,7 +3,7 @@
   "extends": ["config:base", ":timezone(Asia/Tokyo)"],
   "schedule": ["before 4am on the first day of the month"],
   "dependencyDashboard": true,
-  "ignoreDeps": [],
+  "ignoreDeps": ["astro-purgecss"],
   "packageRules": [
     {
       "groupName": "DevDependencies",
