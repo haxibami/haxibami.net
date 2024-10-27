@@ -10,18 +10,19 @@ import rehypeKatex from "rehype-katex";
 import rehypeMermaid from "rehype-mermaid";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
+import rehypeUnwrapImages from "rehype-unwrap-images";
 import remarkRuby from "remark-denden-ruby";
 import remarkGemoji from "remark-gemoji";
 import remarkMath from "remark-math";
-import remarkUnwrapImages from "remark-unwrap-images";
+import { createHighlighter } from "shiki";
 
 import rehypePagefind from "./src/lib/rehype-pagefind";
 import remarkFootnoteTitle from "./src/lib/remark-footnote-title";
 import remarkImagePlaceholder from "./src/lib/remark-image-placeholder";
 import remarkLinkcard from "./src/lib/remark-link-card";
 
-import type { RehypePlugins } from "astro";
 import type { Element } from "hast";
+import type { Options as PrettyOptions } from "rehype-pretty-code";
 
 export default defineConfig({
   integrations: [
@@ -61,7 +62,6 @@ export default defineConfig({
       remarkGemoji,
       remarkMath,
       remarkRuby,
-      remarkUnwrapImages,
       remarkLinkcard,
       //         [
       //           remarkToc,
@@ -81,6 +81,7 @@ export default defineConfig({
     },
     rehypePlugins: [
       rehypeSlug,
+      rehypeUnwrapImages,
       [
         rehypeAutolinkHeadings,
         {
@@ -121,10 +122,20 @@ export default defineConfig({
           },
           grid: false,
           defaultLang: "plaintext",
-        },
+          getHighlighter: (options) =>
+            createHighlighter({
+              ...options,
+              langs: [
+                async () =>
+                  await fetch(
+                    "https://raw.githubusercontent.com/caddyserver/vscode-caddyfile/refs/heads/master/syntaxes/caddyfile.tmLanguage.json",
+                  ).then((res) => res.json()),
+              ],
+            }),
+        } satisfies PrettyOptions,
       ],
       rehypePagefind,
-    ] as RehypePlugins,
+    ],
   },
   site: "https://www.haxibami.net",
 });
