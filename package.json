@@ -25,13 +25,13 @@
   "license": "MIT",
   "dependencies": {
     "@astrojs/check": "0.9.4",
-    "@astrojs/mdx": "3.1.8",
+    "@astrojs/mdx": "3.1.9",
     "@astrojs/rss": "4.0.9",
     "@astrojs/sitemap": "3.2.1",
     "@astrojs/solid-js": "4.4.2",
     "@fontsource-variable/montserrat": "5.1.0",
     "@fontsource/roboto-mono": "5.1.0",
-    "astro": "4.16.7",
+    "astro": "4.16.8",
     "astro-purgecss": "4.4.1",
     "purgecss": "6.0.0",
     "solid-js": "1.9.3"
