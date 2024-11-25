@@ -1,6 +1,6 @@
 ---
 import "tailwindcss/lib/css/preflight.css";
-import "@fontsource-variable/montserrat";
+import "@fontsource-variable/inter";
 import "@/styles/global.css";
 
 import Footer from "@/components/Footer.astro";
@@ -75,7 +75,22 @@ const site = Astro.url.origin;
   </head>
   <body>
     <Header />
-    <slot />
+      <slot />
     <Footer />
   </body>
 </html>
+
+<script>
+  import { HTMLProcessingParser, jaModel } from "budoux/module";
+  import { BudouXBaseElement } from "budoux/module/webcomponents/budoux-base";
+
+  const wbr = document.createElement("wbr");
+  export class BudouXJapaneseElement extends BudouXBaseElement {
+    constructor() {
+      super();
+      this.parser = new HTMLProcessingParser(jaModel, { separator: wbr });
+    }
+  }
+
+  customElements.define('budoux-ja', BudouXJapaneseElement);
+</script>

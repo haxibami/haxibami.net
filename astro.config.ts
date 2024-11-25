@@ -3,29 +3,45 @@ import sitemap from "@astrojs/sitemap";
 import solid from "@astrojs/solid-js";
 import { defineConfig } from "astro/config";
 
+import expressiveCode from "astro-expressive-code";
+import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import purgecss from "astro-purgecss";
 import { h } from "hastscript";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeKatex from "rehype-katex";
 import rehypeMermaid from "rehype-mermaid";
-import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import rehypeUnwrapImages from "rehype-unwrap-images";
 import remarkRuby from "remark-denden-ruby";
 import remarkGemoji from "remark-gemoji";
 import remarkMath from "remark-math";
-import { createHighlighter } from "shiki";
 
+import rehypeBudoux from "./src/lib/rehype-budoux";
 import rehypePagefind from "./src/lib/rehype-pagefind";
 import remarkFootnoteTitle from "./src/lib/remark-footnote-title";
 import remarkImagePlaceholder from "./src/lib/remark-image-placeholder";
 import remarkLinkcard from "./src/lib/remark-link-card";
 
 import type { Element } from "hast";
-import type { Options as PrettyOptions } from "rehype-pretty-code";
 
 export default defineConfig({
   integrations: [
+    expressiveCode({
+      themes: ["github-dark-default", "github-light-default"],
+      plugins: [pluginLineNumbers()],
+      defaultProps: {
+        showLineNumbers: false,
+      },
+      shiki: {
+        langs: [
+          async () =>
+            await fetch(
+              "https://raw.githubusercontent.com/caddyserver/vscode-caddyfile/refs/heads/master/syntaxes/caddyfile.tmLanguage.json",
+              { cache: "force-cache" },
+            ).then((res) => res.json()),
+        ],
+      },
+    }),
     mdx(),
     solid({
       exclude: ["**/OgImage/**"],
@@ -63,15 +79,6 @@ export default defineConfig({
       remarkMath,
       remarkRuby,
       remarkLinkcard,
-      //         [
-      //           remarkToc,
-      //           {
-      //             heading: "目次",
-      //             tight: true,
-      //             maxDepth: 3,
-      //             parents: ["root", "listItem"],
-      //           },
-      //         ],
       remarkFootnoteTitle,
       remarkImagePlaceholder,
     ],
@@ -89,6 +96,7 @@ export default defineConfig({
           properties(node: Element) {
             return {
               "aria-labelledby": node.properties.id,
+              class: "heading-link",
             };
           },
           content: h("span.heading-link-icon", {
@@ -112,28 +120,8 @@ export default defineConfig({
           },
         },
       ],
+      rehypeBudoux,
       rehypeKatex,
-      [
-        rehypePrettyCode,
-        {
-          theme: {
-            light: "poimandres",
-            dark: "rose-pine",
-          },
-          grid: false,
-          defaultLang: "plaintext",
-          getHighlighter: (options) =>
-            createHighlighter({
-              ...options,
-              langs: [
-                async () =>
-                  await fetch(
-                    "https://raw.githubusercontent.com/caddyserver/vscode-caddyfile/refs/heads/master/syntaxes/caddyfile.tmLanguage.json",
-                  ).then((res) => res.json()),
-              ],
-            }),
-        } satisfies PrettyOptions,
-      ],
       rehypePagefind,
     ],
   },

@@ -1,6 +1,5 @@
 ---
 import "katex/dist/katex.min.css";
-import FigureHandler from "@/components/FigureHandler.astro";
 import ImageHandler from "@/components/ImageHandler.astro";
 import LinkHandler from "@/components/LinkHandler.astro";
 
@@ -16,7 +15,6 @@ const { Content } = await post.render();
 
 export const components = {
   a: LinkHandler,
-  figure: FigureHandler,
   img: ImageHandler,
 };
 ---
@@ -27,47 +25,41 @@ export const components = {
 
 <style is:global>
   #post {
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    border-top: 1px solid var(--line);
     flex-grow: 1;
 
-    & p,
-    & li {
-      & a {
-        color: var(--link);
-        text-decoration-line: underline;
-        text-decoration-thickness: 2px;
-        text-underline-offset: 4px;
-        margin: 0 0.2em;
-      }
+    & section {
+      margin-block: 1.5rem;
+      border-top: 1px var(--fg25) solid;
     }
 
-    & p:not(blockquote > p) {
-      margin: 1.5rem 0 0 0;
+    & a:not(.card, .heading-link, .data-footnote-backref) {
+      text-decoration-line: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 4px;
+      margin-inline: 0.2em;
+    }
+
+    & p {
+      margin-block: 0.75rem;
     }
 
     & table {
       display: block;
       overflow-x: auto;
-      margin-top: 1.5rem;
+      margin-block: 0.75rem;
       table-layout: fixed;
       border-collapse: collapse;
       text-align: center;
 
       & th,
       & td {
-        border: 1px solid var(--line);
+        border: 1px solid var(--fg25);
         padding: 0.25rem 0.5rem;
       }
 
       & th {
-        background: var(--hover);
+        background: var(--fg10);
       }
-    }
-
-    & code {
-      font-family: var(--font-mono);
     }
 
     & ul {
@@ -77,26 +69,29 @@ export const components = {
       list-style-type: decimal;
     }
     & li {
-      margin: 0.75rem 0 0 1rem;
+      margin-block: 0.75rem;
+      margin-left: 1rem;
       list-style-position: inside;
+      & p {
+        display: inline;
+      }
     }
     & h1 {
       margin-top: 3rem;
-    }
-    & h2,
-    h3 {
-      margin-top: 2rem;
-      margin-bottom: 1rem;
     }
     & h2 {
       &::before {
         content: "##";
       }
+      margin-top: 2rem;
+      margin-bottom: 1rem;
     }
     & h3 {
       &::before {
         content: "###";
       }
+      margin-top: 2rem;
+      margin-bottom: 1rem;
     }
     & h4 {
       &::before {
@@ -125,9 +120,12 @@ export const components = {
     h4,
     h5,
     h6 {
+      border-left: 4px solid var(--fg);
+      padding-left: 0.5rem;
       &:before {
-        color: var(--link);
+        color: var(--accent);
         margin-right: 0.5rem;
+        content: "";
       }
       &:hover {
         .heading-link-icon {
@@ -141,34 +139,24 @@ export const components = {
       }
     }
 
-    code:not(figure[data-rehype-pretty-code-figure] code) {
-      background: var(--code);
-      padding: 0.1rem 0.2rem;
-      margin: 0 0.2rem;
+    div.expressive-code {
+      margin-block: 1rem;
+    }
+
+    code:not(div.expressive-code code) {
+      font-family: var(--font-mono);
+      background: var(--fg10);
+      padding: 0.1rem;
+      margin-inline: 0.2rem;
       border-radius: 0.2rem;
     }
 
     & .katex-display {
-      overflow-x: scroll;
       overflow-y: hidden;
     }
 
     & img[id^="mermaid-"] {
-      background: var(--hover);
-      border-radius: 0.375rem;
-      margin: 1.5rem auto 0 auto;
-      line-height: 1;
-    }
-
-    & .footnotes {
-      margin-top: 1.5rem;
-      border-top: 1px var(--line) solid;
-      & li {
-        list-style-position: unset;
-      }
-      & .data-footnote-backref {
-        text-decoration: none;
-      }
+      margin: 1rem auto;
     }
   }
 </style>

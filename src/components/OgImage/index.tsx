@@ -3,6 +3,9 @@
 
 import satori from "satori";
 import sharp from "sharp";
+import { loadDefaultJapaneseParser } from "budoux";
+
+const parser = loadDefaultJapaneseParser();
 
 const ogImage = async (text: string, date?: Date, emoji?: string) => {
   const [
@@ -37,8 +40,8 @@ const ogImage = async (text: string, date?: Date, emoji?: string) => {
       style={{
         fontFamily:
           "SF Pro Display, SF Pro JP, Noto Sans CJK JP, Roboto Mono, Noto Color Emoji, sans-serif",
-        backgroundColor: "#120e12",
-        color: "#f2f0e6",
+        backgroundColor: "#1e1e20",
+        color: "#e7e7ea",
         display: "flex",
         flexDirection: "row",
         height: "100%",
@@ -47,8 +50,8 @@ const ogImage = async (text: string, date?: Date, emoji?: string) => {
     >
       <div
         style={{
-          backgroundColor: "white",
-          color: "#120e12",
+          backgroundColor: "#e7e7ea",
+          color: "#1e1e20",
           display: "flex",
           flexDirection: "column",
           width: "30%",
@@ -84,20 +87,26 @@ const ogImage = async (text: string, date?: Date, emoji?: string) => {
           padding: "3rem",
         }}
       >
-        <h1
+        <div
           style={{
             marginTop: 0,
             fontSize: "4rem",
             width: "100%",
             flexGrow: 1,
             display: "flex",
+            flexWrap: "wrap",
             alignItems: "center",
+            alignContent: "center",
             justifyContent: "center",
             lineHeight: "1.2",
           }}
         >
-          {text}
-        </h1>
+          {parser.parse(text).map((word) => (
+            <span key={word} style={{ display: "block" }}>
+              {word}
+            </span>
+          ))}
+        </div>
         <div
           style={{
             display: "flex",
@@ -187,13 +196,9 @@ const ogImage = async (text: string, date?: Date, emoji?: string) => {
               cache: "force-cache",
             },
           ).then((res) => res.text());
-          // convert svg to png since sharp doesn't support svg in svg
-          return `data:image/png;base64,${await sharp(Buffer.from(emojiSvg), {
-            density: 300,
-          })
-            .toFormat("png")
-            .toBuffer()
-            .then((buf) => buf.toString("base64"))}`;
+          return `data:image/svg+xml;base64,${Buffer.from(emojiSvg).toString(
+            "base64",
+          )}`;
         }
         return "";
       },
@@ -201,7 +206,7 @@ const ogImage = async (text: string, date?: Date, emoji?: string) => {
   );
   const imgBuffer = await sharp(Buffer.from(svg))
     .toFormat("png", {
-      quality: 20,
+      quality: 60,
     })
     .toBuffer();
   return imgBuffer;

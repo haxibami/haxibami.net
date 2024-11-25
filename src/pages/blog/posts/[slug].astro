@@ -62,7 +62,8 @@ const lastmodString = new Intl.DateTimeFormat("en-US", {
       <div class="emoji-container">
         <span class="emoji">{post.data.emoji}</span>
       </div>
-      <h1>{post.data.title}</h1>
+      <budoux-ja><h1>{post.data.title}</h1></budoux-ja>
+      <budoux-ja><p>{post.data.description}</p></budoux-ja>
       <div
         class="tags-container"
         data-pagefind-ignore
@@ -112,7 +113,7 @@ const lastmodString = new Intl.DateTimeFormat("en-US", {
     flex-direction: column;
     flex-grow: 1;
     padding: 2rem 0;
-    gap: 3rem;
+    gap: 1.5rem;
   }
 
   header {
@@ -132,8 +133,12 @@ const lastmodString = new Intl.DateTimeFormat("en-US", {
     line-height: 1;
   }
 
-  h1 {
+  h1, p {
     text-align: center;
+  }
+
+  p {
+    color: var(--fg75);
   }
 
   .tags-container {
@@ -151,10 +156,10 @@ const lastmodString = new Intl.DateTimeFormat("en-US", {
   }
 
   .published-container {
-    color: var(--secondary);
+    color: var(--fg75);
   }
 
   .lastmod-container {
-    color: var(--secondary);
+    color: var(--fg75);
   }
 </style>

@@ -1,51 +1,31 @@
 :root {
-  --fg: #1c1b22;
-  --bg: #f7f7fa;
-  --title: #191724;
-  --secondary: #49484e;
-  --hover: #edebef;
-  --line: #8a829955;
-  --shadow: #1c1b2266;
-  --link: #2c4e96;
-  --code: #e8e8e8;
-  --nextbg: #1c1b22;
-  --prevfg: #1c1b22;
-  --codehl: #403d52;
-  --codehlsign: #5de4c7;
-  --codefind: #add7ff40;
-  --codelinenum: #767c9d50;
-  --codetitlebg: #303340;
-  --codetitlefg: #a6accd;
-  --avangard1: #fb0500dd;
-  --avangard2: #305157ee;
-  --avangard3: #949587;
+  --fg: #1e1e20;
+  --bg: #e7e7ea;
+  --fg75: color-mix(in lch, var(--fg) 75%, var(--bg));
+  --fg50: color-mix(in lch, var(--fg) 50%, var(--bg));
+  --fg25: color-mix(in lch, var(--fg) 25%, var(--bg));
+  --fg10: color-mix(in lch, var(--fg) 10%, var(--bg));
+  --accent1: #bf3939;
+  --accent2: #429989;
+  --accent: var(--accent1);
   --font-mono: "ui-monospace", "SFMono-Regular", "SF Mono", "Menlo", "Monaco",
     "Consolas", "monospace";
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --fg: #f7f7fa;
-    --bg: #1c1b22;
-    --title: #f7f7fa;
-    --secondary: #a4a3a6;
-    --hover: #323138;
-    --shadow: #d2ced966;
-    --link: #f472b6;
-    --code: #49484e;
-    --nextbg: #abbf86;
-    --prevfg: #abbf86;
-    --codehlsign: #f472b6;
+    --fg: #e7e7ea;
+    --bg: #1e1e20;
+    --accent: var(--accent2);
   }
 }
 
 body {
   font-family:
-    "Montserrat Variable", "Helvetica Neue", "Helvetica",
+    "Inter Variable", "Helvetica Neue", "Helvetica",
     "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
     "Segoe UI Symbol", "Android Emoji", "EmojiSymbols", "-apple-system",
     "BlinkMacSystemFont", "Segoe UI", "Roboto", "Noto Sans", sans-serif;
-  -webkit-text-size-adjust: 100%;
   background: var(--bg);
   color: var(--fg);
   line-height: 1.75;
@@ -67,6 +47,7 @@ h5,
 h6 {
   font-weight: 700;
   line-height: 1.5;
+  color: var(--fg);
 }
 
 h1 {
@@ -91,7 +72,7 @@ h6 {
 }
 
 blockquote {
-  color: gray;
+  color: var(--fg75);
   margin: 1.5rem 0;
   padding: 0 1.5rem;
   position: relative;
@@ -100,8 +81,8 @@ blockquote {
     content: "";
     position: absolute;
     height: 100%;
-    width: 0.3rem;
+    width: 0.2rem;
     left: 0;
-    background: var(--line);
+    background: var(--fg25);
   }
 }

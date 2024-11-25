@@ -61,7 +61,7 @@ Rainbeamといい、Rust製、シンプル志向、といかにもおたく好�
 
 ### 依存関係のインストール
 
-```console
+```sh
 # Ubuntu 24.04 の場合
 sudo apt install build-essentials rustup just pkg-config libssl-dev
 ```
@@ -70,7 +70,7 @@ sudo apt install build-essentials rustup just pkg-config libssl-dev
 
 リポジトリをクローンし、`just build`でビルドを実行する。引数には利用したいデータベースのバックエンドを指定する。小規模・個人用の場合はSQLiteで十分だろう（PostgreSQLやMySQL / MariaDBも選べるらしい）。
 
-```console
+```sh
 git clone https://github.com/swmff/rainbeam
 cd rainbeam
 just build sqlite
@@ -84,7 +84,7 @@ just build sqlite
 
 ### 依存関係のインストール・有効化
 
-```console
+```sh
 # Ubuntu 24.04 の場合
 sudo apt install redis sqlite3 caddy
 sudo systemctl enable redis-server --now
@@ -97,12 +97,12 @@ sudo systemctl enable caddy --now
 
 以下、すべての作業はクローンしたリポジトリのルートディレクトリで行う。
 
-```console
+```sh
 git clone https://github.com/swmff/rainbeam
 cd rainbeam
 ```
 
-まず`./.config/config.toml`に設定を書く。`./.config/config.example.toml`にサンプルがあるほか、[設定を読み込むコード](https://github.com/swmff/rainbeam/blob/master/crates/rainbeam/src/config.rs)に各項目の説明が書かれているので参照するとよい。取得しておいたhCaptchaのキーとシークレットはここに書き込む。
+まず`./.config/config.toml`に設定を書く。`./.config/config.example.toml`にサンプルがあるほか、[設定を読み込むコード](https://github.com/swmff/rainbeam/blob/master/crates/rainbeam-core/src/config.rs)に各項目の説明が書かれているので参照するとよい。取得しておいたhCaptchaのキーとシークレットはここに書き込む。
 
 ```toml title="./.config/config.toml"
 port = 8080 # Rainbeamが待ち受けるポート
@@ -138,7 +138,7 @@ pages = 1
 
 ### ちょっとしたハック
 
-```console
+```sh
 touch main.db
 ```
 
@@ -157,7 +157,7 @@ ask.example.com {
 }
 ```
 
-```console
+```sh
 sudo systemctl restart caddy
 ```
 
@@ -188,11 +188,13 @@ WantedBy=multi-user.target
 
 変更を反映してユニットを有効化する。状態を確認し、問題なさそうなら、ブラウザから設定済みのドメインにアクセスしてみる。
 
-```console
+```sh
 sudo systemctl daemon-reload
 sudo systemctl enable --now rainbeam
-systemctl status rainbeam
+```
 
+```console
+> systemctl status rainbeam
 ● rainbeam.service - Rainbeam daemon
      Loaded: loaded (/etc/systemd/system/rainbeam.service; enabled; preset: enabled)
      Active: active (running) since Sat 2024-10-26 03:28:55 UTC; 13h ago

@@ -29,14 +29,14 @@ const { tags, collectionKey } = Astro.props;
     flex-wrap: wrap;
     gap: 0.75rem;
     font-family: var(--font-mono);
-    font-size: 1.2rem;
-    line-height: 1.5;
+    font-size: 0.9em;
   }
 
   .tag-link {
-    color: var(--link);
+    padding: 0.125rem 0.25rem;
+    border: 1.5px solid var(--fg75);
     &:hover {
-      text-decoration: underline solid 2px;
+      text-decoration: underline;
     }
     &:before {
       content: "#";

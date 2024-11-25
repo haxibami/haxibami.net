@@ -20,6 +20,7 @@ const { page } = Astro.props;
         return (
           <li>
             <article>
+              <a href={`/${collection}/posts/${slug}`}>
               <span class="date">
                 <time datetime={data.date.toISOString()}>
                   {new Intl.DateTimeFormat("en-US", {
@@ -38,11 +39,10 @@ const { page } = Astro.props;
                   </time>
                 )}
               </span>
-              <a href={`/${collection}/posts/${slug}`}>
-                <h2>{data.title}</h2>
+              <budoux-ja><h2>{data.title}</h2></budoux-ja>
+              <budoux-ja><span class="description">{data?.description}</span></budoux-ja>
               </a>
-              <span class="description">{data?.description}</span>
-              <span class="tags-container">
+              <span>
                 <Tags tags={data.tags} collectionKey={collection} />
               </span>
             </article>
@@ -59,7 +59,6 @@ const { page } = Astro.props;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    gap: 2rem;
   }
 
   article {
@@ -67,24 +66,32 @@ const { page } = Astro.props;
     overflow: hidden;
     flex-direction: column;
     gap: 0.5rem;
-    border-radius: 0.25rem;
-    color: var(--secondary);
+    padding: 1.5rem 0.5rem;
+  }
+
+  li {
+    border-block-start: 1px solid var(--fg75);
+    &:last-of-type {
+      border-block-end: 1px solid var(--fg75);
+    }
   }
 
   .date {
     line-height: 1.25em;
+    color: var(--fg75);
   }
 
   h2 {
-    color: var(--title);
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     max-height: 6em; /* fallback */
+  }
 
-    &:hover {
+  a:hover {
+    h2 {
       text-decoration: underline solid 2px;
     }
   }
@@ -92,5 +99,6 @@ const { page } = Astro.props;
   .description {
     font-size: 0.9em;
     line-height: 1.25em;
+    color: var(--fg50);
   }
 </style>

@@ -12,6 +12,7 @@ export async function GET(context: APIContext) {
     description: meta.data.top.description,
     site: context.url.origin,
     items: posts.map((post) => {
+      const ogImagePath = `/api/og/article/${post.collection}/${post.slug}.png`;
       return {
         title: post.data.title,
         description: post.data.description,
@@ -19,9 +20,9 @@ export async function GET(context: APIContext) {
         categories: post.data.tags,
         link: `/${post.collection}/posts/${post.slug}/`,
         enclosure: {
-          url: `/api/og/article/${post.collection}/${post.slug}.png`,
+          url: ogImagePath,
           type: "image/png",
-          length: 65535,
+          length: Bun.file(`./dist${ogImagePath}`).size,
         },
       };
     }),
