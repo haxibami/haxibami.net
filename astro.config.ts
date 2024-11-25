@@ -3,8 +3,8 @@ import sitemap from "@astrojs/sitemap";
 import solid from "@astrojs/solid-js";
 import { defineConfig } from "astro/config";
 
-import expressiveCode from "astro-expressive-code";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
+import expressiveCode from "astro-expressive-code";
 import purgecss from "astro-purgecss";
 import { h } from "hastscript";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";

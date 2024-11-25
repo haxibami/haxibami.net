@@ -1,9 +1,9 @@
 /** @jsxImportSource react */
 /** @jsxRuntime automatic */
 
+import { loadDefaultJapaneseParser } from "budoux";
 import satori from "satori";
 import sharp from "sharp";
-import { loadDefaultJapaneseParser } from "budoux";
 
 const parser = loadDefaultJapaneseParser();
 

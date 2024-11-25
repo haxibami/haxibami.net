@@ -1,5 +1,5 @@
-import { visit } from "unist-util-visit";
 import { h } from "hastscript";
+import { visit } from "unist-util-visit";
 // import { toHtml } from "hast-util-to-html";
 // import { fromHtml } from "hast-util-from-html";
 // import { loadDefaultJapaneseParser } from "budoux";
