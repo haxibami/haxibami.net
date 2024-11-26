@@ -1,8 +1,8 @@
-import { visit } from "unist-util-visit";
-import { toHtml } from "hast-util-to-html";
-import { fromHtml } from "hast-util-from-html";
 import { HTMLProcessingParser, jaModel } from "budoux";
 import { win } from "budoux/dist/win";
+import { fromHtml } from "hast-util-from-html";
+import { toHtml } from "hast-util-to-html";
+import { visit } from "unist-util-visit";
 
 import type { Element, Root } from "hast";
 import type { Plugin } from "unified";
