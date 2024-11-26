@@ -86,3 +86,8 @@ blockquote {
     background: var(--fg25);
   }
 }
+
+.budoux {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}

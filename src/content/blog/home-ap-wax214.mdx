@@ -54,12 +54,8 @@ emoji: "⚙️"
 
 あちこち移動して厳密に信号強度を取るような真似はしなかったが、参考までに[iperf3](https://github.com/esnet/iperf)でLAN内の速度を実測した。有線接続したマシン上でiperf3サーバを起動し、自室（家の隅にある）にてアクセスポイントに接続（5GHz帯、802.11ax）した端末からテストを実行した結果が以下である。
 
-```sh
-iperf3 -c SERVER_ADDRESS
-```
-
-
-```txt /Bitrate/
+```console /Bitrate/
+> iperf3 -c SERVER_ADDRESS
 Connecting to host SERVER_ADDRESS, port 5201
 [  5] local CLIENT_ADDRESS port 45692 connected to SERVER_ADDRESS port 5201
 [ ID] Interval           Transfer     Bitrate         Retr  Cwnd
