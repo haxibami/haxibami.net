@@ -1,11 +1,11 @@
 ---
 import { Picture } from "astro:assets";
 
-export type Props = {
+interface Props {
   src: ImageMetadata;
   alt: string;
   placeholder: string;
-};
+}
 
 const { src, alt, placeholder, ...props } = Astro.props;
 ---

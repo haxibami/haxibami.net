@@ -2,10 +2,11 @@
 import type { CollectionEntry } from "astro:content";
 import type { Page } from "astro";
 
+import Budoux from "@/components/Budoux.astro";
 import Pager from "@/components/Pager.astro";
 import Tags from "@/components/Tags.astro";
 
-export interface Props {
+interface Props {
   page: Page<CollectionEntry<"blog">>;
 }
 
@@ -39,8 +40,10 @@ const { page } = Astro.props;
                   </time>
                 )}
               </span>
-              <budoux-ja><h2>{data.title}</h2></budoux-ja>
-              <budoux-ja><span class="description">{data?.description}</span></budoux-ja>
+              <h2><Budoux html={data.title} /></h2>
+              <span class="description">
+                <Budoux html={data?.description} />
+              </span>
               </a>
               <span>
                 <Tags tags={data.tags} collectionKey={collection} />

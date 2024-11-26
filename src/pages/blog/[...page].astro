@@ -7,7 +7,7 @@ import Posts from "@/components/Posts.astro";
 import Layout from "@/layouts/Layout.astro";
 import { COUNT_PER_PAGE } from "@/lib/constant";
 
-export interface Props {
+interface Props {
   page: Page<CollectionEntry<"blog">>;
 }
 

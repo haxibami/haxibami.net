@@ -4,13 +4,10 @@ import type { Element, Root } from "hast";
 import type { Plugin } from "unified";
 
 function shouldNotIndexed(node: Element) {
-  return (
-    // code block
-    (node.tagName === "figure" &&
-      Object.hasOwn(node.properties, "data-rehype-pretty-code-figure")) ||
-    // link card
-    (node.tagName === "a" && Object.hasOwn(node.properties, "dataLinkcard"))
-  );
+  if (node.tagName === "a") {
+    return Object.hasOwn(node.properties, "dataLinkcard");
+  }
+  return false;
 }
 
 const rehypePagefind: Plugin<[], Root> = () => {

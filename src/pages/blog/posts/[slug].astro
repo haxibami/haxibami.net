@@ -3,11 +3,12 @@ import { getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
 import Article from "@/components/Article.astro";
+import Budoux from "@/components/Budoux.astro";
 import Pager from "@/components/Pager.astro";
 import Tags from "@/components/Tags.astro";
 import Layout from "@/layouts/Layout.astro";
 
-export interface Props {
+interface Props {
   post: CollectionEntry<"blog">;
 }
 
@@ -62,8 +63,8 @@ const lastmodString = new Intl.DateTimeFormat("en-US", {
       <div class="emoji-container">
         <span class="emoji">{post.data.emoji}</span>
       </div>
-      <budoux-ja><h1>{post.data.title}</h1></budoux-ja>
-      <budoux-ja><p>{post.data.description}</p></budoux-ja>
+      <h1><Budoux html={post.data.title} /></h1>
+      <p><Budoux html={post.data.description} /></p>
       <div
         class="tags-container"
         data-pagefind-ignore

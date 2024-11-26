@@ -1,0 +1,17 @@
+---
+import { budouxParser } from "@/lib/budoux";
+
+interface Props {
+  /**
+   * The HTML string to parse.
+   * @type {string}
+   */
+  html: string;
+}
+
+const { html } = Astro.props;
+
+const parsed = budouxParser.translateHTMLString(html);
+---
+
+<Fragment set:html={parsed} />
