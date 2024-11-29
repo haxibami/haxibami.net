@@ -1,0 +1,156 @@
+---
+title: "AstroでBudouXによる日本語の自然な折り返しを実装する"
+date: 2024-11-29
+description: "本文とOpenGraph画像の日本語をいい感じに折り返す"
+tags: ["tech", "web", "astro"]
+emoji: "🍇"
+---
+
+```txt
+あなたとJAVA, 
+今すぐダウンロー
+ド
+```
+
+上のテキストを見てほしい。西洋中心主義者たちの無自覚なふるまいによってめちゃくちゃにされた、見るも無惨な日本語の姿である（[参考](https://arigato-java.download/newline/)）。
+
+もう二度とこうした悲劇が起きないよう、Googleは近年、BudouX :grapes: というライブラリを作った。これは軽量ながら、日本語・中国語・タイ語等の改行位置をうまいこと判定してくれるという優れものである。
+
+https://github.com/google/budoux
+
+Chromium系（v119-）のブラウザにはすでにこの機能が[組み込まれていて](https://developer.mozilla.org/ja/docs/Web/CSS/word-break#ブラウザーの互換性)、`word-break: auto-phrase`を指定すると利用できる。しかしFirefoxやSafariではまだ使えない。そこで、Astro製のサイトにBudouXを組み込み、ブラウザを問わず綺麗な折り返しができるようにした。
+
+なお、ここで紹介する方法をとらずとも、公式で提供されている[Web Components](https://github.com/google/budoux/blob/main/javascript/README.md#web-components)を使えばもっと簡便に同じ表示を実現できる。ただしその場合、余分なJS[^1]をバンドルに含める必要があるうえ、せっかくサイトを静的生成しているのにクライアント側で処理を走らせる羽目になる。そのため、ここではビルド時にすべての処理を済ませてしまう方針をとる。
+
+[^1]: とはいえ実測で20KB（gzip前）程度だが……
+
+## 準備
+
+まずはBudouXのJavaScriptモジュールをインストールしておく。
+
+```sh
+npm add -D budoux
+```
+
+[README](https://www.npmjs.com/package/budoux)によると、JavaScript向けに`Parser.parse()`や`HTMLProcessingParser.applyToElement()`など、いくつかのメソッドが提供されている。今回は本文のHTMLを処理するため、`HTMLProcessingParser.translateHTMLString()`を使う。
+
+さて、`.translateHTMLString()`の実装を見てみると、デフォルトでは改行可能な位置に`U+200B`（ゼロ幅スペース）を挿入するようになっている（`HTMLProcessorOptions.separator`）。これは一見問題なさそうだが、実はゼロ幅スペースはページ上でテキストを選択した際に文字として含まれてしまうため、あまり嬉しくない。代わりに、ゼロ幅スペースに相当するHTML要素（`<wbr>`）を挿入すると、この問題を回避できる[^2]。
+
+[^2]: `HTMLProcessorOptions.separator`には`string`またはHTML要素（`Node`）を指定できる。Node.jsなど非ブラウザ環境でHTML要素を作成するのは少々厄介だが、BudouXが内部で利用している[jsdom](https://github.com/jsdom/jsdom)のWindowを流用するとうまくいく。
+
+また、デフォルトでは出力されるHTMLに`word-break: keep-all; overflow-wrap: anywhere;`というスタイルがインラインで付加されるが、`HTMLProcessorOptions.className`を指定しておくと、代わりに任意のクラスを付与できる。今回は`budoux`というクラスを付与しておき、あとからグローバルCSSで同様のスタイルを当てることにする。
+
+以上を適当な関数にまとめると以下のようになる。
+
+```ts title="src/lib/budoux.ts"
+import { HTMLProcessingParser, jaModel } from "budoux";
+import type { HTMLProcessingParser as HTMLProcessingParserType } from "budoux";
+import { win } from "budoux/dist/win";
+
+let cachedParser: HTMLProcessingParserType | null = null;
+
+export function getBudouxParser() {
+  if (!cachedParser) {
+    const wbr = win.document.createElement("wbr");
+    cachedParser = new HTMLProcessingParser(jaModel, {
+      className: "budoux",
+      separator: wbr,
+    });
+  }
+  return cachedParser;
+}
+
+export const budouxProcess = (html: string) =>
+  getBudouxParser().translateHTMLString(html);
+```
+
+グローバルCSSも忘れずに書いておく。
+
+```css title="src/styles/global.css"
+.budoux {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+```
+
+## 本文（Markdown / MDX）
+
+MarkdownやMDXで記述したコンテンツについては、rehypeプラグインで自動的に処理を行う。対象にしたい要素（`<p>`や`<li>`）をHTML化し、BudouXの処理を適用し、元の要素を置き換えるだけ[^3]。
+
+[^3]: 構文木（hast）をHTML化して、またhastに戻しているのは明らかに非効率なので、本来はhastの状態のまま処理を行いたいところだが、そのためにはBudouXが行っている処理を（hastに即した形で）再実装する必要があり、やや面倒になる。誰か暇ならやってほしい。
+
+```ts title="src/lib/rehype-budoux.ts"
+import { fromHtml } from "hast-util-from-html";
+import { toHtml } from "hast-util-to-html";
+import { SKIP, visit } from "unist-util-visit";
+import { budouxProcess } from "./budoux";
+
+import type { Element, ElementContent, Root } from "hast";
+import type { Plugin } from "unified";
+
+const targetTagNames = ["p", "li", "h1", "h2", "h3", "h4", "h5", "h6"];
+
+function isElement(node: Element | ElementContent): node is Element {
+  return node.type === "element";
+}
+
+function isTargetNode(node: Element | ElementContent): node is Element {
+  return isElement(node) ? targetTagNames.includes(node.tagName) : false;
+}
+
+const rehypeBudoux: Plugin<[], Root> = () => {
+  return (tree) => {
+    visit(tree, "element", (node, index, parent) => {
+      if (typeof index !== "number" || !isTargetNode(node)) {
+        return;
+      }
+      const newNode = fromHtml(budouxProcess(toHtml(node)), {
+        fragment: true,
+      }).children[0];
+      newNode && parent?.children.splice(index, 1, newNode);
+      return SKIP;
+    });
+  };
+};
+
+export default rehypeBudoux;
+```
+
+## 本文（上記以外）
+
+それ以外の箇所については、`<Budoux />`コンポーネントを作成し、適宜インポートして利用する。`<Budoux />`コンポーネントは受け取った子要素をHTML化し[^4]、BudouXの処理を適用し、その出力を直接HTMLとしてセットしている。
+
+[^4]: `Astro.slots.render()`を使うと、子要素をHTMLとしてレンダリングできるというのがポイントかもしれない。
+
+```astro title="src/components/Budoux.astro"
+---
+import { budouxProcess } from "@/lib/budoux";
+
+const slotContent = await Astro.slots.render("default");
+const parsed = budouxProcess(slotContent);
+---
+
+<Fragment set:html={parsed} />
+```
+
+```astro
+---
+import Budoux from "@/components/Budoux.astro";
+---
+
+<Budoux><p>{post.data.description}</p></Budoux>
+```
+
+## OpenGraph画像
+
+本文だけでなく、[satori](https://github.com/vercel/satori)等を使用して生成している画像内の日本語についても、BudouXを使ってまっとうな改行をさせることができる。このトピックについてはすでに数多書かれているのでそちらを参照した。
+
+https://retrorocket.biz/archives/use-budoux-with-satori
+
+## おわりに
+
+BudouXの[公式サイト](https://google.github.io/budoux)曰く、
+
+> Google の使命は、世界中の情報を整理し、世界中の人がアクセスできて使えるようにすることです。 
+
+とのこと。
