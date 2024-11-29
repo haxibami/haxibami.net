@@ -125,5 +125,8 @@ export default defineConfig({
       rehypePagefind,
     ],
   },
+  image: {
+    remotePatterns: [{ protocol: "https" }],
+  },
   site: "https://www.haxibami.net",
 });

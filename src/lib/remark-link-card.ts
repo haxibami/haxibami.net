@@ -20,7 +20,7 @@ const remarkLinkcard: Plugin<[], Root> = () => {
       node.children[0].data = {
         ...node.children[0].data,
         hProperties: {
-          // ...node.children[0].data.hProperties,
+          ...node.children[0].data?.hProperties,
           dataLinkcard: true,
         },
       };

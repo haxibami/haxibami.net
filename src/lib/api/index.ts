@@ -1,2 +1,2 @@
-export { getLinkcard } from "./embed";
+export { getMetadata } from "./embed";
 export { getBlur } from "./blur";
