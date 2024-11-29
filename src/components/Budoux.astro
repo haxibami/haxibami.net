@@ -1,17 +1,9 @@
 ---
-import { budouxParser } from "@/lib/budoux";
+import { budouxProcess } from "@/lib/budoux";
 
-interface Props {
-  /**
-   * The HTML string to parse.
-   * @type {string}
-   */
-  html: string;
-}
+const slotContent = await Astro.slots.render("default");
 
-const { html } = Astro.props;
-
-const parsed = budouxParser.translateHTMLString(html);
+const parsed = budouxProcess(slotContent);
 ---
 
 <Fragment set:html={parsed} />

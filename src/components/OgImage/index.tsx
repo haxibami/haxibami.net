@@ -1,11 +1,11 @@
 /** @jsxImportSource react */
 /** @jsxRuntime automatic */
 
-import { loadDefaultJapaneseParser } from "budoux";
+import { getBudouxParser } from "@/lib/budoux";
 import satori from "satori";
 import sharp from "sharp";
 
-const parser = loadDefaultJapaneseParser();
+const parser = getBudouxParser();
 
 const ogImage = async (text: string, date?: Date, emoji?: string) => {
   const [

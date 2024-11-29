@@ -63,8 +63,8 @@ const lastmodString = new Intl.DateTimeFormat("en-US", {
       <div class="emoji-container">
         <span class="emoji">{post.data.emoji}</span>
       </div>
-      <h1><Budoux html={post.data.title} /></h1>
-      <p><Budoux html={post.data.description} /></p>
+      <Budoux><h1>{post.data.title}</h1></Budoux>
+      <Budoux><p>{post.data.description}</p></Budoux>
       <div
         class="tags-container"
         data-pagefind-ignore

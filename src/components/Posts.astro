@@ -40,10 +40,8 @@ const { page } = Astro.props;
                   </time>
                 )}
               </span>
-              <h2><Budoux html={data.title} /></h2>
-              <span class="description">
-                <Budoux html={data?.description} />
-              </span>
+              <Budoux><h2>{data.title}</h2></Budoux>
+              <Budoux><span class="description">{data?.description}</span></Budoux>
               </a>
               <span>
                 <Tags tags={data.tags} collectionKey={collection} />
@@ -102,6 +100,6 @@ const { page } = Astro.props;
   .description {
     font-size: 0.9em;
     line-height: 1.25em;
-    color: var(--fg50);
+    color: var(--fg75);
   }
 </style>

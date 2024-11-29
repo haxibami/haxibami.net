@@ -28,7 +28,7 @@ const { title, description, image } = await getLinkcard(props.href);
     <div class="card-image">
       {
         image.src ? (
-          <img src={image.src} alt={title} width={400} class="image" />
+          <img src={image.src} alt={title} width={400} class="image" loading="lazy" />
         ) : (
           <span class="placeholder">
             <ArticleIcon class="placeholder-icon" />
