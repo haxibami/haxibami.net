@@ -7,6 +7,7 @@ import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 import expressiveCode from "astro-expressive-code";
 import purgecss from "astro-purgecss";
 import { h } from "hastscript";
+import postcssPresetEnv from "postcss-preset-env";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeKatex from "rehype-katex";
 import rehypeMermaid from "rehype-mermaid";
@@ -25,6 +26,19 @@ import remarkLinkcard from "./src/lib/remark-link-card";
 import type { Element } from "hast";
 
 export default defineConfig({
+  vite: {
+    css: {
+      postcss: {
+        plugins: [
+          postcssPresetEnv({
+            features: {
+              "nesting-rules": true,
+            },
+          }),
+        ],
+      },
+    },
+  },
   integrations: [
     expressiveCode({
       themes: ["github-dark-default", "github-light-default"],
