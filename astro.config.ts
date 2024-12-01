@@ -58,19 +58,6 @@ export default defineConfig({
     defaultStrategy: "viewport",
     prefetchAll: true,
   },
-  vite: {
-    build: {
-      cssMinify: "lightningcss",
-    },
-    css: {
-      transformer: "lightningcss",
-      lightningcss: {
-        drafts: {
-          customMedia: true,
-        },
-      },
-    },
-  },
   markdown: {
     syntaxHighlight: false,
     smartypants: false,

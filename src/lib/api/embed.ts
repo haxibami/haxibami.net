@@ -11,6 +11,10 @@ export async function getMetadata(url: string) {
   }
   return fetchSiteMetadata(url, {
     suppressAdditionalRequest: true,
+    headers: {
+      accept: "text/html",
+      "accept-language": "ja,en-US;q=0.7,en;q=0.3",
+    },
   })
     .then((metadata) => {
       metadataCache.set(url, metadata);

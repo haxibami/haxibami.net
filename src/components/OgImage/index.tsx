@@ -7,34 +7,29 @@ import sharp from "sharp";
 
 const parser = getBudouxParser();
 
+const [
+  notoFontData,
+  robotoFontData,
+  sfProFontData,
+  sfProDisplayFontData,
+  iconBuffer,
+] = await Promise.all([
+  Bun.file("./src/assets/NotoSansCJKjp-Bold.woff").arrayBuffer(),
+
+  Bun.file(
+    "./node_modules/@fontsource/roboto-mono/files/roboto-mono-latin-500-normal.woff",
+  ).arrayBuffer(),
+
+  Bun.file("./src/assets/SFProJP_semibold.woff").arrayBuffer(),
+
+  Bun.file("./src/assets/sf-pro-display_semibold.woff").arrayBuffer(),
+
+  Bun.file("./src/assets/kripcat_720.jpg").arrayBuffer(),
+]);
+
+const icon = Buffer.from(iconBuffer).toString("base64");
+
 const ogImage = async (text: string, date?: Date, emoji?: string) => {
-  const [
-    notoFontData,
-    robotoFontData,
-    sfProFontData,
-    sfProDisplayFontData,
-    iconBuffer,
-  ] = await Promise.all([
-    Bun.file("./src/assets/NotoSansCJKjp-Bold.woff").arrayBuffer(),
-
-    Bun.file(
-      "./node_modules/@fontsource/roboto-mono/files/roboto-mono-latin-500-normal.woff",
-    ).arrayBuffer(),
-
-    Bun.file("./src/assets/SFProJP_semibold.woff").arrayBuffer(),
-
-    Bun.file("./src/assets/sf-pro-display_semibold.woff").arrayBuffer(),
-
-    Bun.file("./src/assets/kripcat_720.jpg").arrayBuffer(),
-  ]);
-
-  const icon = btoa(
-    new Uint8Array(iconBuffer).reduce(
-      (data, byte) => data + String.fromCharCode(byte),
-      "",
-    ),
-  );
-
   const svg = await satori(
     <div
       style={{
@@ -204,8 +199,8 @@ const ogImage = async (text: string, date?: Date, emoji?: string) => {
       },
     },
   );
-  const imgBuffer = await sharp(Buffer.from(svg))
-    .toFormat("png", {
+  const imgBuffer = sharp(Buffer.from(svg))
+    .png({
       quality: 60,
     })
     .toBuffer();

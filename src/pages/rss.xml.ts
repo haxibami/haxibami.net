@@ -7,7 +7,7 @@ export async function GET(context: APIContext) {
   const posts = (await getCollection("blog"))
     .sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
     .reverse();
-  return await rss({
+  return rss({
     title: meta.data.top.title,
     description: meta.data.top.description,
     site: context.url.origin,

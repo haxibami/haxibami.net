@@ -203,8 +203,6 @@ traceroute to 10.10.0.3 (10.10.0.3), 30 hops max, 60 byte packets
 
 [^6]: 具体的には27MB以上の空きがあればよいらしい。
 
-https://github.com/adyanth/openwrt-tailscale-enabler
-
 やっていることは単純で、`/usr/bin/tailscale`、`/usr/bin/tailscaled`が（バイナリの実体ではなく）スクリプトになっている。これが再起動のあと最初に実行されると、最新バージョンのバイナリがメモリ上にダウンロードされ、以後参照されるという仕組みである。実用例は別記事を参照。
 
 ### （Windows）複数ユーザで使う

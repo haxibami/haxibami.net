@@ -5,7 +5,7 @@ export const getBlur = async (
   size: number,
   format: keyof sharp.FormatEnum,
 ) => {
-  return await sharp(buffer)
+  return sharp(buffer)
     .resize(size, size, { fit: "inside" })
     .toFormat(format, { quality: 60 })
     .modulate({

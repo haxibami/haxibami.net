@@ -55,7 +55,6 @@
     "hast-util-to-html": "9.0.3",
     "hastscript": "9.0.0",
     "katex": "0.16.11",
-    "lightningcss": "1.28.2",
     "mermaid": "11.4.1",
     "pagefind": "1.2.0",
     "playwright": "1.49.0",
