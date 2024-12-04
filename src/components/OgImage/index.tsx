@@ -1,3 +1,6 @@
+/** @jsxImportSource react */
+/** @jsxRuntime automatic */
+
 import { getBudouxParser } from "@/lib/budoux";
 import satori from "satori";
 import sharp from "sharp";
