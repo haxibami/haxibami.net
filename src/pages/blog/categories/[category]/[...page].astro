@@ -37,15 +37,15 @@ export async function getStaticPaths({
   return paginates;
 }
 
-const meta = await getEntry("data", "meta");
+const meta = await getEntry("data", "data");
 
 const { page } = Astro.props;
 const params = Astro.params;
 ---
 
 <Layout
-  title=`${meta.data.top.title} - #${params.category}`
-  description={meta.data.blog.description}
+  title=`${meta!.data.top.title} - #${params.category}`
+  description={meta!.data.blog.description}
   path={page.url.current}
   pagefind={false}
   og={{ enabled: true }}

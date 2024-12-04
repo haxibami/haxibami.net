@@ -3,6 +3,7 @@ import "katex/dist/katex.min.css";
 import ImageHandler from "@/components/ImageHandler.astro";
 import LinkHandler from "@/components/LinkHandler.astro";
 
+import { render } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
 interface Props {
@@ -11,7 +12,7 @@ interface Props {
 
 const { post } = Astro.props;
 
-const { Content } = await post.render();
+const { Content } = await render(post);
 
 export const components = {
   a: LinkHandler,

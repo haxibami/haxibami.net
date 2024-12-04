@@ -1,5 +1,8 @@
 ---
-import { FediverseIcon, GitHubIcon, RssIcon, XIcon } from "@/components/Svg";
+import FediverseIcon from "@/assets/svg/fediverse.svg";
+import GitHubIcon from "@/assets/svg/github.svg";
+import RssIcon from "@/assets/svg/rss.svg";
+import XIcon from "@/assets/svg/x.svg";
 ---
 
 <footer data-pagefind-ignore>
@@ -8,24 +11,16 @@ import { FediverseIcon, GitHubIcon, RssIcon, XIcon } from "@/components/Svg";
   </span>
   <span class="icons">
     <a href={"https://x.com/haxibami"} rel="me" title="X">
-      <XIcon class="icon">
-        <title>Twitter - @haxibami</title>
-      </XIcon>
+      <XIcon class="icon" title="X / Twitter - @haxibami" />
     </a>
     <a href={"https://calc.cune.moe/@haxibami"} rel="me" title="Fediverse">
-      <FediverseIcon class="icon">
-        <title>Fediverse (Firefish) - calc.cune.moe</title>
-      </FediverseIcon>
+      <FediverseIcon class="icon" title="Fediverse (Firefish) - calc.cune.moe" />
     </a>
     <a href={"https://github.com/haxibami"} rel="me" title="GitHub">
-      <GitHubIcon class="icon">
-        <title>GitHub - haxibami</title>
-      </GitHubIcon>
+      <GitHubIcon class="icon" title="GitHub - haxibami" />
     </a>
     <a href={`/rss.xml`} title="RSS" data-astro-prefetch="false">
-      <RssIcon class="icon">
-        <title>RSS</title>
-      </RssIcon>
+      <RssIcon class="icon" title="RSS" />
     </a>
   </span>
 </footer>

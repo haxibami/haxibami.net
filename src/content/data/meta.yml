@@ -1,6 +1,7 @@
-top:
-  title: 神話募集中
-  enTitle: mythfinder
-  description: haxibamiのサイト
-blog:
-  description: 祈りと技術について
+data:
+  top:
+    title: 神話募集中
+    enTitle: mythfinder
+    description: haxibamiのサイト
+  blog:
+    description: 祈りと技術について

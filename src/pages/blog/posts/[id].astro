@@ -16,10 +16,9 @@ export async function getStaticPaths() {
   const posts = await getCollection("blog");
 
   return posts.map((post) => {
-    const slug = post.slug;
     return {
       params: {
-        slug,
+        id: post.id,
       },
       props: {
         post,
@@ -48,13 +47,13 @@ const lastmodString = new Intl.DateTimeFormat("en-US", {
 <Layout
   title={post.data.title}
   description={post.data.description}
-  path={`${post.collection}/posts/${post.slug}`}
+  path={`${post.collection}/posts/${post.id}`}
   pagefind={true}
   og={{
     enabled: true,
     width: 1200,
     height: 630,
-    image: new URL(`/api/og/article/${post.collection}/${post.slug}.png`, site),
+    image: new URL(`/api/og/article/${post.collection}/${post.id}.png`, site),
     type: "article",
   }}
 >

@@ -3,22 +3,22 @@ import rss from "@astrojs/rss";
 import type { APIContext } from "astro";
 
 export async function GET(context: APIContext) {
-  const meta = await getEntry("data", "meta");
+  const meta = await getEntry("data", "data");
   const posts = (await getCollection("blog"))
     .sort((a, b) => a.data.date.getTime() - b.data.date.getTime())
     .reverse();
   return rss({
-    title: meta.data.top.title,
-    description: meta.data.top.description,
+    title: meta?.data.top.title ?? "",
+    description: meta?.data.top.description ?? "",
     site: context.url.origin,
     items: posts.map((post) => {
-      const ogImagePath = `/api/og/article/${post.collection}/${post.slug}.png`;
+      const ogImagePath = `/api/og/article/${post.collection}/${post.id}.png`;
       return {
         title: post.data.title,
         description: post.data.description,
         pubDate: post.data.date,
         categories: post.data.tags,
-        link: `/${post.collection}/posts/${post.slug}/`,
+        link: `/${post.collection}/posts/${post.id}/`,
         enclosure: {
           url: ogImagePath,
           type: "image/png",

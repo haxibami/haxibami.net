@@ -1,7 +1,8 @@
 import { defineCollection, z } from "astro:content";
+import { file, glob } from "astro/loaders";
 
-const postCollection = defineCollection({
-  type: "content",
+const blog = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/blog" }),
   schema: z.object({
     title: z.string(),
     date: z.date(),
@@ -13,8 +14,8 @@ const postCollection = defineCollection({
   }),
 });
 
-const pageCollection = defineCollection({
-  type: "content",
+const page = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/page" }),
   schema: z.object({
     title: z.string(),
     enTitle: z.string(),
@@ -24,8 +25,8 @@ const pageCollection = defineCollection({
   }),
 });
 
-const metaCollection = defineCollection({
-  type: "data",
+const data = defineCollection({
+  loader: file("src/content/data/meta.yml"),
   schema: z.object({
     top: z.object({
       title: z.string(),
@@ -38,8 +39,4 @@ const metaCollection = defineCollection({
   }),
 });
 
-export const collections = {
-  data: metaCollection,
-  blog: postCollection,
-  page: pageCollection,
-};
+export const collections = { data, blog, page };

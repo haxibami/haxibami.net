@@ -17,11 +17,11 @@ const { page } = Astro.props;
   <ul>
     {
       page.data.map((post) => {
-        const { slug, data, collection } = post;
+        const { id, data, collection } = post;
         return (
           <li>
             <article>
-              <a href={`/${collection}/posts/${slug}`}>
+              <a href={`/${collection}/posts/${id}`}>
               <span class="date">
                 <time datetime={data.date.toISOString()}>
                   {new Intl.DateTimeFormat("en-US", {

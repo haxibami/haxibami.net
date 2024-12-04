@@ -4,12 +4,12 @@ import { getEntry } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import "@/styles/red-october.css";
 
-const meta = await getEntry("data", "meta");
+const meta = await getEntry("data", "data");
 ---
 
 <Layout
-  title={meta.data.top.title}
-  description={meta.data.top.description}
+  title={meta!.data.top.title}
+  description={meta!.data.top.description}
   path="/"
   pagefind={true}
   og={{

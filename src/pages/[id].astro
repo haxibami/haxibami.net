@@ -16,10 +16,9 @@ export async function getStaticPaths() {
   const posts = await getCollection("page");
 
   return posts.map((post) => {
-    const slug = post.slug;
     return {
       params: {
-        slug,
+        id: post.id,
       },
       props: {
         post,
@@ -34,7 +33,7 @@ const { post } = Astro.props;
 <Layout
   title={post.data.title}
   description={post.data.description}
-  path={`/${post.slug}`}
+  path={`/${post.id}`}
   pagefind={true}
   og={{
     enabled: true,

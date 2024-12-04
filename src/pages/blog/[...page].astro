@@ -26,14 +26,14 @@ export async function getStaticPaths({
   return paginate(posts, { pageSize: COUNT_PER_PAGE });
 }
 
-const meta = await getEntry("data", "meta");
+const meta = await getEntry("data", "data");
 
 const { page } = Astro.props;
 ---
 
 <Layout
-  title={meta.data.top.title}
-  description={meta.data.blog.description}
+  title={meta!.data.top.title}
+  description={meta!.data.blog.description}
   path={page.url.current}
   pagefind={false}
   og={{ enabled: true }}
