@@ -25,14 +25,14 @@
   "license": "MIT",
   "dependencies": {
     "@astrojs/check": "0.9.4",
-    "@astrojs/mdx": "4.0.1",
-    "@astrojs/rss": "4.0.9",
+    "@astrojs/mdx": "4.0.3",
+    "@astrojs/rss": "4.0.10",
     "@astrojs/sitemap": "3.2.1",
-    "@fontsource-variable/inter": "5.1.0",
-    "@fontsource/roboto-mono": "5.1.0",
-    "astro": "5.0.2",
+    "@fontsource-variable/inter": "5.1.1",
+    "@fontsource/roboto-mono": "5.1.1",
+    "astro": "5.1.1",
     "astro-expressive-code": "0.38.3",
-    "astro-purgecss": "5.0.0",
+    "astro-purgecss": "5.1.0",
     "purgecss": "7.0.2"
   },
   "devDependencies": {
