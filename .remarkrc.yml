@@ -1,0 +1,8 @@
+settings:
+  bullet: "-"
+  emphasis: "_"
+plugins:
+  - remark-mdx
+  - remark-frontmatter
+  - remark-math
+  - remark-gfm

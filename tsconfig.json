@@ -20,20 +20,16 @@
     "skipLibCheck": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noUnusedParameters": true
     // "noPropertyAccessFromIndexSignature": true
-    "plugins": [
-      {
-        "name": "@mdx-js/typescript-plugin"
-      },
-      {
-        "name": "@astrojs/ts-plugin"
-      }
-    ]
   },
   "exclude": ["./node_modules", "./dist"],
   "mdx": {
     "checkMdx": true,
-    "plugins": [["remark-frontmatter", ["toml", "yaml"]], "remark-gfm"]
+    "plugins": [
+      ["remark-frontmatter", ["toml", "yaml"]],
+      "remark-math",
+      "remark-gfm"
+    ]
   }
 }

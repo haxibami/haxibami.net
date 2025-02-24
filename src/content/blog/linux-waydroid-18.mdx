@@ -17,7 +17,7 @@ emoji: "🐎"
 
 知られている通り、AndroidカーネルはほぼLinuxそのものである。これを逆手に取り、LinuxカーネルでAndroidを動かそうと試みた賢い人々がおり、結果として以下のような形に結実した。
 
-https://github.com/waydroid/waydroid/
+[https://github.com/waydroid/waydroid/](https://github.com/waydroid/waydroid/)
 
 これまでも単なるAndroidエミュレータなら無数にあったが、Waydroidはエミュレーションという手法を慎重に避ける。代わりに`lxc`で立てたコンテナ内でAndroidを動かすアプローチを取っており、これに伴って以下のメリットがある。
 
@@ -136,7 +136,7 @@ sudo waydroid init
 
 どちらかというと以下が本題である。
 
-ここまでの作業でx86_64のAndroidイメージが起動できるようになったが、まだプレイストアは使えない。さらに、ウマ娘はじめたいていの娯楽アプリはARM向けにしか作られていないため、このままでは動作しない。そこで[OpenGAPPS](https://opengapps.org/)とlibhoudiniを導入する。ざっくりいうと：
+ここまでの作業でx86\_64のAndroidイメージが起動できるようになったが、まだプレイストアは使えない。さらに、ウマ娘はじめたいていの娯楽アプリはARM向けにしか作られていないため、このままでは動作しない。そこで[OpenGAPPS](https://opengapps.org/)とlibhoudiniを導入する。ざっくりいうと：
 
 - OpenGAPPS
   - カスタムROMでPlay Storeを使えるようにするプロジェクト
@@ -146,7 +146,7 @@ sudo waydroid init
 
 導入にあたっては以下のスクリプトが助けになる。
 
-https://github.com/casualsnek/waydroid_script
+[https://github.com/casualsnek/waydroid\_script](https://github.com/casualsnek/waydroid_script)
 
 ここからは踏み込んだ説明は避けるが、READMEを参考に
 

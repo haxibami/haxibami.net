@@ -48,16 +48,16 @@ US配列に準拠。
 
 ### 最終的な変更の一覧
 
-| key               | remap / role     |
-| ----------------- | ---------------- |
-| `CapsLock`        | `Ctrl`           |
-| `左右Ctrl`        | `Alt`            |
-| `Delete`          | バッククォート   |
-| `かな/カナ`       | `Super`          |
-| `無変換`          | `Mod`            |
-| `半角/全角`       | `Esc`            |
-| `Super` + `Space` | 言語配列切り替え |
-| `Mod` + misc      | 色々             |
+| key               | remap / role |
+| ----------------- | ------------ |
+| `CapsLock`        | `Ctrl`       |
+| `左右Ctrl`          | `Alt`        |
+| `Delete`          | バッククォート      |
+| `かな/カナ`           | `Super`      |
+| `無変換`             | `Mod`        |
+| `半角/全角`           | `Esc`        |
+| `Super` + `Space` | 言語配列切り替え     |
+| `Mod` + misc      | 色々           |
 
 ### ディレクトリ構成
 
@@ -89,13 +89,13 @@ xkb_keymap {
 
 今回影響するのは`xkb_types`、`xkb_compat`、`xkb_symbols`の行。上のディレクトリ構造と照らし合わせるとなんとなく対応がわかると思うが、以降のファイルの内容をこれらの行で読み込んでいる。各ファイルの詳細に移る前に、`xkb_symbols`の行で利用している、XKBに予め用意されたプリセットについて補足しておく。
 
-| 項目                                       | 備考                                                                                                |
-| ------------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| 項目                                         | 備考                                                           |
+| ------------------------------------------ | ------------------------------------------------------------ |
 | `us+ru:2+hr:3`                             | 利用したい言語配列を略号で記載する。n 個目（n>=2）の言語は`+<lang>:n`のように記載するのがミソ[^3]。 |
-| `group(win_space_toggle)`                  | 上で記載した配列間を`super + space`キーで切り替える。                                               |
-| `ctrl(nocaps)`                             | `CapsLock`→`Ctrl`。                                                                                 |
-| `jp(hztg_escape)`                          | 不要な`半角/全角`キーを`Esc`にマップ。                                                              |
-| `ctrl(rctrl_ralt)`, `ctrl(swap_lalt_lctl)` | 左右それぞれの`Alt`と`Ctrl`を入れ替え                                                               |
+| `group(win_space_toggle)`                  | 上で記載した配列間を`super + space`キーで切り替える。                           |
+| `ctrl(nocaps)`                             | `CapsLock`→`Ctrl`。                                           |
+| `jp(hztg_escape)`                          | 不要な`半角/全角`キーを`Esc`にマップ。                                      |
+| `ctrl(rctrl_ralt)`, `ctrl(swap_lalt_lctl)` | 左右それぞれの`Alt`と`Ctrl`を入れ替え                                     |
 
 [^3]: これを発見するのにだいぶ苦労した
 
@@ -250,6 +250,6 @@ type:keyboard {
 
 ## 参考サイト
 
-https://did2memo.net/2015/07/20/ubuntu-xkb-muhenkan-hotkey/
+[https://did2memo.net/2015/07/20/ubuntu-xkb-muhenkan-hotkey/](https://did2memo.net/2015/07/20/ubuntu-xkb-muhenkan-hotkey/)
 
-http://ojamemo.com/pc-software/key-binding-ubuntu-001/
+[http://ojamemo.com/pc-software/key-binding-ubuntu-001/](http://ojamemo.com/pc-software/key-binding-ubuntu-001/)

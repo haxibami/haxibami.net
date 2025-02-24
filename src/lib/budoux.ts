@@ -1,6 +1,7 @@
 import { HTMLProcessingParser, jaModel } from "budoux";
-import type { HTMLProcessingParser as HTMLProcessingParserType } from "budoux";
 import { win } from "budoux/dist/win";
+
+import type { HTMLProcessingParser as HTMLProcessingParserType } from "budoux";
 
 let cachedParser: HTMLProcessingParserType | null = null;
 

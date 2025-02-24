@@ -29,9 +29,9 @@ emoji: "🚀"
 
 （2024/07/07 追記）最新の実装は[こちら](/blog/posts/blog-astro-2024#リンクカード内の画像の取り扱い変更)を参照
 
-[以前の実装](/blog/posts/blog-renewal)以来、Markdown内の単独のリンクはリンクカード（:point_down: こういうの）に変換され、リンク先のOpen Graph（以下、OG）画像などが表示されるようになっていた。
+[以前の実装](/blog/posts/blog-renewal)以来、Markdown内の単独のリンクはリンクカード（:point\_down: こういうの）に変換され、リンク先のOpen Graph（以下、OG）画像などが表示されるようになっていた。
 
-https://ogp.me/
+[https://ogp.me/](https://ogp.me/)
 
 この画像は外部のものをそのままリンクしていたので、[Lighthouse](https://developer.chrome.com/ja/docs/lighthouse/)のパフォーマンス診断をかけると、サイズがデカすぎるから減らせと怒鳴られることがあった。そこで、画像をいったん取得し、[sharp](https://sharp.pixelplumbing.com/)で適正なサイズに縮小（ついでに`.webp`に変換）して`base64`形式でドキュメントに埋め込んだ。これでクライアント側でのリクエストが減り、総転送量自体も抑えられる。
 
@@ -41,7 +41,7 @@ https://ogp.me/
 
 こちらから提供する OG画像についても、Edge Functionで動的に応答させる方式を改め、ビルド時に生成することとした。Astroが提供する静的ファイルのエンドポイントを作成する機能を使い、記事一覧から勝手に画像が生えてくるようにしている。
 
-https://docs.astro.build/ja/guides/endpoints/
+[https://docs.astro.build/ja/guides/endpoints/](https://docs.astro.build/ja/guides/endpoints/)
 
 ![生成されるOG画像の例](../../assets/image/linux-tools-2022.png)
 

@@ -14,9 +14,9 @@ emoji: "🍅"
 
 ## Bunの採用
 
-Node\.js / pnpmに代わり、ランタイム / パッケージマネージャに[Bun](https://bun.sh/)を採用した。速い（らしい）。エンジンがV8じゃない（[JavaScriptCore](https://developer.apple.com/documentation/javascriptcore)）。TypeScriptを直接（追加パッケージなしで）実行できる。いいことばかり。
+Node.js / pnpmに代わり、ランタイム / パッケージマネージャに[Bun](https://bun.sh/)を採用した。速い（らしい）。エンジンがV8じゃない（[JavaScriptCore](https://developer.apple.com/documentation/javascriptcore)）。TypeScriptを直接（追加パッケージなしで）実行できる。いいことばかり。
 
-https://github.com/haxibami/haxibami.net/pull/373
+[https://github.com/haxibami/haxibami.net/pull/373](https://github.com/haxibami/haxibami.net/pull/373)
 
 移行にあたってつまづいた点はZennの[スクラップ](https://zenn.dev/haxibami/scraps/56aadb5ac92b20)にまとめた。必要なだいたいの処理は完全にBunのランタイムで（`--bun`オプション付きで）実行できるが、WranglerでCloudflareにデプロイする処理だけはうまくいかなかった。いつか直るといいね。
 
@@ -25,12 +25,12 @@ https://github.com/haxibami/haxibami.net/pull/373
 [以前の実装](/blog/posts/blog-astro-renewal#画像処理のワークフロー-)では`<Image />`コンポーネントを使い、なにやらガタガタと自前で画像を`import`する処理を書いたが、[Astro 4.2の変更](https://astro.build/blog/astro-420/#customizable-image-optimization-in-markdown)に伴って不要になった。より簡単に、remarkプラグインで画像ノードにいくつかのパラメータ（=`<Image />`のオプション）を渡しておけば、その通りに画像を最適化してくれる。これに関連して以下の二つのプラグインを書いた。両者あわせて、パラメータの受け渡しに加え、画像読み込み待ちのプレースホルダーの取得なども行っている。
 
 - [remark-astro-image-opt](https://github.com/haxibami/haxibami.net/blob/93767e7c8b01a1cdf85cc1a39d7639ef490cdc1d/src/lib/remark-astro-image-opt.ts)
-    - 画像の幅と高さを取得、[レスポンシブ画像](https://developer.mozilla.org/ja/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)用に`widths`, `sizes`などのパラメータを渡す
-        - これが`<Image />`のオプション
-    - プレースホルダー（`base64`）を生成、パラメータとして埋め込む
-        - こちらはあとで[独自の画像コンポーネント](https://github.com/haxibami/haxibami.net/blob/93767e7c8b01a1cdf85cc1a39d7639ef490cdc1d/src/components/AstroImage.astro)に置き換える際に利用
+  - 画像の幅と高さを取得、[レスポンシブ画像](https://developer.mozilla.org/ja/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images)用に`widths`, `sizes`などのパラメータを渡す
+    - これが`<Image />`のオプション
+  - プレースホルダー（`base64`）を生成、パラメータとして埋め込む
+    - こちらはあとで[独自の画像コンポーネント](https://github.com/haxibami/haxibami.net/blob/93767e7c8b01a1cdf85cc1a39d7639ef490cdc1d/src/components/AstroImage.astro)に置き換える際に利用
 - [rehype-astro-image-figure](https://github.com/haxibami/haxibami.net/blob/93767e7c8b01a1cdf85cc1a39d7639ef490cdc1d/src/lib/rehype-astro-image-figure.ts)
-    - `<p>`を`<figure>`に変更（これだけはremarkではできない）
+  - `<p>`を`<figure>`に変更（これだけはremarkではできない）
 
 ちなみに「独自の画像コンポーネントに置き換え」とあるが、以前の実装で行っていた`<img>`から`<Image />`への置き換えとは**異なる**。あくまで画像の親要素（Markdownの文法上、独立した画像は必ず`<p>`要素を親に持つ）に着目し、ざっくり言えば`<p><slot /></p>`を`<figure><slot /></figure>`に置き換える処理を行っている。[^1] [^2]
 

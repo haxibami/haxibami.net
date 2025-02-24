@@ -4,18 +4,23 @@
     "enabled": true
   },
   "files": {
-    "ignore": [
-      "./node_modules/**",
-      "./public/**",
-      "./dist/**",
-      "./.astro/**",
-      "./src/components/Svg/*"
-    ]
+    "include": [
+      "./**/*.ts",
+      "./**/*.tsx",
+      "./**/*.js",
+      "./**/*.jsx",
+      "./**/*.json",
+      "./**/*.jsonc"
+    ],
+    "ignore": ["./node_modules/**", "./public/**", "./dist/**", "./.astro/**"]
   },
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "correctness": {
+        "noUnusedImports": "error"
+      }
     }
   },
   "formatter": {

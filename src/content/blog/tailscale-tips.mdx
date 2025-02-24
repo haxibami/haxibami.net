@@ -8,7 +8,7 @@ emoji: "⚖️"
 
 もうわれわれはほろ苦い青春の思い出（おそるおそる自宅ルータのポートを開ける・移り気なIPを追いかけてDDNSでドメインを振る・得体の知れない無料VPNに身を委ねる）に悩まされなくていい。なぜなら[Tailscale](https://tailscale.com/)があるから。
 
-https://tailscale.com/
+[https://tailscale.com/](https://tailscale.com/)
 
 以下は知っておけばよかったTailscaleの小技集。
 
@@ -46,7 +46,6 @@ tailscale up --accept-dns=false
 ```
 
 とすると回避できる。ただしこのままでは[MagicDNS](https://tailscale.com/kb/1081/magicdns)の解決が行われないので、お使いのDNSプロキシ等で`*.ts.net`の解決を`100.100.100.100`に委ねるとよい（以下は[ctrld](https://github.com/Control-D-Inc/ctrld)の例）。
-
 
 ```toml title="/etc/controld/ctrld.toml" {18}
 [upstream.0]
@@ -163,7 +162,6 @@ traceroute to 10.10.0.3 (10.10.0.3), 30 hops max, 60 byte packets
 ```
 
 これを避けるには、LAN内の経路をtailnet経由の経路より優先させる必要がある。[公式の解決手順](https://tailscale.com/kb/1023/troubleshooting#lan-traffic-prioritization-with-overlapping-subnet-routes)が二つ示されている。
-
 
 #### 解決策1：subnet routerに`/23`で広告させる
 
