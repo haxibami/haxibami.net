@@ -13,15 +13,14 @@ interface Props {
 const { page } = Astro.props;
 ---
 
-<>
-  <ul>
-    {
-      page.data.map((post) => {
-        const { id, data, collection } = post;
-        return (
-          <li>
-            <article>
-              <a href={`/${collection}/posts/${id}`}>
+<ul>
+  {
+    page.data.map((post) => {
+      const { id, data, collection } = post;
+      return (
+        <li>
+          <article>
+            <a href={`/${collection}/posts/${id}`}>
               <span class="date">
                 <time datetime={data.date.toISOString()}>
                   {new Intl.DateTimeFormat("en-US", {
@@ -36,65 +35,76 @@ const { page } = Astro.props;
                       year: "numeric",
                       month: "short",
                       day: "numeric",
-                    }).format(post.data.lastmod)} Updated`}
+                    }).format(data.lastmod)} Updated`}
                   </time>
                 )}
               </span>
-              <Budoux><h2>{data.title}</h2></Budoux>
-              <Budoux><span class="description">{data?.description}</span></Budoux>
-              </a>
-              <span>
-                <Tags tags={data.tags} collectionKey={collection} />
-              </span>
-            </article>
-          </li>
-        );
-      })
-    }
-  </ul>
-  <Pager page={page} />
-</>
+              <Budoux>
+                <h3>{data.title}</h3>
+              </Budoux>
+              <Budoux>
+                <span class="description">{data?.description}</span>
+              </Budoux>
+            </a>
+            <span>
+              <Tags tags={data.tags} collectionKey={collection} />
+            </span>
+          </article>
+        </li>
+      );
+    })
+  }
+</ul>
+<Pager page={page} />
 
 <style>
   ul {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+    grid-row: content-start / content-end;
   }
-
   article {
-    display: flex;
-    overflow: hidden;
-    flex-direction: column;
+    display: grid;
     gap: 0.5rem;
     padding: 1.5rem 0.5rem;
   }
 
   li {
-    border-block-start: 1px solid var(--fg75);
+    border-block-start: 1.5px solid var(--ui-border);
     &:last-of-type {
-      border-block-end: 1px solid var(--fg75);
+      border-block-end: 1.5px solid var(--ui-border);
+    }
+
+    h3::before {
+      position: absolute;
+      content: "";
+      width: 100%;
+      height: 100%;
+      bottom: 0;
+      left: 0;
+      border-bottom: 1px solid var(--ui-border);
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.3s;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    &:hover h3::before {
+      transform: scaleX(1);
     }
   }
 
   .date {
-    line-height: 1.25em;
     color: var(--fg75);
   }
 
-  h2 {
+  h3 {
+    position: relative;
+    width: fit-content;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     max-height: 6em; /* fallback */
-  }
-
-  a:hover {
-    h2 {
-      text-decoration: underline solid 2px;
-    }
   }
 
   .description {

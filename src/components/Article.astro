@@ -26,18 +26,19 @@ export const components = {
 
 <style is:global>
   #post {
-    flex-grow: 1;
+    grid-row: content-start / content-end;
+    border-bottom: 1.5px solid var(--ui-border);
+    padding-bottom: 2rem;
 
     & section {
-      margin-block: 1.5rem;
-      border-top: 1px var(--fg25) solid;
+      margin-top: 2rem;
     }
 
     & a:not(.card, .heading-link, .data-footnote-backref) {
       text-decoration-line: underline;
-      text-decoration-thickness: 2px;
-      text-underline-offset: 4px;
-      margin-inline: 0.2em;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 4.5px;
+      margin-inline: 0.1em;
     }
 
     & p {
@@ -47,24 +48,19 @@ export const components = {
     & table {
       display: block;
       overflow-x: auto;
-      margin-block: 0.75rem;
-      table-layout: fixed;
-      border-collapse: collapse;
+      margin-block: 1rem;
       text-align: center;
 
       & th,
       & td {
-        border: 1px solid var(--fg25);
+        border: 1px solid var(--ui-border);
         padding: 0.25rem 0.5rem;
-      }
-
-      & th {
-        background: var(--fg10);
       }
     }
 
     & ul {
       list-style-type: disc;
+      margin-block: 1rem;
     }
     & ol {
       list-style-type: decimal;
@@ -77,41 +73,23 @@ export const components = {
         display: inline;
       }
     }
-    & h1 {
-      margin-top: 3rem;
-    }
     & h2 {
-      &::before {
-        content: "##";
-      }
       margin-top: 2rem;
       margin-bottom: 1rem;
     }
     & h3 {
-      &::before {
-        content: "###";
-      }
       margin-top: 2rem;
       margin-bottom: 1rem;
     }
     & h4 {
-      &::before {
-        content: "####";
-      }
       margin-top: 1.5rem;
       margin-bottom: 0.75rem;
     }
     & h5 {
-      &::before {
-        content: "#####";
-      }
       margin-top: 1rem;
       margin-bottom: 0.5rem;
     }
     & h6 {
-      &::before {
-        content: "######";
-      }
       margin-top: 0.5rem;
       margin-bottom: 0.25rem;
     }
@@ -122,12 +100,7 @@ export const components = {
     h5,
     h6 {
       border-left: 4px solid var(--fg);
-      padding-left: 0.5rem;
-      &:before {
-        color: var(--accent);
-        margin-right: 0.5rem;
-        content: "";
-      }
+      padding-left: 0.75rem;
       &:hover {
         .heading-link-icon {
           &:after {
@@ -158,6 +131,10 @@ export const components = {
 
     & img[id^="mermaid-"] {
       margin: 1rem auto;
+      padding: 1rem;
+      border: 1px solid var(--item-border);
+      background: var(--code-bg);
+      box-shadow: var(--ec-frm-frameBoxShdCssVal);
     }
   }
 </style>

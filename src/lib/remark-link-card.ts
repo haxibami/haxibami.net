@@ -3,10 +3,9 @@ import { SKIP, visit } from "unist-util-visit";
 import { isBareExternalLink } from "./mdast-util-node-is";
 
 import type { Root } from "mdast";
-import type { Plugin } from "unified";
 
-const remarkLinkcard: Plugin<[], Root> = () => {
-  return (tree) => {
+const remarkLinkcard = () => {
+  return (tree: Root) => {
     visit(tree, "paragraph", (node, index, parent) => {
       if (
         !parent ||

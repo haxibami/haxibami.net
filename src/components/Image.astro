@@ -26,19 +26,17 @@ const { src, alt, placeholder, ...props } = Astro.props;
     }}
     {...props}
   />
-  <figcaption class="caption">{alt}</figcaption>
+  <figcaption>{alt}</figcaption>
 </figure>
 
 <style define:vars={{ blurURL: `url(${placeholder})` }}>
   figure {
-    display: flex;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    flex-direction: column;
+    display: grid;
+    margin-block: 2rem;
     gap: 1rem;
   }
 
-  .caption {
+  figcaption {
     text-align: center;
     color: var(--fg75);
   }
@@ -46,8 +44,7 @@ const { src, alt, placeholder, ...props } = Astro.props;
   .image {
     object-fit: contain;
     color: transparent;
-    border: 1px solid var(--fg25);
-    border-radius: 0.5rem;
+    border: 1px solid var(--ui-border);
     background-image: var(--blurURL);
     background-size: cover;
     background-position: 50% 50%;

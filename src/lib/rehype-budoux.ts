@@ -4,7 +4,6 @@ import { SKIP, visit } from "unist-util-visit";
 import { budouxProcess } from "./budoux";
 
 import type { Element, ElementContent, Root } from "hast";
-import type { Plugin } from "unified";
 
 const defaultTargetTagNames = ["p", "li", "h1", "h2", "h3", "h4", "h5", "h6"];
 
@@ -19,7 +18,7 @@ function isTargetNode(
   return isElement(node) ? targetTagNames.includes(node.tagName) : false;
 }
 
-interface RehypeBudouxOptions {
+interface Options {
   /**
    * The list of tag names to be processed by Budoux.
    * @default ["p", "li", "h1", "h2", "h3", "h4", "h5", "h6"]
@@ -27,10 +26,10 @@ interface RehypeBudouxOptions {
   targetTagNames?: string[];
 }
 
-const rehypeBudoux: Plugin<[RehypeBudouxOptions?], Root> = ({
+const rehypeBudoux = ({
   targetTagNames = defaultTargetTagNames,
-} = {}) => {
-  return (tree) => {
+}: Options = {}) => {
+  return (tree: Root) => {
     visit(tree, "element", (node, index, parent) => {
       if (typeof index !== "number" || !isTargetNode(node, targetTagNames)) {
         return;

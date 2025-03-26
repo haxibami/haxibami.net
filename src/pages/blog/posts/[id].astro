@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getEntry, getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
 import Article from "@/components/Article.astro";
@@ -27,6 +27,8 @@ export async function getStaticPaths() {
   });
 }
 
+const meta = await getEntry("data", "data");
+
 const { post } = Astro.props;
 
 const site = Astro.url.origin;
@@ -45,9 +47,8 @@ const lastmodString = new Intl.DateTimeFormat("en-US", {
 ---
 
 <Layout
-  title={post.data.title}
+  title=`${post.data.title} | ${meta!.data.top.title}`
   description={post.data.description}
-  path={`${post.collection}/posts/${post.id}`}
   pagefind={true}
   og={{
     enabled: true,
@@ -57,109 +58,72 @@ const lastmodString = new Intl.DateTimeFormat("en-US", {
     type: "article",
   }}
 >
-  <main class="post-main">
-    <header>
-      <div class="emoji-container">
-        <span class="emoji">{post.data.emoji}</span>
-      </div>
-      <Budoux><h1>{post.data.title}</h1></Budoux>
-      <Budoux><p>{post.data.description}</p></Budoux>
-      <div
-        class="tags-container"
-        data-pagefind-ignore
-        data-pagefind-meta={`tags:${post.data.tags?.join(", ")}`}
-      >
-        <Tags tags={post.data.tags} collectionKey={post.collection} />
-      </div>
-      <div class="post-info" data-pagefind-ignore>
+  <header>
+    <span class="emoji">{post.data.emoji}</span>
+    <Budoux><h1>{post.data.title}</h1></Budoux>
+    <Budoux><p>{post.data.description}</p></Budoux>
+    <Tags
+      tags={post.data.tags}
+      collectionKey={post.collection}
+      class="tags-container"
+      data-pagefind-ignore
+      data-pagefind-meta={`tags:${post.data.tags?.join(", ")}`}
+    />
+    <div class="post-info" data-pagefind-ignore>
+      <div>
+        <div class="date-container">Published</div>
         <div>
-          <div class="published-container">Published</div>
-          <div>
-            <time
-              datetime={post.data.date.toISOString()}
-              data-pagefind-meta={`published:${dateString}`}
-              data-pagefind-filter="published"
-            >
-              {dateString}
-            </time>
-          </div>
+          <time
+            datetime={post.data.date.toISOString()}
+            data-pagefind-meta={`published:${dateString}`}
+            data-pagefind-filter="published"
+          >
+            {dateString}
+          </time>
         </div>
-        {
-          post.data.lastmod && (
-            <div>
-              <div class="lastmod-container">Last Modified</div>
-              <div>
-                <time
-                  datetime={post.data.lastmod.toISOString()}
-                  data-pagefind-meta={`updated:${lastmodString}`}
-                  data-pagefind-filter="updated"
-                >
-                  {lastmodString}
-                </time>
-              </div>
-            </div>
-          )
-        }
       </div>
-    </header>
-    <Article post={post} />
-    <Pager topPath={`/${post.collection}`} />
-  </main>
+      {
+        post.data.lastmod && (
+          <div>
+            <div class="date-container">Last Modified</div>
+            <div>
+              <time
+                datetime={post.data.lastmod.toISOString()}
+                data-pagefind-meta={`updated:${lastmodString}`}
+                data-pagefind-filter="updated"
+              >
+                {lastmodString}
+              </time>
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </header>
+  <Article post={post} />
+  <Pager backTo={`/${post.collection}`} />
 </Layout>
 
 <style>
-  main {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    padding: 2rem 0;
-    gap: 1.5rem;
-  }
-
   header {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 1.5rem;
-  }
-
-  .emoji-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-items: center;
+    text-align: center;
   }
 
   .emoji {
-    font-size: 3.75rem;
-    line-height: 1;
-  }
-
-  h1, p {
-    text-align: center;
-  }
-
-  p {
-    color: var(--fg75);
-  }
-
-  .tags-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-size: 3rem;
   }
 
   .post-info {
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 1rem;
   }
 
-  .published-container {
-    color: var(--fg75);
-  }
-
-  .lastmod-container {
+  p,
+  .date-container {
     color: var(--fg75);
   }
 </style>

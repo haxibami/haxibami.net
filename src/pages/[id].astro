@@ -1,9 +1,7 @@
 ---
-import { Image } from "astro:assets";
-import { getCollection } from "astro:content";
+import { getEntry, getCollection } from "astro:content";
 import type { CollectionEntry } from "astro:content";
 
-import icon from "@/assets/kripcat.jpg";
 import Article from "@/components/Article.astro";
 import Pager from "@/components/Pager.astro";
 import Layout from "@/layouts/Layout.astro";
@@ -27,67 +25,19 @@ export async function getStaticPaths() {
   });
 }
 
+const meta = await getEntry("data", "data");
+
 const { post } = Astro.props;
 ---
 
 <Layout
-  title={post.data.title}
+  title=`${post.data.enTitle} | ${meta!.data.top.title}`
   description={post.data.description}
-  path={`/${post.id}`}
   pagefind={true}
   og={{
     enabled: true,
   }}
 >
-  <main class="post-main">
-    <header>
-      <div>
-        <Image
-          src={icon}
-          alt="icon"
-          width={150}
-          height={150}
-          class="icon"
-          loading="eager"
-          format="avif"
-          quality={40}
-        />
-      </div>
-      <span class="title">
-        <h1>haxibami</h1>
-      </span>
-    </header>
-    <Article post={post} />
-    <Pager topPath="/" />
-  </main>
+  <Article post={post} />
+  <Pager backTo="/" />
 </Layout>
-
-<style>
-  main {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    padding: 2rem 0;
-    gap: 1.5rem;
-  }
-
-  header {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 2rem;
-  }
-
-  .icon {
-    border-radius: 9999px;
-    object-fit: cover;
-  }
-
-  .title {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-</style>

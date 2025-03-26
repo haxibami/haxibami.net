@@ -7,43 +7,33 @@ import ChevronCircleRightIcon from "@/assets/svg/chevron-right.svg";
 
 interface Props {
   page?: Page<CollectionEntry<"blog">>;
-  topPath?: string;
+  backTo?: string;
 }
 
-const { page, topPath } = Astro.props;
+const { page, backTo } = Astro.props;
 ---
 
-<nav class:list={!page ? "border" : ""} data-pagefind-ignore>
+<nav data-pagefind-ignore>
   {
-    page?.url.prev || topPath ? (
-      <a href={page?.url.prev || topPath}>
-        <span class="pager-button prev-color">
-          <ChevronCircleLeftIcon class="nav-icon" />
-          {!topPath ? "Prev" : "Top"}
-        </span>
+    (page?.url.prev || backTo) && (
+      <a href={page?.url.prev || backTo} class="button prev">
+        <ChevronCircleLeftIcon class="nav-icon" />
+        {!backTo ? "Prev" : "Top"}
       </a>
-    ) : (
-      <span class="pager-button" />
     )
   }
   {
     page && (
       <>
-        <div class="current-page">
-          <span>
-            {page.currentPage} / {Math.ceil(page.total / page.size)}
-          </span>
+        <div class="current">
+          {page.currentPage} in {Math.ceil(page.total / page.size)}
         </div>
 
-        {page.url.next ? (
-          <a href={page.url.next}>
-            <span class="pager-button next-color">
-              Next
-              <ChevronCircleRightIcon class="nav-icon" />
-            </span>
+        {page.url.next && (
+          <a href={page.url.next} class="button next">
+            Next
+            <ChevronCircleRightIcon class="nav-icon" />
           </a>
-        ) : (
-          <span class="pager-button" />
         )}
       </>
     )
@@ -52,27 +42,24 @@ const { page, topPath } = Astro.props;
 
 <style>
   nav {
-    display: flex;
-    padding-top: 2rem;
-    justify-content: space-between;
-    font-size: 1.25rem;
-    &.border {
-      border-top: 1px solid var(--fg25);
-    }
+    grid-row: content-end / bottom;
+    display: grid;
+    grid-template-columns: [left] 5rem [middle-left] 1fr [middle-right] 5rem [right];
+    font-size: 1.1em;
   }
 
-  .pager-button {
-    width: 6rem;
-    height: 2rem;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    transition-property: background-color;
+  .button {
+    width: 5rem;
+    display: grid;
+    grid-auto-flow: column;
+    place-items: center;
+    transition-property: background-color, color;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 300ms;
   }
 
-  .prev-color {
+  .prev {
+    grid-column: left / middle-left;
     color: var(--fg);
 
     &:hover {
@@ -80,14 +67,15 @@ const { page, topPath } = Astro.props;
     }
   }
 
-  .next-color {
-    color: var(--bg);
-    border-color: var(--bg);
+  .next {
+    grid-column: middle-right / right;
     background-color: var(--fg);
+    color: var(--bg);
+    border: 1px solid var(--fg);
+
     &:hover {
-      border: 1px solid;
-      color: var(--fg);
       background-color: var(--bg);
+      color: var(--fg);
     }
   }
 
@@ -97,10 +85,9 @@ const { page, topPath } = Astro.props;
     fill: currentColor;
   }
 
-  .current-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.8em;
+  .current {
+    grid-column: middle-left / middle-right;
+    display: grid;
+    place-items: center;
   }
 </style>

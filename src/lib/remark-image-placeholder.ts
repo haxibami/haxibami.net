@@ -4,11 +4,10 @@ import { visit } from "unist-util-visit";
 
 import type { Image, Root } from "mdast";
 import type { FormatEnum } from "sharp";
-import type { Plugin } from "unified";
 
 import { getBlur } from "./api";
 
-interface RemarkImagePlaceholderOptions {
+interface Options {
   /**
    * The directory where the images are stored, relative to `src` directory.
    * @default "./assets/image"
@@ -26,14 +25,12 @@ interface RemarkImagePlaceholderOptions {
   format: keyof FormatEnum;
 }
 
-const remarkImagePlaceholder: Plugin<[RemarkImagePlaceholderOptions?], Root> = (
-  {
-    imgDir = "./assets/image",
-    size = 8,
-    format = "webp",
-  } = {} as RemarkImagePlaceholderOptions,
-) => {
-  return async (tree) => {
+const remarkImagePlaceholder = ({
+  imgDir = "./assets/image",
+  size = 8,
+  format = "webp",
+}: Partial<Options> = {}) => {
+  return async (tree: Root) => {
     const imgs: Image[] = [];
 
     visit(tree, "image", (node) => {

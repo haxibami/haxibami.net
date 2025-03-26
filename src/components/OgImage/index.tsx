@@ -7,22 +7,12 @@ import sharp from "sharp";
 
 const parser = getBudouxParser();
 
-const [
-  notoFontData,
-  robotoFontData,
-  sfProFontData,
-  sfProDisplayFontData,
-  iconBuffer,
-] = await Promise.all([
-  Bun.file("./src/assets/NotoSansCJKjp-Bold.woff").arrayBuffer(),
+const [ibmPlexFontData, robotoFontData, iconBuffer] = await Promise.all([
+  Bun.file("./src/assets/IBMPlexSansJP-Bold.woff").arrayBuffer(),
 
   Bun.file(
     "./node_modules/@fontsource/roboto-mono/files/roboto-mono-latin-500-normal.woff",
   ).arrayBuffer(),
-
-  Bun.file("./src/assets/SFProJP_semibold.woff").arrayBuffer(),
-
-  Bun.file("./src/assets/sf-pro-display_semibold.woff").arrayBuffer(),
 
   Bun.file("./src/assets/kripcat_720.jpg").arrayBuffer(),
 ]);
@@ -34,9 +24,9 @@ const ogImage = async (text: string, date?: Date, emoji?: string) => {
     <div
       style={{
         fontFamily:
-          "SF Pro Display, SF Pro JP, Noto Sans CJK JP, Roboto Mono, Noto Color Emoji, sans-serif",
+          "IBM Plex Sans JP, Roboto Mono, Noto Color Emoji, sans-serif",
         backgroundColor: "#1e1e20",
-        color: "#e7e7ea",
+        color: "#e3e4e6",
         display: "flex",
         flexDirection: "row",
         height: "100%",
@@ -45,8 +35,8 @@ const ogImage = async (text: string, date?: Date, emoji?: string) => {
     >
       <div
         style={{
-          backgroundColor: "#e7e7ea",
-          color: "#1e1e20",
+          backgroundColor: "#e3e4e6",
+          color: "#202225",
           display: "flex",
           flexDirection: "column",
           width: "30%",
@@ -85,7 +75,7 @@ const ogImage = async (text: string, date?: Date, emoji?: string) => {
         <div
           style={{
             marginTop: 0,
-            fontSize: "4rem",
+            fontSize: "3.5rem",
             width: "100%",
             flexGrow: 1,
             display: "flex",
@@ -93,7 +83,8 @@ const ogImage = async (text: string, date?: Date, emoji?: string) => {
             alignItems: "center",
             alignContent: "center",
             justifyContent: "center",
-            lineHeight: "1.2",
+            textAlign: "center",
+            lineHeight: "1.3",
           }}
         >
           {parser.parse(text).map((word) => (
@@ -157,26 +148,14 @@ const ogImage = async (text: string, date?: Date, emoji?: string) => {
       height: 630,
       fonts: [
         {
-          name: "SF Pro JP",
-          data: sfProFontData,
-          weight: 600,
-          style: "normal",
-        },
-        {
-          name: "SF Pro Display",
-          data: sfProDisplayFontData,
-          weight: 600,
-          style: "normal",
-        },
-        {
           name: "Roboto Mono",
           data: robotoFontData,
           weight: 500,
           style: "normal",
         },
         {
-          name: "Noto Sans CJK JP",
-          data: notoFontData,
+          name: "IBM Plex Sans JP",
+          data: ibmPlexFontData,
           weight: 700,
           style: "normal",
         },

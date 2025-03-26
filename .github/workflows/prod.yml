@@ -35,7 +35,7 @@ jobs:
       - name: Build project artifacts
         run: bun --bun run build
       - name: Deploy project artifacts to Cloudflare Pages
-        run: bunx --bun wrangler pages deploy ./dist --project-name=mythfinder --branch main
+        run: bunx --bun wrangler pages deploy ./dist --project-name=h6i --branch main
         env:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}

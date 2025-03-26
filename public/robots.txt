@@ -4,5 +4,5 @@ Disallow: /
 User-Agent: *
 Allow: /
 
-Host: https://www.haxibami.net
-Sitemap: https://www.haxibami.net/sitemap.xml
+Host: https://h6i.org
+Sitemap: https://h6i.org/sitemap.xml

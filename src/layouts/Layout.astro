@@ -1,7 +1,7 @@
 ---
-import "tailwindcss/preflight.css";
-import "@fontsource-variable/inter";
+import "tailwindcss/preflight";
 import "@/styles/global.css";
+import "@fontsource-variable/ibm-plex-sans";
 
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
@@ -9,8 +9,9 @@ import Header from "@/components/Header.astro";
 interface Props {
   title: string;
   description?: string;
-  path: string;
   pagefind: boolean;
+  header?: boolean;
+  footer?: boolean;
   og: {
     enabled: boolean;
     image?: URL;
@@ -20,12 +21,12 @@ interface Props {
   };
 }
 
-const { title, description, path, pagefind, og } = Astro.props;
+const { title, description, pagefind, header, footer, og } = Astro.props;
 
 const site = Astro.url.origin;
 ---
 
-<html lang="ja" {...pagefind && { "data-pagefind-body": "" }}>
+<html lang="ja" data-pagefind-body={pagefind ? "" : null}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -46,7 +47,7 @@ const site = Astro.url.origin;
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={new URL(path, site).toString()} />
+    <meta property="og:url" content={Astro.url} />
     <meta property="og:site_name" content={title} />
     <meta name="twitter:site" content="@haxibami" />
     <meta name="twitter:creator" content="@haxibami" />
@@ -58,9 +59,7 @@ const site = Astro.url.origin;
           <meta
             property="og:image"
             content={og.image ?? new URL("/kripcat_720.jpg", site).toString()}
-            {...(pagefind && {
-              "data-pagefind-meta": "image[content]",
-            })}
+            data-pagefind-meta={pagefind ? "image[content]" : null}
           />
           <meta property="og:image:width" content={`${og.width ?? 720}`} />
           <meta property="og:image:height" content={`${og.height ?? 720}`} />
@@ -74,8 +73,21 @@ const site = Astro.url.origin;
     }
   </head>
   <body>
-    <Header />
+    {header !== false && <Header />}
+    <main>
       <slot />
-    <Footer />
+    </main>
+    {footer !== false && <Footer />}
   </body>
 </html>
+
+<style>
+  main {
+    grid-row: main-start / main-end;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: [top] auto [content-start] 1fr [content-end] auto [bottom];
+    padding-block: 2rem;
+    gap: 2rem;
+  }
+</style>

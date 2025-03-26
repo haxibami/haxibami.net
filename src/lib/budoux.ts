@@ -1,13 +1,15 @@
 import { HTMLProcessingParser, jaModel } from "budoux";
-import { win } from "budoux/dist/win";
+import { parseHTML } from "linkedom";
 
 import type { HTMLProcessingParser as HTMLProcessingParserType } from "budoux";
 
 let cachedParser: HTMLProcessingParserType | null = null;
 
+const { document } = parseHTML("<!doctype html><html></html>");
+
 export function getBudouxParser() {
   if (!cachedParser) {
-    const wbr = win.document.createElement("wbr");
+    const wbr = document.createElement("wbr");
     cachedParser = new HTMLProcessingParser(jaModel, {
       className: "budoux",
       separator: wbr,

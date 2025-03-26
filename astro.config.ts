@@ -15,6 +15,7 @@ import remarkRuby from "remark-denden-ruby";
 import remarkGemoji from "remark-gemoji";
 import remarkMath from "remark-math";
 
+import { SITE } from "./src/lib/constant";
 import rehypeBudoux from "./src/lib/rehype-budoux";
 import rehypePagefind from "./src/lib/rehype-pagefind";
 import remarkFootnoteTitle from "./src/lib/remark-footnote-title";
@@ -31,12 +32,17 @@ export default defineConfig({
       defaultProps: {
         showLineNumbers: false,
       },
+      styleOverrides: {
+        borderRadius: "0",
+        borderColor: "var(--item-border)",
+        borderWidth: "1px",
+        codeBackground: "var(--code-bg)",
+      },
       shiki: {
         langs: [
           async () =>
             await fetch(
               "https://raw.githubusercontent.com/caddyserver/vscode-caddyfile/refs/heads/master/syntaxes/caddyfile.tmLanguage.json",
-              { cache: "force-cache" },
             ).then((res) => res.json()),
         ],
       },
@@ -44,8 +50,13 @@ export default defineConfig({
     mdx(),
     sitemap(),
     purgecss({
-      fontFace: true,
-      safelist: [/:hover$/],
+      fontFace: false,
+      variables: true,
+      keyframes: true,
+      safelist: {
+        standard: [/:hover$/],
+        variables: ["--font-mono"],
+      },
     }),
   ],
   build: {
@@ -67,15 +78,16 @@ export default defineConfig({
       remarkImagePlaceholder,
     ],
     remarkRehype: {
-      footnoteLabel: "脚注",
+      footnoteLabel: " ",
       footnoteBackLabel: "戻る",
+      footnoteLabelTagName: "hr",
     },
     rehypePlugins: [
       rehypeSlug,
       rehypeUnwrapImages,
-      [
-        rehypeAutolinkHeadings,
-        {
+      (...args) =>
+        rehypeAutolinkHeadings({
+          ...args,
           behavior: "append",
           properties(node: Element) {
             return {
@@ -86,8 +98,7 @@ export default defineConfig({
           content: h("span.heading-link-icon", {
             title: "リンク",
           }),
-        },
-      ],
+        }),
       [
         rehypeMermaid,
         {
@@ -105,14 +116,19 @@ export default defineConfig({
         },
       ],
       rehypeBudoux,
-      rehypeKatex,
+      (...args) =>
+        rehypeKatex({
+          ...args,
+          trust: true,
+          strict: false,
+        }),
       rehypePagefind,
     ],
   },
   image: {
     remotePatterns: [{ protocol: "https" }],
   },
-  site: "https://www.haxibami.net",
+  site: SITE.href,
   experimental: {
     svg: {
       mode: "inline",

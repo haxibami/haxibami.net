@@ -1,0 +1,35 @@
+---
+import { Image } from "astro:assets";
+
+import icon from "@/assets/kripcat.jpg";
+---
+
+<header>
+  <Image
+    src={icon}
+    alt="icon"
+    width={150}
+    height={150}
+    class="icon"
+    loading="eager"
+    format="avif"
+    quality={40}
+  />
+  <h1>About</h1>
+</header>
+
+<style>
+  header {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .icon {
+    border-radius: 9999px;
+    object-fit: cover;
+  }
+</style>

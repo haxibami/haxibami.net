@@ -1,220 +1,110 @@
 ---
 import { getEntry } from "astro:content";
 
+import Rule1 from "@/components/Rule1.mdx";
+import Rule2 from "@/components/Rule2.mdx";
+import Conclusion from "@/components/Conclusion.mdx";
 import Layout from "@/layouts/Layout.astro";
-import "@/styles/red-october.css";
+
+import "katex/dist/katex.min.css";
 
 const meta = await getEntry("data", "data");
+const { title, description } = meta!.data.top;
 ---
 
 <Layout
-  title={meta!.data.top.title}
-  description={meta!.data.top.description}
-  path="/"
+  title={title}
+  description={description}
   pagefind={true}
+  header={false}
+  footer={false}
   og={{
     enabled: true,
   }}
 >
-  <main>
-    <div class="avangard-container">
-      <div class="avangard">
-        <div class="name">
-          <div class="core">
-            <h2 class="question">who?:</h2>
-            <h1 class="answer">haxibami</h1>
-          </div>
-        </div>
-        <div class="squares"></div>
-        <div class="arrows vertical">
-          <h2 class="description">
-            {"read,"}
-            <br />
-            {"write,"}
-            <br />
-            {"and seek."}
-          </h2>
-        </div>
-      </div>
+  <header>
+    <div>
+      <h1>
+        <span class="tenten blink">{title[0]}</span><span class="tenten blink"
+          >{title[1]}</span
+        >{title.substring(2)}
+      </h1>
+      <code>h6i.org</code>
     </div>
-  </main>
+    <nav>
+      <a href="/about">
+        <div>（About）</div>
+      </a>
+      <a href="/blog">
+        <div>（Blog）</div>
+      </a>
+    </nav>
+  </header>
+  <div id="content">
+    <figure>
+      <figcaption>Rule 1.</figcaption>
+      <Rule1 />
+    </figure>
+    <figure>
+      <figcaption>Rule 2.</figcaption>
+      <Rule2 />
+    </figure>
+    <figure id="conclusion">
+      <figcaption>Conclusion.</figcaption>
+      <Conclusion />
+    </figure>
+  </div>
+
+  <style>
+    header {
+      grid-row: top / content-start;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+    }
+
+    #content {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-auto-rows: min-content;
+      gap: 2rem;
+      align-content: center;
+    }
+
+    figure {
+      border-block: 1.5px solid var(--ui-border);
+      padding: 1rem;
+      display: grid;
+      grid-template-rows: auto 1fr;
+
+      &#conclusion {
+        grid-column: 1 / -1;
+      }
+    }
+
+    figcaption {
+      font-size: 1.25em;
+      font-weight: bold;
+      text-decoration-line: underline;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1px;
+    }
+
+    :global(.katex-display) {
+      font-size: 1.5em;
+      display: grid;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 1.5em;
+    }
+
+    h2 {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: center;
+    }
+  </style>
 </Layout>
-
-<style>
-  main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-bottom: 1.5rem;
-  }
-  main > :not([hidden]) ~ :not([hidden]) {
-    border-top: 1px solid var(--fg25);
-  }
-
-  .avangard-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .avangard {
-    display: flex;
-    padding-top: 18rem;
-    margin-top: 0.5rem;
-    flex-direction: column;
-    gap: 2rem;
-    font-family: "Red October", sans-serif;
-  }
-
-  .name {
-    display: flex;
-    position: relative;
-    align-items: flex-start;
-    transform: rotate(-35deg);
-
-    &::before {
-      content: "";
-      position: absolute;
-      bottom: calc(100% + 15px);
-      right: 0;
-      z-index: -10;
-      height: 200%;
-      width: 50px;
-      background-color: var(--accent1);
-      transform: translate3d(0, 0, 0);
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: calc(100% + 15px);
-      right: 60px;
-      z-index: -10;
-      height: 150%;
-      width: 50px;
-      background-color: var(--accent2);
-      transform: translate3d(0, 0, 0);
-    }
-  }
-
-  .core {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    position: relative;
-
-    &::before {
-      content: "";
-      position: absolute;
-      bottom: calc(100% + 20px);
-      right: 60%;
-      z-index: -10;
-      height: 0;
-      width: 0;
-      border: 25px solid transparent;
-      border-right: 60px solid var(--accent1);
-      transform: translate3d(0, 0, 0) rotate(40deg);
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: calc(100% + 47px);
-      right: 73%;
-      z-index: -10;
-      height: 20px;
-      width: 20px;
-      border-radius: 9999px;
-      background-color: var(--fg);
-      transform: translate3d(0, 0, 0);
-    }
-  }
-
-  .question {
-    font-size: 2.25rem;
-    line-height: 1;
-  }
-
-  .answer {
-    font-size: 3.75rem;
-    line-height: 1;
-  }
-
-  .squares {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    position: relative;
-    transform: rotate(-35deg);
-
-    &::before {
-      content: "";
-      position: absolute;
-      bottom: calc(100% + 15px);
-      top: 1rem;
-      right: 4rem;
-      z-index: -10;
-      height: 2rem;
-      width: 2rem;
-      background-color: var(--fg);
-      transform: translate3d(0, 0, 0);
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      right: 3rem;
-      top: 2rem;
-      z-index: -10;
-      height: 2rem;
-      width: 2rem;
-      background-color: var(--fg);
-      transform: translate3d(0, 0, 0);
-    }
-  }
-
-  .arrows {
-    display: flex;
-    position: relative;
-    margin-top: 0.5rem;
-    margin-right: 5rem;
-    flex-direction: column;
-    overflow: hidden;
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    transform: rotate(-35deg);
-
-    &::before {
-      content: "";
-      position: absolute;
-      right: 40%;
-      top: 0;
-      z-index: -10;
-      height: 0;
-      width: 0;
-      border-top: 90px solid var(--fg75);
-      border-right: 20px solid transparent;
-      border-left: 20px solid transparent;
-      transform: translate3d(0, 0, 0);
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      right: 40%;
-      bottom: 0;
-      z-index: -10;
-      height: 0;
-      width: 0;
-      border-top: 90px solid var(--accent1);
-      border-right: 20px solid transparent;
-      border-left: 20px solid transparent;
-      transform: translate3d(0, 0, 0);
-    }
-  }
-
-  .description {
-    font-size: 1.875rem;
-    line-height: 1;
-  }
-</style>

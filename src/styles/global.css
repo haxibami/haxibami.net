@@ -1,46 +1,49 @@
+@import "@/styles/uchu.css";
+@import "@/styles/uchu-expanded.css";
+
 :root {
-  --fg: #1e1e20;
-  --bg: #e7e7ea;
-  --fg75: color-mix(in lch, var(--fg) 75%, var(--bg));
-  --fg50: color-mix(in lch, var(--fg) 50%, var(--bg));
-  --fg25: color-mix(in lch, var(--fg) 25%, var(--bg));
-  --fg10: color-mix(in lch, var(--fg) 10%, var(--bg));
-  --accent1: #bf3939;
-  --accent2: #429989;
-  --accent: var(--accent1);
+  --fg: var(--uchu-yin-9);
+  --bg: var(--uchu-yin-1);
+  --fg75: var(--uchu-yin-8);
+  --fg25: var(--uchu-yin-6);
+  --fg10: var(--uchu-yin-2);
+  --accent: var(--uchu-red);
   --font-mono: "ui-monospace", "SFMono-Regular", "SF Mono", "Menlo", "Monaco",
     "Consolas", "monospace";
+  --ui-border: var(--fg75);
+  --item-border: var(--fg25);
+  --code-bg: var(--uchu-yang);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --fg: #e7e7ea;
-    --bg: #1e1e20;
-    --accent: var(--accent2);
+    --fg: var(--uchu-yin-1);
+    --bg: var(--uchu-yin-9);
+    --fg75: var(--uchu-yin-2);
+    --fg25: var(--uchu-yin-6);
+    --fg10: var(--uchu-yin-8);
+    --accent: var(--uchu-blue-3);
+    --code-bg: var(--uchu-yin);
   }
 }
 
 html {
   font-size: 16px;
-  font-family:
-    "Inter Variable", "Helvetica Neue", "Helvetica",
-    "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji",
-    "Segoe UI Symbol", "Android Emoji", "EmojiSymbols", "-apple-system",
-    "BlinkMacSystemFont", "Segoe UI", "Roboto", "Noto Sans", sans-serif;
+  font-family: "IBM Plex Sans Variable", sans-serif;
+  font-feature-settings: "palt";
   line-height: 1.75;
   background: var(--bg);
   color: var(--fg);
 }
 
 body {
-  margin: 0 auto;
-  display: flex;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  flex-direction: column;
-  justify-content: space-between;
-  max-width: 48rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
   min-height: 100vh;
+  max-width: 48rem;
+  display: grid;
+  grid-template-rows: [top] auto [main-start] 1fr [main-end] auto [bottom];
+  grid-template-columns: minmax(0, 1fr);
 }
 
 h1,
@@ -55,19 +58,19 @@ h6 {
 }
 
 h1 {
-  font-size: 1.875rem;
+  font-size: 1.75rem;
 }
 
 h2 {
-  font-size: 1.625rem;
+  font-size: 1.5rem;
 }
 
 h3 {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
 }
 
 h4 {
-  font-size: 1.125rem;
+  font-size: 1.1rem;
 }
 
 h5,
@@ -77,21 +80,58 @@ h6 {
 
 blockquote {
   color: var(--fg75);
-  margin: 1.5rem 0;
-  padding: 0 1.5rem;
-  position: relative;
+  margin-block: 1.5rem;
+  padding-inline: 1.5rem;
+  border-left: 0.25rem double var(--item-border);
+}
 
-  &::before {
-    content: "";
-    position: absolute;
-    height: 100%;
-    width: 0.2rem;
-    left: 0;
-    background: var(--fg25);
-  }
+hr {
+  margin-block: 2rem;
+  color: var(--ui-border);
+  border-top-width: 1.5px;
 }
 
 .budoux {
   word-break: keep-all;
   overflow-wrap: anywhere;
+}
+
+.cjk_fallback {
+  font-family: "IBM Plex Sans Variable", sans-serif;
+}
+
+.accent-color {
+  color: var(--accent);
+}
+
+@keyframes blink {
+  0% {
+    color: currentcolor;
+  }
+  100% {
+    color: transparent;
+  }
+}
+
+.tenten {
+  position: relative;
+
+  &:before {
+    position: absolute;
+    content: "";
+    bottom: 120%;
+    left: calc(50% - .125em);
+    width: .25em;
+    height: .25em;
+    background: var(--fg);
+    border-radius: 50%;
+    text-align: center;
+  }
+}
+
+.tenten.blink {
+  &:before,
+  &:after {
+    animation: blink 1s ease-in-out infinite alternate;
+  }
 }

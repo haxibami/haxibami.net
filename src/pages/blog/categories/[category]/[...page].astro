@@ -44,30 +44,18 @@ const params = Astro.params;
 ---
 
 <Layout
-  title=`${meta!.data.top.title} - #${params.category}`
+  title=`#${params.category} | ${meta!.data.top.title}`
   description={meta!.data.blog.description}
-  path={page.url.current}
   pagefind={false}
   og={{ enabled: true }}
 >
-  <main>
-    <h1>
-      {params.category}
-    </h1>
-    <Posts page={page} />
-  </main>
+  <h1>
+    {params.category}
+  </h1>
+  <Posts page={page} />
 </Layout>
 
 <style>
-  main {
-    display: flex;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    flex-direction: column;
-    flex-grow: 1;
-    gap: 2rem;
-  }
-
   h1:before {
     content: "# ";
     color: var(--accent);

@@ -2,85 +2,54 @@
 import "@pagefind/default-ui/css/ui.css";
 ---
 
-<div id="modal" class="hidden">
-  <div id="search-container">
+<astro-search data-host={Astro.url.host}>
+  <dialog id="modal">
     <div id="search"></div>
-  </div>
-</div>
-<button id="modal-button" title="Ctrl + K で検索">
-  <div id="modal-button-desktop">
-    <span><kbd>Ctrl</kbd>+<kbd>K</kbd></span>
-    <span> 🔍 </span>
-  </div>
-  <div id="modal-button-mobile">
-    <span> 🔍 </span>
-  </div>
-</button>
+  </dialog>
+  <button id="modal-button" title="Ctrl + K で検索">
+    <div id="modal-button-label">
+      <span>?</span>
+    </div>
+  </button>
+</astro-search>
 
 <style>
   #modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    padding: 2rem;
-    width: 100%;
-    height: 100%;
-    z-index: 50;
-    background-color: hsla(223, 13%, 10%, 0.66);
-    backdrop-filter: blur(0.25rem);
+    width: calc(100% - 3rem);
+    max-width: 50rem;
+    max-height: calc(100% - 3rem);
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+    background-color: color-mix(in srgb, var(--bg) 97%, var(--fg) 3%);
+    margin: 1.5rem auto;
+    padding: 1.5rem;
+    overflow-y: auto;
+    border-radius: 0.5rem;
     --pagefind-ui-background: var(--bg);
-    --pagefind-ui-border: var(--fg25);
+    --pagefind-ui-border: var(--ui-border);
     --pagefind-ui-text: var(--fg);
     --pagefind-ui-primary: var(--fg);
-    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-width: 1.5px;
     --pagefind-ui-font: initial;
     --pagefind-ui-tag: color-mix(in srgb, var(--fg10) 95%, var(--fg) 5%);
   }
 
-  #modal.hidden {
-    display: none;
+  #modal::backdrop {
+    background-color: hsla(223, 13%, 10%, 0.66);
+    backdrop-filter: blur(0.25rem);
   }
 
-  #modal-button-desktop {
+  #modal-button-label {
     display: flex;
-    gap: 0.5rem;
-    background-color: color-mix(in srgb, var(--bg) 95%, var(--fg) 5%);
-    color: var(--fg75);
-    border-radius: 0.5rem;
-    padding: 0.25rem 0.5rem;
-    & kbd {
-      font-size: 0.9em;
-      background: var(--bg);
-      border: 1px solid var(--fg25);
-      padding: 0.1rem 0.2rem;
-      margin: 0 0.2rem;
-      border-radius: 0.2rem;
-    }
+    justify-content: flex-end;
+    border-bottom: 1.5px solid var(--ui-border);
+    padding-inline: 0.5rem;
   }
 
-  #modal-button-mobile {
-    display: none;
-  }
-
-  @media (max-width: 768px) {
-    #modal-button-desktop {
-      display: none;
+  @media (min-width: 768px) {
+    #modal-button-label {
+      width: 6rem;
+      padding-inline: 0;
     }
-
-    #modal-button-mobile {
-      display: block;
-    }
-  }
-
-  #search-container {
-    background-color: color-mix(in srgb, var(--bg) 97%, var(--fg) 3%);
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    max-width: 60rem;
-    margin: 0 auto;
-    overflow-y: auto;
-    max-height: 100%;
   }
 </style>
 
@@ -88,62 +57,56 @@ import "@pagefind/default-ui/css/ui.css";
   // @ts-expect-error - PagefindUI doesn't have types yet
   import { PagefindUI } from "@pagefind/default-ui";
 
-  function initPageFind() {
-    new PagefindUI({
-      element: "#search",
-      showEmptyFilters: false,
-      translations: {
-        clear_search: "クリア",
-        zero_results: "[SEARCH_TERM] に一致する結果は見つかりませんでした",
-      },
-      // @ts-expect-error - PagefindUI doesn't have types yet
-      processResult: function (result) {
-        const ogImgPath = new URL(result.meta.image);
-        const host = "www.haxibami.net";
-        if (ogImgPath.host === host) {
-          result.meta.image = ogImgPath.pathname;
-        }
-      },
-    });
-
-    const modalButton = document.querySelector("#modal-button");
-    const modal = document.querySelector("#modal");
-    const input = document.querySelector(
-      ".pagefind-ui__search-input",
-    ) as HTMLInputElement | null;
-
-    if (modalButton && modal && input) {
-      listen(modalButton, modal, input);
-    }
-
-    function listen(
-      modalButton: Element,
-      modal: Element,
-      input: HTMLInputElement,
-    ) {
-      modalButton.addEventListener("click", () => {
-        modal.classList.toggle("hidden");
-        input.focus();
+  class AstroSearch extends HTMLElement {
+    connectedCallback() {
+      const host = this.dataset.host;
+      new PagefindUI({
+        element: "#search",
+        autofocus: true,
+        showEmptyFilters: false,
+        translations: {
+          clear_search: "クリア",
+          zero_results: "[SEARCH_TERM] に一致する結果は見つかりませんでした",
+        },
+        // @ts-expect-error - PagefindUI doesn't have types yet
+        processResult: function (result) {
+          const ogImgPath = new URL(result.meta.image);
+          if (ogImgPath.host === host) {
+            result.meta.image = ogImgPath.pathname;
+          }
+        },
       });
 
-      modal.addEventListener("click", (e) => {
-        if (e.target === modal) {
-          modal.classList.toggle("hidden");
-        }
-      });
+      const modalButton = this.querySelector("#modal-button");
+      const modal = this.querySelector("#modal") as HTMLDialogElement | null;
 
-      window.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-          modal.classList.add("hidden");
-        }
-        if (e.key === "k" && e.ctrlKey) {
-          e.preventDefault();
-          modal.classList.toggle("hidden");
-          input.focus();
-        }
-      });
+      if (modalButton && modal) {
+        listen(modalButton, modal);
+      }
+
+      function listen(modalButton: Element, modal: HTMLDialogElement) {
+        modalButton.addEventListener("click", () => {
+          modal.showModal();
+        });
+
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            modal.close();
+          }
+        });
+
+        window.addEventListener("keydown", (e) => {
+          if (e.key === "Escape") {
+            modal.close();
+          }
+          if (e.key === "k" && e.ctrlKey) {
+            e.preventDefault();
+            modal.showModal();
+          }
+        });
+      }
     }
   }
 
-  document.addEventListener("DOMContentLoaded", initPageFind);
+  customElements.define("astro-search", AstroSearch);
 </script>

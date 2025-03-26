@@ -27,15 +27,18 @@ import XIcon from "@/assets/svg/x.svg";
 
 <style>
   footer {
-    display: flex;
+    grid-row: main-end / bottom;
+    display: grid;
+    grid-template-columns: 1fr auto;
     justify-content: space-between;
-    border-top: 1px solid var(--fg25);
+    border-top: 1.5px solid var(--ui-border);
     padding: 2rem 1rem;
     color: var(--fg75);
   }
 
   .icons {
-    display: flex;
+    display: grid;
+    grid-auto-flow: column;
     gap: 1rem;
   }
 
