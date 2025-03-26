@@ -11,15 +11,19 @@ import XIcon from "@/assets/svg/x.svg";
   </span>
   <span class="icons">
     <a href={"https://x.com/haxibami"} rel="me" title="X">
+      {/* @ts-expect-error */}
       <XIcon class="icon" title="X / Twitter - @haxibami" />
     </a>
     <a href={"https://hl.cune.moe/@haxibami"} rel="me" title="Fediverse">
+      {/* @ts-expect-error */}
       <FediverseIcon class="icon" title="Fediverse (Hollo) - hl.cune.moe" />
     </a>
     <a href={"https://github.com/haxibami"} rel="me" title="GitHub">
+      {/* @ts-expect-error */}
       <GitHubIcon class="icon" title="GitHub - haxibami" />
     </a>
     <a href={`/rss.xml`} title="RSS" data-astro-prefetch="false">
+      {/* @ts-expect-error */}
       <RssIcon class="icon" title="RSS" />
     </a>
   </span>

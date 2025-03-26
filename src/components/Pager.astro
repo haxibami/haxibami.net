@@ -17,6 +17,7 @@ const { page, backTo } = Astro.props;
   {
     (page?.url.prev || backTo) && (
       <a href={page?.url.prev || backTo} class="button prev">
+        {/* @ts-expect-error */}
         <ChevronCircleLeftIcon class="nav-icon" />
         {!backTo ? "Prev" : "Top"}
       </a>
@@ -32,6 +33,7 @@ const { page, backTo } = Astro.props;
         {page.url.next && (
           <a href={page.url.next} class="button next">
             Next
+            {/* @ts-expect-error */}
             <ChevronCircleRightIcon class="nav-icon" />
           </a>
         )}

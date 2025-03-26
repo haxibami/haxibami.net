@@ -22,6 +22,7 @@ const { title, description, image } = await getMetadata(props.href);
         {description}
       </div>
       <div class="hostname">
+        {/* @ts-expect-error */}
         <LinkIcon class="link-icon" />
         <span>{new URL(props.href).hostname}</span>
       </div>
